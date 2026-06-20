@@ -4180,21 +4180,43 @@ return;
 
 }
 
+try{
+
+/* حذف التقرير السابق لنفس التاريخ */
+
+const { error: deleteError } =
+await supabaseClient
+.from("daily_reports")
+.delete()
+.eq("report_date", reportDate);
+
+if(deleteError){
+
+console.log(deleteError);
+
+alert(
+"فشل حذف النسخة السابقة من التقرير"
+);
+
+return;
+
+}
+
+/* تجهيز البيانات الجديدة */
+
 let rows = [];
 
 document
 .querySelectorAll("[data-save]")
 .forEach(el=>{
 
-let key = el.id;
-
-if(!key) return;
+if(!el.id) return;
 
 rows.push({
 
 report_date: reportDate,
 factory: "ALL",
-field_name: key,
+field_name: el.id,
 field_value: el.value || "",
 updated_by: "admin"
 
@@ -4202,19 +4224,19 @@ updated_by: "admin"
 
 });
 
-try{
+/* حفظ التقرير الجديد */
 
-const { error } =
+const { error: insertError } =
 await supabaseClient
 .from("daily_reports")
 .insert(rows);
 
-if(error){
+if(insertError){
 
-console.log(error);
+console.log(insertError);
 
 alert(
-"فشل حفظ التقرير في قاعدة البيانات"
+"فشل حفظ التقرير"
 );
 
 return;
