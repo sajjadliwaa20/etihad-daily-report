@@ -395,10 +395,6 @@ margin-right:0;
 
 <div>
 
-<button onclick="testSupabase()">
-اختبار Supabase
-</button>
-
 <button onclick="window.print()">
 
 🖨️ طباعة PDF
@@ -411,10 +407,6 @@ margin-right:0;
 
 <button onclick="approveReport()">
 ✅ اعتماد التقرير
-</button>
-
-<button onclick="testInsert()">
-اختبار الإدخال
 </button>
 
 <button onclick="copyReportLink()">
@@ -3906,28 +3898,6 @@ function updateNetFeedProduction(){
 
 }
 
-async function testSupabase(){
-
-const { data, error } =
-await supabaseClient
-.from("daily_reports")
-.select("*")
-.limit(1);
-
-if(error){
-
-console.log(error);
-alert("فشل الاتصال");
-
-}else{
-
-console.log(data);
-alert("تم الاتصال بنجاح");
-
-}
-
-}
-
 function updateFeedSalesTotal(){
 
     let corn =
@@ -4118,8 +4088,6 @@ console.error(err);
 alert(
 "فشل تحميل التقرير"
 );
-
-}
 
 }
 
