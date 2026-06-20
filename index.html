@@ -4165,31 +4165,74 @@ total.toFixed(2);
 
 }
 
-async function testInsert(){
+async function approveReport(){
 
-const { data, error } =
+let reportDate =
+document.getElementById(
+"reportDateKey"
+).value;
+
+if(!reportDate){
+
+alert("لم يتم تحديد تاريخ التقرير");
+
+return;
+
+}
+
+let rows = [];
+
+document
+.querySelectorAll("[data-save]")
+.forEach(el=>{
+
+let key = el.id;
+
+if(!key) return;
+
+rows.push({
+
+report_date: reportDate,
+factory: "ALL",
+field_name: key,
+field_value: el.value || "",
+updated_by: "admin"
+
+});
+
+});
+
+try{
+
+const { error } =
 await supabaseClient
 .from("daily_reports")
-.insert([
-{
-report_date: "2026-06-20",
-factory: "test",
-field_name: "test_field",
-field_value: "123",
-updated_by: "admin"
-}
-]);
-
-console.log("DATA:", data);
-console.log("ERROR:", error);
+.insert(rows);
 
 if(error){
 
-alert(error.message);
+console.log(error);
 
-}else{
+alert(
+"فشل حفظ التقرير في قاعدة البيانات"
+);
 
-alert("تم الإدخال بنجاح");
+return;
+
+}
+
+alert(
+"تم اعتماد التقرير بنجاح"
+);
+
+}
+catch(e){
+
+console.log(e);
+
+alert(
+"حدث خطأ أثناء الحفظ"
+);
 
 }
 
