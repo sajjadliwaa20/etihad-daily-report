@@ -346,6 +346,8 @@ margin-right:0;
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
@@ -392,6 +394,10 @@ margin-right:0;
 </div>
 
 <div>
+
+<button onclick="testSupabase()">
+اختبار Supabase
+</button>
 
 <button onclick="window.print()">
 
@@ -3297,6 +3303,18 @@ onclick="loadArchiveReport()">
 
 <script>
 
+const SUPABASE_URL =
+"https://aptamsjgburgubfwamep.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_q0VgF-S8RkmWdRUvA9pQMQ_nDrLa28F";
+
+const supabaseClient =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
 /* ===========================
    التاريخ واليوم
 =========================== */
@@ -3881,6 +3899,28 @@ function updateNetFeedProduction(){
 
     document.getElementById('feed_net_total').value =
     (gross - returned).toFixed(2);
+
+}
+
+async function testSupabase(){
+
+const { data, error } =
+await supabaseClient
+.from("daily_reports")
+.select("*")
+.limit(1);
+
+if(error){
+
+console.log(error);
+alert("فشل الاتصال");
+
+}else{
+
+console.log(data);
+alert("تم الاتصال بنجاح");
+
+}
 
 }
 
