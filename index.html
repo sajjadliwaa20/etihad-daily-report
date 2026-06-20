@@ -4047,61 +4047,81 @@ function updateShorteningSalesTotal(){
 
 async function loadArchiveReport(){
 
-    const date =
-    document.getElementById(
-    "archiveDate"
-    ).value;
+const date =
+document.getElementById(
+"archiveDate"
+).value;
 
-    if(!date){
+if(!date){
 
-        alert("اختر تاريخ التقرير");
+alert("اختر تاريخ التقرير");
 
-        return;
+return;
 
-    }
+}
 
-    try{
+try{
 
-const response =
-await fetch(
-"https://script.google.com/macros/s/AKfycbwWooB13k6TRFDAkXyyFkLWZZCClvjH0gpyRkNXGNxJBrUyxmyOHi20YuytQzGgaSwOnA/exec"
-+
-"?date=" + date
+const { data, error } =
+await supabaseClient
+.from("daily_reports")
+.select("*")
+.eq("report_date", date);
+
+if(error){
+
+console.log(error);
+
+alert(
+"فشل تحميل التقرير"
 );
 
-const data =
-await response.json();
+return;
 
-console.log(data);
+}
 
-alert(JSON.stringify(data));
+if(!data || data.length === 0){
 
-Object.keys(data).forEach(key=>{
+alert(
+"لا يوجد تقرير لهذا التاريخ"
+);
 
-    const element =
-    document.getElementById(key);
+return;
 
-    if(element){
+}
 
-        element.value =
-        data[key];
+data.forEach(row => {
 
-    }
+const element =
+document.getElementById(
+row.field_name
+);
+
+if(element){
+
+element.value =
+row.field_value;
+
+}
 
 });
-        alert("تم تحميل التقرير");
 
-    }
+alert(
+"تم تحميل التقرير بنجاح"
+);
 
-    catch(err){
+}
+catch(err){
 
-        alert(
-        "فشل تحميل التقرير"
-        );
+console.error(err);
 
-        console.error(err);
+alert(
+"فشل تحميل التقرير"
+);
 
-    }
+}
+
+}
 
 }
 
