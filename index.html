@@ -1,0 +1,4129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>التقرير اليومي للمصانع</title>
+
+<style>
+
+:root{
+
+--main:#1f3c88;
+--gold:#b08a3e;
+--bg:#f4f6f9;
+--success:#dff3df;
+--warning:#fff4d6;
+--orange:#ffe7d1;
+--danger:#ffd6d6;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:Tahoma, Arial, sans-serif;
+background:var(--bg);
+text-align:center;
+
+}
+.sidebar{
+
+position:fixed;
+right:0;
+top:0;
+width:280px;
+height:100vh;
+overflow:auto;
+
+background:var(--main);
+
+color:white;
+
+padding:20px;
+
+}
+
+.sidebar h2{
+
+margin-bottom:20px;
+
+font-size:22px;
+
+}
+
+.sidebar a{
+
+display:block;
+
+padding:12px;
+
+margin-bottom:10px;
+
+background:rgba(255,255,255,.1);
+
+border-radius:10px;
+
+text-decoration:none;
+
+color:white;
+
+transition:.3s;
+
+}
+
+.sidebar a:hover{
+
+background:rgba(255,255,255,.2);
+
+}
+
+.content{
+
+margin-right:300px;
+
+padding:20px;
+
+}
+
+.section{
+
+background:white;
+
+border-radius:15px;
+
+padding:20px;
+
+margin-bottom:20px;
+
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+}
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+}
+
+.title-box{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.logo{
+
+width:70px;
+
+height:70px;
+
+object-fit:contain;
+
+}
+
+.main-title{
+
+font-size:30px;
+
+color:var(--main);
+
+font-weight:bold;
+
+}
+
+.info-bar{
+
+margin-top:15px;
+
+font-size:18px;
+
+}
+
+.kpi-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+.kpi-card{
+
+background:white;
+
+padding:15px;
+
+border-right:6px solid var(--gold);
+
+border-radius:12px;
+
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+}
+
+.kpi-title{
+
+font-size:15px;
+
+color:#666;
+
+}
+
+.kpi-value{
+
+font-size:28px;
+
+font-weight:bold;
+
+color:var(--main);
+
+margin-top:10px;
+
+}
+
+details{
+
+margin-top:12px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+overflow:hidden;
+
+}
+
+summary{
+
+padding:15px;
+
+background:#eef2ff;
+
+cursor:pointer;
+
+font-weight:bold;
+
+color:var(--main);
+
+}
+
+.details-content{
+
+padding:15px;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:10px;
+
+}
+
+th{
+
+background:var(--main);
+
+color:white;
+
+padding:10px;
+
+}
+
+td{
+
+padding:8px;
+
+border:1px solid #ddd;
+
+}
+
+input{
+
+width:100%;
+padding:8px;
+border:1px solid #ccc;
+border-radius:5px;
+text-align:center;
+
+}
+
+textarea{
+
+text-align:center;
+
+}
+
+button{
+
+padding:10px 15px;
+
+border:none;
+
+border-radius:8px;
+
+background:var(--main);
+
+color:white;
+
+cursor:pointer;
+
+margin-left:10px;
+
+}
+
+.notes{
+
+width:100%;
+height:120px;
+
+}
+
+.success{
+background:var(--success);
+}
+
+.warning{
+background:var(--warning);
+}
+
+.orange{
+background:var(--orange);
+}
+
+.danger{
+background:var(--danger);
+}
+
+@media(max-width:900px){
+
+.sidebar{
+
+position:relative;
+
+width:100%;
+
+height:auto;
+
+}
+
+.content{
+
+margin-right:0;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>🏭 التقرير اليومي للمصانع</h2>
+
+<p style="margin-bottom:20px;">
+إعداد التقرير<br>
+<b>سجاد لواء</b>
+</p>
+
+<a href="#home">الرئيسية</a>
+
+<a href="#powerstation">⚡ محطة الطاقة</a>
+
+<a href="#sugar">مصنع السكر</a>
+
+<a href="#oil">مصنع الزيت</a>
+
+<a href="#flour">مصنع الطحين</a>
+
+<a href="#feed">مصنع الأعلاف</a>
+
+<a href="#archive">📚 الأرشيف</a>
+
+</div>
+
+<div class="content">
+
+<section id="home" class="section">
+
+<div class="header">
+
+<div class="title-box">
+
+<div class="main-title">
+
+التقرير اليومي للمصانع
+
+</div>
+
+</div>
+
+<div>
+
+<button onclick="window.print()">
+
+🖨️ طباعة PDF
+
+</button>
+
+<button onclick="saveData()">
+💾 حفظ مسودة
+</button>
+
+<button onclick="approveReport()">
+✅ اعتماد التقرير
+</button>
+
+<button onclick="copyReportLink()">
+🔗 نسخ رابط التقرير
+</button>
+
+<button onclick="exportReportHTML()">
+📄 تصدير التقرير HTML
+</button>
+
+<button onclick="clearAllData()">
+
+🗑️ مسح البيانات
+
+</button>
+
+</div>
+
+</div>
+
+<div class="info-bar">
+<input
+type="hidden"
+id="reportDateKey">
+
+اليوم :
+<span id="today"></span>
+
+|
+
+التاريخ :
+<span id="todayDate"></span>
+
+</div>
+
+<!-- المبيعات والتسويق -->
+
+<details open>
+
+<summary>
+📈 المبيعات والتسويق
+</summary>
+
+<div class="details-content">
+
+<!-- مبيعات السكر -->
+
+<details open>
+
+<summary>مبيعات السكر</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الفئة</th>
+<th>المبيعات (طن)</th>
+</tr>
+
+<tr>
+<td>1 كغم</td><td>
+<input id="sugar_sales_1kg" data-save onkeyup="updateSugarSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>10 كغم</td><td>
+<input id="sugar_sales_10kg" data-save onkeyup="updateSugarSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>25 كغم</td>
+<td><input id="sugar_sales_25kg" data-save onkeyup="updateSugarSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>50 كغم</td>
+<td><input id="sugar_sales_50kg" data-save onkeyup="updateSugarSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>1 طن</td>
+<td><input id="sugar_sales_1ton" data-save onkeyup="updateSugarSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td><b>المجموع</b></td>
+<td><input id="sugar_sales_total" readonly></td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<br>
+
+<!-- مبيعات الزيت -->
+
+<details open>
+
+<summary>مبيعات الزيت</summary>
+
+<div class="details-content">
+
+<div class="details-content">
+
+<table>
+<tr>
+<th colspan="2">
+مبيعات الشورتنينغ (طن)
+</th>
+</tr>
+</table>
+
+<table>
+
+<tr>
+<th>الفئة</th>
+<th>المبيعات (طن)</th>
+</tr>
+
+<tr>
+<td>20 كغم</td>
+<td>
+<input
+id="shortening_sales_20kg"
+data-save
+onkeyup="updateShorteningSalesTotal()">
+</td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="details-content">
+
+<table>
+<tr>
+<th colspan="2">
+مبيعات السمنة (طن)
+</th>
+</tr>
+</table>
+
+<table>
+
+<tr>
+<th>الفئة</th>
+<th>المبيعات (طن)</th>
+</tr>
+
+<tr>
+<td>5 لتر</td>
+<td>
+<input id="GEA_sales_5l"
+data-save
+onkeyup="updateGEASalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>6 لتر</td>
+<td>
+<input id="GEA_sales_6l"
+data-save
+onkeyup="updateGEASalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>10 لتر</td>
+<td>
+<input id="GEA_sales_10l"
+data-save
+onkeyup="updateGEASalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>12 لتر</td>
+<td>
+<input id="GEA_sales_12l"
+data-save
+onkeyup="updateGEASalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>14 لتر</td>
+<td>
+<input id="GEA_sales_14l"
+data-save
+onkeyup="updateGEASalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td><b>المجموع</b></td>
+<td>
+<input id="GEA_sales_total" readonly>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="details-content">
+
+<table>
+<tr>
+<th colspan="2">
+مبيعات زيت العباد (طن)
+</th>
+</tr>
+</table>
+
+<table>
+
+<tr>
+<th>الفئة</th>
+<th>المبيعات (طن)</th>
+</tr>
+
+<tr><td>750 مل</td><td><input id="sun_sales_750" data-save onkeyup="updateSunSalesTotal()"></td></tr>
+<tr><td>900 مل</td><td><input id="sun_sales_900" data-save onkeyup="updateSunSalesTotal()"></td></tr>
+<tr><td>1 لتر</td><td><input id="sun_sales_1l" data-save onkeyup="updateSunSalesTotal()"></td></tr>
+<tr>
+<td><b>المجموع</b></td>
+<td><input id="sun_sales_total" readonly></td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="details-content">
+
+<table>
+<tr>
+<th colspan="2">
+مبيعات زيت الأولين (طن)
+</th>
+</tr>
+</table>
+
+<table>
+
+<tr>
+<th>الفئة</th>
+<th>المبيعات (طن)</th>
+</tr>
+
+<tr><td>5 لتر</td><td><input id="olein_sales_5l" data-save onkeyup="updateOleinSalesTotal()"></td></tr>
+<tr><td>6 لتر</td><td><input id="olein_sales_6l" data-save onkeyup="updateOleinSalesTotal()"></td></tr>
+<tr><td>10 لتر</td><td><input id="olein_sales_10l" data-save onkeyup="updateOleinSalesTotal()"></td></tr>
+<tr><td>18 لتر</td><td><input id="olein_sales_18l_big" data-save onkeyup="updateOleinSalesTotal()"></td></tr>
+<tr><td>20 كغم</td><td><input id="olein_sales_20kg" data-save
+onkeyup="updateOleinSalesTotal()">
+</td>
+</tr>
+<tr>
+<td><b>المجموع</b></td>
+<td>
+<input
+id="olein_sales_total"
+readonly>
+</td></tr>
+
+</table>
+
+</div>
+
+
+</div>
+
+</details>
+
+<br>
+
+<!-- مبيعات الطحين -->
+
+<details open>
+
+<summary>مبيعات الطحين</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الصنف</th>
+<th>المبيعات (طن)</th>
+</tr>
+
+<tr>
+<td>F1</td>
+<td>
+<input
+id="flour_sales_f1"
+data-save
+onkeyup="updateFlourSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>F3</td>
+<td>
+<input
+id="flour_sales_f3"
+data-save
+onkeyup="updateFlourSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>W.Bran</td>
+<td>
+<input
+id="flour_sales_bran"
+data-save
+onkeyup="updateFlourSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td><b>المجموع</b></td>
+<td>
+<input
+id="flour_sales_total"
+readonly>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<br>
+
+<!-- مبيعات الأعلاف -->
+
+<details open>
+
+<summary>مبيعات الأعلاف</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>المادة</th>
+<th>مبيعات الوكلاء (طن)</th>
+</tr>
+
+<tr>
+<td>الذرة</td>
+<td>
+<input
+id="feed_sales_corn"
+data-save
+onkeyup="updateFeedSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>كسبة الصويا</td>
+<td>
+<input
+id="feed_sales_soybean"
+data-save
+onkeyup="updateFeedSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>الأعلاف</td>
+<td>
+<input
+id="feed_sales_feed"
+data-save
+onkeyup="updateFeedSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td>البريمكس</td>
+<td>
+<input
+id="feed_sales_premix"
+data-save
+onkeyup="updateFeedSalesTotal()">
+</td>
+</tr>
+
+<tr>
+<td><b>المجموع</b></td>
+<td>
+<input
+id="feed_sales_total"
+readonly>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+</section>
+
+<!-- محطات الطاقة -->
+
+<section id="blackoil" class="section">
+
+<h2>
+🛢️ موقف النفط الأسود
+</h2>
+
+<details>
+
+<summary>محطة الطاقة - الاتحاد</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>البيان</th>
+<th>القيمة</th>
+</tr>
+
+<tr>
+<td>القطوعات غير المستلمة</td>
+<td><input id="union_cuttings" data-save></td>
+</tr>
+
+<tr>
+<td>رصيد النفط الخام (م³)</td>
+<td><input id="union_stock" data-save></td>
+</tr>
+
+<tr>
+<td>المستوى الفارغ (م³)</td>
+<td><input id="union_empty" data-save></td>
+</tr>
+
+<tr>
+<td>استهلاك محطة الطاقة (م³)</td>
+<td><input id="union_power_use" data-save></td>
+</tr>
+
+<tr>
+<td>استهلاك بويلرات الريان (م³)</td>
+<td><input id="union_boiler_use" data-save></td>
+</tr>
+
+<tr>
+<td><b>الاستهلاك الكلي (م³)</b></td>
+<td>
+<input
+id="union_total_use"
+readonly>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<details>
+
+<summary>محطة الطاقة - صحاري كربلاء</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<td>القطوعات غير المستلمة</td>
+<td><input id="sahara_cuttings" data-save></td>
+</tr>
+
+<tr>
+<td>رصيد النفط الخام (م³)</td>
+<td><input id="sahara_stock" data-save></td>
+</tr>
+
+<tr>
+<td>المستوى الفارغ (م³)</td>
+<td><input id="sahara_empty" data-save></td>
+</tr>
+
+<tr>
+<td>استهلاك محطة الطاقة (م³)</td>
+<td><input id="sahara_use" data-save></td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<details>
+
+<summary>محطة الطاقة - شركة ديوان</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<td>القطوعات غير المستلمة</td>
+<td><input id="diwan_cuttings" data-save></td>
+</tr>
+
+<tr>
+<td>رصيد النفط الخام (م³)</td>
+<td><input id="diwan_stock" data-save></td>
+</tr>
+
+<tr>
+<td>المستوى الفارغ (م³)</td>
+<td><input id="diwan_empty" data-save></td>
+</tr>
+
+<tr>
+<td>الاستهلاك اليومي (م³)</td>
+<td><input id="diwan_use" data-save></td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+</section>
+
+</section>
+
+<!-- موقف محطة الطاقة -->
+
+<section id="powerstation" class="section">
+
+<h2 style="color:#1f3c88;">
+⚡ موقف محطة الطاقة
+</h2>
+
+
+<details>
+
+<summary>موقف محطة الطاقة</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>المعدة</th>
+<th>حالة التشغيل</th>
+</tr>
+
+<tr>
+<td>البويلرات</td>
+<td><input id="boilers_status" data-save></td>
+</tr>
+
+<tr>
+<td>توربينات 20MW </td>
+<td><input id="turbine20_status" data-save></td>
+</tr>
+
+<tr>
+<td>توربينات 10MW </td>
+<td><input id="turbine10_status" data-save></td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>أعلى حمل كهربائي (MW)</th>
+<th>أقل حمل كهربائي (MW)</th>
+</tr>
+
+<tr>
+<td>
+<input id="max_electrical_load" data-save>
+</td>
+
+<td>
+<input id="min_electrical_load" data-save>
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>ملاحظات محطة الطاقة</th>
+</tr>
+
+<tr>
+<td>
+<input id="power_station_notes" data-save>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+</section>
+
+<!-- ===================================== -->
+<!-- مصنع السكر -->
+<!-- ===================================== -->
+
+<section id="sugar" class="section">
+
+<h2 style="color:#1f3c88;">
+🏭 مصنع السكر
+</h2>
+
+<!-- الخام -->
+
+<details>
+
+<summary>موقف الخام</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الكمية الواردة (طن)</th>
+<th>الرصيد الحالي (طن)</th>
+<th>المستهلك (طن)</th>
+</tr>
+
+<tr>
+
+<td>
+<input id="sugar_raw_received" data-save>
+</td>
+
+<td>
+<input id="sugar_raw_stock" data-save>
+</td>
+
+<td>
+<input id="sugar_raw_used" data-save>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الاذابة -->
+
+<details>
+
+<summary>محطة الإذابة</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>لون الخام (ICUMSA)</th>
+<th>الجريان (م³/ساعة)</th>
+<th>البريكس (%)</th>
+<th>مجموع المذاب (طن)</th>
+</tr>
+
+<tr>
+
+<td>
+<input id="diss_color" data-save>
+</td>
+
+<td>
+<input id="diss_flow" data-save>
+</td>
+
+<td>
+<input id="diss_brix" data-save>
+</td>
+
+<td>
+<input id="diss_total" data-save>
+</td>
+
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>الإذابة القديمة</th>
+<th>الإذابة الجديدة</th>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+
+<td>
+<input id="old_dissolution" data-save>
+</td>
+
+<td>
+<input id="new_dissolution" data-save>
+</td>
+
+<td>
+<input id="diss_status" data-save>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الكربنة -->
+
+<details>
+
+<summary>
+محطة الكربنة
+</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>رصيد اللايم (طن)</th>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+
+<td>
+<input id="carb_lime" data-save>
+</td>
+
+<td>
+<input id="carb_status" data-save>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+<!-- PKF -->
+
+<details>
+
+<summary>محطة PKF</summary>
+
+<div class="details-content">
+
+<h4>فلاتر 250</h4>
+
+<table>
+
+<tr>
+<th>معدل حجم الدورة (م³)</th>
+<th>معدل زمن الدورة (ساعة)</th>
+<th>استهلاك البريكوت (طن)</th>
+</tr>
+
+<tr>
+
+<td>
+<input id="pkf250_volume" data-save>
+</td>
+
+<td>
+<input id="pkf250_time" data-save>
+</td>
+
+<td>
+<input id="pkf250_briquette" data-save>
+</td>
+
+</tr>
+
+</table>
+
+<br>
+
+<h4>فلاتر 500</h4>
+
+<table>
+
+<tr>
+<th>معدل حجم الدورة (م³)</th>
+<th>معدل زمن الدورة (ساعة)</th>
+<th>استهلاك البريكوت (طن)</th>
+</tr>
+
+<tr>
+
+<td>
+<input id="pkf500_volume" data-save>
+</td>
+
+<td>
+<input id="pkf500_time" data-save>
+</td>
+
+<td>
+<input id="pkf500_briquette" data-save>
+</td>
+
+</tr>
+
+</table>
+<br>
+
+<table>
+
+<tr>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+<td>
+<input id="pkf_status" data-save>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- NOVASEP -->
+
+<details>
+
+<summary>محطة NOVASEP</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>اللون الخارج (ICUMSA)</th>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+
+<td>
+<input id="novasep_color" data-save>
+</td>
+
+<td>
+<input id="novasep_status" data-save>
+</td>
+
+</tr>
+
+</table>
+</div>
+
+</details>
+
+<!-- الطباخات -->
+
+<details>
+<summary> محطة الطباخات </summary>
+
+<div class="details-content">
+
+<table>
+<tr>
+<th colspan="2">
+بريكس العصير الداخل
+</th>
+</tr>
+
+<tr>
+<td>البريكس (%)</td>
+<td>
+<input id="cooker_in_brix" data-save>
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th colspan="2">
+المولاس المنتج
+</th>
+</tr>
+
+<tr>
+<td>كمية المولاس (طن)</td>
+<td>
+<input id="molasses_qty" data-save>
+</td>
+</tr>
+
+<tr>
+<td>بريكس المولاس (%)</td>
+<td>
+<input id="molasses_brix" data-save>
+</td>
+</tr>
+
+<tr>
+<td>نقاوة المولاس (%)</td>
+<td>
+<input id="molasses_purity" data-save>
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+<td>
+<input id="cooker_status" data-save>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+
+<!-- التجفيف -->
+
+<details>
+
+<summary>محطة التجفيف</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>حرارة السكر</th>
+<th>PH</th>
+<th>لون المنتج</th>
+<th>الكمية المجففة (طن)</th>
+<th>CV</th>
+<th>MA</th>
+<th>DUST</th>
+<th>Oversize</th>
+</tr>
+
+<tr>
+
+<td><input id="dryer_temp" data-save></td>
+
+<td><input id="dryer_ph" data-save></td>
+
+<td><input id="dryer_color" data-save></td>
+
+<td><input id="dryer_qty" data-save></td>
+
+<td><input id="dryer_cv" data-save></td>
+
+<td><input id="dryer_ma" data-save></td>
+
+<td><input id="dryer_dust" data-save></td>
+
+<td><input id="dryer_oversize" data-save></td>
+
+
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+<td>
+<input
+id="dryer_status"
+data-save
+style="width:100%;">
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- التعبئة -->
+
+<details>
+
+<summary>قسم التعبئة</summary>
+
+<div class="details-content">
+
+<h4>تشغيل خطوط التعبئة</h4>
+
+<table>
+
+<tr>
+<th rowspan="2">الشفت</th>
+
+<th colspan="2">1 طن</th>
+<th colspan="2">50 كغم</th>
+<th colspan="2">25 كغم</th>
+<th colspan="2">10 كغم</th>
+<th colspan="2">1 كغم</th>
+
+</tr>
+
+<tr>
+
+<th>عدد المكائن</th>
+<th>الإنتاج</th>
+
+<th>عدد المكائن</th>
+<th>الإنتاج</th>
+
+<th>عدد المكائن</th>
+<th>الإنتاج</th>
+
+<th>عدد المكائن</th>
+<th>الإنتاج</th>
+
+<th>عدد المكائن</th>
+<th>الإنتاج</th>
+
+</tr>
+
+<tr>
+
+<td>صباحي</td>
+
+<td><input id="pack_1t_morning" data-save></td>
+<td><input id="pack_1t_prod_morning" data-save></td>
+
+<td><input id="pack_50_morning" data-save></td>
+<td><input id="pack_50_prod_morning" data-save></td>
+
+<td><input id="pack_25_morning" data-save></td>
+<td><input id="pack_25_prod_morning" data-save></td>
+
+<td><input id="pack_10_morning" data-save></td>
+<td><input id="pack_10_prod_morning" data-save></td>
+
+<td><input id="pack_1_morning" data-save></td>
+<td><input id="pack_1_prod_morning" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>مسائي</td>
+
+<td><input id="pack_1t_evening" data-save></td>
+<td><input id="pack_1t_prod_evening" data-save></td>
+
+<td><input id="pack_50_evening" data-save></td>
+<td><input id="pack_50_prod_evening" data-save></td>
+
+<td><input id="pack_25_evening" data-save></td>
+<td><input id="pack_25_prod_evening" data-save></td>
+
+<td><input id="pack_10_evening" data-save></td>
+<td><input id="pack_10_prod_evening" data-save></td>
+
+<td><input id="pack_1_evening" data-save></td>
+<td><input id="pack_1_prod_evening" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>ليلي</td>
+
+<td><input id="pack_1t_night" data-save></td>
+<td><input id="pack_1t_prod_night" data-save></td>
+
+<td><input id="pack_50_night" data-save></td>
+<td><input id="pack_50_prod_night" data-save></td>
+
+<td><input id="pack_25_night" data-save></td>
+<td><input id="pack_25_prod_night" data-save></td>
+
+<td><input id="pack_10_night" data-save></td>
+<td><input id="pack_10_prod_night" data-save></td>
+
+<td><input id="pack_1_night" data-save></td>
+<td><input id="pack_1_prod_night" data-save></td>
+
+</tr>
+
+</table>
+
+<table>
+
+<tr>
+<th colspan="2">
+أرصدة المنتج النهائي المعبأ
+</th>
+</tr>
+
+</table>
+
+<table>
+
+<tr>
+<th>الفئة</th>
+<th>الرصيد (طن)</th>
+</tr>
+
+<tr>
+<td>1 طن</td>
+<td><input id="stock_1t" data-save></td>
+</tr>
+
+<tr>
+<td>50 كغم</td>
+<td><input id="stock_50kg" data-save></td>
+</tr>
+
+<tr>
+<td>25 كغم</td>
+<td><input id="stock_25kg" data-save></td>
+</tr>
+
+<tr>
+<td>10 كغم</td>
+<td><input id="stock_10kg" data-save></td>
+</tr>
+
+<tr>
+<td>1 كغم</td>
+<td><input id="stock_1kg" data-save></td>
+</tr>
+
+</table>
+
+<h4>ملاحظات التعبئة</h4>
+
+<table>
+
+<tr>
+<th>الشفت</th>
+<th>الملاحظات</th>
+</tr>
+
+<tr>
+<td>صباحي</td>
+<td>
+<input id="pack_note_morning" data-save>
+</td>
+</tr>
+
+<tr>
+<td>مسائي</td>
+<td>
+<input id="pack_note_evening" data-save>
+</td>
+</tr>
+
+<tr>
+<td>ليلي</td>
+<td>
+<input id="pack_note_night" data-save>
+</td>
+</tr>
+
+</table>
+</div>
+
+</details>
+
+<!-- الجودة والسلامة -->
+
+<details>
+
+<summary>الجودة والسلامة</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>ملاحظات قسم الجودة</th>
+</tr>
+
+<tr>
+<td>
+
+<textarea
+id="sugar_quality_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>ملاحظات قسم السلامة</th>
+</tr>
+
+<tr>
+<td>
+
+<textarea
+id="sugar_safety_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- ملاحظات السكر -->
+
+<details>
+
+<summary>ملاحظات مصنع السكر</summary>
+
+<div class="details-content">
+
+<textarea
+class="notes"
+id="sugar_notes"
+data-save></textarea>
+
+</div>
+
+</details>
+
+</section>
+<!-- ===================================== -->
+<!-- مصنع الزيت -->
+<!-- ===================================== -->
+
+<section id="oil" class="section">
+
+<h2 style="color:#1f3c88;">
+🛢️ مصنع تكرير الزيوت النباتية
+</h2>
+
+<!-- أرصدة الخام -->
+
+<details>
+
+<summary>أرصدة الزيوت الخام</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>نوع الخام</th>
+<th>الوارد (طن)</th>
+<th>المستهلك (طن)</th>
+<th>الرصيد الحالي (طن)</th>
+</tr>
+
+<tr>
+<td>زيت عباد الشمس الخام</td>
+
+<td>
+<input id="raw_sunflower_in" data-save>
+</td>
+
+<td>
+<input id="raw_sunflower_used" data-save>
+</td>
+
+<td>
+<input id="raw_sunflower_stock" data-save>
+</td>
+
+</tr>
+
+<tr>
+<td>زيت الأولين الخام</td>
+
+<td>
+<input id="raw_olein_in" data-save>
+</td>
+
+<td>
+<input id="raw_olein_used" data-save>
+</td>
+
+<td>
+<input id="raw_olein_stock" data-save>
+</td>
+
+</tr>
+
+<tr>
+<td>زيت النخيل الخام</td>
+
+<td>
+<input id="raw_palm_in" data-save>
+</td>
+
+<td>
+<input id="raw_palm_used" data-save>
+</td>
+
+<td>
+<input id="raw_palm_stock" data-save>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- انتاج خطي التكرير -->
+
+<details>
+
+<summary>إنتاج خطوط التكرير</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+
+<th>الخط</th>
+<th>الإنتاج اليومي</th>
+
+</tr>
+
+<tr>
+
+<td>خط التكرير 1</td>
+
+<td>
+<input
+id="refinery1"
+data-save>
+</td>
+
+</tr>
+
+<tr>
+
+<td>خط التكرير 2</td>
+
+<td>
+<input
+id="refinery2"
+data-save>
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<b>المجموع</b>
+
+</td>
+
+<td>
+
+<input
+id="refinery_total"
+data-save>
+
+</td>
+
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+<td>
+<input id="oil_refinery_status" data-save>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- موقف وأرصدة المنتج النهائي -->
+
+<details>
+
+<summary>موقف وأرصدة المنتج النهائي</summary>
+
+<div class="details-content">
+
+<!-- زيت العباد -->
+
+<details>
+
+<summary>زيت العباد</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الحجم</th>
+<th>الرصيد (طن)</th>
+</tr>
+
+<tr><td>750 مل</td><td><input id="sun_750_stock" data-save></td></tr>
+<tr><td>900 مل</td><td><input id="sun_900_stock" data-save></td></tr>
+<tr><td>1 لتر</td><td><input id="sun_1l_stock" data-save></td></tr>
+<tr><td>1.8 لتر</td><td><input id="sun_18_stock" data-save></td></tr>
+<tr><td>5 لتر</td><td><input id="sun_5l_stock" data-save></td></tr>
+<tr><td>6 لتر</td><td><input id="sun_6l_stock" data-save></td></tr>
+<tr><td>10 لتر</td><td><input id="sun_10l_stock" data-save></td></tr>
+<tr><td>12 لتر</td><td><input id="sun_12l_stock" data-save></td></tr>
+<tr><td>14 لتر</td><td><input id="sun_14l_stock" data-save></td></tr>
+<tr><td>18 لتر</td><td><input id="sun_18l_stock" data-save></td></tr>
+<tr><td>20 لتر</td><td><input id="sun_20l_stock" data-save></td></tr>
+<tr><td>20 كغم</td><td><input id="sun_20kg_stock" data-save></td></tr>
+
+</table>
+
+</div>
+
+</details>
+
+<br>
+
+<!-- زيت الأولين والنخيل -->
+
+<details>
+
+<summary>زيت الأولين والنخيل</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الحجم</th>
+<th>الأولين (طن)</th>
+<th>النخيل (طن)</th>
+</tr>
+
+<tr><td>750 مل</td><td><input id="olein_750_stock" data-save></td><td><input id="palm_750_stock" data-save></td></tr>
+<tr><td>900 مل</td><td><input id="olein_900_stock" data-save></td><td><input id="palm_900_stock" data-save></td></tr>
+<tr><td>1 لتر</td><td><input id="olein_1l_stock" data-save></td><td><input id="palm_1l_stock" data-save></td></tr>
+<tr><td>1.8 لتر</td><td><input id="olein_18_stock" data-save></td><td><input id="palm_18_stock" data-save></td></tr>
+<tr><td>5 لتر</td><td><input id="olein_5l_stock" data-save></td><td><input id="palm_5l_stock" data-save></td></tr>
+<tr><td>6 لتر</td><td><input id="olein_6l_stock" data-save></td><td><input id="palm_6l_stock" data-save></td></tr>
+<tr><td>10 لتر</td><td><input id="olein_10l_stock" data-save></td><td><input id="palm_10l_stock" data-save></td></tr>
+<tr><td>12 لتر</td><td><input id="olein_12l_stock" data-save></td><td><input id="palm_12l_stock" data-save></td></tr>
+<tr><td>14 لتر</td><td><input id="olein_14l_stock" data-save></td><td><input id="palm_14l_stock" data-save></td></tr>
+<tr><td>18 لتر</td><td><input id="olein_18l_stock" data-save></td><td><input id="palm_18l_stock" data-save></td></tr>
+<tr><td>20 لتر</td><td><input id="olein_20l_stock" data-save></td><td><input id="palm_20l_stock" data-save></td></tr>
+<tr><td>20 كغم</td><td><input id="olein_20kg_stock" data-save></td><td><input id="palm_20kg_stock" data-save></td></tr>
+
+</table>
+
+</div>
+
+</details>
+
+<br>
+
+<table>
+
+<tr>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+<td>
+<input id="oil_products_status" data-save>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<details>
+
+<summary>موقف خطوط التعبئة</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+
+<th>الخط</th>
+
+<th>صباحي</th>
+
+<th>مسائي</th>
+
+<th>ليلي</th>
+
+</tr>
+
+<tr>
+
+<td>كرونس 1</td>
+
+<td><input id="krones1a" data-save></td>
+
+<td><input id="krones1b" data-save></td>
+
+<td><input id="krones1c" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>كرونس 2</td>
+
+<td><input id="krones2a" data-save></td>
+
+<td><input id="krones2b" data-save></td>
+
+<td><input id="krones2c" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>كرونس 3</td>
+
+<td><input id="krones3a" data-save></td>
+
+<td><input id="krones3b" data-save></td>
+
+<td><input id="krones3c" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>خط السمنة</td>
+
+<td><input id="geaa" data-save></td>
+
+<td><input id="geab" data-save></td>
+
+<td><input id="geac" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>خط الشورتنينغ</td>
+
+<td><input id="shorta" data-save></td>
+
+<td><input id="shortb" data-save></td>
+
+<td><input id="shortc" data-save></td>
+
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>حالة المحطة</th>
+</tr>
+
+<tr>
+<td>
+<input id="oil_packing_status" data-save>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- تقرير مصنع اللدائن -->
+
+<details>
+
+<summary>تقرير مصنع اللدائن</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الماكنة</th>
+<th> المنتج</th>
+<th>الإنتاج اليومي (قطعة)</th>
+<th>الكفاءة (%)</th>
+<th>الملاحظات</th>
+</tr>
+
+<tr>
+<td>ماكنة الأمبولة 1</td>
+<td><input id="plastic_bottle1_product" data-save></td>
+<td><input id="plastic_bottle1_qty" data-save></td>
+<td><input id="plastic_bottle1_eff" data-save></td>
+<td><input id="plastic_bottle1_note" data-save></td>
+</tr>
+
+<tr>
+<td>ماكنة الأمبولة 2</td>
+<td><input id="plastic_bottle2_product" data-save></td>
+<td><input id="plastic_bottle2_qty" data-save></td>
+<td><input id="plastic_bottle2_eff" data-save></td>
+<td><input id="plastic_bottle2_note" data-save></td>
+</tr>
+
+<tr>
+<td>ماكنة Spout 1</td>
+<td><input id="plastic_spout1_product" data-save></td>
+<td><input id="plastic_spout1_qty" data-save></td>
+<td><input id="plastic_spout1_eff" data-save></td>
+<td><input id="plastic_spout1_note" data-save></td>
+</tr>
+
+<tr>
+<td>ماكنة Spout 2</td>
+<td><input id="plastic_spout2_product" data-save></td>
+<td><input id="plastic_spout2_qty" data-save></td>
+<td><input id="plastic_spout2_eff" data-save></td>
+<td><input id="plastic_spout2_note" data-save></td>
+</tr>
+
+<tr>
+<td>ماكنة Cap</td>
+<td><input id="plastic_cap_product" data-save></td>
+<td><input id="plastic_cap_qty" data-save></td>
+<td><input id="plastic_cap_eff" data-save></td>
+<td><input id="plastic_cap_note" data-save></td>
+</tr>
+
+<tr>
+<td>ماكنة التجميع 1</td>
+<td><input id="plastic_assembly1_product" data-save></td>
+<td><input id="plastic_assembly1_qty" data-save></td>
+<td><input id="plastic_assembly1_eff" data-save></td>
+<td><input id="plastic_assembly1_note" data-save></td>
+</tr>
+
+<tr>
+<td>ماكنة التجميع 2</td>
+<td><input id="plastic_assembly2_product" data-save></td>
+<td><input id="plastic_assembly2_qty" data-save></td>
+<td><input id="plastic_assembly2_eff" data-save></td>
+<td><input id="plastic_assembly2_note" data-save></td>
+</tr>
+
+<tr>
+<td>ماكنة السداد المعدني</td>
+<td><input id="plastic_metalcap_product" data-save></td>
+<td><input id="plastic_metalcap_qty" data-save></td>
+<td><input id="plastic_metalcap_eff" data-save></td>
+<td><input id="plastic_metalcap_note" data-save></td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>إجمالي الإنتاج (قطعة)</th>
+<th>عدد المكائن العاملة</th>
+<th>عدد المكائن المتوقفة</th>
+</tr>
+
+<tr>
+<td><input id="plastic_total_production" data-save></td>
+<td><input id="plastic_running_machines" data-save></td>
+<td><input id="plastic_stopped_machines" data-save></td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>ملاحظات مصنع اللدائن</th>
+</tr>
+
+<tr>
+<td>
+<textarea
+id="plastic_factory_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الجودة والسلامة -->
+
+<details>
+
+<summary>الجودة والسلامة</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>ملاحظات قسم الجودة</th>
+</tr>
+
+<tr>
+<td>
+
+<textarea
+id="oil_quality_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>ملاحظات قسم السلامة</th>
+</tr>
+
+<tr>
+<td>
+
+<textarea
+id="oil_safety_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الملاحظات -->
+
+<details>
+
+<summary>ملاحظات مصنع الزيت</summary>
+
+<div class="details-content">
+
+<textarea
+class="notes"
+id="oil_notes"
+data-save></textarea>
+
+</div>
+
+</details>
+
+</section>
+<!-- ===================================== -->
+<!-- مصنع الطحين -->
+<!-- ===================================== -->
+
+<section id="flour" class="section">
+
+<h2 style="color:#1f3c88;">
+🌾 مصنع الطحين
+</h2>
+
+<!-- استهلاك الخام -->
+
+<details>
+
+<summary>استهلاك المواد الخام</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+
+<th>الحنطة الأسترالية</th>
+<th>الحنطة العراقية</th>
+<th>الحنطة الروسية</th>
+
+</tr>
+
+<tr>
+
+<td>
+<input id="aus_wheat_use" data-save>
+</td>
+
+<td>
+<input id="iraq_wheat_use" data-save>
+</td>
+
+<td>
+<input id="rus_wheat_use" data-save>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- أرصدة الخام -->
+
+<details>
+
+<summary>أرصدة المواد الخام</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+
+<th>الموقع</th>
+<th>النوع</th>
+<th>الرصيد</th>
+
+</tr>
+
+<tr>
+
+<td>الشركة</td>
+<td>أسترالي</td>
+<td><input id="auseti" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>الشركة</td>
+<td>روسي</td>
+<td><input id="ruseti" data-save></td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الإنتاج -->
+<details>
+
+<summary>إنتاج المطحنة</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الخط</th>
+<th>F1 (طن)</th>
+<th>F3 (طن)</th>
+<th>W.Bran (طن)</th>
+<th>المجموع (طن)</th>
+</tr>
+
+<tr>
+<td>A</td>
+<td><input id="line1_f1" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line1_f3" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line1_bran" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line1_total" readonly></td>
+</tr>
+
+<tr>
+<td>B</td>
+<td><input id="line2_f1" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line2_f3" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line2_bran" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line2_total" readonly></td>
+</tr>
+
+<tr>
+<td>C</td>
+<td><input id="line3_f1" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line3_f3" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line3_bran" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line3_total" readonly></td>
+</tr>
+
+<tr>
+<td>D</td>
+<td><input id="line4_f1" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line4_f3" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line4_bran" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line4_total" readonly></td>
+</tr>
+
+<tr>
+<td>E</td>
+<td><input id="line5_f1" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line5_f3" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line5_bran" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line5_total" readonly></td>
+</tr>
+
+<tr>
+<td>F</td>
+<td><input id="line6_f1" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line6_f3" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line6_bran" data-save onkeyup="calcMillTotals()"></td>
+<td><input id="line6_total" readonly></td>
+</tr>
+
+<tr>
+<td><b>المجموع الكلي</b></td>
+<td></td>
+<td></td>
+<td></td>
+<td><input id="mill_total_prod" readonly></td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- كفاءة الاستخراج -->
+
+<details>
+
+<summary>كفاءة الاستخراج</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+
+<th>نسبة كفاءة الاستخراج %</th>
+
+</tr>
+
+<tr>
+
+<td>
+
+<input
+id="extraction_eff"
+data-save
+onkeyup="checkExtractionEfficiency(this)"
+onchange="checkExtractionEfficiency(this)">
+
+</td>
+
+</tr>
+
+</table>
+
+<p style="margin-top:10px;color:#666;">
+
+</p>
+
+</div>
+
+</details>
+
+<!-- أرصدة المنتج النهائي -->
+
+<details>
+
+<summary>أرصدة المنتج النهائي</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+
+<th>المنتج</th>
+<th>مخزون السايلوات</th>
+<th>المخزون المعبأ</th>
+
+</tr>
+
+<tr>
+
+<td>F1</td>
+
+<td>
+<input id="f1silostock" data-save>
+</td>
+
+<td>
+<input id="f1bagstock" data-save>
+</td>
+
+</tr>
+
+<tr>
+
+<td>النخالة</td>
+
+<td>
+<input id="bransilostock" data-save>
+</td>
+
+<td>
+<input id="branbagstock" data-save>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+
+<!-- توقفات الخطوط -->
+
+<details>
+
+<summary>توقفات الخطوط الإنتاجية</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+
+<th>الخط</th>
+<th>مدة التوقف</th>
+<th>سبب التوقف</th>
+
+</tr>
+
+<tr>
+
+<td>A</td>
+<td><input id="astoptime" data-save></td>
+<td><input id="astopcause" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>B</td>
+<td><input id="bstoptime" data-save></td>
+<td><input id="bstopcause" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>C</td>
+<td><input id="cstoptime" data-save></td>
+<td><input id="cstopcause" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>D</td>
+<td><input id="dstoptime" data-save></td>
+<td><input id="dstopcause" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>E</td>
+<td><input id="estoptime" data-save></td>
+<td><input id="estopcause" data-save></td>
+
+</tr>
+
+<tr>
+
+<td>F</td>
+<td><input id="fstoptime" data-save></td>
+<td><input id="fstopcause" data-save></td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الجودة والسلامة -->
+
+<details>
+
+<summary>الجودة والسلامة</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>ملاحظات قسم الجودة</th>
+</tr>
+
+<tr>
+<td>
+
+<textarea
+id="flour_quality_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>ملاحظات قسم السلامة</th>
+</tr>
+
+<tr>
+<td>
+
+<textarea
+id="flour_safety_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الملاحظات -->
+
+<details>
+
+<summary>الملاحظات العامة</summary>
+
+<div class="details-content">
+
+<textarea
+class="notes"
+id="flour_notes"
+data-save></textarea>
+
+</div>
+
+</details>
+
+</section>
+<!-- ===================================== -->
+<!-- مصنع الأعلاف والبريمكس -->
+<!-- ===================================== -->
+
+<section id="feed" class="section">
+
+<h2 style="color:#1f3c88;">
+🐄 مصنع الأعلاف والبريمكس
+</h2>
+
+<!-- أرصدة المواد الخام -->
+
+<details>
+
+<summary>أرصدة المواد الخام</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+
+<th>ذرة مغربلة</th>
+<th>ذرة غير مغربلة</th>
+<th>كسر ذرة</th>
+<th>كسبة صويا</th>
+<th>زيت صويا</th>
+
+</tr>
+
+<tr>
+
+<td><input id="corn_clean" data-save></td>
+
+<td><input id="corn_unclean" data-save></td>
+
+<td><input id="corn_break" data-save></td>
+
+<td><input id="soy_meal" data-save></td>
+
+<td><input id="soy_oil" data-save></td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الإنتاج -->
+
+<details>
+
+<summary>إنتاج خطوط الأعلاف</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الخط</th>
+<th>صباحي (طن)</th>
+<th>الإنتاجية/ساعة</th>
+<th>مسائي (طن)</th>
+<th>الإنتاجية/ساعة</th>
+<th>ليلي (طن)</th>
+<th>الإنتاجية/ساعة</th>
+<th>المجموع (طن)</th>
+</tr>
+
+<tr>
+
+<td>خط 1</td>
+
+<td>
+<input
+id="feed_l1_m"
+data-save
+onkeyup="calcFeedRate('feed_l1_m','feed_l1_m_rate')">
+</td>
+
+<td>
+<input
+id="feed_l1_m_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l1_e"
+data-save
+onkeyup="calcFeedRate('feed_l1_e','feed_l1_e_rate')">
+</td>
+
+<td>
+<input
+id="feed_l1_e_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l1_n"
+data-save
+onkeyup="calcFeedRate('feed_l1_n','feed_l1_n_rate')">
+</td>
+
+<td>
+<input
+id="feed_l1_n_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l1_total"
+readonly>
+</td>
+
+</tr>
+
+<tr>
+<td>خط 2</td>
+
+<td>
+<input
+id="feed_l2_m"
+data-save
+onkeyup="calcFeedRate('feed_l2_m','feed_l2_m_rate')">
+</td>
+
+<td>
+<input
+id="feed_l2_m_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l2_e"
+data-save
+onkeyup="calcFeedRate('feed_l2_e','feed_l2_e_rate')">
+</td>
+
+<td>
+<input
+id="feed_l2_e_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l2_n"
+data-save
+onkeyup="calcFeedRate('feed_l2_n','feed_l2_n_rate')">
+</td>
+
+<td>
+<input
+id="feed_l2_n_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l2_total"
+readonly>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>خط 3</td>
+
+<td>
+<input
+id="feed_l3_m"
+data-save
+onkeyup="calcFeedRate('feed_l3_m','feed_l3_m_rate')">
+</td>
+
+<td>
+<input
+id="feed_l3_m_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l3_e"
+data-save
+onkeyup="calcFeedRate('feed_l3_e','feed_l3_e_rate')">
+</td>
+
+<td>
+<input
+id="feed_l3_e_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l3_n"
+data-save
+onkeyup="calcFeedRate('feed_l3_n','feed_l3_n_rate')">
+</td>
+
+<td>
+<input
+id="feed_l3_n_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l3_total"
+readonly>
+</td>
+
+</tr>
+
+<tr>
+
+<td>خط 4</td>
+
+<td>
+<input
+id="feed_l4_m"
+data-save
+onkeyup="calcFeedRate('feed_l4_m','feed_l4_m_rate')">
+</td>
+
+<td>
+<input
+id="feed_l4_m_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l4_e"
+data-save
+onkeyup="calcFeedRate('feed_l4_e','feed_l4_e_rate')">
+</td>
+
+<td>
+<input
+id="feed_l4_e_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l4_n"
+data-save
+onkeyup="calcFeedRate('feed_l4_n','feed_l4_n_rate')">
+</td>
+
+<td>
+<input
+id="feed_l4_n_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l4_total"
+readonly>
+</td>
+
+</tr>
+
+<tr>
+
+<td>خط 5</td>
+
+<td>
+<input
+id="feed_l5_m"
+data-save
+onkeyup="calcFeedRate('feed_l5_m','feed_l5_m_rate')">
+</td>
+
+<td>
+<input
+id="feed_l5_m_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l5_e"
+data-save
+onkeyup="calcFeedRate('feed_l5_e','feed_l5_e_rate')">
+</td>
+
+<td>
+<input
+id="feed_l5_e_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l5_n"
+data-save
+onkeyup="calcFeedRate('feed_l5_n','feed_l5_n_rate')">
+</td>
+
+<td>
+<input
+id="feed_l5_n_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l5_total"
+readonly>
+</td>
+
+</tr>
+
+<tr>
+
+<td>خط 6</td>
+
+<td>
+<input
+id="feed_l6_m"
+data-save
+onkeyup="calcFeedRate('feed_l6_m','feed_l6_m_rate')">
+</td>
+
+<td>
+<input
+id="feed_l6_m_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l6_e"
+data-save
+onkeyup="calcFeedRate('feed_l6_e','feed_l6_e_rate')">
+</td>
+
+<td>
+<input
+id="feed_l6_e_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l6_n"
+data-save
+onkeyup="calcFeedRate('feed_l6_n','feed_l6_n_rate')">
+</td>
+
+<td>
+<input
+id="feed_l6_n_rate"
+readonly>
+</td>
+
+<td>
+<input
+id="feed_l6_total"
+readonly>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<details>
+
+<summary>إنتاج مصنع البريمكس</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>الصنف</th>
+<th>الإنتاج (طن)</th>
+</tr>
+
+<tr>
+<td>Premix </td>
+<td><input id="premix1_prod" data-save></td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<details>
+
+<summary>العلف المرتجع</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>البند</th>
+<th>الكمية (طن)</th>
+</tr>
+
+<tr>
+<td>العلف المرتجع</td>
+<td>
+<input
+id="returned_feed"
+data-save
+onkeyup="updateNetFeedProduction()">
+</td>
+</tr>
+
+<tr>
+<td><b>الإنتاج الكلي للمصنع</b></td>
+<td>
+<input
+id="feed_gross_total"
+readonly>
+</td>
+</tr>
+
+<tr>
+<td><b>الإنتاج الصافي اليومي</b></td>
+<td>
+<input
+id="feed_net_total"
+readonly>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- استهلاك المواد -->
+
+<details>
+
+<summary>استهلاك المواد الخام</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>المادة</th>
+<th>الكمية</th>
+</tr>
+
+<tr><td>العلف المرتجع</td><td><input id="rework" data-save></td></tr>
+
+<tr><td>المولاس</td><td><input id="molasses" data-save></td></tr>
+
+<tr><td>الذرة</td><td><input id="corn" data-save></td></tr>
+
+<tr><td>الفورمالين</td><td><input id="formaldyhade" data-save></td></tr>
+
+<tr><td>كسبة الصويا</td><td><input id="soya" data-save></td></tr>
+
+<tr><td>الحنطة</td><td><input id="wheat" data-save></td></tr>
+
+<tr><td>حجر الكلس الخشن</td><td><input id="coarselime" data-save></td></tr>
+
+<tr><td>حجر الكلس الناعم</td><td><input id="finelime" data-save></td></tr>
+
+<tr><td>زيت الصويا</td><td><input id="soyaoil" data-save></td></tr>
+
+<tr><td>الزيت المخلوط</td><td><input id="mixedoil" data-save></td></tr>
+
+<tr><td>زيت الرندر</td><td><input id="poultryoil" data-save></td></tr>
+
+<tr><td>الطحين</td><td><input id="flour" data-save></td></tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الجودة والسلامة -->
+
+<details>
+
+<summary>الجودة والسلامة</summary>
+
+<div class="details-content">
+
+<table>
+
+<tr>
+<th>ملاحظات قسم الجودة</th>
+</tr>
+
+<tr>
+<td>
+
+<textarea
+id="feedm_quality_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>ملاحظات قسم السلامة</th>
+</tr>
+
+<tr>
+<td>
+
+<textarea
+id="feedm_safety_notes"
+data-save
+rows="4"
+style="width:100%;">
+</textarea>
+
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</details>
+
+<!-- الملاحظات -->
+
+<details>
+
+<summary>الملاحظات العامة</summary>
+
+<div class="details-content">
+
+<textarea
+class="notes"
+id="feed_notes"
+data-save></textarea>
+
+</div>
+
+</details>
+
+</section>
+
+<!-- الأرشيف -->
+
+<section id="archive" class="section">
+
+<h2>📚 الأرشيف</h2>
+
+<div style="padding:20px;text-align:center;">
+
+<label>اختر تاريخ التقرير</label>
+
+<br><br>
+
+<input
+type="date"
+id="archiveDate">
+
+<br><br>
+
+<button
+onclick="loadArchiveReport()">
+
+فتح التقرير
+
+</button>
+
+</div>
+
+</section>
+
+<script>
+
+/* ===========================
+   التاريخ واليوم
+=========================== */
+
+const daysArabic = [
+
+"الأحد",
+"الإثنين",
+"الثلاثاء",
+"الأربعاء",
+"الخميس",
+"الجمعة",
+"السبت"
+
+];
+
+window.addEventListener("load",()=>{
+
+const now = new Date();
+
+document.getElementById("today").innerText =
+daysArabic[now.getDay()];
+
+document.getElementById("todayDate").innerText =
+now.toLocaleDateString("ar-IQ");
+const dateKey =
+now.getFullYear() + "-" +
+String(now.getMonth()+1).padStart(2,"0") + "-" +
+String(now.getDate()).padStart(2,"0");
+
+document.getElementById(
+"reportDateKey"
+).value = dateKey;
+
+loadData();
+
+});
+
+/* ===========================
+   حفظ تلقائي
+=========================== */
+
+function saveData(){
+
+document.querySelectorAll("[data-save]")
+.forEach((el,index)=>{
+
+localStorage.setItem(
+"factory_"+index,
+el.value
+);
+
+});
+
+}
+
+function loadData(){
+
+document.querySelectorAll("[data-save]")
+.forEach((el,index)=>{
+
+let val = localStorage.getItem(
+"factory_"+index
+);
+
+if(val !== null){
+
+el.value = val;
+
+}
+
+});
+
+}
+
+document.addEventListener("input",saveData);
+
+/* ===========================
+   مسح البيانات
+=========================== */
+
+function clearAllData(){
+
+if(confirm("هل تريد حذف جميع البيانات؟")){
+
+localStorage.clear();
+
+location.reload();
+
+}
+
+}
+
+function checkRawSugarColor(el){
+
+let v = parseFloat(el.value);
+
+el.classList.remove("warning");
+
+if(isNaN(v))
+return;
+
+if(v > 1000){
+
+el.classList.add("warning");
+
+}
+
+}
+
+/* ===========================
+   لون السكر
+=========================== */
+
+function checkSugarColor(el){
+
+let v = parseFloat(el.value);
+
+el.classList.remove(
+"warning",
+"orange"
+);
+
+if(isNaN(v))
+return;
+
+if(v < 29){
+
+el.classList.add("warning");
+
+}
+
+else if(v > 32){
+
+el.classList.add("orange");
+
+}
+
+}
+
+/* ===========================
+   مبيعات السكر
+=========================== */
+
+function checkSales(el){
+
+let v = parseFloat(el.value);
+
+el.classList.remove(
+"success",
+"orange",
+"danger"
+);
+
+if(isNaN(v))
+return;
+
+if(v === 0){
+
+el.classList.add("danger");
+
+}
+
+else if(v < 2500){
+
+el.classList.add("orange");
+
+}
+
+else if(v > 5000){
+
+el.classList.add("success");
+
+}
+
+}
+
+/* ===========================
+   كفاءة الطحين
+=========================== */
+
+function checkExtractionEfficiency(input){
+
+    const value = parseFloat(input.value);
+
+    input.style.backgroundColor = "";
+
+    if(isNaN(value)) return;
+
+    if(value < 72){
+
+        input.style.backgroundColor = "#fff59d";
+
+    }else if(value <= 73.9){
+
+        input.style.backgroundColor = "";
+
+    }else{
+
+        input.style.backgroundColor = "#c8e6c9";
+
+    }
+
+}
+
+/* ===========================
+   البريمكس
+=========================== */
+
+function checkPremix(el){
+
+let v = parseFloat(el.value);
+
+el.classList.remove(
+"success",
+"warning"
+);
+
+if(isNaN(v))
+return;
+
+if(v < 40){
+
+el.classList.add("warning");
+
+}
+
+else if(v > 80){
+
+el.classList.add("success");
+
+}
+
+}
+
+/* ===========================
+   أصناف الزيت الديناميكية
+=========================== */
+
+function addOilProduct(){
+
+let table =
+document.getElementById(
+"oilProductsTable"
+);
+
+let row =
+table.insertRow(-1);
+
+let cell1 =
+row.insertCell(0);
+
+let cell2 =
+row.insertCell(1);
+
+cell1.innerHTML =
+'<input placeholder="اسم الصنف" data-save>';
+
+cell2.innerHTML =
+'<input placeholder="الرصيد" data-save>';
+
+saveData();
+
+}
+
+/* ===========================
+   حسابات الصفحة الرئيسية
+=========================== */
+
+function updateDashboard(){
+
+let sugar =
+document.getElementById(
+"real_prod"
+);
+
+if(sugar){
+
+document.getElementById(
+"home_sugar_prod"
+).value =
+sugar.value;
+}
+
+let refinery1 =
+parseFloat(
+document.getElementById(
+"refinery1"
+)?.value || 0
+);
+
+let refinery2 =
+parseFloat(
+document.getElementById(
+"refinery2"
+)?.value || 0
+);
+
+let oilTotal =
+refinery1 + refinery2;
+
+document.getElementById(
+"home_oil_prod"
+).value =
+oilTotal;
+
+let b1 =
+parseFloat(
+document.getElementById(
+"b1_prod"
+)?.value || 0
+);
+
+let f1 =
+parseFloat(
+document.getElementById(
+"f1_prod"
+)?.value || 0
+);
+
+let bran =
+parseFloat(
+document.getElementById(
+"bran_prod"
+)?.value || 0
+);
+
+document.getElementById(
+"home_flour_prod"
+).value =
+b1 + f1 + bran;
+
+let feed1 =
+parseFloat(
+document.getElementById(
+"feed1_prod"
+)?.value || 0
+);
+
+let feed2 =
+parseFloat(
+document.getElementById(
+"feed2_prod"
+)?.value || 0
+);
+
+document.getElementById(
+"home_feed_prod"
+).value =
+feed1 + feed2;
+
+}
+
+function updatePowerStation(){
+
+let power =
+parseFloat(
+document.getElementById(
+"union_power_use"
+)?.value || 0
+);
+
+let boiler =
+parseFloat(
+document.getElementById(
+"union_boiler_use"
+)?.value || 0
+);
+
+document.getElementById(
+"union_total_use"
+).value =
+power + boiler;
+
+}
+
+setInterval(()=>{
+
+updateDashboard();
+updatePowerStation();
+
+},1000);
+
+function copyReportLink(){
+
+const reportDate =
+document.getElementById(
+"reportDateKey"
+).value;
+
+const reportLink =
+"https://splendorous-sopapillas-75528b.netlify.app/?date="
++ reportDate;
+
+navigator.clipboard.writeText(
+reportLink
+);
+
+alert(
+"تم نسخ رابط التقرير"
+);
+
+}
+
+function exportReportHTML(){
+
+  // إنشاء نسخة من الصفحة الحالية
+  const clonedDoc =
+  document.documentElement.cloneNode(true);
+
+  // تثبيت قيم جميع الحقول داخل HTML
+  clonedDoc
+  .querySelectorAll("input, textarea")
+  .forEach(el => {
+
+    if(el.tagName === "TEXTAREA"){
+
+      el.innerHTML = el.value;
+
+    }else{
+
+      el.setAttribute(
+        "value",
+        el.value
+      );
+
+    }
+
+  });
+
+  // إنشاء الملف
+  const htmlContent =
+  "<!DOCTYPE html>\n" +
+  clonedDoc.outerHTML;
+
+  const blob =
+  new Blob(
+    [htmlContent],
+    {type:"text/html"}
+  );
+
+  const a =
+  document.createElement("a");
+
+  const reportDate =
+  document.getElementById(
+    "reportDateKey"
+  )?.value || "Report";
+
+  a.href =
+  URL.createObjectURL(blob);
+
+  a.download =
+  "Factory_Report_" +
+  reportDate +
+  ".html";
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(a.href);
+
+}
+
+async function approveReport(){
+
+alert("وصلنا للدالة");
+
+let allData = {};
+
+document
+.querySelectorAll("[data-save]")
+.forEach(el=>{
+
+let key =
+el.id ||
+"field_" +
+Math.random()
+.toString(36)
+.substring(2,9);
+
+allData[key] =
+el.value;
+
+});
+
+allData.reportDate =
+document.getElementById(
+"reportDateKey"
+).value;
+
+try{
+
+await fetch(
+"https://script.google.com/macros/s/AKfycbwWooB13k6TRFDAkXyyFkLWZZCClvjH0gpyRkNXGNxJBrUyxmyOHi20YuytQzGgaSwOnA/exec",
+{
+method:"POST",
+body:JSON.stringify({
+mode:"approve",
+data:allData
+})
+}
+);
+
+alert(
+"تم اعتماد التقرير بنجاح"
+);
+
+}
+catch(e){
+
+alert(
+"فشل اعتماد التقرير"
+);
+
+}
+
+}
+
+function calcFeedRate(prodId, rateId){
+
+    let prod =
+    parseFloat(
+        document.getElementById(prodId).value
+    ) || 0;
+
+    document.getElementById(rateId).value =
+    (prod / 8).toFixed(2);
+
+    updateFeedTotals();
+
+}
+
+function updateFeedTotals(){
+
+    for(let i=1;i<=6;i++){
+
+        let m =
+        parseFloat(document.getElementById(`feed_l${i}_m`).value) || 0;
+
+        let e =
+        parseFloat(document.getElementById(`feed_l${i}_e`).value) || 0;
+
+        let n =
+        parseFloat(document.getElementById(`feed_l${i}_n`).value) || 0;
+
+        let total = m + e + n;
+
+document.getElementById(
+    `feed_l${i}_total`
+).value = total.toFixed(2);
+
+}
+
+updateNetFeedProduction();
+
+}
+
+function updateNetFeedProduction(){
+
+    let gross = 0;
+
+    for(let i=1;i<=6;i++){
+
+        gross +=
+        parseFloat(
+            document.getElementById(`feed_l${i}_total`)?.value
+        ) || 0;
+
+    }
+
+    let returned =
+    parseFloat(
+        document.getElementById('returned_feed')?.value
+    ) || 0;
+
+    document.getElementById('feed_gross_total').value =
+    gross.toFixed(2);
+
+    document.getElementById('feed_net_total').value =
+    (gross - returned).toFixed(2);
+
+}
+
+function updateFeedSalesTotal(){
+
+    let corn =
+    parseFloat(document.getElementById("feed_sales_corn")?.value) || 0;
+
+    let soybean =
+    parseFloat(document.getElementById("feed_sales_soybean")?.value) || 0;
+
+    let feed =
+    parseFloat(document.getElementById("feed_sales_feed")?.value) || 0;
+
+    let premix =
+    parseFloat(document.getElementById("feed_sales_premix")?.value) || 0;
+
+    let total =
+    corn + soybean + feed + premix;
+
+    document.getElementById("feed_sales_total").value =
+    total.toFixed(2);
+
+}
+
+function updateFlourSalesTotal(){
+
+    let f1 =
+    parseFloat(document.getElementById("flour_sales_f1")?.value) || 0;
+
+    let f3 =
+    parseFloat(document.getElementById("flour_sales_f3")?.value) || 0;
+
+    let bran =
+    parseFloat(document.getElementById("flour_sales_bran")?.value) || 0;
+
+    let total =
+    f1 + f3 + bran;
+
+    document.getElementById("flour_sales_total").value =
+    total.toFixed(2);
+
+}
+
+function updateSugarSalesTotal(){
+
+    let v1 =
+    parseFloat(document.getElementById("sugar_sales_1kg")?.value) || 0;
+
+    let v10 =
+    parseFloat(document.getElementById("sugar_sales_10kg")?.value) || 0;
+
+    let v25 =
+    parseFloat(document.getElementById("sugar_sales_25kg")?.value) || 0;
+
+    let v50 =
+    parseFloat(document.getElementById("sugar_sales_50kg")?.value) || 0;
+
+    let v1000 =
+    parseFloat(document.getElementById("sugar_sales_1ton")?.value) || 0;
+
+    document.getElementById("sugar_sales_total").value =
+    (v1 + v10 + v25 + v50 + v1000).toFixed(2);
+
+}
+
+function updateSunSalesTotal(){
+
+    let total = 0;
+
+    total += parseFloat(document.getElementById("sun_sales_750")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_900")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_1l")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_18l")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_5l")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_6l")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_10l")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_12l")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_14l")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_18l_big")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_20l")?.value) || 0;
+    total += parseFloat(document.getElementById("sun_sales_20kg")?.value) || 0;
+
+    document.getElementById("sun_sales_total").value =
+    total.toFixed(2);
+
+}
+
+function updateOleinSalesTotal(){
+
+    let total = 0;
+
+    total += parseFloat(document.getElementById("olein_sales_750")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_900")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_1l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_18l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_5l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_6l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_10l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_12l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_14l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_18l_big")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_20l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_20kg")?.value) || 0;
+
+    document.getElementById("olein_sales_total").value =
+    total.toFixed(2);
+
+}
+
+function updateShorteningSalesTotal(){
+
+    let total =
+    parseFloat(document.getElementById("shortening_sales_20kg")?.value) || 0;
+
+    document.getElementById("shortening_sales_total").value =
+    total.toFixed(2);
+
+}
+
+async function loadArchiveReport(){
+
+    const date =
+    document.getElementById(
+    "archiveDate"
+    ).value;
+
+    if(!date){
+
+        alert("اختر تاريخ التقرير");
+
+        return;
+
+    }
+
+    try{
+
+const response =
+await fetch(
+"https://script.google.com/macros/s/AKfycbwWooB13k6TRFDAkXyyFkLWZZCClvjH0gpyRkNXGNxJBrUyxmyOHi20YuytQzGgaSwOnA/exec"
++
+"?date=" + date
+);
+
+const data =
+await response.json();
+
+console.log(data);
+
+alert(JSON.stringify(data));
+
+Object.keys(data).forEach(key=>{
+
+    const element =
+    document.getElementById(key);
+
+    if(element){
+
+        element.value =
+        data[key];
+
+    }
+
+});
+        alert("تم تحميل التقرير");
+
+    }
+
+    catch(err){
+
+        alert(
+        "فشل تحميل التقرير"
+        );
+
+        console.error(err);
+
+    }
+
+}
+
+function calcMillTotals(){
+
+let grandTotal = 0;
+
+for(let i = 1; i <= 6; i++){
+
+let f1 =
+parseFloat(document.getElementById(`line${i}_f1`)?.value || 0);
+
+let f3 =
+parseFloat(document.getElementById(`line${i}_f3`)?.value || 0);
+
+let bran =
+parseFloat(document.getElementById(`line${i}_bran`)?.value || 0);
+
+let lineTotal =
+f1 + f3 + bran;
+
+document.getElementById(`line${i}_total`).value =
+lineTotal.toFixed(2);
+
+grandTotal += lineTotal;
+
+}
+
+document.getElementById("mill_total_prod").value =
+grandTotal.toFixed(2);
+
+}
+
+function updateShorteningSalesTotal(){
+
+let total = 0;
+
+total += parseFloat(document.getElementById("GEA_sales_5l")?.value || 0);
+total += parseFloat(document.getElementById("GEA_sales_6l")?.value || 0);
+total += parseFloat(document.getElementById("GEA_sales_10l")?.value || 0);
+total += parseFloat(document.getElementById("GEA_sales_12l")?.value || 0);
+total += parseFloat(document.getElementById("GEA_sales_14l")?.value || 0);
+
+document.getElementById("GEA_sales_total").value =
+total.toFixed(2);
+
+}
+
+function updateGEASalesTotal(){
+
+let total = 0;
+
+total += parseFloat(document.getElementById("GEA_sales_5l")?.value || 0);
+total += parseFloat(document.getElementById("GEA_sales_6l")?.value || 0);
+total += parseFloat(document.getElementById("GEA_sales_10l")?.value || 0);
+total += parseFloat(document.getElementById("GEA_sales_12l")?.value || 0);
+total += parseFloat(document.getElementById("GEA_sales_14l")?.value || 0);
+
+document.getElementById("GEA_sales_total").value =
+total.toFixed(2);
+
+}
+
+</script>
+
+</body>
+
+</html>
+
