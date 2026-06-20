@@ -413,6 +413,10 @@ margin-right:0;
 ✅ اعتماد التقرير
 </button>
 
+<button onclick="testInsert()">
+اختبار الإدخال
+</button>
+
 <button onclick="copyReportLink()">
 🔗 نسخ رابط التقرير
 </button>
@@ -4158,6 +4162,35 @@ total += parseFloat(document.getElementById("GEA_sales_14l")?.value || 0);
 
 document.getElementById("GEA_sales_total").value =
 total.toFixed(2);
+
+}
+
+async function testInsert(){
+
+const { data, error } =
+await supabaseClient
+.from("daily_reports")
+.insert([
+{
+report_date: "2026-06-20",
+factory: "test",
+field_name: "test_field",
+field_value: "123",
+updated_by: "admin"
+}
+]);
+
+if(error){
+
+console.log(error);
+alert("فشل الإدخال");
+
+}else{
+
+console.log(data);
+alert("تم الإدخال بنجاح");
+
+}
 
 }
 
