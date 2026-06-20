@@ -4180,14 +4180,15 @@ updated_by: "admin"
 }
 ]);
 
+console.log("DATA:", data);
+console.log("ERROR:", error);
+
 if(error){
 
-console.log(error);
-alert("فشل الإدخال");
+alert(error.message);
 
 }else{
 
-console.log(data);
 alert("تم الإدخال بنجاح");
 
 }
