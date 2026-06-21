@@ -4275,9 +4275,18 @@ updatePowerStation();
 
 async function applyPermissions(){
 
-const userEmail =
-localStorage.getItem("userEmail");
+const {
+  data: { user }
+} = await supabaseClient.auth.getUser();
 
+if(!user){
+
+window.location = "login.html";
+return;
+
+}
+
+const userEmail = user.email;
 if(!userEmail){
 
 window.location = "login.html";
