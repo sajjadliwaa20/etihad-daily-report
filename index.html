@@ -3692,6 +3692,8 @@ feed1 + feed2;
 
 }
 
+}
+
 function updatePowerStation(){
 
 let power =
@@ -4141,21 +4143,6 @@ grandTotal += lineTotal;
 
 document.getElementById("mill_total_prod").value =
 grandTotal.toFixed(2);
-
-}
-
-function updateGEASalesTotal(){
-
-let total = 0;
-
-total += parseFloat(document.getElementById("GEA_sales_5l")?.value || 0);
-total += parseFloat(document.getElementById("GEA_sales_6l")?.value || 0);
-total += parseFloat(document.getElementById("GEA_sales_10l")?.value || 0);
-total += parseFloat(document.getElementById("GEA_sales_12l")?.value || 0);
-total += parseFloat(document.getElementById("GEA_sales_14l")?.value || 0);
-
-document.getElementById("GEA_sales_total").value =
-total.toFixed(2);
 
 }
 
