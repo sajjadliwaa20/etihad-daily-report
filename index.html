@@ -391,6 +391,16 @@ margin-right:0;
 
 </div>
 
+<div id="currentUserBox"
+style="
+margin-top:10px;
+font-size:14px;
+font-weight:bold;
+color:#1f3c88;
+">
+جاري تحميل المستخدم...
+</div>
+
 </div>
 
 <div>
@@ -441,6 +451,8 @@ id="reportDateKey">
 <span id="todayDate"></span>
 
 </div>
+
+
 
 <!-- المبيعات والتسويق -->
 
@@ -4264,12 +4276,15 @@ alert(
 
 }
 
-applyPermissions();
-
 setInterval(()=>{
 
+try{
 updateDashboard();
+}catch(e){}
+
+try{
 updatePowerStation();
+}catch(e){}
 
 },1000);
 
@@ -4381,6 +4396,62 @@ document.getElementById("home").style.display = "block";
 document.getElementById("feed").style.display = "block";
 
 }
+
+}
+
+async function showCurrentUser(){
+
+const {
+data: { user }
+} =
+await supabaseClient.auth.getUser();
+
+if(!user) return;
+
+const { data } =
+await supabaseClient
+.from("users")
+.select("*")
+.eq("email", user.email)
+.single();
+
+if(!data) return;
+
+document.getElementById(
+"currentUserBox"
+).innerHTML =
+"👤 " +
+data.name +
+" | " +
+data.role;
+
+}
+
+async function showCurrentUser(){
+
+const {
+data: { user }
+} =
+await supabaseClient.auth.getUser();
+
+if(!user) return;
+
+const { data } =
+await supabaseClient
+.from("users")
+.select("*")
+.eq("email", user.email)
+.single();
+
+if(!data) return;
+
+document.getElementById(
+"currentUserBox"
+).innerHTML =
+"👤 " +
+data.name +
+" | " +
+data.role;
 
 }
 
