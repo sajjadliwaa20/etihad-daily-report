@@ -4306,6 +4306,14 @@ section.style.display = "none";
 
 });
 
+const buttons =
+document.querySelectorAll("button");
+
+buttons.forEach(btn=>{
+
+btn.style.display = "inline-block";
+
+});
 /* صلاحيات الإدارة */
 
 if(role === "admin"){
@@ -4325,6 +4333,8 @@ return;
 
 if(role === "sugar"){
 
+document.getElementById("home").style.display = "block";
+
 document.getElementById("sugar").style.display = "block";
 
 }
@@ -4332,6 +4342,8 @@ document.getElementById("sugar").style.display = "block";
 /* مدير الزيت */
 
 if(role === "oil"){
+
+document.getElementById("home").style.display = "block";
 
 document.getElementById("oil").style.display = "block";
 
@@ -4341,6 +4353,8 @@ document.getElementById("oil").style.display = "block";
 
 if(role === "flour"){
 
+document.getElementById("home").style.display = "block";
+
 document.getElementById("flour").style.display = "block";
 
 }
@@ -4348,6 +4362,8 @@ document.getElementById("flour").style.display = "block";
 /* مدير الأعلاف */
 
 if(role === "feed"){
+
+document.getElementById("home").style.display = "block";
 
 document.getElementById("feed").style.display = "block";
 
