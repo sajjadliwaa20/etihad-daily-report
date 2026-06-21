@@ -4180,6 +4180,11 @@ try{
 
 /* حذف التقرير السابق لنفس التاريخ */
 
+const {
+data: { user }
+} =
+await supabaseClient.auth.getUser();
+
 const { error: deleteError } =
 await supabaseClient
 .from("daily_reports")
@@ -4216,9 +4221,7 @@ field_name: el.id,
 field_value: el.value || "",
 
 updated_by:
-localStorage.getItem(
-"currentUser"
-)
+user.email
 
 });
 
