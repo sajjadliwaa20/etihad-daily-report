@@ -1730,6 +1730,18 @@ data-save></textarea>
 
 </details>
 
+<div style="margin-top:15px;">
+
+<button
+id="approveSugarBtn"
+onclick="approveSection('sugar')">
+
+✅ اعتماد قسم السكر
+
+</button>
+
+</div>
+
 </section>
 <!-- ===================================== -->
 <!-- مصنع الزيت -->
@@ -2297,6 +2309,18 @@ data-save></textarea>
 
 </details>
 
+<div style="margin-top:15px;">
+
+<button
+id="approveOilBtn"
+onclick="approveSection('oil')">
+
+✅ اعتماد قسم الزيت
+
+</button>
+
+</div>
+
 </section>
 <!-- ===================================== -->
 <!-- مصنع الطحين -->
@@ -2704,6 +2728,14 @@ data-save></textarea>
 </div>
 
 </details>
+
+<button
+id="approveFlourBtn"
+onclick="approveSection('flour')">
+
+✅ اعتماد قسم الطحين
+
+</button>
 
 </section>
 <!-- ===================================== -->
@@ -3278,6 +3310,14 @@ data-save></textarea>
 
 </details>
 
+<button
+id="approveFeedBtn"
+onclick="approveSection('feed')">
+
+✅ اعتماد قسم الأعلاف
+
+</button>
+
 </section>
 
 <!-- الأرشيف -->
@@ -3286,7 +3326,11 @@ data-save></textarea>
 
 <h2>📚 الأرشيف</h2>
 
-<div style="padding:20px;text-align:center;">
+<details>
+
+<summary>📂 تحميل تقرير سابق</summary>
+
+<div class="details-content">
 
 <label>اختر تاريخ التقرير</label>
 
@@ -3301,32 +3345,15 @@ id="archiveDate">
 <button
 onclick="loadArchiveReport()">
 
-<details>
-
-<summary>📂 الأرشيف</summary>
-
-<div class="details-content">
-
-<input
-type="date"
-id="archiveDate">
-
-<button
-onclick="loadArchiveReport()">
-
-تحميل التقرير
+📥 تحميل التقرير
 
 </button>
 
 </div>
 
 </details>
-</button>
-
-</div>
 
 </section>
-
 <script>
 
 const SUPABASE_URL =
@@ -4452,6 +4479,53 @@ document.getElementById(
 data.name +
 " | " +
 data.role;
+
+}
+
+async function approveSection(section){
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+const reportDate =
+document.getElementById(
+"reportDateKey"
+).value;
+
+if(!reportDate){
+
+alert("لم يتم تحديد تاريخ التقرير");
+
+return;
+
+}
+
+const { error } =
+await supabaseClient
+.from("section_approvals")
+.insert([{
+
+report_date: reportDate,
+section_name: section,
+approved_by: user.email
+
+}]);
+
+if(error){
+
+console.log(error);
+
+alert("فشل الاعتماد");
+
+return;
+
+}
+
+alert(
+"تم اعتماد القسم بنجاح"
+);
 
 }
 
