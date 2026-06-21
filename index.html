@@ -3691,6 +3691,8 @@ homeFeed.value =
 feed1 + feed2;
 
 }
+}
+
 function updatePowerStation(){
 
 let power =
@@ -3699,6 +3701,7 @@ document.getElementById(
 "union_power_use"
 )?.value || 0
 );
+}
 
 let boiler =
 parseFloat(
@@ -3713,13 +3716,6 @@ document.getElementById(
 power + boiler;
 
 }
-
-setInterval(()=>{
-
-updateDashboard();
-updatePowerStation();
-
-},1000);
 
 function copyReportLink(){
 
@@ -4274,6 +4270,13 @@ alert(
 }
 
 }
+
+setInterval(()=>{
+
+updateDashboard();
+updatePowerStation();
+
+},1000);
 
 </script>
 
