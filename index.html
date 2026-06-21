@@ -4185,6 +4185,7 @@ data: { user }
 } =
 await supabaseClient.auth.getUser();
 
+alert(user.email);
 const { error: deleteError } =
 await supabaseClient
 .from("daily_reports")
