@@ -3630,11 +3630,17 @@ document.getElementById(
 let oilTotal =
 refinery1 + refinery2;
 
+const homeOil =
 document.getElementById(
 "home_oil_prod"
-).value =
+);
+
+if(homeOil){
+
+homeOil.value =
 oilTotal;
 
+}
 let b1 =
 parseFloat(
 document.getElementById(
@@ -3660,7 +3666,6 @@ document.getElementById(
 "home_flour_prod"
 ).value =
 b1 + f1 + bran;
-
 let feed1 =
 parseFloat(
 document.getElementById(
@@ -3675,13 +3680,17 @@ document.getElementById(
 )?.value || 0
 );
 
+const homeFeed =
 document.getElementById(
 "home_feed_prod"
-).value =
+);
+
+if(homeFeed){
+
+homeFeed.value =
 feed1 + feed2;
 
 }
-
 function updatePowerStation(){
 
 let power =
