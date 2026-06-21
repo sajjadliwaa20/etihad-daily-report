@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>تسجيل الدخول</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+padding-top:100px;
+background:#f4f6f9;
+}
+
+.box{
+width:350px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+input{
+width:90%;
+padding:10px;
+margin:10px;
+}
+
+button{
+padding:10px 20px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>تسجيل الدخول</h2>
+
+<input
+type="email"
+id="email"
+placeholder="البريد الإلكتروني">
+
+<input
+type="password"
+id="password"
+placeholder="كلمة المرور">
+
+<button onclick="login()">
+
+دخول
+
+</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+
+const supabaseUrl =
+"https://aptamsjgburgubfwamep.supabase.co";
+
+const supabaseKey =
+"sb_publishable_q0VgF-S8RkmWdRUvA9pQMQ_nDrLa28F";
+
+const supabaseClient =
+supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+async function login(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+const { data , error } =
+await supabaseClient.auth.signInWithPassword({
+
+email,
+password
+
+});
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+localStorage.setItem(
+"userEmail",
+email
+);
+
+window.location =
+"index.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
