@@ -4256,12 +4256,100 @@ alert(
 
 }
 
+applyPermissions();
+
 setInterval(()=>{
 
 updateDashboard();
 updatePowerStation();
 
 },1000);
+
+async function applyPermissions(){
+
+const userEmail =
+localStorage.getItem("userEmail");
+
+if(!userEmail){
+
+window.location = "login.html";
+return;
+
+}
+
+const { data, error } =
+await supabaseClient
+.from("users")
+.select("*")
+.eq("email", userEmail)
+.single();
+
+if(error || !data){
+
+window.location = "login.html";
+return;
+
+}
+
+const role = data.role;
+
+/* اخفاء جميع الأقسام أولاً */
+
+document.querySelectorAll(".section")
+.forEach(section => {
+
+section.style.display = "none";
+
+});
+
+/* صلاحيات الإدارة */
+
+if(role === "admin"){
+
+document.querySelectorAll(".section")
+.forEach(section => {
+
+section.style.display = "block";
+
+});
+
+return;
+
+}
+
+/* مدير السكر */
+
+if(role === "sugar"){
+
+document.getElementById("sugar").style.display = "block";
+
+}
+
+/* مدير الزيت */
+
+if(role === "oil"){
+
+document.getElementById("oil").style.display = "block";
+
+}
+
+/* مدير الطحين */
+
+if(role === "flour"){
+
+document.getElementById("flour").style.display = "block";
+
+}
+
+/* مدير الأعلاف */
+
+if(role === "feed"){
+
+document.getElementById("feed").style.display = "block";
+
+}
+
+}
 
 </script>
 
