@@ -4214,7 +4214,11 @@ report_date: reportDate,
 factory: "ALL",
 field_name: el.id,
 field_value: el.value || "",
-updated_by: "admin"
+
+updated_by:
+localStorage.getItem(
+"currentUser"
+)
 
 });
 
