@@ -415,7 +415,7 @@ color:#1f3c88;
 💾 حفظ مسودة
 </button>
 
-<button onclick="Report()">
+<button onclick="approveReport()">
 ✅ اعتماد التقرير
 </button>
 
@@ -4445,7 +4445,6 @@ document.getElementById("sales_feed").style.display = "none";
 }
 
 /* مدير الأعلاف */
-
 if(role === "feed"){
 
 document.getElementById("home").style.display = "block";
@@ -4457,6 +4456,10 @@ document.getElementById("sales_feed").style.display = "block";
 document.getElementById("sales_sugar").style.display = "none";
 document.getElementById("sales_oil").style.display = "none";
 document.getElementById("sales_flour").style.display = "none";
+
+}
+
+alert("applyPermissions finished");
 
 }
 
