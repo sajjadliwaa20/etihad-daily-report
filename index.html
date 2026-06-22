@@ -466,7 +466,7 @@ id="reportDateKey">
 
 <!-- مبيعات السكر -->
 
-<details open>
+<details open id="sales_sugar">
 
 <summary>مبيعات السكر</summary>
 
@@ -524,7 +524,7 @@ id="reportDateKey">
 
 <!-- مبيعات الزيت -->
 
-<details open>
+<details open id="sales_oil">
 
 <summary>مبيعات الزيت</summary>
 
@@ -710,7 +710,7 @@ readonly>
 
 <!-- مبيعات الطحين -->
 
-<details open>
+<details open id="sales_flour">
 
 <summary>مبيعات الطحين</summary>
 
@@ -772,7 +772,7 @@ readonly>
 
 <!-- مبيعات الأعلاف -->
 
-<details open>
+<details open id="sales_feed">
 
 <summary>مبيعات الأعلاف</summary>
 
@@ -4105,7 +4105,7 @@ if(error){
 console.log(error);
 
 alert(
-"فشل تحميل التقرير"
+"ERROR: " + error.message
 );
 
 return;
@@ -4398,6 +4398,10 @@ document.getElementById("home").style.display = "block";
 
 document.getElementById("sugar").style.display = "block";
 
+document.getElementById("sales_sugar")?.style.display = "block";
+document.getElementById("sales_oil")?.style.display = "none";
+document.getElementById("sales_flour")?.style.display = "none";
+document.getElementById("sales_feed")?.style.display = "none";
 }
 
 /* مدير الزيت */
@@ -4407,6 +4411,11 @@ if(role === "oil"){
 document.getElementById("home").style.display = "block";
 
 document.getElementById("oil").style.display = "block";
+document.getElementById("sales_oil").style.display = "block";
+
+document.getElementById("sales_sugar").style.display = "none";
+document.getElementById("sales_flour").style.display = "none";
+document.getElementById("sales_feed").style.display = "none";
 
 }
 
@@ -4417,6 +4426,11 @@ if(role === "flour"){
 document.getElementById("home").style.display = "block";
 
 document.getElementById("flour").style.display = "block";
+document.getElementById("sales_flour").style.display = "block";
+
+document.getElementById("sales_sugar").style.display = "none";
+document.getElementById("sales_oil").style.display = "none";
+document.getElementById("sales_feed").style.display = "none";
 
 }
 
@@ -4427,6 +4441,12 @@ if(role === "feed"){
 document.getElementById("home").style.display = "block";
 
 document.getElementById("feed").style.display = "block";
+
+document.getElementById("sales_feed").style.display = "block";
+
+document.getElementById("sales_sugar").style.display = "none";
+document.getElementById("sales_oil").style.display = "none";
+document.getElementById("sales_flour").style.display = "none";
 
 }
 
