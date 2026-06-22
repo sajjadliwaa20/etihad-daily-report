@@ -415,7 +415,7 @@ color:#1f3c88;
 💾 حفظ مسودة
 </button>
 
-<button onclick="approveReport()">
+<button onclick="Report()">
 ✅ اعتماد التقرير
 </button>
 
@@ -1733,7 +1733,7 @@ data-save></textarea>
 <div style="margin-top:15px;">
 
 <button
-id="approveSugarBtn"
+id="SugarBtn"
 onclick="approveSection('sugar')">
 
 ✅ اعتماد قسم السكر
@@ -4317,6 +4317,8 @@ updatePowerStation();
 
 async function applyPermissions(){
 
+console.log("applyPermissions started");
+
 const {
   data: { user }
 } = await supabaseClient.auth.getUser();
@@ -4351,7 +4353,9 @@ return;
 }
 
 const role = data.role;
-
+console.log("EMAIL =", userEmail);
+console.log("ROLE =", role);
+console.log(data);
 alert("ROLE = " + role);
 
 /* اخفاء جميع الأقسام أولاً */
@@ -4484,7 +4488,7 @@ data.role;
 
 }
 
-async function approveSection(section){
+async function Section(section){
 
 const {
 data:{user}
@@ -4511,7 +4515,7 @@ await supabaseClient
 
 report_date: reportDate,
 section_name: section,
-approved_by: user.email
+d_by: user.email
 
 }]);
 
@@ -4530,6 +4534,15 @@ alert(
 );
 
 }
+
+applyPermissions();
+
+setInterval(()=>{
+
+updateDashboard();
+updatePowerStation();
+
+},1000);
 
 </script>
 
