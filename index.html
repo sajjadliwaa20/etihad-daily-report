@@ -4398,8 +4398,13 @@ document.getElementById("home").style.display = "block";
 
 document.getElementById("sugar").style.display = "block";
 
-document.getElementById("sales_sugar")?.style.display = "block";
-document.getElementById("sales_oil")?.style.display = "none";
+let salesSugar = document.getElementById("sales_sugar");
+
+if(salesSugar){
+
+salesSugar.style.display = "block";
+
+}document.getElementById("sales_oil")?.style.display = "none";
 document.getElementById("sales_flour")?.style.display = "none";
 document.getElementById("sales_feed")?.style.display = "none";
 }
@@ -4411,8 +4416,13 @@ if(role === "oil"){
 document.getElementById("home").style.display = "block";
 
 document.getElementById("oil").style.display = "block";
-document.getElementById("sales_oil").style.display = "block";
+let salesOil = document.getElementById("sales_oil");
 
+if(salesOil){
+
+salesOil.style.display = "block";
+
+}
 document.getElementById("sales_sugar").style.display = "none";
 document.getElementById("sales_flour").style.display = "none";
 document.getElementById("sales_feed").style.display = "none";
@@ -4480,35 +4490,7 @@ data.role;
 
 }
 
-async function showCurrentUser(){
-
-const {
-data: { user }
-} =
-await supabaseClient.auth.getUser();
-
-if(!user) return;
-
-const { data } =
-await supabaseClient
-.from("users")
-.select("*")
-.eq("email", user.email)
-.single();
-
-if(!data) return;
-
-document.getElementById(
-"currentUserBox"
-).innerHTML =
-"👤 " +
-data.name +
-" | " +
-data.role;
-
-}
-
-async function Section(section){
+async function approveSection(section){
 
 const {
 data:{user}
@@ -4535,8 +4517,7 @@ await supabaseClient
 
 report_date: reportDate,
 section_name: section,
-d_by: user.email
-
+approved_by: user.email
 }]);
 
 if(error){
