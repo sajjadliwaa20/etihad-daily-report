@@ -361,19 +361,19 @@ margin-right:0;
 <b>سجاد لواء</b>
 </p>
 
-<a href="#home">الرئيسية</a>
+<a id="menu_home" href="#home">الرئيسية</a>
 
-<a href="#powerstation">⚡ محطة الطاقة</a>
+<a id="menu_power" href="#powerstation">⚡ محطة الطاقة</a>
 
-<a href="#sugar">مصنع السكر</a>
+<a id="menu_sugar" href="#sugar">مصنع السكر</a>
 
-<a href="#oil">مصنع الزيت</a>
+<a id="menu_oil" href="#oil">مصنع الزيت</a>
 
-<a href="#flour">مصنع الطحين</a>
+<a id="menu_flour" href="#flour">مصنع الطحين</a>
 
-<a href="#feed">مصنع الأعلاف</a>
+<a id="menu_feed" href="#feed">مصنع الأعلاف</a>
 
-<a href="#archive">📚 الأرشيف</a>
+<a id="menu_archive" href="#archive">📚 الأرشيف</a>
 
 </div>
 
@@ -382,6 +382,8 @@ margin-right:0;
 <section id="home" class="section">
 
 <div id="remindersBox"></div>
+
+<div id="approvalsDashboard"></div>
 
 <div class="header">
 
@@ -413,8 +415,8 @@ color:#1f3c88;
 
 </button>
 
-<button onclick="saveData()">
-💾 حفظ مسودة
+<button onclick="goToLogin()">
+🔑 تبديل المستخدم
 </button>
 
 <button onclick="approveReport()">
@@ -3408,44 +3410,6 @@ loadData();
 
 });
 
-/* ===========================
-   حفظ تلقائي
-=========================== */
-
-function saveData(){
-
-document.querySelectorAll("[data-save]")
-.forEach((el,index)=>{
-
-localStorage.setItem(
-"factory_"+index,
-el.value
-);
-
-});
-
-}
-
-function loadData(){
-
-document.querySelectorAll("[data-save]")
-.forEach((el,index)=>{
-
-let val = localStorage.getItem(
-"factory_"+index
-);
-
-if(val !== null){
-
-el.value = val;
-
-}
-
-});
-
-}
-
-document.addEventListener("input",saveData);
 
 /* ===========================
    مسح البيانات
@@ -4322,6 +4286,13 @@ section.style.display = "none";
 
 });
 
+document.getElementById("menu_power").style.display="none";
+document.getElementById("menu_sugar").style.display="none";
+document.getElementById("menu_oil").style.display="none";
+document.getElementById("menu_flour").style.display="none";
+document.getElementById("menu_feed").style.display="none";
+document.getElementById("menu_archive").style.display="none";
+
 const buttons =
 document.querySelectorAll("button");
 
@@ -4333,6 +4304,13 @@ btn.style.display = "inline-block";
 /* صلاحيات الإدارة */
 
 if(role === "admin"){
+
+document.getElementById("menu_power").style.display="block";
+document.getElementById("menu_sugar").style.display="block";
+document.getElementById("menu_oil").style.display="block";
+document.getElementById("menu_flour").style.display="block";
+document.getElementById("menu_feed").style.display="block";
+document.getElementById("menu_archive").style.display="block";
 
 document.querySelectorAll(".section")
 .forEach(section => {
@@ -4350,6 +4328,8 @@ return;
 /* مدير السكر */
 
 if(role === "sugar"){
+
+document.getElementById("menu_sugar").style.display="block";
 
 document.getElementById("home").style.display = "block";
 document.getElementById("sugar").style.display = "block";
@@ -4380,6 +4360,8 @@ salesFeed.style.display = "none";
 
 if(role === "oil"){
 
+document.getElementById("menu_oil").style.display="block";
+
 document.getElementById("home").style.display = "block";
 document.getElementById("oil").style.display = "block";
 
@@ -4409,6 +4391,8 @@ salesFeed.style.display = "none";
 
 if(role === "flour"){
 
+document.getElementById("menu_flour").style.display="block";
+
 document.getElementById("home").style.display = "block";
 document.getElementById("flour").style.display = "block";
 
@@ -4437,6 +4421,8 @@ salesFeed.style.display = "none";
 /* مدير الأعلاف */
 
 if(role === "feed"){
+
+document.getElementById("menu_feed").style.display="block";
 
 document.getElementById("home").style.display = "block";
 document.getElementById("feed").style.display = "block";
@@ -4535,6 +4521,38 @@ return;
 
 }
 
+let sectionElement =
+document.getElementById(section);
+
+if(sectionElement){
+
+let historyRows = [];
+
+sectionElement
+.querySelectorAll("[data-save]")
+.forEach(el=>{
+
+historyRows.push({
+
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+factory: section
+
+});
+
+});
+
+if(historyRows.length > 0){
+
+await supabaseClient
+.from("field_history")
+.insert(historyRows);
+
+}
+
+}
+
 alert(
 "تم اعتماد القسم بنجاح"
 );
@@ -4542,6 +4560,28 @@ alert(
 }
 
 async function loadReminders(){
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+if(!user) return;
+
+const { data:userInfo } =
+await supabaseClient
+.from("users")
+.select("*")
+.eq("email", user.email)
+.single();
+
+if(!userInfo) return;
+
+if(userInfo.role !== "admin"){
+
+return;
+
+}
 
 const box =
 document.getElementById(
@@ -4623,9 +4663,149 @@ encodeURIComponent(
 
 }
 
+async function loadApprovalsDashboard(){
+
+const reportDate =
+document.getElementById(
+"reportDateKey"
+)?.value;
+
+if(!reportDate) return;
+
+const box =
+document.getElementById(
+"approvalsDashboard"
+);
+
+if(!box) return;
+
+box.innerHTML = `
+<div style="
+background:white;
+padding:15px;
+border-radius:8px;
+margin-bottom:15px;
+border:1px solid #ddd;
+">
+
+<h3>
+📋 حالة الاعتمادات اليوم
+</h3>
+
+<div id="approvalStatusList">
+جاري التحميل...
+</div>
+
+</div>
+`;
+
+const factories = [
+
+{
+role:"sugar",
+name:"السكر"
+},
+
+{
+role:"oil",
+name:"الزيت"
+},
+
+{
+role:"flour",
+name:"الطحين"
+},
+
+{
+role:"feed",
+name:"الأعلاف"
+}
+
+];
+
+let html = "";
+
+let approvedCount = 0;
+
+for(const factory of factories){
+
+const { data } =
+await supabaseClient
+.from("section_approvals")
+.select("*")
+.eq(
+"report_date",
+reportDate
+)
+.eq(
+"section_name",
+factory.role
+);
+
+if(data && data.length > 0){
+
+approvedCount++;
+
+html += `
+<div style="
+color:green;
+font-weight:bold;
+margin:5px;
+">
+
+🟢 ${factory.name}
+معتمد
+
+</div>
+`;
+
+}else{
+
+html += `
+<div style="
+color:red;
+font-weight:bold;
+margin:5px;
+">
+
+🔴 ${factory.name}
+غير معتمد
+
+</div>
+`;
+
+}
+
+}
+
+html += `
+<hr>
+
+<b>
+
+المعتمد:
+
+${approvedCount}
+
+من
+
+4
+
+</b>
+`;
+
+document.getElementById(
+"approvalStatusList"
+).innerHTML =
+html;
+
+}
+
 applyPermissions();
 
 loadReminders();
+
+loadApprovalsDashboard();
 
 setInterval(()=>{
 
@@ -4633,6 +4813,15 @@ updateDashboard();
 updatePowerStation();
 
 },1000);
+
+async function goToLogin(){
+
+await supabaseClient.auth.signOut();
+
+window.location =
+"login.html";
+
+}
 
 </script>
 
