@@ -381,6 +381,8 @@ margin-right:0;
 
 <section id="home" class="section">
 
+<div id="remindersBox"></div>
+
 <div class="header">
 
 <div class="title-box">
@@ -4539,7 +4541,91 @@ alert(
 
 }
 
+async function loadReminders(){
+
+const box =
+document.getElementById(
+"remindersBox"
+);
+
+if(!box) return;
+
+box.innerHTML = "";
+
+const factories = [
+
+{
+role:"sugar",
+name:"السكر"
+},
+
+{
+role:"oil",
+name:"الزيت"
+},
+
+{
+role:"flour",
+name:"الطحين"
+},
+
+{
+role:"feed",
+name:"الأعلاف"
+}
+
+];
+
+for(const factory of factories){
+
+const { data:userData } =
+await supabaseClient
+.from("users")
+.select("*")
+.eq(
+"role",
+factory.role
+)
+.single();
+
+if(!userData) continue;
+
+box.innerHTML += `
+<div style="
+background:#ffe5e5;
+border:1px solid red;
+padding:10px;
+margin:5px;
+border-radius:6px;
+">
+
+🔴 اختبار واتساب ${factory.name}
+
+<br><br>
+
+<button onclick="
+window.open(
+'https://wa.me/${userData.phone}?text=' +
+encodeURIComponent(
+'اختبار نظام التذكير لمصنع ${factory.name}'
+)
+)
+">
+
+🔔 إرسال واتساب
+
+</button>
+
+</div>
+`;
+
+}
+
+}
+
 applyPermissions();
+
+loadReminders();
 
 setInterval(()=>{
 
