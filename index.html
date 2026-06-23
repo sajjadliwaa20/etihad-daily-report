@@ -3701,10 +3701,18 @@ document.getElementById(
 )?.value || 0
 );
 
+let homeFlour =
 document.getElementById(
 "home_flour_prod"
-).value =
+);
+
+if(homeFlour){
+
+homeFlour.value =
 b1 + f1 + bran;
+
+}
+
 let feed1 =
 parseFloat(
 document.getElementById(
@@ -3719,7 +3727,7 @@ document.getElementById(
 )?.value || 0
 );
 
-const homeFeed =
+let homeFeed =
 document.getElementById(
 "home_feed_prod"
 );
@@ -3837,61 +3845,6 @@ function exportReportHTML(){
   document.body.removeChild(a);
 
   URL.revokeObjectURL(a.href);
-
-}
-
-async function approveReport(){
-
-alert("وصلنا للدالة");
-
-let allData = {};
-
-document
-.querySelectorAll("[data-save]")
-.forEach(el=>{
-
-let key =
-el.id ||
-"field_" +
-Math.random()
-.toString(36)
-.substring(2,9);
-
-allData[key] =
-el.value;
-
-});
-
-allData.reportDate =
-document.getElementById(
-"reportDateKey"
-).value;
-
-try{
-
-await fetch(
-"https://script.google.com/macros/s/AKfycbwWooB13k6TRFDAkXyyFkLWZZCClvjH0gpyRkNXGNxJBrUyxmyOHi20YuytQzGgaSwOnA/exec",
-{
-method:"POST",
-body:JSON.stringify({
-mode:"approve",
-data:allData
-})
-}
-);
-
-alert(
-"تم اعتماد التقرير بنجاح"
-);
-
-}
-catch(e){
-
-alert(
-"فشل اعتماد التقرير"
-);
-
-}
 
 }
 
@@ -4386,6 +4339,8 @@ section.style.display = "block";
 
 });
 
+alert("applyPermissions finished");
+
 return;
 
 }
@@ -4395,18 +4350,28 @@ return;
 if(role === "sugar"){
 
 document.getElementById("home").style.display = "block";
-
 document.getElementById("sugar").style.display = "block";
 
 let salesSugar = document.getElementById("sales_sugar");
-
 if(salesSugar){
-
 salesSugar.style.display = "block";
+}
 
-}document.getElementById("sales_oil")?.style.display = "none";
-document.getElementById("sales_flour")?.style.display = "none";
-document.getElementById("sales_feed")?.style.display = "none";
+let salesOil = document.getElementById("sales_oil");
+if(salesOil){
+salesOil.style.display = "none";
+}
+
+let salesFlour = document.getElementById("sales_flour");
+if(salesFlour){
+salesFlour.style.display = "none";
+}
+
+let salesFeed = document.getElementById("sales_feed");
+if(salesFeed){
+salesFeed.style.display = "none";
+}
+
 }
 
 /* مدير الزيت */
@@ -4414,18 +4379,27 @@ document.getElementById("sales_feed")?.style.display = "none";
 if(role === "oil"){
 
 document.getElementById("home").style.display = "block";
-
 document.getElementById("oil").style.display = "block";
+
 let salesOil = document.getElementById("sales_oil");
-
 if(salesOil){
-
 salesOil.style.display = "block";
-
 }
-document.getElementById("sales_sugar").style.display = "none";
-document.getElementById("sales_flour").style.display = "none";
-document.getElementById("sales_feed").style.display = "none";
+
+let salesSugar = document.getElementById("sales_sugar");
+if(salesSugar){
+salesSugar.style.display = "none";
+}
+
+let salesFlour = document.getElementById("sales_flour");
+if(salesFlour){
+salesFlour.style.display = "none";
+}
+
+let salesFeed = document.getElementById("sales_feed");
+if(salesFeed){
+salesFeed.style.display = "none";
+}
 
 }
 
@@ -4434,34 +4408,60 @@ document.getElementById("sales_feed").style.display = "none";
 if(role === "flour"){
 
 document.getElementById("home").style.display = "block";
-
 document.getElementById("flour").style.display = "block";
-document.getElementById("sales_flour").style.display = "block";
 
-document.getElementById("sales_sugar").style.display = "none";
-document.getElementById("sales_oil").style.display = "none";
-document.getElementById("sales_feed").style.display = "none";
+let salesFlour = document.getElementById("sales_flour");
+if(salesFlour){
+salesFlour.style.display = "block";
+}
+
+let salesSugar = document.getElementById("sales_sugar");
+if(salesSugar){
+salesSugar.style.display = "none";
+}
+
+let salesOil = document.getElementById("sales_oil");
+if(salesOil){
+salesOil.style.display = "none";
+}
+
+let salesFeed = document.getElementById("sales_feed");
+if(salesFeed){
+salesFeed.style.display = "none";
+}
 
 }
 
 /* مدير الأعلاف */
+
 if(role === "feed"){
 
 document.getElementById("home").style.display = "block";
-
 document.getElementById("feed").style.display = "block";
 
-document.getElementById("sales_feed").style.display = "block";
+let salesFeed = document.getElementById("sales_feed");
+if(salesFeed){
+salesFeed.style.display = "block";
+}
 
-document.getElementById("sales_sugar").style.display = "none";
-document.getElementById("sales_oil").style.display = "none";
-document.getElementById("sales_flour").style.display = "none";
+let salesSugar = document.getElementById("sales_sugar");
+if(salesSugar){
+salesSugar.style.display = "none";
+}
+
+let salesOil = document.getElementById("sales_oil");
+if(salesOil){
+salesOil.style.display = "none";
+}
+
+let salesFlour = document.getElementById("sales_flour");
+if(salesFlour){
+salesFlour.style.display = "none";
+}
 
 }
 
 alert("applyPermissions finished");
-
-}
 
 }
 
