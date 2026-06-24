@@ -5013,8 +5013,14 @@ loadLateFieldsDashboard();
 }
 )
 
-.subscribe();
+.subscribe((status)=>{
 
+console.log(
+"REALTIME STATUS:",
+status
+);
+
+});
 
 setInterval(()=>{
 
