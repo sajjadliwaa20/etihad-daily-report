@@ -4556,7 +4556,8 @@ historyRows.push({
 field_name: el.id,
 field_value: el.value || "",
 updated_by: user.email,
-factory: section
+factory: section,
+updated_at: new Date().toISOString()
 
 });
 
