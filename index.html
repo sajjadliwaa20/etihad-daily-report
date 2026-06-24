@@ -385,6 +385,8 @@ margin-right:0;
 
 <div id="approvalsDashboard"></div>
 
+<div id="lateFieldsDashboard"></div>
+
 <div class="header">
 
 <div class="title-box">
@@ -4818,11 +4820,190 @@ html;
 
 }
 
+async function loadLateFieldsDashboard(){
+
+const box =
+document.getElementById(
+"lateFieldsDashboard"
+);
+
+if(!box) return;
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+if(!user) return;
+
+const { data:userInfo } =
+await supabaseClient
+.from("users")
+.select("*")
+.eq("email",user.email)
+.single();
+
+if(!userInfo) return;
+
+if(userInfo.role !== "admin"){
+
+box.innerHTML = "";
+
+return;
+
+}
+
+const { data , error } =
+await supabaseClient
+.from("field_history")
+.select("*")
+.order("updated_at",{ascending:false});
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+let latestFields = {};
+
+data.forEach(row=>{
+
+if(!latestFields[row.field_name]){
+
+latestFields[row.field_name] = row;
+
+}
+
+});
+
+let html = `
+<div style="
+background:white;
+padding:15px;
+border-radius:8px;
+margin-top:15px;
+border:1px solid #ddd;
+">
+
+<h3>
+🔴 الحقول المتأخرة
+</h3>
+`;
+
+let count = 0;
+
+Object.values(latestFields)
+.forEach(field=>{
+
+const lastUpdate =
+new Date(field.updated_at);
+
+const now =
+new Date();
+
+const hours =
+(now-lastUpdate)/(1000*60*60);
+
+if(hours > 24){
+
+count++;
+
+html += `
+<div style="
+background:#ffe5e5;
+padding:8px;
+margin:5px;
+border-radius:6px;
+border:1px solid red;
+">
+
+<b>${field.factory}</b>
+
+<br>
+
+${field.field_name}
+
+<br>
+
+آخر تحديث منذ
+
+${Math.floor(hours)}
+
+ساعة
+
+</div>
+`;
+
+}
+
+});
+
+if(count===0){
+
+html += `
+<div style="
+color:green;
+font-weight:bold;
+">
+
+✅ لا توجد حقول متأخرة
+
+</div>
+`;
+
+}
+
+html += "</div>";
+
+box.innerHTML = html;
+
+}
+
 applyPermissions();
 
 loadReminders();
 
 loadApprovalsDashboard();
+
+loadLateFieldsDashboard();
+
+supabaseClient
+.channel('live-updates')
+
+.on(
+'postgres_changes',
+{
+event: '*',
+schema: 'public',
+table: 'section_approvals'
+},
+payload => {
+
+loadApprovalsDashboard();
+loadReminders();
+
+}
+)
+
+.on(
+'postgres_changes',
+{
+event: '*',
+schema: 'public',
+table: 'field_history'
+},
+payload => {
+
+loadLateFieldsDashboard();
+
+}
+)
+
+.subscribe();
+
 
 setInterval(()=>{
 
