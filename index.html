@@ -4963,6 +4963,16 @@ box.innerHTML = html;
 
 }
 
+setInterval(()=>{
+
+loadApprovalsDashboard();
+
+loadLateFieldsDashboard();
+
+loadReminders();
+
+},10000);
+
 applyPermissions();
 
 loadReminders();
