@@ -1055,6 +1055,12 @@ readonly>
 
 </table>
 
+<button onclick="approveSection('power')">
+
+اعتماد محطة الطاقة
+
+</button>
+
 </div>
 
 </details>
@@ -4301,6 +4307,17 @@ buttons.forEach(btn=>{
 btn.style.display = "inline-block";
 
 });
+
+if(role === "power"){
+
+document.getElementById("home").style.display = "block";
+
+document.getElementById("powerstation").style.display = "block";
+
+document.getElementById("menu_power").style.display = "block";
+
+}
+
 /* صلاحيات الإدارة */
 
 if(role === "admin"){
