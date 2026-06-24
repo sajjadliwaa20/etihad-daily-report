@@ -268,6 +268,10 @@ border:1px solid #ddd;
 }
 
 input{
+font-size:16px;
+}
+
+input{
 
 width:100%;
 padding:8px;
@@ -3414,8 +3418,6 @@ document.getElementById(
 "reportDateKey"
 ).value = dateKey;
 
-loadData();
-
 });
 
 
@@ -4240,7 +4242,7 @@ try{
 updatePowerStation();
 }catch(e){}
 
-},1000);
+},60000);
 
 async function applyPermissions(){
 
@@ -4987,6 +4989,54 @@ supabaseClient
 .on(
 'postgres_changes',
 {
+event:'*',
+schema:'public',
+table:'field_history'
+},
+payload=>{
+
+console.log(
+"FIELD HISTORY UPDATE",
+payload
+);
+
+loadLateFieldsDashboard();
+
+}
+)
+
+.on(
+'postgres_changes',
+{
+event:'*',
+schema:'public',
+table:'section_approvals'
+},
+payload=>{
+
+console.log(
+"SECTION UPDATE",
+payload
+);
+
+loadApprovalsDashboard();
+
+loadReminders();
+
+}
+)
+
+.subscribe((status)=>{
+
+console.log(
+"REALTIME STATUS:",
+status
+);
+
+});
+.on(
+'postgres_changes',
+{
 event: '*',
 schema: 'public',
 table: 'section_approvals'
@@ -5037,6 +5087,25 @@ window.location =
 "login.html";
 
 }
+
+document
+.querySelectorAll("input[data-save]")
+.forEach(el=>{
+
+if(
+!el.id.includes("note")
+){
+
+el.type = "number";
+
+el.setAttribute(
+"inputmode",
+"numeric"
+);
+
+}
+
+});
 
 </script>
 
