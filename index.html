@@ -5100,20 +5100,23 @@ event:'*',
 schema:'public',
 table:'section_approvals'
 },
-payload=>{
+async payload=>{
 
 console.log(
 "SECTION UPDATE",
 payload
 );
 
-loadApprovalsDashboard();
+await loadApprovalsDashboard();
 
-loadReminders();
+await loadReminders();
+
+await loadFactorySection(
+payload.new.section_name
+);
 
 }
 )
-
 .subscribe((status)=>{
 
 console.log(
