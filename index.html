@@ -4559,14 +4559,6 @@ updated_by: user.email
 
 });
 
-if(historyRows.length > 0){
-
-await supabaseClient
-.from("field_history")
-.insert(historyRows);
-
-}
-
 if(reportRows.length > 0){
 
 await supabaseClient
@@ -4578,6 +4570,14 @@ await supabaseClient
 await supabaseClient
 .from("daily_reports")
 .insert(reportRows);
+
+}
+
+if(historyRows.length > 0){
+
+await supabaseClient
+.from("field_history")
+.insert(historyRows);
 
 }
 
