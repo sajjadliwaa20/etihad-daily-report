@@ -4305,6 +4305,11 @@ document.getElementById("menu_oil").style.display="none";
 document.getElementById("menu_flour").style.display="none";
 document.getElementById("menu_feed").style.display="none";
 document.getElementById("menu_archive").style.display="none";
+document.getElementById("approvalsDashboard").style.display="none";
+
+document.getElementById("lateFieldsDashboard").style.display="none";
+
+document.getElementById("remindersBox").style.display="none";
 
 const buttons =
 document.querySelectorAll("button");
@@ -4328,6 +4333,12 @@ window.location.hash="powerstation";
 /* صلاحيات الإدارة */
 
 if(role === "admin"){
+
+document.getElementById("approvalsDashboard").style.display="block";
+
+document.getElementById("lateFieldsDashboard").style.display="block";
+
+document.getElementById("remindersBox").style.display="block";
 
 document.getElementById("menu_power").style.display="block";
 document.getElementById("menu_sugar").style.display="block";
@@ -5097,11 +5108,23 @@ row.field_value;
 
 }
 
-async function initializeApp(){
-
 await applyPermissions();
 
 await showCurrentUser();
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+const { data:userInfo } =
+await supabaseClient
+.from("users")
+.select("role")
+.eq("email",user.email)
+.single();
+
+if(userInfo.role==="admin"){
 
 await loadReminders();
 
@@ -5109,10 +5132,11 @@ await loadApprovalsDashboard();
 
 await loadLateFieldsDashboard();
 
+}
+
 updateDashboard();
 
 updatePowerStation();
-
 }
 
 const fieldLabels = {
@@ -5391,7 +5415,22 @@ updatePowerStation();
 
 },1000);
 
-setInterval(()=>{
+setInterval(async ()=>{
+
+const {
+data:{user}
+} = await supabaseClient.auth.getUser();
+
+if(!user) return;
+
+const { data:userInfo } =
+await supabaseClient
+.from("users")
+.select("role")
+.eq("email",user.email)
+.single();
+
+if(userInfo?.role==="admin"){
 
 loadApprovalsDashboard();
 
@@ -5399,8 +5438,9 @@ loadLateFieldsDashboard();
 
 loadReminders();
 
-},10000);
+}
 
+},10000);
 supabaseClient
 .channel('live-updates')
 
@@ -5437,9 +5477,28 @@ console.log(
 payload
 );
 
+const {
+data:{user}
+} = await supabaseClient.auth.getUser();
+
+if(user){
+
+const { data:userInfo } =
+await supabaseClient
+.from("users")
+.select("role")
+.eq("email",user.email)
+.single();
+
+if(userInfo?.role==="admin"){
+
 await loadApprovalsDashboard();
 
 await loadReminders();
+
+}
+
+}
 
 setTimeout(async ()=>{
 
@@ -5450,8 +5509,7 @@ payload.new.section_name
 },1000);
 
 }
-)
-.subscribe((status)=>{
+).subscribe((status)=>{
 
 console.log(
 "REALTIME STATUS:",
