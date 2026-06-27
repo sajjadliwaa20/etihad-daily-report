@@ -5001,7 +5001,7 @@ border-radius:6px;
 border-left:5px solid red;
 ">
 
-🔴 ${field.name}
+${fieldLabels[field.name] || field.name}
 
 <br>
 
@@ -5099,6 +5099,20 @@ updateDashboard();
 updatePowerStation();
 
 }
+
+const fieldLabels = {
+
+aus_wheat_use: "استهلاك الحنطة الأسترالية",
+
+iraq_wheat_use: "استهلاك الحنطة العراقية",
+
+rus_wheat_use: "استهلاك الحنطة الروسية",
+
+auseti: "رصيد الحنطة الأسترالية",
+
+ruseti: "رصيد الحنطة الروسية"
+
+};
 
 initializeApp();
 
