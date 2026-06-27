@@ -4926,50 +4926,98 @@ border:1px solid #ddd;
 `;
 
 let count = 0;
+let groupedFields = {};
 
-Object.values(latestFields)
-.forEach(field=>{
+Object.values(latestFields).forEach(field=>{
 
-const lastUpdate =
-new Date(field.updated_at);
-
-const now =
-new Date();
+const lastUpdate = new Date(field.updated_at);
 
 const hours =
-(now-lastUpdate)/(1000*60*60);
+(new Date()-lastUpdate)/(1000*60*60);
 
-if(hours > 24){
+if(hours<=24) return;
 
 count++;
 
-html += `
+if(!groupedFields[field.factory]){
+
+groupedFields[field.factory]=[];
+
+}
+
+groupedFields[field.factory].push({
+
+name:field.field_name,
+
+hours:Math.floor(hours)
+
+});
+
+});
+
+const factoryNames={
+
+sugar:"🍬 مصنع السكر",
+
+oil:"🛢 مصنع الزيت",
+
+flour:"🌾 مصنع الطحين",
+
+feed:"🌽 مصنع الأعلاف",
+
+power:"⚡ محطة الطاقة"
+
+};
+
+Object.keys(groupedFields).forEach(factory=>{
+
+html+=`
+
+<details style="margin-bottom:10px;">
+
+<summary style="
+font-weight:bold;
+cursor:pointer;
+font-size:16px;
+">
+
+${factoryNames[factory]||factory}
+
+(${groupedFields[factory].length})
+
+</summary>
+
+`;
+
+groupedFields[factory].forEach(field=>{
+
+html+=`
+
 <div style="
 background:#ffe5e5;
 padding:8px;
-margin:5px;
+margin:6px;
 border-radius:6px;
-border:1px solid red;
+border-left:5px solid red;
 ">
 
-<b>${field.factory}</b>
-
-<br>
-
-${field.field_name}
+🔴 ${field.name}
 
 <br>
 
 آخر تحديث منذ
 
-${Math.floor(hours)}
+${field.hours}
 
 ساعة
 
 </div>
+
 `;
 
-}
+});
+
+html+="</details>";
 
 });
 
@@ -5119,6 +5167,7 @@ payload.new.section_name
 );
 
 },1000);
+
 }
 )
 .subscribe((status)=>{
