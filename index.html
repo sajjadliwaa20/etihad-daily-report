@@ -4525,26 +4525,6 @@ return;
 
 }
 
-const { error } =
-await supabaseClient
-.from("section_approvals")
-.insert([{
-
-report_date: reportDate,
-section_name: section,
-approved_by: user.email
-}]);
-
-if(error){
-
-console.log(error);
-
-alert("فشل الاعتماد");
-
-return;
-
-}
-
 let sectionElement =
 document.getElementById(section);
 
@@ -4598,6 +4578,27 @@ await supabaseClient
 await supabaseClient
 .from("daily_reports")
 .insert(reportRows);
+
+}
+
+const { error } =
+await supabaseClient
+.from("section_approvals")
+.insert([{
+
+report_date: reportDate,
+section_name: section,
+approved_by: user.email
+
+}]);
+
+if(error){
+
+console.log(error);
+
+alert("فشل الاعتماد");
+
+return;
 
 }
 
@@ -5111,10 +5112,13 @@ await loadApprovalsDashboard();
 
 await loadReminders();
 
+setTimeout(async ()=>{
+
 await loadFactorySection(
 payload.new.section_name
 );
 
+},1000);
 }
 )
 .subscribe((status)=>{
