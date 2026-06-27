@@ -4158,7 +4158,8 @@ const { error: deleteError } =
 await supabaseClient
 .from("daily_reports")
 .delete()
-.eq("report_date", reportDate);
+.eq("report_date",reportDate)
+.eq("factory",section);
 
 if(deleteError){
 
@@ -4185,12 +4186,14 @@ if(!el.id) return;
 rows.push({
 
 report_date: reportDate,
-factory: "ALL",
+
+factory: section,
+
 field_name: el.id,
+
 field_value: el.value || "",
 
-updated_by:
-user.email
+updated_by: user.email
 
 });
 
@@ -4548,6 +4551,7 @@ document.getElementById(section);
 if(sectionElement){
 
 let historyRows = [];
+let reportRows = [];
 
 sectionElement
 .querySelectorAll("[data-save]")
@@ -4563,6 +4567,16 @@ updated_at: new Date().toISOString()
 
 });
 
+reportRows.push({
+
+report_date: reportDate,
+factory: section,
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email
+
+});
+
 });
 
 if(historyRows.length > 0){
@@ -4570,6 +4584,20 @@ if(historyRows.length > 0){
 await supabaseClient
 .from("field_history")
 .insert(historyRows);
+
+}
+
+if(reportRows.length > 0){
+
+await supabaseClient
+.from("daily_reports")
+.delete()
+.eq("report_date", reportDate)
+.eq("factory", section);
+
+await supabaseClient
+.from("daily_reports")
+.insert(reportRows);
 
 }
 
@@ -4965,6 +4993,34 @@ box.innerHTML = html;
 
 }
 
+async function initializeApp(){
+
+await applyPermissions();
+
+await showCurrentUser();
+
+await loadReminders();
+
+await loadApprovalsDashboard();
+
+await loadLateFieldsDashboard();
+
+updateDashboard();
+
+updatePowerStation();
+
+}
+
+initializeApp();
+
+setInterval(()=>{
+
+updateDashboard();
+
+updatePowerStation();
+
+},1000);
+
 setInterval(()=>{
 
 loadApprovalsDashboard();
@@ -4974,14 +5030,6 @@ loadLateFieldsDashboard();
 loadReminders();
 
 },10000);
-
-applyPermissions();
-
-loadReminders();
-
-loadApprovalsDashboard();
-
-loadLateFieldsDashboard();
 
 supabaseClient
 .channel('live-updates')
@@ -5022,43 +5070,6 @@ payload
 loadApprovalsDashboard();
 
 loadReminders();
-
-}
-)
-
-.subscribe((status)=>{
-
-console.log(
-"REALTIME STATUS:",
-status
-);
-
-});
-.on(
-'postgres_changes',
-{
-event: '*',
-schema: 'public',
-table: 'section_approvals'
-},
-payload => {
-
-loadApprovalsDashboard();
-loadReminders();
-
-}
-)
-
-.on(
-'postgres_changes',
-{
-event: '*',
-schema: 'public',
-table: 'field_history'
-},
-payload => {
-
-loadLateFieldsDashboard();
 
 }
 )
