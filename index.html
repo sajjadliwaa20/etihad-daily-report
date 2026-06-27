@@ -4317,11 +4317,11 @@ btn.style.display = "inline-block";
 
 if(role === "power"){
 
-document.getElementById("home").style.display = "block";
-
 document.getElementById("powerstation").style.display = "block";
 
 document.getElementById("menu_power").style.display = "block";
+
+window.location.hash="powerstation";
 
 }
 
@@ -4683,33 +4683,48 @@ if(!userData) continue;
 
 box.innerHTML += `
 <div style="
-background:#ffe5e5;
-border:1px solid red;
-padding:10px;
-margin:5px;
-border-radius:6px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#f8f9ff;
+border:1px solid #d9e3ff;
+padding:8px 12px;
+margin:6px 0;
+border-radius:8px;
 ">
 
-🔴 اختبار واتساب ${factory.name}
+<span style="
+font-weight:bold;
+font-size:14px;
+">
+${factory.name}
+</span>
 
-<br><br>
-
-<button onclick="
+<button
+style="
+padding:5px 12px;
+font-size:13px;
+border:none;
+border-radius:6px;
+background:#1f3c88;
+color:white;
+cursor:pointer;
+"
+onclick="
 window.open(
 'https://wa.me/${userData.phone}?text=' +
 encodeURIComponent(
-'اختبار نظام التذكير لمصنع ${factory.name}'
+'تذكير بتحديث تقرير ${factory.name}'
 )
 )
 ">
 
-🔔 إرسال واتساب
+📲 تذكير
 
 </button>
 
 </div>
 `;
-
 }
 
 }
