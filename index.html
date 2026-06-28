@@ -5106,37 +5106,39 @@ row.field_value;
 
 });
 
-}
 
-await applyPermissions();
 
-await showCurrentUser();
+async function initializeApp(){
 
-const {
-data:{user}
-} =
-await supabaseClient.auth.getUser();
+    await applyPermissions();
 
-const { data:userInfo } =
-await supabaseClient
-.from("users")
-.select("role")
-.eq("email",user.email)
-.single();
+    await showCurrentUser();
 
-if(userInfo.role==="admin"){
+    const {
+        data:{user}
+    } = await supabaseClient.auth.getUser();
 
-await loadReminders();
+    const { data:userInfo } =
+    await supabaseClient
+    .from("users")
+    .select("role")
+    .eq("email",user.email)
+    .single();
 
-await loadApprovalsDashboard();
+    if(userInfo.role==="admin"){
 
-await loadLateFieldsDashboard();
+        await loadReminders();
 
-}
+        await loadApprovalsDashboard();
 
-updateDashboard();
+        await loadLateFieldsDashboard();
 
-updatePowerStation();
+    }
+
+    updateDashboard();
+
+    updatePowerStation();
+
 }
 
 const fieldLabels = {
