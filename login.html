@@ -9,13 +9,17 @@
 
 <title>تسجيل الدخول</title>
 
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
 
-margin:0;
-
-font-family:Arial,sans-serif;
-
-background:linear-gradient(135deg,#eef3fa,#dce8f8);
+min-height:100vh;
 
 display:flex;
 
@@ -23,58 +27,70 @@ justify-content:center;
 
 align-items:center;
 
-min-height:100vh;
-
 padding:20px;
+
+background:
+linear-gradient(rgba(240,245,252,.82),rgba(240,245,252,.82)),
+url("assets/background-desktop.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
 
 }
 
-.box{
+.login-box{
 
 width:100%;
+max-width:470px;
 
-max-width:430px;
+background:rgba(255,255,255,.82);
 
-background:#fff;
+backdrop-filter:blur(12px);
 
-padding:40px 30px;
+-webkit-backdrop-filter:blur(12px);
 
-border-radius:22px;
+border-radius:24px;
+
+padding:45px 35px;
 
 box-shadow:
-0 15px 45px rgba(0,0,0,.15);
+
+0 20px 45px rgba(0,0,0,.18);
+
+border:1px solid rgba(255,255,255,.45);
 
 text-align:center;
-
-border-top:6px solid #204a9c;
 
 }
 
 .logo{
 
-width:95px;
+width:120px;
 
-margin-bottom:15px;
+margin-bottom:18px;
 
 }
 
-h2{
+h1{
 
-margin:5px 0;
-
-color:#1b2e59;
+color:#1d356d;
 
 font-size:30px;
 
+margin-bottom:8px;
+
 }
 
-.subtitle{
+.company{
 
-color:#777;
-
-margin-bottom:30px;
+color:#666;
 
 font-size:15px;
+
+margin-bottom:30px;
 
 }
 
@@ -82,19 +98,19 @@ input{
 
 width:100%;
 
-padding:15px;
+padding:16px;
 
-margin:10px 0;
-
-border-radius:12px;
-
-border:1px solid #ccc;
+margin:12px 0;
 
 font-size:16px;
 
-box-sizing:border-box;
+border-radius:14px;
 
-transition:.3s;
+border:1px solid #cfd6e5;
+
+background:white;
+
+transition:.25s;
 
 }
 
@@ -104,7 +120,9 @@ outline:none;
 
 border-color:#204a9c;
 
-box-shadow:0 0 8px rgba(32,74,156,.25);
+box-shadow:
+
+0 0 10px rgba(32,74,156,.22);
 
 }
 
@@ -112,9 +130,13 @@ button{
 
 width:100%;
 
-padding:15px;
+padding:16px;
 
-margin-top:15px;
+margin-top:18px;
+
+border:none;
+
+border-radius:14px;
 
 background:#204a9c;
 
@@ -124,74 +146,84 @@ font-size:18px;
 
 font-weight:bold;
 
-border:none;
-
-border-radius:12px;
-
 cursor:pointer;
 
-transition:.3s;
+transition:.25s;
 
 }
 
 button:hover{
 
-background:#173a79;
+background:#17397a;
 
 transform:translateY(-2px);
 
 }
 
-.footer{
+.version{
 
-margin-top:25px;
+margin-top:22px;
 
 font-size:13px;
 
-color:#888;
+color:#777;
 
 }
 
-@media(max-width:600px){
+@media(max-width:768px){
 
-.box{
+body{
 
-padding:35px 22px;
+background:
 
-border-radius:18px;
+linear-gradient(rgba(240,245,252,.82),rgba(240,245,252,.82)),
+url("assets/background-mobile.jpg");
+
+background-size:cover;
+
+background-position:center;
 
 }
 
-h2{
+.login-box{
 
-font-size:26px;
+max-width:95%;
+
+padding:35px 24px;
 
 }
 
 .logo{
 
-width:80px;
+width:95px;
 
 }
 
+h1{
+
+font-size:24px;
+
 }
+
+}</style>
+
 </head>
 
 <body>
 
-<div class="box">
+<div class="login-box">
 
 <img
-src="favicon.jpg"
+src="assets/favicon.jpg"
 class="logo">
 
-<h2>
+<h1>
 
 التقرير اليومي للمصانع
 
-</h2>
+</h1>
 
-<div class="subtitle">
+<div class="company">
 
 شركة الاتحاد للصناعات الغذائية
 
@@ -213,7 +245,7 @@ placeholder="كلمة المرور">
 
 </button>
 
-<div class="footer">
+<div class="version">
 
 Version 2.0
 
