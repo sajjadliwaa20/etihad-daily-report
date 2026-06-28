@@ -350,6 +350,96 @@ margin-right:0;
 
 }
 
+/* ==========================
+   Mobile Table Scroll
+========================== */
+
+.table-scroll{
+
+position:relative;
+
+width:100%;
+
+overflow-x:auto;
+
+overflow-y:hidden;
+
+-webkit-overflow-scrolling:touch;
+
+margin-top:8px;
+
+}
+
+.table-scroll::-webkit-scrollbar{
+
+height:8px;
+
+}
+
+.table-scroll::-webkit-scrollbar-track{
+
+background:#ececec;
+
+border-radius:20px;
+
+}
+
+.table-scroll::-webkit-scrollbar-thumb{
+
+background:#1f3c88;
+
+border-radius:20px;
+
+}
+
+.table-scroll::before{
+
+content:"↔";
+
+position:sticky;
+
+right:8px;
+
+top:6px;
+
+float:right;
+
+background:white;
+
+color:#1f3c88;
+
+font-size:20px;
+
+font-weight:bold;
+
+padding:2px 8px;
+
+border-radius:20px;
+
+box-shadow:0 1px 5px rgba(0,0,0,.15);
+
+z-index:5;
+
+pointer-events:none;
+
+}
+
+.table-scroll table{
+
+min-width:max-content;
+
+}
+
+@media(min-width:901px){
+
+.table-scroll::before{
+
+display:none;
+
+}
+
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -5554,6 +5644,28 @@ el.setAttribute(
 );
 
 }
+
+});
+
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+document.querySelectorAll("table").forEach(table=>{
+
+if(table.parentElement.classList.contains("table-scroll")) return;
+
+const wrapper=document.createElement("div");
+
+wrapper.className="table-scroll";
+
+table.parentNode.insertBefore(wrapper,table);
+
+wrapper.appendChild(table);
+
+});
 
 });
 
