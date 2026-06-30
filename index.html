@@ -480,6 +480,65 @@ transition:none;
 
 }
 
+/*==========================
+  Numeric Inputs
+==========================*/
+
+input[type="number"]{
+
+width:65px;
+
+min-width:65px;
+
+max-width:65px;
+
+text-align:center;
+
+padding:4px;
+
+}
+
+input[type="text"],
+textarea{
+
+width:100%;
+
+}
+
+/*=================================
+  حجم حقول الإدخال الرقمية
+==================================*/
+
+/* الكمبيوتر */
+input[type="number"]{
+
+width:70px;
+
+min-width:70px;
+
+max-width:70px;
+
+text-align:center;
+
+padding:4px 6px;
+
+}
+
+/* الهاتف */
+@media (max-width:768px){
+
+input[type="number"]{
+
+width:55px;
+
+min-width:55px;
+
+max-width:55px;
+
+}
+
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
