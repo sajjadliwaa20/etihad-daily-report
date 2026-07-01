@@ -4238,7 +4238,7 @@ function updateSunSalesTotal(){
     total += parseFloat(document.getElementById("sun_sales_20kg")?.value) || 0;
 
 document.getElementById("sun_sales_total").value =
-(v1 + v2 + v3 + ...).toFixed(2);
+total.toFixed(2);
 
 saveSalesField("sun_sales_total","oil");
 
@@ -4262,7 +4262,7 @@ function updateOleinSalesTotal(){
     total += parseFloat(document.getElementById("olein_sales_20kg")?.value) || 0;
 
 document.getElementById("olein_sales_total").value =
-(v1 + v2 + v3 + ...).toFixed(2);
+total.toFixed(2);
 
 saveSalesField("olein_sales_total","oil");
 }
@@ -4273,7 +4273,7 @@ function updateShorteningSalesTotal(){
     parseFloat(document.getElementById("shortening_sales_20kg")?.value) || 0;
 
 document.getElementById("shortening_sales_total").value =
-(v1 + v2 + v3 + ...).toFixed(2);
+total.toFixed(2);
 
 saveSalesField("shortening_sales_total","oil");
 
