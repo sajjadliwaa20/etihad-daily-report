@@ -529,7 +529,7 @@ padding:4px 6px;
 
 input[type="number"]{
 
-width:55px;
+width:65px;
 
 min-width:55px;
 
@@ -682,37 +682,70 @@ id="reportDateKey">
 
 <tr>
 <td>1 كغم</td><td>
-<input id="sugar_sales_1kg" data-save onkeyup="updateSugarSalesTotal()">
-</td>
+<input
+id="sugar_sales_1kg"
+data-save
+oninput="
+updateSugarSalesTotal();
+saveSalesField('sugar_sales_1kg','sugar');
+"></td>
 </tr>
 
 <tr>
 <td>10 كغم</td><td>
-<input id="sugar_sales_10kg" data-save onkeyup="updateSugarSalesTotal()">
-</td>
+<input
+id="sugar_sales_10kg"
+data-save
+oninput="
+updateSugarSalesTotal();
+saveSalesField('sugar_sales_10kg','sugar');
+"></td>
 </tr>
 
 <tr>
 <td>25 كغم</td>
-<td><input id="sugar_sales_25kg" data-save onkeyup="updateSugarSalesTotal()">
+<td><input
+id="sugar_sales_25kg"
+data-save
+oninput="
+updateSugarSalesTotal();
+saveSalesField('sugar_sales_25kg','sugar');
+">
 </td>
 </tr>
 
 <tr>
 <td>50 كغم</td>
-<td><input id="sugar_sales_50kg" data-save onkeyup="updateSugarSalesTotal()">
+<td><input
+id="sugar_sales_50kg"
+data-save
+oninput="
+updateSugarSalesTotal();
+saveSalesField('sugar_sales_50kg','sugar');
+">
 </td>
 </tr>
 
 <tr>
 <td>1 طن</td>
-<td><input id="sugar_sales_1ton" data-save onkeyup="updateSugarSalesTotal()">
+<td><input
+id="sugar_sales_1ton"
+data-save
+oninput="
+updateSugarSalesTotal();
+saveSalesField('sugar_sales_1ton','sugar');
+">
 </td>
 </tr>
 
 <tr>
 <td><b>المجموع</b></td>
-<td><input id="sugar_sales_total" readonly></td>
+<td><input
+id="sugar_sales_total"
+readonly
+onchange="
+saveSalesField('sugar_sales_total','sugar');
+"></td>
 </tr>
 
 </table>
@@ -4141,6 +4174,8 @@ function updateSugarSalesTotal(){
     document.getElementById("sugar_sales_total").value =
     (v1 + v10 + v25 + v50 + v1000).toFixed(2);
 
+saveSalesField("sugar_sales_total","sugar");
+
 }
 
 function updateSunSalesTotal(){
@@ -4416,16 +4451,11 @@ alert(
 }
 catch(e){
 
-console.log(e);
+console.error(e);
 
-alert(
-"حدث خطأ أثناء الحفظ"
-);
+alert(e.message);
 
 }
-
-}
-
 setInterval(()=>{
 
 try{
@@ -5702,7 +5732,51 @@ payload.new.section_name
 },1000);
 
 }
-).subscribe((status)=>{
+)
+
+.on(
+'postgres_changes',
+{
+event:'*',
+schema:'public',
+table:'daily_reports'
+},
+async payload=>{
+
+console.log(
+"DAILY REPORT UPDATE",
+payload
+);
+
+const row = payload.new;
+
+if(!row) return;
+
+let element =
+document.getElementById(
+row.field_name
+);
+
+if(element){
+
+element.value =
+row.field_value;
+
+}
+
+// إعادة حساب المجاميع بعد وصول البيانات
+updateSugarSalesTotal();
+updateSunSalesTotal();
+updateOleinSalesTotal();
+updateGEASalesTotal();
+updateShorteningSalesTotal();
+updateFlourSalesTotal();
+updateFeedSalesTotal();
+
+}
+)
+
+.subscribe((status)=>{
 
 console.log(
 "REALTIME STATUS:",
@@ -5767,6 +5841,66 @@ wrapper.appendChild(table);
 });
 
 });
+
+async function saveSalesField(fieldId, factory){
+
+if(document.activeElement.id!==fieldId){
+    return;
+}
+
+    const reportDate =
+    document.getElementById("reportDateKey").value;
+
+    if(!reportDate) return;
+
+    const field =
+    document.getElementById(fieldId);
+
+    if(!field) return;
+
+    const value = field.value;
+
+    const {
+        data:{user}
+    } = await supabaseClient.auth.getUser();
+
+    if(!user) return;
+
+    const { data } =
+    await supabaseClient
+    .from("daily_reports")
+    .select("id")
+    .eq("report_date",reportDate)
+    .eq("factory",factory)
+    .eq("field_name",fieldId)
+    .maybeSingle();
+
+    if(data){
+
+        await supabaseClient
+        .from("daily_reports")
+        .update({
+            field_value:value,
+            updated_by:user.email,
+            updated_at:new Date().toISOString()
+        })
+        .eq("id",data.id);
+
+    }else{
+
+        await supabaseClient
+        .from("daily_reports")
+        .insert([{
+            report_date:reportDate,
+            factory:factory,
+            field_name:fieldId,
+            field_value:value,
+            updated_by:user.email
+        }]);
+
+    }
+
+}
 
 </script>
 
