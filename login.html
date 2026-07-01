@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+
+<link rel="icon" type="image/jpeg" href="favicon.png">
+
+<meta charset="UTF-8">
+
+<title>تسجيل الدخول</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+background:
+linear-gradient(rgba(240,245,252,.22),rgba(240,245,252,.22)),
+url("background-desktop.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
+
+}
+
+.login-box{
+
+width:95%;
+
+max-width:520px;
+
+background:rgba(255,255,255,.65);
+
+backdrop-filter:blur(6px);
+
+-webkit-backdrop-filter:blur(6px);
+
+border-radius:24px;
+
+padding:50px 40px;
+
+box-shadow:
+0 20px 45px rgba(0,0,0,.18);
+
+border:1px solid rgba(255,255,255,.45);
+
+text-align:center;
+
+}
+
+.logo{
+
+width:120px;
+
+margin-bottom:18px;
+
+}
+
+h1{
+
+color:#1d356d;
+
+font-size:30px;
+
+margin-bottom:8px;
+
+}
+
+.company{
+
+color:#666;
+
+font-size:15px;
+
+margin-bottom:30px;
+
+}
+
+input{
+
+width:100%;
+
+padding:16px;
+
+margin:12px 0;
+
+font-size:16px;
+
+border-radius:14px;
+
+border:1px solid #cfd6e5;
+
+background:white;
+
+transition:.25s;
+
+}
+
+input:focus{
+
+outline:none;
+
+border-color:#204a9c;
+
+box-shadow:
+
+0 0 10px rgba(32,74,156,.22);
+
+}
+
+button{
+
+width:100%;
+
+padding:16px;
+
+margin-top:18px;
+
+border:none;
+
+border-radius:14px;
+
+background:#204a9c;
+
+color:white;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+button:hover{
+
+background:#17397a;
+
+transform:translateY(-2px);
+
+}
+
+.version{
+
+margin-top:22px;
+
+font-size:13px;
+
+color:#777;
+
+}
+
+@media(max-width:768px){
+
+.login-box{
+
+width:96%;
+
+max-width:96%;
+
+padding:45px 30px;
+
+border-radius:22px;
+
+}
+
+body{
+
+background:
+linear-gradient(rgba(255,255,255,.22),rgba(255,255,255,.22)),
+url("background-mobile.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+}
+
+.logo{
+
+width:110px;
+
+}
+
+h1{
+
+font-size:26px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<img
+src="favicon.png"
+class="logo">
+
+<h1>
+
+التقرير اليومي للمصانع
+
+</h1>
+
+<div class="company">
+
+شركة الاتحاد للصناعات الغذائية
+
+</div>
+
+<input
+type="email"
+id="email"
+placeholder="البريد الإلكتروني">
+
+<input
+type="password"
+id="password"
+placeholder="كلمة المرور">
+
+<button onclick="login()">
+
+تسجيل الدخول
+
+</button>
+
+<div class="version">
+
+<div>
+
+Version 2.0
+
+</div>
+
+<div style="margin-top:10px;">
+
+Designed & Developed by
+
+</div>
+
+<div style="
+font-weight:bold;
+font-size:15px;
+color:#1d356d;
+margin-top:4px;
+">
+
+Sajjad Liwaa
+
+</div>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+
+const supabaseUrl =
+"https://aptamsjgburgubfwamep.supabase.co";
+
+const supabaseKey =
+"sb_publishable_q0VgF-S8RkmWdRUvA9pQMQ_nDrLa28F";
+
+const supabaseClient =
+supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+async function login(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+const { data , error } =
+await supabaseClient.auth.signInWithPassword({
+
+email,
+password
+
+});
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+window.location =
+"index.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
