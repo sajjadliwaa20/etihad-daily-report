@@ -4269,14 +4269,6 @@ saveSalesField("olein_sales_total","oil");
 
 function updateShorteningSalesTotal(){
 
-    let total =
-    parseFloat(document.getElementById("shortening_sales_20kg")?.value) || 0;
-
-document.getElementById("shortening_sales_total").value =
-total.toFixed(2);
-
-saveSalesField("shortening_sales_total","oil");
-
 }
 
 async function loadArchiveReport(){
