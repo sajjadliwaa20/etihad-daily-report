@@ -787,7 +787,10 @@ saveSalesField('sugar_sales_total','sugar');
 <input
 id="shortening_sales_20kg"
 data-save
-onkeyup="updateShorteningSalesTotal()">
+oninput="
+updateShorteningSalesTotal();
+saveSalesField('shortening_sales_20kg','oil');
+">
 </td>
 </tr>
 
@@ -817,7 +820,10 @@ onkeyup="updateShorteningSalesTotal()">
 <td>
 <input id="GEA_sales_5l"
 data-save
-onkeyup="updateGEASalesTotal()">
+oninput="
+updateGEASalesTotal();
+saveSalesField('GEA_sales_5l','oil');
+">
 </td>
 </tr>
 
@@ -826,7 +832,10 @@ onkeyup="updateGEASalesTotal()">
 <td>
 <input id="GEA_sales_6l"
 data-save
-onkeyup="updateGEASalesTotal()">
+oninput="
+updateGEASalesTotal();
+saveSalesField('GEA_sales_6l','oil');
+">
 </td>
 </tr>
 
@@ -835,7 +844,10 @@ onkeyup="updateGEASalesTotal()">
 <td>
 <input id="GEA_sales_10l"
 data-save
-onkeyup="updateGEASalesTotal()">
+oninput="
+updateGEASalesTotal();
+saveSalesField('GEA_sales_10l','oil');
+">
 </td>
 </tr>
 
@@ -844,7 +856,10 @@ onkeyup="updateGEASalesTotal()">
 <td>
 <input id="GEA_sales_12l"
 data-save
-onkeyup="updateGEASalesTotal()">
+oninput="
+updateGEASalesTotal();
+saveSalesField('GEA_sales_12l','oil');
+">
 </td>
 </tr>
 
@@ -853,7 +868,10 @@ onkeyup="updateGEASalesTotal()">
 <td>
 <input id="GEA_sales_14l"
 data-save
-onkeyup="updateGEASalesTotal()">
+oninput="
+updateGEASalesTotal();
+saveSalesField('GEA_sales_14l','oil');
+">
 </td>
 </tr>
 
@@ -885,9 +903,18 @@ onkeyup="updateGEASalesTotal()">
 <th>المبيعات (طن)</th>
 </tr>
 
-<tr><td>750 مل</td><td><input id="sun_sales_750" data-save onkeyup="updateSunSalesTotal()"></td></tr>
-<tr><td>900 مل</td><td><input id="sun_sales_900" data-save onkeyup="updateSunSalesTotal()"></td></tr>
-<tr><td>1 لتر</td><td><input id="sun_sales_1l" data-save onkeyup="updateSunSalesTotal()"></td></tr>
+<tr><td>750 مل</td><td><input id="sun_sales_750" data-save oninput="
+updateSunSalesTotal();
+saveSalesField('sun_sales_750','oil');
+"></td></tr>
+<tr><td>900 مل</td><td><input id="sun_sales_900" data-save oninput="
+updateSunSalesTotal();
+saveSalesField('sun_sales_900','oil');
+"></td></tr>
+<tr><td>1 لتر</td><td><input id="sun_sales_1l" data-save oninput="
+updateSunSalesTotal();
+saveSalesField('sun_sales_1l','oil');
+"></td></tr>
 <tr>
 <td><b>المجموع</b></td>
 <td><input id="sun_sales_total" readonly></td>
@@ -915,12 +942,27 @@ onkeyup="updateGEASalesTotal()">
 <th>المبيعات (طن)</th>
 </tr>
 
-<tr><td>5 لتر</td><td><input id="olein_sales_5l" data-save onkeyup="updateOleinSalesTotal()"></td></tr>
-<tr><td>6 لتر</td><td><input id="olein_sales_6l" data-save onkeyup="updateOleinSalesTotal()"></td></tr>
-<tr><td>10 لتر</td><td><input id="olein_sales_10l" data-save onkeyup="updateOleinSalesTotal()"></td></tr>
-<tr><td>18 لتر</td><td><input id="olein_sales_18l_big" data-save onkeyup="updateOleinSalesTotal()"></td></tr>
+<tr><td>5 لتر</td><td><input id="olein_sales_5l" data-save oninput="
+updateOleinSalesTotal();
+saveSalesField('olein_sales_5l','oil');
+"></td></tr>
+<tr><td>6 لتر</td><td><input id="olein_sales_6l" data-save oninput="
+updateOleinSalesTotal();
+saveSalesField('olein_sales_6l','oil');
+"></td></tr>
+<tr><td>10 لتر</td><td><input id="olein_sales_10l" data-save oninput="
+updateOleinSalesTotal();
+saveSalesField('olein_sales_10l','oil');
+"></td></tr>
+<tr><td>18 لتر</td><td><input id="olein_sales_18l_big" data-save oninput="
+updateOleinSalesTotal();
+saveSalesField('olein_sales_18l_big','oil');
+"></td></tr>
 <tr><td>20 كغم</td><td><input id="olein_sales_20kg" data-save
-onkeyup="updateOleinSalesTotal()">
+oninput="
+updateOleinSalesTotal();
+saveSalesField('olein_sales_20kg','oil');
+">
 </td>
 </tr>
 <tr>
@@ -4195,8 +4237,10 @@ function updateSunSalesTotal(){
     total += parseFloat(document.getElementById("sun_sales_20l")?.value) || 0;
     total += parseFloat(document.getElementById("sun_sales_20kg")?.value) || 0;
 
-    document.getElementById("sun_sales_total").value =
-    total.toFixed(2);
+document.getElementById("sun_sales_total").value =
+(v1 + v2 + v3 + ...).toFixed(2);
+
+saveSalesField("sun_sales_total","oil");
 
 }
 
@@ -4217,9 +4261,10 @@ function updateOleinSalesTotal(){
     total += parseFloat(document.getElementById("olein_sales_20l")?.value) || 0;
     total += parseFloat(document.getElementById("olein_sales_20kg")?.value) || 0;
 
-    document.getElementById("olein_sales_total").value =
-    total.toFixed(2);
+document.getElementById("olein_sales_total").value =
+(v1 + v2 + v3 + ...).toFixed(2);
 
+saveSalesField("olein_sales_total","oil");
 }
 
 function updateShorteningSalesTotal(){
@@ -4227,8 +4272,10 @@ function updateShorteningSalesTotal(){
     let total =
     parseFloat(document.getElementById("shortening_sales_20kg")?.value) || 0;
 
-    document.getElementById("shortening_sales_total").value =
-    total.toFixed(2);
+document.getElementById("shortening_sales_total").value =
+(v1 + v2 + v3 + ...).toFixed(2);
+
+saveSalesField("shortening_sales_total","oil");
 
 }
 
@@ -4351,8 +4398,9 @@ total += parseFloat(document.getElementById("GEA_sales_12l")?.value || 0);
 total += parseFloat(document.getElementById("GEA_sales_14l")?.value || 0);
 
 document.getElementById("GEA_sales_total").value =
-total.toFixed(2);
+(v1 + v2 + v3 + ...).toFixed(2);
 
+saveSalesField("GEA_sales_total","oil");
 }
 
 async function approveReport(){
