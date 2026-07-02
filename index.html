@@ -612,12 +612,13 @@ color:#1f3c88;
 
 </button>
 
-<button onclick="goToLogin()">
+<button
+onclick="goToLogin()"
+style="
+background:#6c7a89;
+color:white;
+">
 🔑 تبديل المستخدم
-</button>
-
-<button onclick="approveReport()">
-✅ اعتماد التقرير
 </button>
 
 <button onclick="copyReportLink()">
@@ -626,12 +627,6 @@ color:#1f3c88;
 
 <button onclick="exportReportHTML()">
 📄 تصدير التقرير HTML
-</button>
-
-<button onclick="clearAllData()">
-
-🗑️ مسح البيانات
-
 </button>
 
 </div>
@@ -2158,7 +2153,10 @@ onclick="approveSection('sugar')">
 <td>
 <input
 id="refinery1"
-data-save>
+data-save
+oninput="
+updateDashboard();
+">
 </td>
 
 </tr>
@@ -2170,7 +2168,10 @@ data-save>
 <td>
 <input
 id="refinery2"
-data-save>
+data-save
+oninput="
+updateDashboard();
+">
 </td>
 
 </tr>
@@ -3933,9 +3934,8 @@ document.getElementById(
 )?.value || 0
 );
 
-let oilTotal =
-refinery1 + refinery2;
-
+document.getElementById("refinery_total").value =
+(refinery1 + refinery2).toFixed(2);
 const homeOil =
 document.getElementById(
 "home_oil_prod"
@@ -4903,6 +4903,19 @@ alert("فشل الاعتماد");
 return;
 
 }
+
+}
+
+const btn =
+document.querySelector(
+`button[onclick="approveSection('${section}')"]`
+);
+
+if(btn){
+
+btn.style.background="#28a745";
+
+btn.innerHTML="✅ تم الاعتماد";
 
 }
 
