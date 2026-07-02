@@ -529,11 +529,11 @@ padding:4px 6px;
 
 input[type="number"]{
 
-width:65px;
+width:75px;
 
-min-width:55px;
+min-width:75px;
 
-max-width:55px;
+max-width:75px;
 
 }
 
@@ -1005,7 +1005,10 @@ readonly>
 <input
 id="flour_sales_f1"
 data-save
-onkeyup="updateFlourSalesTotal()">
+oninput="
+updateFlourSalesTotal();
+saveSalesField('flour_sales_f1','flour');
+">
 </td>
 </tr>
 
@@ -1015,7 +1018,10 @@ onkeyup="updateFlourSalesTotal()">
 <input
 id="flour_sales_f3"
 data-save
-onkeyup="updateFlourSalesTotal()">
+oninput="
+updateFlourSalesTotal();
+saveSalesField('flour_sales_f3','flour');
+">
 </td>
 </tr>
 
@@ -1025,7 +1031,10 @@ onkeyup="updateFlourSalesTotal()">
 <input
 id="flour_sales_bran"
 data-save
-onkeyup="updateFlourSalesTotal()">
+oninput="
+updateFlourSalesTotal();
+saveSalesField('flour_sales_bran','flour');
+">
 </td>
 </tr>
 
@@ -1041,6 +1050,10 @@ readonly>
 </table>
 
 </div>
+
+</details>
+
+<br>
 
 </details>
 
@@ -1067,7 +1080,10 @@ readonly>
 <input
 id="feed_sales_corn"
 data-save
-onkeyup="updateFeedSalesTotal()">
+oninput="
+updateFeedSalesTotal();
+saveSalesField('feed_sales_corn','feed');
+">
 </td>
 </tr>
 
@@ -1077,7 +1093,10 @@ onkeyup="updateFeedSalesTotal()">
 <input
 id="feed_sales_soybean"
 data-save
-onkeyup="updateFeedSalesTotal()">
+oninput="
+updateFeedSalesTotal();
+saveSalesField('feed_sales_soybean','feed');
+">
 </td>
 </tr>
 
@@ -1087,7 +1106,10 @@ onkeyup="updateFeedSalesTotal()">
 <input
 id="feed_sales_feed"
 data-save
-onkeyup="updateFeedSalesTotal()">
+oninput="
+updateFeedSalesTotal();
+saveSalesField('feed_sales_feed','feed');
+">
 </td>
 </tr>
 
@@ -1097,7 +1119,10 @@ onkeyup="updateFeedSalesTotal()">
 <input
 id="feed_sales_premix"
 data-save
-onkeyup="updateFeedSalesTotal()">
+oninput="
+updateFeedSalesTotal();
+saveSalesField('feed_sales_premix','feed');
+">
 </td>
 </tr>
 
@@ -4175,6 +4200,8 @@ function updateFeedSalesTotal(){
     document.getElementById("feed_sales_total").value =
     total.toFixed(2);
 
+saveSalesField("feed_sales_total","feed");
+
 }
 
 function updateFlourSalesTotal(){
@@ -4193,6 +4220,8 @@ function updateFlourSalesTotal(){
 
     document.getElementById("flour_sales_total").value =
     total.toFixed(2);
+
+saveSalesField("flour_sales_total","flour");
 
 }
 
