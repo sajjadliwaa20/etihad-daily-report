@@ -539,6 +539,77 @@ max-width:75px;
 
 }
 
+.spinner{
+width:32px;
+height:32px;
+border:4px solid #d9e3f5;
+border-top:4px solid #1d4ea3;
+border-radius:50%;
+animation:spin .8s linear infinite;
+margin:0 auto 15px;
+}
+
+@keyframes spin{
+
+0%{
+transform:rotate(0deg);
+}
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+#loadingScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(255,255,255,.90);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.spinner{
+width:42px;
+height:42px;
+border:4px solid #dce5f5;
+border-top:4px solid #1d4ea3;
+border-radius:50%;
+animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+
+0%{
+transform:rotate(0deg);
+}
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+.switchUserBtn{
+
+background:#7a2e2e;
+color:white;
+transition:.25s;
+
+}
+
+.switchUserBtn:hover{
+
+background:#652525;
+
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -546,6 +617,18 @@ max-width:75px;
 </head>
 
 <body>
+
+<div id="loadingScreen">
+    <div class="spinner"></div>
+    <div style="
+        margin-top:15px;
+        font-size:18px;
+        font-weight:bold;
+        color:#1d356d;
+    ">
+        جاري تحميل البيانات...
+    </div>
+</div>
 
 <div class="sidebar">
 
@@ -599,7 +682,7 @@ font-size:14px;
 font-weight:bold;
 color:#1f3c88;
 ">
-جاري تحميل المستخدم...
+⏳ جاري تحميل بيانات المستخدم...
 </div>
 
 </div>
@@ -615,7 +698,7 @@ color:#1f3c88;
 <button
 onclick="goToLogin()"
 style="
-background:#5b4b8a;
+background:#7a2e2e;
 color:white;
 ">
 🔑 تبديل المستخدم
@@ -5984,6 +6067,12 @@ if(document.activeElement.id!==fieldId){
     }
 
 }
+
+window.addEventListener("load",()=>{
+
+document.getElementById("loadingScreen").style.display="none";
+
+});
 
 </script>
 
