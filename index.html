@@ -3717,33 +3717,20 @@ onclick="approveSection('feed')">
 
 <h2>📚 الأرشيف</h2>
 
-<details>
+<details open>
 
-<summary>📂 تحميل تقرير سابق</summary>
+<summary>📅 الأرشيف</summary>
 
 <div class="details-content">
 
-<label>اختر تاريخ التقرير</label>
-
-<br><br>
-
 <input
 type="date"
-id="archiveDate">
-
-<br><br>
-
-<button
-onclick="loadArchiveReport()">
-
-📥 تحميل التقرير
-
-</button>
+id="archiveDate"
+onchange="loadArchiveReport()">
 
 </div>
 
 </details>
-
 </section>
 <script>
 
