@@ -5038,13 +5038,14 @@ input.readOnly = true;
 });
 
 // منع الضغط على حقول التاريخ
-document
-.querySelectorAll('input[type="date"]')
-.forEach(input=>{
 
-input.disabled = true;
+const reportDateInput =
+document.getElementById("reportDateKey");
 
-});
+if(reportDateInput){
+
+reportDateInput.readOnly = true;
+}
 
 alert("applyPermissions finished");
 
@@ -5822,6 +5823,38 @@ row.field_value;
 }
 
 });
+
+// تحميل روابط الصور الخاصة بالملاحظات
+
+const { data:imageRows } =
+await supabaseClient
+.from("note_images")
+.select("*")
+.eq("report_date", reportDate)
+.eq("factory", factory);
+
+if(imageRows){
+
+imageRows.forEach(img=>{
+
+const link =
+document.getElementById(
+img.field_name + "_link"
+);
+
+if(link){
+
+link.href =
+img.image_url;
+
+link.style.display =
+"inline-block";
+
+}
+
+});
+
+}
 
 }
 
