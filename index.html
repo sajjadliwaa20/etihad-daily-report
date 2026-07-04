@@ -430,6 +430,47 @@ min-width:max-content;
 
 }
 
+@media (max-width:768px){
+
+h2{
+
+font-size:24px;
+
+}
+
+summary{
+
+font-size:20px;
+font-weight:bold;
+
+}
+
+table th{
+
+font-size:18px;
+
+}
+
+table td{
+
+font-size:17px;
+
+}
+
+input{
+
+font-size:18px;
+
+}
+
+button{
+
+font-size:17px;
+
+}
+
+}
+
 @media(min-width:901px){
 
 .table-scroll::before{
@@ -607,6 +648,16 @@ transition:.25s;
 .switchUserBtn:hover{
 
 background:#652525;
+
+}
+
+input[readonly]{
+
+background:#eef3f9;
+color:#1d356d;
+border:1px solid #c8d5ea;
+font-weight:600;
+cursor:not-allowed;
 
 }
 
@@ -4712,6 +4763,24 @@ document.querySelectorAll(".section")
 .forEach(section => {
 
 section.style.display = "block";
+
+});
+
+// جعل جميع الحقول للقراءة فقط للأدمن
+document
+.querySelectorAll("input[data-save]")
+.forEach(input=>{
+
+input.readOnly = true;
+
+});
+
+// منع الضغط على حقول التاريخ
+document
+.querySelectorAll('input[type="date"]')
+.forEach(input=>{
+
+input.disabled = true;
 
 });
 
