@@ -5398,7 +5398,7 @@ factory.role
 
 if(!userData) continue;
 
-box.innerHTML += `
+document.getElementById("remindersContent").innerHTML += `
 <div style="
 display:flex;
 justify-content:space-between;
@@ -5463,37 +5463,26 @@ document.getElementById(
 if(!box) return;
 
 box.innerHTML = `
-<details style="
-background:white;
-padding:15px;
-border-radius:8px;
-margin-bottom:15px;
-border:1px solid #ddd;
-">
+<details>
 
 <summary style="
 font-size:18px;
 font-weight:bold;
 cursor:pointer;
-user-select:none;
 ">
 
-📋 حالة الاعتمادات اليوم
+📱 تذكيرات الواتساب
 
 </summary>
 
 <div
-id="approvalStatusList"
-style="margin-top:15px;"
->
-
-جاري التحميل...
+id="remindersContent"
+style="margin-top:15px;">
 
 </div>
 
 </details>
 `;
-
 const factories = [
 
 {
@@ -6430,9 +6419,32 @@ uploaded_at:new Date()
 
 }else{
 
+const { error:dbError } =
 await supabaseClient
 .from("note_images")
 .insert([{
+
+report_date:reportDate,
+
+factory:factory,
+
+field_name:fieldName,
+
+image_url:imageUrl,
+
+uploaded_by:user.email
+
+}]);
+
+console.log(dbError);
+
+if(dbError){
+
+alert(dbError.message);
+
+return;
+
+}
 
 report_date:reportDate,
 
