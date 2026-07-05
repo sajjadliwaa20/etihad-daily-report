@@ -5885,12 +5885,7 @@ async function initializeApp(){
 
     if(userInfo.role==="admin"){
 
-        await loadReminders();
-
-        await loadApprovalsDashboard();
-
-        await loadLateFieldsDashboard();
-
+await refreshAdminTools();
     }
 
     updateDashboard();
@@ -6324,13 +6319,6 @@ status
 
 });
 
-setInterval(()=>{
-
-updateDashboard();
-updatePowerStation();
-
-},1000);
-
 async function goToLogin(){
 
 await supabaseClient.auth.signOut();
@@ -6466,18 +6454,6 @@ alert(dbError.message);
 return;
 
 }
-
-report_date:reportDate,
-
-factory:factory,
-
-field_name:fieldName,
-
-image_url:imageUrl,
-
-uploaded_by:user.email
-
-}]);
 
 }
 
