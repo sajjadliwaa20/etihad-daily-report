@@ -730,11 +730,9 @@ background:#3056b3;
 
 <section id="home" class="section">
 
-<div id="remindersBox"></div>
-
-<div id="approvalsDashboard"></div>
-
-<div id="lateFieldsDashboard"></div>
+<input
+type="date"
+id="reportDateKey">
 
 <div class="header">
 
@@ -788,10 +786,6 @@ color:white;
 </div>
 
 <div class="info-bar">
-<input
-type="hidden"
-id="reportDateKey">
-
 اليوم :
 <span id="today"></span>
 
@@ -802,6 +796,31 @@ id="reportDateKey">
 
 </div>
 
+<details id="adminTools">
+
+<summary>
+
+🛠 أدوات الإدارة
+
+</summary>
+
+<br>
+
+<button onclick="refreshAdminTools()">
+
+🔄 تحديث الآن
+
+</button>
+
+<br><br>
+
+<div id="approvalsDashboard"></div>
+
+<div id="lateFieldsDashboard"></div>
+
+<div id="remindersBox"></div>
+
+</details>
 
 
 <!-- المبيعات والتسويق -->
@@ -6146,15 +6165,17 @@ daily_notes : "📅 ملاحظات اليوم"
 
 };
 
+async function refreshAdminTools(){
+
+await loadApprovalsDashboard();
+
+await loadLateFieldsDashboard();
+
+await loadReminders();
+
+}
+
 initializeApp();
-
-setInterval(()=>{
-
-updateDashboard();
-
-updatePowerStation();
-
-},1000);
 
 setInterval(async ()=>{
 
