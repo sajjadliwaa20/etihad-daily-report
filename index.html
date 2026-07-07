@@ -855,6 +855,51 @@ color:#ffffff !important;
 
 }
 
+/* تحسين ترتيب الأزرار في الهاتف */
+
+.header-buttons{
+
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:flex-start;
+
+}
+
+@media(max-width:768px){
+
+.header{
+
+flex-direction:column;
+align-items:center;
+
+}
+
+.title-box{
+
+flex-direction:column;
+gap:8px;
+
+}
+
+.header-buttons{
+
+display:grid;
+grid-template-columns:1fr 1fr;
+width:100%;
+gap:10px;
+
+}
+
+.header-buttons button{
+
+width:100%;
+margin:0;
+
+}
+
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -931,18 +976,14 @@ color:#1f3c88;
 
 </div>
 
-<div>
+<div class="header-buttons">
 
 <button id="darkModeBtn" onclick="toggleDarkMode()">
-
 🌙 الوضع الليلي
-
 </button>
 
 <button onclick="window.print()">
-
 🖨️ طباعة PDF
-
 </button>
 
 <button
@@ -962,9 +1003,7 @@ color:white;
 📄 تصدير التقرير HTML
 </button>
 
-</div>
-
-</div>
+</div></div>
 
 <div class="info-bar">
 
