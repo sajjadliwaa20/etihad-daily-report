@@ -5397,41 +5397,19 @@ updatePowerStation();
 
 },60000);
 
-function applyExecutiveMode(){
-
-// إظهار جميع القوائم
-document.getElementById("menu_power").style.display="block";
-document.getElementById("menu_sugar").style.display="block";
-document.getElementById("menu_oil").style.display="block";
-document.getElementById("menu_flour").style.display="block";
-document.getElementById("menu_feed").style.display="block";
-document.getElementById("menu_archive").style.display="block";
-
-// إظهار جميع الأقسام
-document.querySelectorAll(".section").forEach(section=>{
-
-section.style.display="block";
-
-});
-
-// إخفاء أدوات الإدارة بالكامل
-document.getElementById("adminTools").style.display="none";
+function applyReadOnlyMode(){
 
 // جعل جميع الحقول للقراءة فقط
 document.querySelectorAll("input, textarea, select").forEach(el=>{
 
-// استثناء الحقول التي يجب أن تبقى تعمل
 if(
 el.id==="reportDateKey" ||
 el.id==="archiveDate" ||
 el.id==="searchBox"
 ){
-
 return;
-
 }
 
-// حقول الإدخال
 if(el.tagName==="TEXTAREA"){
 
 el.readOnly=true;
@@ -5456,7 +5434,7 @@ el.disabled=true;
 
 });
 
-// إخفاء جميع أزرار الحفظ والاعتماد
+// إخفاء أزرار الحفظ والاعتماد فقط
 document.querySelectorAll("button").forEach(btn=>{
 
 const txt = btn.innerText;
@@ -5464,16 +5442,114 @@ const txt = btn.innerText;
 if(
 
 txt.includes("حفظ") ||
-
 txt.includes("اعتماد") ||
-
 txt.includes("رفض") ||
-
 txt.includes("تعديل")
 
 ){
 
 btn.style.display="none";
+
+}
+
+});
+
+}
+
+
+
+function showAdminTools(){
+
+document.getElementById("adminTools").style.display="block";
+
+document.getElementById("editModeBtn").style.display="inline-block";
+
+document.getElementById("approvalsDashboard").style.display="block";
+
+document.getElementById("lateFieldsDashboard").style.display="block";
+
+document.getElementById("remindersBox").style.display="block";
+
+}
+
+
+
+function hideAdminTools(){
+
+document.getElementById("adminTools").style.display="none";
+
+document.getElementById("editModeBtn").style.display="none";
+
+document.getElementById("approvalsDashboard").style.display="none";
+
+document.getElementById("lateFieldsDashboard").style.display="none";
+
+document.getElementById("remindersBox").style.display="none";
+
+}
+
+function showAllMenus(){
+
+[
+"menu_power",
+"menu_sugar",
+"menu_oil",
+"menu_flour",
+"menu_feed",
+"menu_archive"
+
+].forEach(id=>{
+
+const el=document.getElementById(id);
+
+if(el){
+
+el.style.display="block";
+
+}
+
+});
+
+}
+
+function applyExecutiveMode(){
+
+showAllMenus();
+
+applyReadOnlyMode();
+
+hideAdminTools();
+
+// إظهار جميع الأقسام
+document.querySelectorAll(".section").forEach(section=>{
+
+section.style.display="block";
+
+});
+
+// إخفاء أدوات الإدارة بالكامل
+document.getElementById("adminTools").style.display="none";
+
+// حقول الإدخال
+if(el.tagName==="TEXTAREA"){
+
+el.readOnly=true;
+
+}else if(el.tagName==="INPUT"){
+
+if(
+el.type==="text" ||
+el.type==="number" ||
+el.type==="date"
+){
+
+el.readOnly=true;
+
+}
+
+}else{
+
+el.disabled=true;
 
 }
 
@@ -5535,6 +5611,14 @@ return;
 }
 
 const role = data.role;
+const adminTools =
+document.getElementById("adminTools");
+
+const editBtn =
+document.getElementById("editModeBtn");
+
+adminTools.style.display = "none";
+editBtn.style.display = "none";
 document.getElementById("editModeBtn").style.display = "none";
 console.log("EMAIL =", userEmail);
 console.log("ROLE =", role);
@@ -5596,8 +5680,11 @@ return;
 
 if(role === "admin"){
 
-applyExecutiveMode();
+applyReadOnlyMode();
 
+showAllMenus();
+
+showAdminTools();
 document.getElementById("adminTools").style.display="block";
 
 document.getElementById("editModeBtn").style.display="inline-block";
@@ -7416,6 +7503,8 @@ window.addEventListener("load",()=>{
 document.getElementById("loadingScreen").style.display="none";
 
 });
+
+
 
 </script>
 
