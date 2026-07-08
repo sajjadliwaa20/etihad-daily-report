@@ -5530,31 +5530,6 @@ section.style.display="block";
 // إخفاء أدوات الإدارة بالكامل
 document.getElementById("adminTools").style.display="none";
 
-// حقول الإدخال
-if(el.tagName==="TEXTAREA"){
-
-el.readOnly=true;
-
-}else if(el.tagName==="INPUT"){
-
-if(
-el.type==="text" ||
-el.type==="number" ||
-el.type==="date"
-){
-
-el.readOnly=true;
-
-}
-
-}else{
-
-el.disabled=true;
-
-}
-
-});
-
 // إعادة زر الأدمن إلى حالته الافتراضية
 
 adminEditMode = false;
