@@ -1225,6 +1225,15 @@ color:white;
 
 </button>
 
+<button
+id="editModeBtn"
+onclick="toggleAdminEditMode()"
+style="display:none;background:#d97706;color:white;">
+
+✏️ تفعيل وضع التعديل
+
+</button>
+
 <br><br>
 
 <div id="approvalsDashboard"></div>
@@ -4491,6 +4500,8 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
+let adminEditMode = false;
+
 /* ===========================
    التاريخ واليوم
 =========================== */
@@ -5435,6 +5446,50 @@ btn.style.display="none";
 
 });
 
+// إعادة زر الأدمن إلى حالته الافتراضية
+
+adminEditMode = false;
+
+const editBtn =
+document.getElementById("editModeBtn");
+
+if(editBtn){
+
+editBtn.innerHTML =
+"✏️ تفعيل وضع التعديل";
+
+editBtn.style.background="#d97706";
+
+}
+
+}
+
+}
+
+function applyAdminMode(){
+
+// إزالة القراءة فقط
+
+document.querySelectorAll("input, textarea, select").forEach(el=>{
+
+el.readOnly = false;
+
+el.disabled = false;
+
+});
+
+// إظهار جميع الأزرار
+
+document.querySelectorAll("button").forEach(btn=>{
+
+btn.style.display = "inline-block";
+
+});
+
+// إظهار أدوات الإدارة
+
+document.getElementById("adminTools").style.display="block";
+
 }
 
 async function applyPermissions(){
@@ -5534,6 +5589,12 @@ return;
 
 if(role === "admin"){
 
+applyExecutiveMode();
+
+document.getElementById("adminTools").style.display="block";
+
+document.getElementById("editModeBtn").style.display="inline-block";
+
 document.getElementById("approvalsDashboard").style.display="block";
 
 document.getElementById("lateFieldsDashboard").style.display="block";
@@ -5554,26 +5615,7 @@ section.style.display = "block";
 
 });
 
-// جعل جميع الحقول للقراءة فقط للأدمن
-document
-.querySelectorAll("input[data-save]")
-.forEach(input=>{
-
-input.readOnly = true;
-
-});
-
-// منع الضغط على حقول التاريخ
-
-const reportDateInput =
-document.getElementById("reportDateKey");
-
-if(reportDateInput){
-
-reportDateInput.readOnly = true;
-}
-
-alert("applyPermissions finished");
+window.location.hash = "home";
 
 return;
 
@@ -7173,6 +7215,108 @@ document.body.classList.contains("dark-mode")
 }
 
 });
+
+function toggleAdminEditMode(){
+
+adminEditMode = !adminEditMode;
+
+const btn =
+document.getElementById("editModeBtn");
+
+/* الحقول */
+
+document.querySelectorAll("input, textarea, select").forEach(el=>{
+
+// استثناء هذه الحقول
+if(
+
+el.id==="reportDateKey" ||
+
+el.id==="archiveDate" ||
+
+el.id==="searchBox"
+
+){
+
+return;
+
+}
+
+// إزالة القراءة فقط أو إعادتها
+
+if(el.tagName==="TEXTAREA"){
+
+el.readOnly = !adminEditMode;
+
+}
+
+else if(el.tagName==="INPUT"){
+
+if(
+
+el.type==="text" ||
+
+el.type==="number" ||
+
+el.type==="date"
+
+){
+
+el.readOnly = !adminEditMode;
+
+}
+
+}
+
+});
+
+/* أزرار الحفظ والاعتماد */
+
+document.querySelectorAll("button").forEach(button=>{
+
+const txt = button.innerText;
+
+if(
+
+txt.includes("حفظ") ||
+
+txt.includes("اعتماد") ||
+
+txt.includes("رفض") ||
+
+txt.includes("تعديل")
+
+){
+
+button.style.display =
+adminEditMode ?
+"inline-block"
+:
+"none";
+
+}
+
+});
+
+/* شكل زر الأدمن */
+
+if(adminEditMode){
+
+btn.innerHTML =
+"🔒 إنهاء وضع التعديل";
+
+btn.style.background="#c62828";
+
+}else{
+
+applyExecutiveMode();
+
+document.getElementById("adminTools").style.display="block";
+
+btn.style.display="inline-block";
+
+}
+}
 
 </script>
 
