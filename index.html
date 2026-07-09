@@ -2844,8 +2844,7 @@ updateDashboard();
 
 <input
 id="refinery_total"
-data-save>
-
+readonly>
 </td>
 
 </tr>
@@ -4747,32 +4746,26 @@ sugar.value;
 }
 
 let refinery1 =
-parseFloat(
-document.getElementById(
-"refinery1"
-)?.value || 0
-);
+parseFloat(document.getElementById("refinery1")?.value) || 0;
 
 let refinery2 =
-parseFloat(
-document.getElementById(
-"refinery2"
-)?.value || 0
-);
+parseFloat(document.getElementById("refinery2")?.value) || 0;
+
+let oilTotal = refinery1 + refinery2;
 
 document.getElementById("refinery_total").value =
-(refinery1 + refinery2).toFixed(2);
+oilTotal.toFixed(2);
+
 const homeOil =
-document.getElementById(
-"home_oil_prod"
-);
+document.getElementById("home_oil_prod");
 
 if(homeOil){
 
 homeOil.value =
-oilTotal;
+oilTotal.toFixed(2);
 
 }
+
 let b1 =
 parseFloat(
 document.getElementById(
@@ -5113,11 +5106,20 @@ function recalculateAll(){
 
 updateFeedTotals();
 
+calcMillTotals();
+
 updateFeedSalesTotal();
+
+updateSugarSalesTotal();
+
+updateFlourSalesTotal();
 
 updateDashboard();
 
+updatePowerStation();
+
 }
+
 function updateSunSalesTotal(){
 
     let total = 0;
