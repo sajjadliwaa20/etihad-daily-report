@@ -454,6 +454,10 @@ transform:translateY(-1px);
 width:100%;
 height:120px;
 
+font-size:19px;
+
+line-height:1.8;
+
 }
 
 .success{
@@ -4987,15 +4991,26 @@ function updateFeedTotals(){
         let n =
         parseFloat(document.getElementById(`feed_l${i}_n`).value) || 0;
 
+        // حساب معدل الإنتاج لكل شفت
+        document.getElementById(`feed_l${i}_m_rate`).value =
+        (m/8).toFixed(2);
+
+        document.getElementById(`feed_l${i}_e_rate`).value =
+        (e/8).toFixed(2);
+
+        document.getElementById(`feed_l${i}_n_rate`).value =
+        (n/8).toFixed(2);
+
+        // حساب المجموع
         let total = m + e + n;
 
-document.getElementById(
-    `feed_l${i}_total`
-).value = total.toFixed(2);
+        document.getElementById(
+        `feed_l${i}_total`
+        ).value = total.toFixed(2);
 
-}
+    }
 
-updateNetFeedProduction();
+    updateNetFeedProduction();
 
 }
 
