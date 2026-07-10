@@ -1733,7 +1733,7 @@ readonly>
 
 </section>
 
-<!-- محطات الطاقة -->
+<!-- موقف النفط الأسود -->
 
 <section id="blackoil" class="section">
 
@@ -1942,7 +1942,7 @@ readonly>
 
 </table>
 
-<button onclick="approveSection('power')">
+<button onclick="approvePowerSection()">
 
 اعتماد محطة الطاقة
 
@@ -5644,12 +5644,23 @@ btn.style.display = "inline-block";
 
 if(role === "power"){
 
+document.getElementById("powerstation").style.display="block";
 
-document.getElementById("powerstation").style.display = "block";
+document.getElementById("blackoil").style.display="block";
 
-document.getElementById("menu_power").style.display = "block";
+document.getElementById("menu_power").style.display="block";
+
+document.getElementById("darkModeBtn").style.display="inline-block";
+
+document.querySelector("button[onclick='window.print()']").style.display="inline-block";
+
+document.querySelector("button[onclick='goToLogin()']").style.display="inline-block";
+
+document.querySelector("button[onclick='exportReportHTML()']").style.display="inline-block";
 
 window.location.hash="powerstation";
+
+return;
 
 }
 
@@ -5973,6 +5984,16 @@ btn.innerHTML="✅ تم الاعتماد";
 alert(
 "تم اعتماد القسم بنجاح"
 );
+
+}
+
+async function approvePowerSection(){
+
+await approveSection("powerstation");
+
+await approveSection("blackoil");
+
+alert("تم اعتماد تقرير محطة الطاقة والنفط الأسود بنجاح");
 
 }
 
