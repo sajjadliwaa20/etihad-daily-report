@@ -1094,6 +1094,20 @@ font-size:15px;
 
 }
 
+.station-status{
+
+width:100%;
+
+min-height:55px;
+
+resize:vertical;
+
+font-size:15px;
+
+box-sizing:border-box;
+
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2063,18 +2077,18 @@ readonly>
 <tr>
 
 <td>
-<input
+<textarea
 id="old_dissolution"
-type="text"
-data-save>
-</td>
+data-save
+rows="2">
+</textarea></td>
 
 <td>
-<input
+<textarea
 id="new_dissolution"
-type="text"
-data-save>
-</td>
+data-save
+rows="2">
+</textarea></td>
 
 <td>
 <textarea
@@ -2639,13 +2653,13 @@ data-save>
 for="sugar_quality_notes_image"
 class="uploadImageBtn">
 
-📷 إرفاق صورة
+📎 إرفاق ملف
 
 </label>
 
 <input
 type="file"
-accept="image/*"
+accept="image/*,application/pdf"
 id="sugar_quality_notes_image"
 data-factory="sugar"
 data-field="sugar_quality_notes"
@@ -2663,7 +2677,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الصورة
+👁 عرض الملف
 
 </a></td>
 </tr>
@@ -2692,13 +2706,13 @@ data-save>
 for="sugar_safety_notes_image"
 class="uploadImageBtn">
 
-📷 إرفاق صورة
+📎 إرفاق ملف
 
 </label>
 
 <input
 type="file"
-accept="image/*"
+accept="image/*,application/pdf"
 id="sugar_safety_notes_image"
 data-factory="sugar"
 data-field="sugar_safety_notes"
@@ -2716,7 +2730,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الصورة
+👁 عرض الملف
 
 </a></td>
 
@@ -2918,15 +2932,18 @@ readonly>
 
 <tr>
 <td>
-<input
+
+<textarea
 id="oil_refinery_status"
-type="text"
-data-save>
+class="station-status"
+data-save
+rows="2">
+</textarea>
+
 </td>
 </tr>
 
 </table>
-
 </div>
 
 </details>
@@ -3259,13 +3276,13 @@ data-save>
 for="oil_quality_notes_image"
 class="uploadImageBtn">
 
-📷 إرفاق صورة
+📎 إرفاق ملف
 
 </label>
 
 <input
 type="file"
-accept="image/*"
+accept="image/*,application/pdf"
 id="oil_quality_notes_image"
 data-factory="oil"
 data-field="oil_quality_notes"
@@ -3283,7 +3300,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الصورة
+👁 عرض الملف
 
 </a></td>
 </tr>
@@ -3312,13 +3329,13 @@ data-save>
 for="oil_safety_notes_image"
 class="uploadImageBtn">
 
-📷 إرفاق صورة
+📎 إرفاق ملف
 
 </label>
 
 <input
 type="file"
-accept="image/*"
+accept="image/*,application/pdf"
 id="oil_safety_notes_image"
 data-factory="oil"
 data-field="oil_safety_notes"
@@ -3336,7 +3353,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الصورة
+👁 عرض الملف
 
 </a></td>
 </tr>
@@ -3660,7 +3677,8 @@ onchange="checkExtractionEfficiency(this)">
 
 <tr>
 
-<td>A</td>
+<td>A
+</td>
 <td><input id="astoptime" data-save></td>
 <td style="width:45%;">
 <textarea
@@ -3671,7 +3689,7 @@ style="
 width:100%;
 min-height:55px;
 resize:vertical;
-font-size:15px;
+font-size:18px;
 box-sizing:border-box;
 ">
 </textarea>
@@ -3690,7 +3708,7 @@ style="
 width:100%;
 min-height:55px;
 resize:vertical;
-font-size:15px;
+font-size:18px;
 box-sizing:border-box;
 ">
 </textarea>
@@ -3710,7 +3728,7 @@ style="
 width:100%;
 min-height:55px;
 resize:vertical;
-font-size:15px;
+font-size:18px;
 box-sizing:border-box;
 ">
 </textarea>
@@ -3730,7 +3748,7 @@ style="
 width:100%;
 min-height:55px;
 resize:vertical;
-font-size:15px;
+font-size:18px;
 box-sizing:border-box;
 ">
 </textarea>
@@ -3750,7 +3768,7 @@ style="
 width:100%;
 min-height:55px;
 resize:vertical;
-font-size:15px;
+font-size:18px;
 box-sizing:border-box;
 ">
 </textarea>
@@ -3770,7 +3788,7 @@ style="
 width:100%;
 min-height:55px;
 resize:vertical;
-font-size:15px;
+font-size:18px;
 box-sizing:border-box;
 ">
 </textarea>
@@ -3811,13 +3829,13 @@ data-save>
 for="flour_quality_notes_image"
 class="uploadImageBtn">
 
-📷 إرفاق صورة
+📎 إرفاق ملف
 
 </label>
 
 <input
 type="file"
-accept="image/*"
+accept="image/*,application/pdf"
 id="flour_quality_notes_image"
 data-factory="flour"
 data-field="flour_quality_notes"
@@ -3835,7 +3853,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الصورة
+👁 عرض الملف
 
 </a>
 </td>
@@ -3865,13 +3883,13 @@ data-save>
 for="flour_safety_notes_image"
 class="uploadImageBtn">
 
-📷 إرفاق صورة
+📎 إرفاق ملف
 
 </label>
 
 <input
 type="file"
-accept="image/*"
+accept="image/*,application/pdf"
 id="flour_safety_notes_image"
 data-factory="flour"
 data-field="flour_safety_notes"
@@ -3889,7 +3907,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الصورة
+👁 عرض الملف
 
 </a></td>
 </tr>
@@ -4453,13 +4471,13 @@ data-save>
 for="feed_quality_notes_image"
 class="uploadImageBtn">
 
-📷 إرفاق صورة
+📎 إرفاق ملف
 
 </label>
 
 <input
 type="file"
-accept="image/*"
+accept="image/*,application/pdf"
 id="feed_quality_notes_image"
 data-factory="sugar"
 data-field="feed_quality_notes"
@@ -4477,7 +4495,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الصورة
+👁 عرض الملف
 
 </a></td>
 </tr>
@@ -4506,13 +4524,13 @@ data-save>
 for="feed_safety_notes_image"
 class="uploadImageBtn">
 
-📷 إرفاق صورة
+📷 إرفاق ملف
 
 </label>
 
 <input
 type="file"
-accept="image/*"
+accept="image/*,application/pdf"
 id="feed_safety_notes_image"
 data-factory="feed"
 data-field="feed_safety_notes"
@@ -4530,7 +4548,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الصورة
+👁 عرض الملف
 
 </a></td>
 </tr>
@@ -4574,7 +4592,7 @@ onclick="approveSection('feed')">
 
 <h2>📚 الأرشيف</h2>
 
-<details open>
+<details>
 
 <summary>📅 الأرشيف</summary>
 
@@ -5714,7 +5732,6 @@ document.getElementById("editModeBtn").style.display = "none";
 console.log("EMAIL =", userEmail);
 console.log("ROLE =", role);
 console.log(data);
-alert("ROLE = " + role);
 
 /* اخفاء جميع الأقسام أولاً */
 
@@ -5945,10 +5962,6 @@ salesFlour.style.display = "none";
 
 }
 
-alert("applyPermissions finished");
-
-}
-
 async function showCurrentUser(){
 
 const {
@@ -6090,7 +6103,7 @@ btn.innerHTML="✅ تم الاعتماد";
 }
 
 alert(
-"تم اعتماد القسم بنجاح"
+"✅تم اعتماد القسم بنجاح"
 );
 
 }
@@ -7149,120 +7162,6 @@ input.dataset.field;
 
 const {
 data:{user}
-} = await supabaseClient.auth.getUser();
-
-const fileName =
-`${reportDate}_${factory}_${fieldName}_${Date.now()}.${file.name.split('.').pop()}`;
-
-const { error:uploadError } =
-await supabaseClient.storage
-.from("daily-report-images")
-.upload(fileName,file);
-
-if(uploadError){
-
-alert("فشل رفع الصورة");
-
-console.log(uploadError);
-
-return;
-
-}
-
-const {
-data:urlData
-} =
-supabaseClient.storage
-.from("daily-report-images")
-.getPublicUrl(fileName);
-
-const imageUrl =
-urlData.publicUrl;
-
-const { data:oldRow } =
-await supabaseClient
-.from("note_images")
-.select("id")
-.eq("report_date",reportDate)
-.eq("factory",factory)
-.eq("field_name",fieldName)
-.maybeSingle();
-
-if(oldRow){
-
-await supabaseClient
-.from("note_images")
-.update({
-
-image_url:imageUrl,
-
-uploaded_by:user.email,
-
-uploaded_at:new Date()
-
-})
-.eq("id",oldRow.id);
-
-}else{
-
-const { error:dbError } =
-await supabaseClient
-.from("note_images")
-.insert([{
-
-report_date:reportDate,
-
-factory:factory,
-
-field_name:fieldName,
-
-image_url:imageUrl,
-
-uploaded_by:user.email
-
-}]);
-
-console.log(dbError);
-
-if(dbError){
-
-alert(dbError.message);
-
-return;
-
-}
-
-}
-
-alert("✅ تم رفع الصورة بنجاح");
-
-}
-
-async function uploadNoteImage(input){
-
-const file = input.files[0];
-
-if(!file) return;
-
-const reportDate =
-document.getElementById("reportDateKey").value;
-
-if(!reportDate){
-
-alert("اختر تاريخ التقرير أولاً");
-
-return;
-
-}
-
-const factory =
-input.dataset.factory;
-
-const fieldName =
-input.dataset.field;
-
-const {
-data:{user}
 } =
 await supabaseClient.auth.getUser();
 
@@ -7369,7 +7268,7 @@ link.style.display =
 
 }
 
-alert("✅ تم رفع الصورة بنجاح");
+alert("✅ تم رفع الملف بنجاح");
 
 }
 
