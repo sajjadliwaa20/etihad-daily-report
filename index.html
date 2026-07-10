@@ -15,13 +15,13 @@
 
 :root{
 
---main:#1f3c88;
+--main:#428556;
 --gold:#b08a3e;
 
---bg:#f4f6f9;
+--bg:#4d784d;
 --card:#ffffff;
 --text:#222;
---border:#d9d9d9;
+--border:#4d784d;
 --secondary:#eceff5;
 
 --success:#dff3df;
@@ -33,7 +33,7 @@
 
 .dark-mode{
 
---main:#294a8f;
+--main:#428556;
 
 --gold:#d8b45c;
 
@@ -205,7 +205,7 @@ object-fit:contain;
 
 font-size:30px;
 
-color:var(--main);
+color:#7aa47a
 
 font-weight:bold;
 
@@ -280,7 +280,7 @@ font-size:28px;
 
 font-weight:bold;
 
-color:var(--main);
+color:#7aa47a
 
 margin-top:10px;
 
@@ -312,7 +312,7 @@ cursor:pointer;
 
 font-weight:bold;
 
-color:var(--main);
+color:#7aa47a
 
 transition:.25s;
 
@@ -344,7 +344,7 @@ color:var(--text);
 
 th{
 
-background:var(--main);
+background:#7AA47A
 
 color:white;
 
@@ -916,7 +916,7 @@ font-size:28px;
 
 background:transparent;
 
-color:var(--main);
+color:#7aa47a
 
 border:none;
 
@@ -1084,6 +1084,16 @@ margin-right:0;
 
 }
 
+#sugar input{
+
+min-width:100px;
+
+text-align:center;
+
+font-size:15px;
+
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1247,7 +1257,7 @@ style="display:none;background:#d97706;color:white;">
 
 <!-- المبيعات والتسويق -->
 
-<details open>
+<details id="salesSection" open>
 
 <summary>
 📈 المبيعات والتسويق
@@ -1643,12 +1653,6 @@ readonly>
 
 </details>
 
-<br>
-
-</details>
-
-<br>
-
 <!-- مبيعات الأعلاف -->
 
 <details open id="sales_feed">
@@ -1730,6 +1734,11 @@ readonly>
 </div>
 
 </details>
+
+</details>
+  
+</details>
+
 
 </section>
 
@@ -2054,15 +2063,29 @@ readonly>
 <tr>
 
 <td>
-<input id="old_dissolution" data-save>
+<input
+id="old_dissolution"
+type="text"
+data-save>
 </td>
 
 <td>
-<input id="new_dissolution" data-save>
+<input
+id="new_dissolution"
+type="text"
+data-save>
 </td>
 
 <td>
-<input id="diss_status" data-save>
+<textarea
+id="diss_status"
+data-save
+rows="2"
+style="
+width:100%;
+resize:vertical;
+font-size:15px;
+"></textarea>
 </td>
 
 </tr>
@@ -2097,7 +2120,15 @@ readonly>
 </td>
 
 <td>
-<input id="carb_status" data-save>
+<textarea
+id="carb_status"
+data-save
+rows="2"
+style="
+width:100%;
+resize:vertical;
+font-size:15px;
+"></textarea>
 </td>
 
 </tr>
@@ -2182,7 +2213,15 @@ readonly>
 
 <tr>
 <td>
-<input id="pkf_status" data-save>
+<textarea
+id="pkf_status"
+data-save
+rows="2"
+style="
+width:100%;
+resize:vertical;
+font-size:15px;
+"></textarea>
 </td>
 </tr>
 
@@ -2214,9 +2253,16 @@ readonly>
 </td>
 
 <td>
-<input id="novasep_status" data-save>
+<textarea
+id="novasep_status"
+data-save
+rows="2"
+style="
+width:100%;
+resize:vertical;
+font-size:15px;
+"></textarea>
 </td>
-
 </tr>
 
 </table>
@@ -2290,9 +2336,16 @@ readonly>
 
 <tr>
 <td>
-<input id="cooker_status" data-save>
-</td>
-</tr>
+<textarea
+id="cooker_status"
+data-save
+rows="2"
+style="
+width:100%;
+resize:vertical;
+font-size:15px;
+"></textarea>
+</td></tr>
 
 </table>
 
@@ -2355,12 +2408,16 @@ readonly>
 
 <tr>
 <td>
-<input
+<textarea
 id="dryer_status"
 data-save
-style="width:100%;">
-</td>
-</tr>
+rows="2"
+style="
+width:100%;
+resize:vertical;
+font-size:15px;
+"></textarea>
+</td></tr>
 
 </table>
 
@@ -2861,7 +2918,10 @@ readonly>
 
 <tr>
 <td>
-<input id="oil_refinery_status" data-save>
+<input
+id="oil_refinery_status"
+type="text"
+data-save>
 </td>
 </tr>
 
@@ -2952,20 +3012,6 @@ readonly>
 
 <br>
 
-<table>
-
-<tr>
-<th>حالة المحطة</th>
-</tr>
-
-<tr>
-<td>
-<input id="oil_products_status" data-save>
-</td>
-</tr>
-
-</table>
-
 </div>
 
 </details>
@@ -3053,20 +3099,6 @@ readonly>
 </table>
 
 <br>
-
-<table>
-
-<tr>
-<th>حالة المحطة</th>
-</tr>
-
-<tr>
-<td>
-<input id="oil_packing_status" data-save>
-</td>
-</tr>
-
-</table>
 
 </div>
 
@@ -3620,8 +3652,9 @@ onchange="checkExtractionEfficiency(this)">
 <tr>
 
 <th>الخط</th>
-<th>مدة التوقف</th>
-<th>سبب التوقف</th>
+<th style="width:18%;">مدة التوقف</th>
+
+<th style="width:45%;">سبب التوقف</th>
 
 </tr>
 
@@ -3629,48 +3662,119 @@ onchange="checkExtractionEfficiency(this)">
 
 <td>A</td>
 <td><input id="astoptime" data-save></td>
-<td><input id="astopcause" data-save></td>
-
-</tr>
+<td style="width:45%;">
+<textarea
+id="astopcause"
+data-save
+rows="2"
+style="
+width:100%;
+min-height:55px;
+resize:vertical;
+font-size:15px;
+box-sizing:border-box;
+">
+</textarea>
+</td></tr>
 
 <tr>
 
 <td>B</td>
 <td><input id="bstoptime" data-save></td>
-<td><input id="bstopcause" data-save></td>
-
+<td style="width:45%;">
+<textarea
+id="bstopcause"
+data-save
+rows="2"
+style="
+width:100%;
+min-height:55px;
+resize:vertical;
+font-size:15px;
+box-sizing:border-box;
+">
+</textarea>
+</td>
 </tr>
 
 <tr>
 
 <td>C</td>
 <td><input id="cstoptime" data-save></td>
-<td><input id="cstopcause" data-save></td>
-
+<td style="width:45%;">
+<textarea
+id="cstopcause"
+data-save
+rows="2"
+style="
+width:100%;
+min-height:55px;
+resize:vertical;
+font-size:15px;
+box-sizing:border-box;
+">
+</textarea>
+</td>
 </tr>
 
 <tr>
 
 <td>D</td>
 <td><input id="dstoptime" data-save></td>
-<td><input id="dstopcause" data-save></td>
-
+<td style="width:45%;">
+<textarea
+id="dstopcause"
+data-save
+rows="2"
+style="
+width:100%;
+min-height:55px;
+resize:vertical;
+font-size:15px;
+box-sizing:border-box;
+">
+</textarea>
+</td>
 </tr>
 
 <tr>
 
 <td>E</td>
 <td><input id="estoptime" data-save></td>
-<td><input id="estopcause" data-save></td>
-
+<td style="width:45%;">
+<textarea
+id="estopcause"
+data-save
+rows="2"
+style="
+width:100%;
+min-height:55px;
+resize:vertical;
+font-size:15px;
+box-sizing:border-box;
+">
+</textarea>
+</td>
 </tr>
 
 <tr>
 
 <td>F</td>
 <td><input id="fstoptime" data-save></td>
-<td><input id="fstopcause" data-save></td>
-
+<td style="width:45%;">
+<textarea
+id="fstopcause"
+data-save
+rows="2"
+style="
+width:100%;
+min-height:55px;
+resize:vertical;
+font-size:15px;
+box-sizing:border-box;
+">
+</textarea>
+</td>
 </tr>
 
 </table>
@@ -5643,6 +5747,10 @@ btn.style.display = "inline-block";
 });
 
 if(role === "power"){
+
+document.getElementById("salesSection").style.display="none";
+
+document.getElementById("home").style.display="block";
 
 document.getElementById("powerstation").style.display="block";
 
