@@ -6604,7 +6604,11 @@ row.field_value;
 
 }
 
+
 });
+
+recalculateAll();
+
 
 /* إعادة حساب جميع القيم المشتقة */
 
@@ -6639,39 +6643,68 @@ link.style.display =
 
 }
 
+async function loadDailyReport() {
+
+console.log("LOAD DAILY REPORT STARTED");
+
+await loadFactorySection("powerstation");
+
+await loadFactorySection("blackoil");
+
+await loadFactorySection("sugar");
+
+await loadFactorySection("oil");
+
+await loadFactorySection("flour");
+
+await loadFactorySection("feed");
+
 recalculateAll();
 
 }
 
-async function initializeApp(){
+async function bootApplication(){
+
+    console.log("🚀 Boot Application Started");
 
     await applyPermissions();
 
     await showCurrentUser();
 
+    // تحميل التقرير بالكامل
+    await loadDailyReport();
+
+    // إعادة الحسابات
+    recalculateAll();
+
+    // تشغيل المزامنة اللحظية
+    startRealtime();
+
+    // تحديث أدوات الأدمن
     const {
         data:{user}
     } = await supabaseClient.auth.getUser();
 
-    const { data:userInfo } =
-    await supabaseClient
-    .from("users")
-    .select("role")
-    .eq("email",user.email)
-    .single();
+    if(user){
 
-    if(userInfo.role==="admin"){
+        const { data:userInfo } =
+        await supabaseClient
+        .from("users")
+        .select("role")
+        .eq("email",user.email)
+        .single();
 
-await refreshAdminTools();
+        if(userInfo?.role==="admin"){
+
+            await refreshAdminTools();
+
+        }
+
     }
 
-    updateDashboard();
-
-    updatePowerStation();
+    console.log("✅ Boot Application Finished");
 
 }
-
-
 
 const fieldLabels = {
 
@@ -6962,7 +6995,8 @@ sidebar.classList.toggle("open");
 overlay.classList.toggle("show");
 
 }
-initializeApp();
+
+bootApplication();
 
 setInterval(async ()=>{
 
@@ -6990,117 +7024,15 @@ loadReminders();
 }
 
 },10000);
+
+function startRealtime(){
+
 supabaseClient
 .channel('live-updates')
 
-.on(
-'postgres_changes',
-{
-event:'*',
-schema:'public',
-table:'field_history'
-},
-payload=>{
+.on(...)
 
-console.log(
-"FIELD HISTORY UPDATE",
-payload
-);
-
-loadLateFieldsDashboard();
-
-}
-)
-
-.on(
-'postgres_changes',
-{
-event:'*',
-schema:'public',
-table:'section_approvals'
-},
-async payload=>{
-
-console.log(
-"SECTION UPDATE",
-payload
-);
-
-const {
-data:{user}
-} = await supabaseClient.auth.getUser();
-
-if(user){
-
-const { data:userInfo } =
-await supabaseClient
-.from("users")
-.select("role")
-.eq("email",user.email)
-.single();
-
-if(userInfo?.role==="admin"){
-
-await loadApprovalsDashboard();
-
-await loadReminders();
-
-}
-
-}
-
-setTimeout(async ()=>{
-
-await loadFactorySection(
-payload.new.section_name
-);
-
-},1000);
-
-}
-)
-
-.on(
-'postgres_changes',
-{
-event:'*',
-schema:'public',
-table:'daily_reports'
-},
-async payload=>{
-
-console.log(
-"DAILY REPORT UPDATE",
-payload
-);
-
-const row = payload.new;
-
-if(!row) return;
-
-let element =
-document.getElementById(
-row.field_name
-);
-
-if(element){
-
-element.value =
-row.field_value;
-
-}
-
-// إعادة حساب المجاميع بعد وصول البيانات
-updateSugarSalesTotal();
-updateSunSalesTotal();
-updateOleinSalesTotal();
-updateGEASalesTotal();
-updateShorteningSalesTotal();
-updateFlourSalesTotal();
-updateFeedSalesTotal();
-
-}
-)
+.on(...)
 
 .subscribe((status)=>{
 
@@ -7109,6 +7041,9 @@ console.log(
 status
 );
 
+});
+
+}
 });
 
 async function goToLogin(){
