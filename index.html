@@ -6104,6 +6104,8 @@ btn.innerHTML="✅ تم الاعتماد";
 
 }
 
+await loadDailyReport();
+
 alert(
 "✅تم اعتماد القسم بنجاح"
 );
@@ -6597,13 +6599,18 @@ data.forEach(row=>{
 let element =
 document.getElementById(row.field_name);
 
-if(element){
+if(!element){
+
+    console.warn(
+        "NOT FOUND:",
+        row.field_name
+    );
+
+    return;
+}
 
 element.value =
 row.field_value;
-
-}
-
 
 });
 
