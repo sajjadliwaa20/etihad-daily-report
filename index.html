@@ -5226,18 +5226,21 @@ saveSalesField("sugar_sales_total","sugar");
 
 function recalculateAll(){
 
+// الإنتاج
 updateFeedTotals();
-
 calcMillTotals();
 
+// المبيعات
+updateSugarSalesTotal();
+updateShorteningSalesTotal();
+updateGEASalesTotal();
+updateSunSalesTotal();
+updateOleinSalesTotal();
+updateFlourSalesTotal();
 updateFeedSalesTotal();
 
-updateSugarSalesTotal();
-
-updateFlourSalesTotal();
-
+// لوحة التحكم
 updateDashboard();
-
 updatePowerStation();
 
 }
