@@ -7453,11 +7453,8 @@ await supabaseClient
 .eq("field_name",fieldId)
 .maybeSingle();
 
-console.log("saveSalesField", {
-    fieldId,
-    data,
-    error
-});
+console.log("saveSalesField ERROR =", error);
+console.log("saveSalesField DATA =", data);
     if(data){
 
         await supabaseClient
