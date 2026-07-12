@@ -6643,7 +6643,7 @@ link.style.display =
 
 }
 
-async function loadDailyReport() {
+async function loadDailyReport(){
 
 console.log("LOAD DAILY REPORT STARTED");
 
@@ -7026,24 +7026,13 @@ loadReminders();
 
 function startRealtime(){
 
-supabaseClient
-.channel('live-updates')
-
-.on(...)
-
-.on(...)
-
-.subscribe((status)=>{
-
-console.log(
-"REALTIME STATUS:",
-status
-);
-
+supabaseClient 
+.channel('live-updates') 
+.on( 'postgres_changes', 
+{ event:'*', schema:'public', table:'field_history' },
+ payload=>{ console.log( "FIELD HISTORY UPDATE", payload ); loadLateFieldsDashboard(); } ) .on( 'postgres_changes', { event:'*', schema:'public', table:'section_approvals' }, async payload=>{ console.log( "SECTION UPDATE", payload ); const { data:{user} } = await supabaseClient.auth.getUser(); if(user){ const { data:userInfo } = await supabaseClient .from("users") .select("role") .eq("email",user.email) .single(); if(userInfo?.role==="admin"){ await loadApprovalsDashboard(); await loadReminders(); } } setTimeout(async ()=>{ await loadDailyReport(); },1000); } ) .on( 'postgres_changes', { event:'*', schema:'public', table:'daily_reports' }, async payload=>{ console.log( "DAILY REPORT UPDATE", payload ); const row = payload.new; if(!row) return; let element = document.getElementById( row.field_name ); if(element){ element.value = row.field_value; } // إعادة حساب المجاميع بعد وصول البيانات updateSugarSalesTotal(); updateSunSalesTotal(); updateOleinSalesTotal(); updateGEASalesTotal(); updateShorteningSalesTotal(); updateFlourSalesTotal(); updateFeedSalesTotal(); } ) .subscribe((status)=>{ console.log( "REALTIME STATUS:", status );
 });
 
-}
-});
 }
 async function goToLogin(){
 
