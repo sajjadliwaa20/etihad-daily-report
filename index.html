@@ -7422,9 +7422,9 @@ wrapper.appendChild(table);
 
 async function saveSalesField(fieldId, factory){
 
-if(document.activeElement.id!==fieldId){
-    return;
-}
+    if(document.activeElement.id !== fieldId){
+        return;
+    }
 
     const reportDate =
     document.getElementById("reportDateKey").value;
@@ -7444,50 +7444,27 @@ if(document.activeElement.id!==fieldId){
 
     if(!user) return;
 
-const { data, error } =
-await supabaseClient
-.from("daily_reports")
-.select("id")
-.eq("report_date",reportDate)
-.eq("factory",factory)
-.eq("field_name",fieldId)
-.maybeSingle();
+    const { error } =
+    await supabaseClient
+    .from("daily_reports")
+    .upsert(
+    {
+        report_date: reportDate,
+        factory: factory,
+        field_name: fieldId,
+        field_value: value,
+        updated_by: user.email,
+        updated_at: new Date().toISOString()
+    },
+    {
+        onConflict: "report_date,factory,field_name"
+    });
 
-console.log("saveSalesField ERROR =", error);
-console.log("saveSalesField DATA =", data);
-    if(data){
-
-        await supabaseClient
-        .from("daily_reports")
-        .update({
-            field_value:value,
-            updated_by:user.email,
-            updated_at:new Date().toISOString()
-        })
-        .eq("id",data.id);
-
-    }else{
-
-        await supabaseClient
-        .from("daily_reports")
-        .insert([{
-            report_date:reportDate,
-            factory:factory,
-            field_name:fieldId,
-            field_value:value,
-            updated_by:user.email
-        }]);
-
+    if(error){
+        console.error(error);
     }
 
 }
-
-window.addEventListener("load",()=>{
-
-document.getElementById("loadingScreen").style.display="none";
-
-});
-
 
 
 </script>
