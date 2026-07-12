@@ -312,7 +312,7 @@ cursor:pointer;
 
 font-weight:bold;
 
-color:#7aa47a
+color:#43BF4A
 
 transition:.25s;
 
@@ -6026,6 +6026,36 @@ let reportRows = [];
 sectionElement
 .querySelectorAll("[data-save]")
 .forEach(el=>{
+
+if(section==="oil"){
+
+document
+.querySelectorAll("#sales_oil [data-save]")
+.forEach(el=>{
+
+historyRows.push({
+
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+factory: "oil",
+updated_at: new Date().toISOString()
+
+});
+
+reportRows.push({
+
+report_date: reportDate,
+factory: "oil",
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email
+
+});
+
+});
+
+}
 
 historyRows.push({
 
