@@ -7444,15 +7444,20 @@ if(document.activeElement.id!==fieldId){
 
     if(!user) return;
 
-    const { data } =
-    await supabaseClient
-    .from("daily_reports")
-    .select("id")
-    .eq("report_date",reportDate)
-    .eq("factory",factory)
-    .eq("field_name",fieldId)
-    .maybeSingle();
+const { data, error } =
+await supabaseClient
+.from("daily_reports")
+.select("id")
+.eq("report_date",reportDate)
+.eq("factory",factory)
+.eq("field_name",fieldId)
+.maybeSingle();
 
+console.log("saveSalesField", {
+    fieldId,
+    data,
+    error
+});
     if(data){
 
         await supabaseClient
