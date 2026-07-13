@@ -1262,6 +1262,8 @@ style="display:none;background:#d97706;color:white;">
 
 <div id="approvalsDashboard"></div>
 
+<div id="approvalStatusList"></div>
+
 <div id="lateFieldsDashboard"></div>
 
 <div id="remindersBox"></div>
@@ -5884,17 +5886,12 @@ data.role;
 async function approveSection(section){
 
 const {
-data:{user}
-} =
-await supabaseClient.auth.getUser();
+    data:{user},
+    error
+} = await supabaseClient.auth.getUser();
 
-if(!user){
-
-alert("يجب تسجيل الدخول");
-
-return;
-
-}
+console.log(user);
+console.log(error);
 
 const reportDate =
 document.getElementById("reportDateKey").value;
