@@ -205,7 +205,7 @@ object-fit:contain;
 
 font-size:30px;
 
-color:#7aa47a
+color:##123514
 
 font-weight:bold;
 
@@ -5446,11 +5446,6 @@ await supabaseClient.auth.getUser();
 
 alert(user.email);
 const { error: deleteError } =
-await supabaseClient
-.from("daily_reports")
-.delete()
-.eq("report_date",reportDate)
-.eq("factory",section);
 
 if(deleteError){
 
@@ -6002,10 +5997,16 @@ data:{user}
 } =
 await supabaseClient.auth.getUser();
 
+if(!user){
+
+alert("يجب تسجيل الدخول");
+
+return;
+
+}
+
 const reportDate =
-document.getElementById(
-"reportDateKey"
-).value;
+document.getElementById("reportDateKey").value;
 
 if(!reportDate){
 
@@ -6015,69 +6016,25 @@ return;
 
 }
 
-let sectionElement =
+const sectionElement =
 document.getElementById(section);
 
-if(sectionElement){
+if(!sectionElement){
+
+alert("القسم غير موجود");
+
+return;
+
+}
 
 let historyRows = [];
 let reportRows = [];
 
+/* بيانات القسم */
+
 sectionElement
 .querySelectorAll("[data-save]")
 .forEach(el=>{
-
-    historyRows.push(...);
-
-    reportRows.push(...);
-
-});
-
-// بعد انتهاء الحلقة
-
-if(section==="oil"){
-
-    document
-    .querySelectorAll("#sales_oil [data-save]")
-    .forEach(el=>{
-
-        historyRows.push({
-
-            field_name: el.id,
-            field_value: el.value || "",
-            updated_by: user.email,
-            factory: "oil",
-            updated_at: new Date().toISOString()
-
-        });
-
-        reportRows.push({
-
-            report_date: reportDate,
-            factory: "oil",
-            field_name: el.id,
-            field_value: el.value || "",
-            updated_by: user.email
-
-        });
-
-    });
-
-}
-
-reportRows.push({
-
-report_date: reportDate,
-factory: "oil",
-field_name: el.id,
-field_value: el.value || "",
-updated_by: user.email
-
-});
-
-});
-
-}
 
 historyRows.push({
 
@@ -6095,27 +6052,180 @@ report_date: reportDate,
 factory: section,
 field_name: el.id,
 field_value: el.value || "",
-updated_by: user.email
+updated_by: user.email,
+updated_at: new Date().toISOString()
 
 });
 
 });
 
-if(reportRows.length > 0){
 
-await supabaseClient
-.from("daily_reports")
-.delete()
-.eq("report_date", reportDate)
-.eq("factory", section);
+/* بيانات المبيعات */
 
-await supabaseClient
-.from("daily_reports")
-.insert(reportRows);
+if(section==="oil"){
+
+document
+.querySelectorAll("#sales_oil [data-save]")
+.forEach(el=>{
+
+historyRows.push({
+
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+factory: "oil",
+updated_at: new Date().toISOString()
+
+});
+
+reportRows.push({
+
+report_date: reportDate,
+factory: "oil",
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+updated_at: new Date().toISOString()
+
+});
+
+});
 
 }
 
-if(historyRows.length > 0){
+if(section==="sugar"){
+
+document
+.querySelectorAll("#sales_sugar [data-save]")
+.forEach(el=>{
+
+historyRows.push({
+
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+factory: "sugar",
+updated_at: new Date().toISOString()
+
+});
+
+reportRows.push({
+
+report_date: reportDate,
+factory: "sugar",
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+updated_at: new Date().toISOString()
+
+});
+
+});
+
+}
+
+if(section==="flour"){
+
+document
+.querySelectorAll("#sales_flour [data-save]")
+.forEach(el=>{
+
+historyRows.push({
+
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+factory: "flour",
+updated_at: new Date().toISOString()
+
+});
+
+reportRows.push({
+
+report_date: reportDate,
+factory: "flour",
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+updated_at: new Date().toISOString()
+
+});
+
+});
+
+}
+
+if(section==="feed"){
+
+document
+.querySelectorAll("#sales_feed [data-save]")
+.forEach(el=>{
+
+historyRows.push({
+
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+factory: "feed",
+updated_at: new Date().toISOString()
+
+});
+
+reportRows.push({
+
+report_date: reportDate,
+factory: "feed",
+field_name: el.id,
+field_value: el.value || "",
+updated_by: user.email,
+updated_at: new Date().toISOString()
+
+});
+
+});
+
+}
+
+/* حفظ البيانات */
+
+if(reportRows.length){
+
+const {error} =
+const { error } =
+await supabaseClient
+.from("daily_reports")
+.upsert(
+reportRows,
+{
+onConflict:"report_date,factory,field_name"
+});
+
+if(error){
+
+console.log(error);
+
+alert(error.message);
+
+return;
+
+}
+
+if(error){
+
+console.log(error);
+
+alert(error.message);
+
+return;
+
+}
+
+}
+
+
+/* حفظ السجل */
+
+if(historyRows.length){
 
 await supabaseClient
 .from("field_history")
@@ -6123,20 +6233,24 @@ await supabaseClient
 
 }
 
-const { error } =
+
+/* اعتماد القسم */
+
+const {error:approvalError} =
 await supabaseClient
 .from("section_approvals")
 .insert([{
 
-report_date: reportDate,
-section_name: section,
-approved_by: user.email
+report_date:reportDate,
+section_name:section,
+approved_by:user.email
 
 }]);
 
-if(error){
 
-console.log(error);
+if(approvalError){
+
+console.log(approvalError);
 
 alert("فشل الاعتماد");
 
@@ -6144,7 +6258,8 @@ return;
 
 }
 
-}
+
+/* تحديث الزر */
 
 const btn =
 document.querySelector(
@@ -6159,15 +6274,14 @@ btn.innerHTML="✅ تم الاعتماد";
 
 }
 
+
+/* إعادة تحميل البيانات */
+
 await loadDailyReport();
 
-alert(
-"✅تم اعتماد القسم بنجاح"
-);
+alert("✅ تم اعتماد القسم بنجاح");
 
-}
-
-async function approvePowerSection(){
+}async function approvePowerSection(){
 
 await approveSection("powerstation");
 
