@@ -5885,13 +5885,15 @@ data.role;
 
 async function approveSection(section){
 
+console.log("approveSection START", section);
+
 const {
     data:{user},
     error
 } = await supabaseClient.auth.getUser();
 
-console.log(user);
-console.log(error);
+console.log("USER =", user);
+console.log("ERROR =", error);
 
 const reportDate =
 document.getElementById("reportDateKey").value;
