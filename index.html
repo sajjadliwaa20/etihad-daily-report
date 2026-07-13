@@ -6027,21 +6027,43 @@ sectionElement
 .querySelectorAll("[data-save]")
 .forEach(el=>{
 
-if(section==="oil"){
+    historyRows.push(...);
 
-document
-.querySelectorAll("#sales_oil [data-save]")
-.forEach(el=>{
-
-historyRows.push({
-
-field_name: el.id,
-field_value: el.value || "",
-updated_by: user.email,
-factory: "oil",
-updated_at: new Date().toISOString()
+    reportRows.push(...);
 
 });
+
+// بعد انتهاء الحلقة
+
+if(section==="oil"){
+
+    document
+    .querySelectorAll("#sales_oil [data-save]")
+    .forEach(el=>{
+
+        historyRows.push({
+
+            field_name: el.id,
+            field_value: el.value || "",
+            updated_by: user.email,
+            factory: "oil",
+            updated_at: new Date().toISOString()
+
+        });
+
+        reportRows.push({
+
+            report_date: reportDate,
+            factory: "oil",
+            field_name: el.id,
+            field_value: el.value || "",
+            updated_by: user.email
+
+        });
+
+    });
+
+}
 
 reportRows.push({
 
@@ -6708,42 +6730,52 @@ async function bootApplication(){
 
     console.log("🚀 Boot Application Started");
 
-    await applyPermissions();
+    try{
 
-    await showCurrentUser();
+        await applyPermissions();
 
-    // تحميل التقرير بالكامل
-    await loadDailyReport();
+        await showCurrentUser();
 
-    // إعادة الحسابات
-    recalculateAll();
+        await loadDailyReport();
 
-    // تشغيل المزامنة اللحظية
-    startRealtime();
+        recalculateAll();
 
-    // تحديث أدوات الأدمن
-    const {
-        data:{user}
-    } = await supabaseClient.auth.getUser();
+        startRealtime();
 
-    if(user){
+        const {
+            data:{user}
+        } = await supabaseClient.auth.getUser();
 
-        const { data:userInfo } =
-        await supabaseClient
-        .from("users")
-        .select("role")
-        .eq("email",user.email)
-        .single();
+        if(user){
 
-        if(userInfo?.role==="admin"){
+            const { data:userInfo } =
+            await supabaseClient
+            .from("users")
+            .select("role")
+            .eq("email",user.email)
+            .single();
 
-            await refreshAdminTools();
+            if(userInfo?.role==="admin"){
+
+                await refreshAdminTools();
+
+            }
 
         }
 
-    }
+        console.log("✅ Boot Application Finished");
 
-    console.log("✅ Boot Application Finished");
+    }
+    catch(err){
+
+        console.error("BOOT ERROR:", err);
+
+    }
+    finally{
+
+        document.getElementById("loadingScreen").style.display = "none";
+
+    }
 
 }
 
@@ -7061,6 +7093,10 @@ loadApprovalsDashboard();
 loadLateFieldsDashboard();
 
 loadReminders();
+
+console.log("✅ Boot Application Finished");
+
+document.getElementById("loadingScreen").style.display = "none";
 
 }
 
