@@ -293,34 +293,31 @@ supabaseUrl,
 supabaseKey
 );
 
-// تسجيل الدخول التلقائي للأدمن والتنفيذي
-(async ()=>{
+async function autoLogin(){
 
-const {
-    data:{session}
-} = await supabaseClient.auth.getSession();
+    const {
+        data:{session}
+    } = await supabaseClient.auth.getSession();
 
-if(!session) return;
+    if(!session) return;
 
-const {
-    data:userInfo
-} =
-await supabaseClient
-.from("users")
-.select("role")
-.eq("email",session.user.email)
-.single();
+    const { data:userInfo } =
+    await supabaseClient
+    .from("users")
+    .select("role")
+    .eq("email",session.user.email)
+    .single();
 
-if(
-    userInfo?.role==="admin" ||
-    userInfo?.role==="executive"
-){
+    if(
+        userInfo?.role==="admin" ||
+        userInfo?.role==="executive"
+    ){
 
-    window.location="index.html";
+        window.location="index.html";
+
+    }
 
 }
-
-})();
 
 async function login(){
 
@@ -349,6 +346,9 @@ return;
 window.location="index.html";
 
 }
+
+autoLogin();
+
 </script>
 
 </body>
