@@ -773,7 +773,7 @@ transform:rotate(360deg);
 }
 
 #loadingScreen{
-position:fixed;
+display:none !important;
 top:0;
 left:0;
 width:100%;
@@ -1116,7 +1116,7 @@ box-sizing:border-box;
 
 <body>
 
-<div id="loadingScreen">
+<div id="loadingScreen" style="display:none;">
     <div class="spinner"></div>
     <div style="
         margin-top:15px;
@@ -6747,7 +6747,7 @@ await applyPermissions();
 await showCurrentUser();
 
 /* أخفِ شاشة التحميل مباشرة */
-document.getElementById("loadingScreen").style.display = "none";
+document.getElementById("loadingScreen").style.display="none";
 
 /* ثم حمّل البيانات في الخلفية */
 loadDailyReport().then(()=>{
@@ -6757,8 +6757,6 @@ loadDailyReport().then(()=>{
 });
 
 startRealtime();
-
-refreshAdminTools();
 
         const {
             data:{user}
@@ -6787,11 +6785,6 @@ refreshAdminTools();
     catch(err){
 
         console.error("BOOT ERROR:", err);
-
-    }
-    finally{
-
-        document.getElementById("loadingScreen").style.display = "none";
 
     }
 
