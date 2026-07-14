@@ -6739,12 +6739,23 @@ async function bootApplication(){
 
         await showCurrentUser();
 
-        await loadDailyReport();
+await applyPermissions();
 
-        recalculateAll();
+await showCurrentUser();
 
-        startRealtime();
+/* أخفِ شاشة التحميل مباشرة */
+document.getElementById("loadingScreen").style.display = "none";
 
+/* ثم حمّل البيانات في الخلفية */
+loadDailyReport().then(()=>{
+
+    recalculateAll();
+
+});
+
+startRealtime();
+
+refreshAdminTools();
 
         const {
             data:{user}
