@@ -7214,6 +7214,8 @@ data:{user}
 } =
 await supabaseClient.auth.getUser();
 
+console.log("UPLOAD USER =", user);
+
 if(!user){
 
 alert("يجب تسجيل الدخول");
