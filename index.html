@@ -1215,10 +1215,6 @@ color:white;
 🔑 تبديل المستخدم
 </button>
 
-<button onclick="exportReportHTML()">
-📄 تصدير التقرير HTML
-</button>
-
 </div></div>
 
 <div class="info-bar">
@@ -4995,68 +4991,6 @@ alert(
 
 }
 
-function exportReportHTML(){
-
-  // إنشاء نسخة من الصفحة الحالية
-  const clonedDoc =
-  document.documentElement.cloneNode(true);
-
-  // تثبيت قيم جميع الحقول داخل HTML
-  clonedDoc
-  .querySelectorAll("input, textarea")
-  .forEach(el => {
-
-    if(el.tagName === "TEXTAREA"){
-
-      el.innerHTML = el.value;
-
-    }else{
-
-      el.setAttribute(
-        "value",
-        el.value
-      );
-
-    }
-
-  });
-
-  // إنشاء الملف
-  const htmlContent =
-  "<!DOCTYPE html>\n" +
-  clonedDoc.outerHTML;
-
-  const blob =
-  new Blob(
-    [htmlContent],
-    {type:"text/html"}
-  );
-
-  const a =
-  document.createElement("a");
-
-  const reportDate =
-  document.getElementById(
-    "reportDateKey"
-  )?.value || "Report";
-
-  a.href =
-  URL.createObjectURL(blob);
-
-  a.download =
-  "Factory_Report_" +
-  reportDate +
-  ".html";
-
-  document.body.appendChild(a);
-
-  a.click();
-
-  document.body.removeChild(a);
-
-  URL.revokeObjectURL(a.href);
-
-}
 
 function calcFeedRate(prodId, rateId){
 
@@ -5671,8 +5605,6 @@ document.getElementById("darkModeBtn").style.display="inline-block";
 document.querySelector("button[onclick='window.print()']").style.display="inline-block";
 
 document.querySelector("button[onclick='goToLogin()']").style.display="inline-block";
-
-document.querySelector("button[onclick='exportReportHTML()']").style.display="inline-block";
 
 window.location.hash="powerstation";
 
@@ -7161,11 +7093,15 @@ async function goToLogin(){
 
 await supabaseClient.auth.signOut();
 
-window.location =
-"login.html";
+window.location="login.html";
 
 }
 
+await supabaseClient.auth.signOut();
+
+window.location="login.html";
+
+}
 document
 .querySelectorAll("input[data-save]")
 .forEach(el=>{
