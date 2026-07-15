@@ -7266,18 +7266,18 @@ input.dataset.factory;
 const fieldName =
 input.dataset.field;
 
-const {
-data:{user}
-} =
+const result =
 await supabaseClient.auth.getUser();
 
-console.log("UPLOAD USER =", user);
+console.log("UPLOAD USER =", result);
+
+const user = result.data?.user;
 
 if(!user){
 
-alert("يجب تسجيل الدخول");
+    alert("يجب تسجيل الدخول");
 
-return;
+    return;
 
 }
 
@@ -7362,45 +7362,63 @@ uploaded_by:user.email
 
 }
 
+let preview =
+document.getElementById(fieldName + "_preview");
+
+if(!preview){
+
+    preview = document.createElement("img");
+
+    preview.id = fieldName + "_preview";
+
+    preview.style.maxWidth = "100%";
+    preview.style.maxHeight = "350px";
+    preview.style.marginTop = "10px";
+    preview.style.borderRadius = "12px";
+    preview.style.boxShadow = "0 8px 25px rgba(0,0,0,.15)";
+    preview.style.cursor = "pointer";
+    preview.style.display = "none";
+
+    preview.onclick = ()=>{
+
+        window.open(preview.src);
+
+    };
+
+    input.parentElement.appendChild(preview);
+
+}
+
 const link =
-document.getElementById(
-fieldName+"_link"
-);
-
-if(link){
-
-const preview =
-document.getElementById(
-fieldName + "_preview"
-);
-
-const link =
-document.getElementById(
-fieldName + "_link"
-);
+document.getElementById(fieldName + "_link");
 
 if(file.type.startsWith("image/")){
 
-    preview.src = publicUrl;
+    preview.src = imageUrl;
 
-    preview.style.display="block";
+    preview.style.display = "block";
 
-    link.style.display="none";
+    if(link){
+
+        link.style.display = "none";
+
+    }
 
 }else{
 
-    link.href = publicUrl;
+    preview.style.display = "none";
 
-    link.innerHTML="📄 عرض الملف";
+    if(link){
 
-    link.style.display="inline-block";
+        link.href = imageUrl;
 
-    preview.style.display="none";
+        link.innerHTML = "📄 عرض الملف";
 
-}
-}
+        link.style.display = "inline-block";
 
-alert("✅ تم رفع الملف بنجاح");
+    }
+
+}alert("✅ تم رفع الملف بنجاح");
 
 }
 
