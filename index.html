@@ -127,6 +127,8 @@ display:flex;
 
 align-items:center;
 
+justify-content:center;
+
 padding:14px 18px;
 
 margin-bottom:10px;
@@ -690,7 +692,7 @@ width:100%;
 
 table th{
 
-background:#7AA47A;
+background:#184E3B;
 
 color:white;
 
@@ -973,13 +975,29 @@ font-size:28px;
 
 background:transparent;
 
-color:#7aa47a
+color:##184E3B
 
 border:none;
 
 cursor:pointer;
 
 margin-left:10px;
+
+font-weight:bold;
+
+padding:6px;
+
+border-radius:8px;
+
+transition:.25s;
+
+#menuToggle:hover{
+
+background:#eef5ef;
+
+color:#2E8B6A;
+
+}
 
 }
 
@@ -2776,6 +2794,20 @@ style="display:none;">
 
 <br>
 
+<img
+id="sugar_safety_notes_preview"
+style="
+display:none;
+max-width:100%;
+max-height:350px;
+margin-top:10px;
+border-radius:12px;
+box-shadow:0 6px 20px rgba(0,0,0,.18);
+cursor:pointer;
+"
+onclick="window.open(this.src)"
+>
+
 <a
 id="sugar_safety_notes_link"
 target="_blank"
@@ -2785,7 +2817,7 @@ font-size:13px;
 text-decoration:none;
 ">
 
-👁 عرض الملف
+📄 عرض الملف
 
 </a></td>
 
@@ -6686,21 +6718,58 @@ if(imageRows){
 
 imageRows.forEach(img=>{
 
+const preview =
+document.getElementById(
+img.field_name + "_preview"
+);
+
 const link =
 document.getElementById(
 img.field_name + "_link"
 );
 
-if(link){
+const extension =
+img.image_url
+.split(".")
+.pop()
+.toLowerCase();
 
-link.href =
-img.image_url;
+if(
+["jpg","jpeg","png","gif","webp","bmp"]
+.includes(extension)
+){
 
-link.style.display =
-"inline-block";
-}
+    if(preview){
 
-});
+        preview.src = img.image_url;
+
+        preview.style.display="block";
+
+    }
+
+    if(link){
+
+        link.style.display="none";
+
+    }
+
+}else{
+
+    if(link){
+
+        link.href = img.image_url;
+
+        link.style.display="inline-block";
+
+    }
+
+    if(preview){
+
+        preview.style.display="none";
+
+    }
+
+}});
 
 }
 
@@ -7300,11 +7369,35 @@ fieldName+"_link"
 
 if(link){
 
-link.href = imageUrl;
+const preview =
+document.getElementById(
+fieldName + "_preview"
+);
 
-link.style.display =
-"inline-block";
+const link =
+document.getElementById(
+fieldName + "_link"
+);
 
+if(file.type.startsWith("image/")){
+
+    preview.src = publicUrl;
+
+    preview.style.display="block";
+
+    link.style.display="none";
+
+}else{
+
+    link.href = publicUrl;
+
+    link.innerHTML="📄 عرض الملف";
+
+    link.style.display="inline-block";
+
+    preview.style.display="none";
+
+}
 }
 
 alert("✅ تم رفع الملف بنجاح");
