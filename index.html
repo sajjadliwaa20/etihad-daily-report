@@ -82,8 +82,14 @@ box-sizing:border-box;
 body{
 
 font-family:Tahoma, Arial, sans-serif;
-background:var(--bg);
-color:var(--text);
+background:
+linear-gradient(
+180deg,
+#f7f9fc 0%,
+#eef3f7 100%
+);
+
+color:#263238;
 text-align:center;
 
 }
@@ -92,52 +98,68 @@ text-align:center;
 position:fixed;
 right:0;
 top:0;
-width:280px;
+width:285px;
 height:100vh;
 overflow:auto;
 
-background:var(--main);
+background:
+linear-gradient(
+180deg,
+#184E3B 0%,
+#256B52 40%,
+#2E8B6A 100%
+);
 
-color:white;
+box-shadow:
+0 15px 45px rgba(0,0,0,.28);
 
-padding:20px;
+padding:22px;
 
-border-left:1px solid var(--border);
+border:none;
 
-transition:0.3s;
-
-}
-.sidebar h2{
-
-margin-bottom:20px;
-
-font-size:22px;
+transition:.35s;
 
 }
 
 .sidebar a{
 
-display:block;
+display:flex;
 
-padding:12px;
+align-items:center;
+
+padding:14px 18px;
 
 margin-bottom:10px;
 
-background:rgba(255,255,255,.1);
+border-radius:14px;
 
-border-radius:10px;
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(8px);
 
 text-decoration:none;
 
+font-weight:bold;
+
+letter-spacing:.2px;
+
 color:white;
 
-transition:.3s;
+transition:.25s;
 
 }
 
 .sidebar a:hover{
 
-background:rgba(255,255,255,.2);
+background:white;
+
+color:#1D5B44;
+
+transform:translateX(-8px);
+
+box-shadow:
+
+0 10px 20px rgba(0,0,0,.18);
 
 }
 
@@ -205,7 +227,7 @@ object-fit:contain;
 
 font-size:30px;
 
-color:##123514
+color:#123514
 
 font-weight:bold;
 
@@ -340,11 +362,19 @@ background:var(--card);
 
 color:var(--text);
 
+border-radius:16px;
+
+overflow:hidden;
+
+box-shadow:
+
+0 5px 18px rgba(0,0,0,.06);
+
 }
 
 th{
 
-background:#7AA47A
+background:#7AA47A;
 
 color:white;
 
@@ -446,6 +476,14 @@ button:hover{
 filter:brightness(1.1);
 
 transform:translateY(-1px);
+
+transform:
+
+translateY(-3px);
+
+box-shadow:
+
+0 12px 25px rgba(0,0,0,.22);
 
 }
 
@@ -552,7 +590,7 @@ float:right;
 
 background:white;
 
-color:##7AA47A;
+color:#7AA47A;
 
 font-size:20px;
 
@@ -593,7 +631,18 @@ font-weight:bold;
 
 table th{
 
-font-size:18px;
+background:
+
+linear-gradient(
+90deg,
+#1d5f45,
+#2d8a62,
+#4caf7a
+);
+
+color:white;
+
+font-weight:700;
 
 }
 
@@ -655,7 +704,15 @@ background:#ffffff;
 
 table tr:nth-child(even){
 
-background:#D4E0F2;
+background:#f8fbfd;
+
+}
+
+table tr:hover{
+
+background:#eef8f2;
+
+transition:.2s;
 
 }
 
