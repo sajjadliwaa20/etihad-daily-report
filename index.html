@@ -4796,40 +4796,6 @@ document.getElementById(
 
 });
 
-
-/* ===========================
-   مسح البيانات
-=========================== */
-
-function clearAllData(){
-
-if(confirm("هل تريد حذف جميع البيانات؟")){
-
-localStorage.clear();
-
-location.reload();
-
-}
-
-}
-
-function checkRawSugarColor(el){
-
-let v = parseFloat(el.value);
-
-el.classList.remove("warning");
-
-if(isNaN(v))
-return;
-
-if(v > 1000){
-
-el.classList.add("warning");
-
-}
-
-}
-
 /* ===========================
    لون السكر
 =========================== */
@@ -6737,11 +6703,6 @@ element
 
 if(!element){
 
-    console.warn(
-        "NOT FOUND:",
-        row.field_name
-    );
-
     return;
 }
 
@@ -6851,8 +6812,6 @@ grid.appendChild(pdf);
 }
 async function loadDailyReport(){
 
-console.log("LOAD DAILY REPORT STARTED");
-
 await loadFactorySection("powerstation");
 
 await loadFactorySection("blackoil");
@@ -6865,12 +6824,8 @@ await loadFactorySection("flour");
 
 await loadFactorySection("feed");
 
-recalculateAll();
-
 }
 async function bootApplication(){
-
-    console.log("🚀 Boot Application Started");
 
     try{
 
@@ -6882,11 +6837,8 @@ await showCurrentUser();
 document.getElementById("loadingScreen").style.display="none";
 
 /* ثم حمّل البيانات في الخلفية */
-loadDailyReport().then(()=>{
 
-    recalculateAll();
-
-});
+await loadDailyReport();
 
 startRealtime();
 
@@ -6910,8 +6862,6 @@ startRealtime();
             }
 
         }
-
-        console.log("✅ Boot Application Finished");
 
     }
     catch(err){
@@ -7637,4 +7587,3 @@ async function saveSalesField(fieldId, factory){
 </body>
 
 </html>
-
