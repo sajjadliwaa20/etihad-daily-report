@@ -1183,6 +1183,62 @@ box-sizing:border-box;
 
 }
 
+.files-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fill,minmax(220px,1fr));
+
+gap:15px;
+
+margin-top:10px;
+
+}
+
+.files-grid img{
+
+width:100%;
+
+height:180px;
+
+object-fit:cover;
+
+border-radius:12px;
+
+box-shadow:0 6px 20px rgba(0,0,0,.15);
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.files-grid img:hover{
+
+transform:scale(1.03);
+
+}
+
+.files-grid a{
+
+display:block;
+
+padding:10px;
+
+background:#eef5ff;
+
+border-radius:10px;
+
+text-decoration:none;
+
+font-weight:bold;
+
+color:#1d4ea3;
+
+}
+
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2732,6 +2788,7 @@ class="uploadImageBtn">
 
 <input
 type="file"
+multiple
 accept="image/*,application/pdf"
 id="sugar_quality_notes_image"
 data-factory="sugar"
@@ -2785,6 +2842,7 @@ class="uploadImageBtn">
 
 <input
 type="file"
+multiple
 accept="image/*,application/pdf"
 id="sugar_safety_notes_image"
 data-factory="sugar"
@@ -3369,6 +3427,7 @@ class="uploadImageBtn">
 
 <input
 type="file"
+multiple
 accept="image/*,application/pdf"
 id="oil_quality_notes_image"
 data-factory="oil"
@@ -3422,6 +3481,7 @@ class="uploadImageBtn">
 
 <input
 type="file"
+multiple
 accept="image/*,application/pdf"
 id="oil_safety_notes_image"
 data-factory="oil"
@@ -3922,6 +3982,7 @@ class="uploadImageBtn">
 
 <input
 type="file"
+multiple
 accept="image/*,application/pdf"
 id="flour_quality_notes_image"
 data-factory="flour"
@@ -3976,6 +4037,7 @@ class="uploadImageBtn">
 
 <input
 type="file"
+multiple
 accept="image/*,application/pdf"
 id="flour_safety_notes_image"
 data-factory="flour"
@@ -4564,6 +4626,7 @@ class="uploadImageBtn">
 
 <input
 type="file"
+multiple
 accept="image/*,application/pdf"
 id="feed_quality_notes_image"
 data-factory="sugar"
@@ -4617,6 +4680,7 @@ class="uploadImageBtn">
 
 <input
 type="file"
+multiple
 accept="image/*,application/pdf"
 id="feed_safety_notes_image"
 data-factory="feed"
@@ -6716,18 +6780,87 @@ await supabaseClient
 
 if(imageRows){
 
-imageRows.forEach(img=>{
+// تنظيف المعارض القديمة حتى لا تتكرر الصور
+document.querySelectorAll(".files-grid").forEach(g=>g.remove());
 
-let preview =
-document.getElementById(
-img.field_name + "_preview"
-);
+const grouped={};
 
-const link =
-document.getElementById(
-img.field_name + "_link"
-);
+imageRows.forEach(file=>{
 
+const key=file.field_name;
+
+if(!grouped[key]){
+
+grouped[key]=[];
+
+}
+
+grouped[key].push(file);
+
+});
+
+Object.keys(grouped).forEach(field=>{
+
+const link=
+document.getElementById(field+"_link");
+
+if(!link)return;
+
+const grid=document.createElement("div");
+
+grid.className="files-grid";
+
+link.parentNode.insertBefore(grid,link);
+
+link.style.display="none";
+
+grouped[field].forEach(file=>{
+
+const extension=file.image_url
+.split(".")
+.pop()
+.toLowerCase();
+
+if([
+"jpg",
+"jpeg",
+"png",
+"gif",
+"bmp",
+"webp"
+].includes(extension)){
+
+const img=document.createElement("img");
+
+img.src=file.image_url;
+
+img.onclick=()=>{
+
+window.open(file.image_url,"_blank");
+
+};
+
+grid.appendChild(img);
+
+}else{
+
+const pdf=document.createElement("a");
+
+pdf.href=file.image_url;
+
+pdf.target="_blank";
+
+pdf.innerHTML="📄 "+file.image_url.split("/").pop();
+
+grid.appendChild(pdf);
+
+}
+
+});
+
+});
+
+}
 // إذا لم تكن الصورة موجودة ننشئها تلقائياً
 if(!preview){
 
@@ -7270,56 +7403,49 @@ el.setAttribute(
 
 async function uploadNoteImage(input){
 
-const file = input.files[0];
+const files=[...input.files];
 
-if(!file) return;
+if(files.length===0)return;
 
-const reportDate =
+const reportDate=
 document.getElementById("reportDateKey").value;
 
 if(!reportDate){
 
-alert("اختر تاريخ التقرير أولاً");
+alert("اختر التاريخ أولاً");
 
 return;
 
 }
 
-const factory =
-input.dataset.factory;
+const factory=input.dataset.factory;
 
-const fieldName =
-input.dataset.field;
+const fieldName=input.dataset.field;
 
-const result =
-await supabaseClient.auth.getUser();
+const {
+data:{user}
+}=await supabaseClient.auth.getUser();
 
-console.log("UPLOAD USER =", result);
+if(!user)return;
 
-const user = result.data?.user;
+for(const file of files){
 
-if(!user){
-
-    alert("يجب تسجيل الدخول");
-
-    return;
-
-}
-
-const extension =
+const extension=
 file.name.split(".").pop();
 
-const fileName =
-`${reportDate}/${factory}/${fieldName}.${extension}`;
+const fileName=
+`${reportDate}/${factory}/${fieldName}/${Date.now()}_${Math.random().toString(36).substring(2)}.${extension}`;
 
-const { error:uploadError } =
+const {
+error:uploadError
+}=
 await supabaseClient.storage
 .from("daily-report-images")
 .upload(
 fileName,
 file,
 {
-upsert:true
+upsert:false
 }
 );
 
@@ -7327,51 +7453,20 @@ if(uploadError){
 
 console.log(uploadError);
 
-alert(uploadError.message);
-
-return;
+continue;
 
 }
 
 const {
 data:urlData
-} =
+}=
 supabaseClient.storage
 .from("daily-report-images")
 .getPublicUrl(fileName);
 
-const imageUrl =
-urlData.publicUrl;
-
-const { data:oldRow } =
 await supabaseClient
 .from("note_images")
-.select("id")
-.eq("report_date",reportDate)
-.eq("factory",factory)
-.eq("field_name",fieldName)
-.maybeSingle();
-
-if(oldRow){
-
-await supabaseClient
-.from("note_images")
-.update({
-
-image_url:imageUrl,
-
-uploaded_by:user.email,
-
-uploaded_at:new Date().toISOString()
-
-})
-.eq("id",oldRow.id);
-
-}else{
-
-await supabaseClient
-.from("note_images")
-.insert([{
+.insert({
 
 report_date:reportDate,
 
@@ -7379,74 +7474,21 @@ factory:factory,
 
 field_name:fieldName,
 
-image_url:imageUrl,
+image_url:urlData.publicUrl,
 
 uploaded_by:user.email
 
-}]);
+});
 
 }
 
-let preview =
-document.getElementById(fieldName + "_preview");
+await loadFactorySection(factory);
 
-if(!preview){
+input.value="";
 
-    preview = document.createElement("img");
-
-    preview.id = fieldName + "_preview";
-
-    preview.style.maxWidth = "100%";
-    preview.style.maxHeight = "350px";
-    preview.style.marginTop = "10px";
-    preview.style.borderRadius = "12px";
-    preview.style.boxShadow = "0 8px 25px rgba(0,0,0,.15)";
-    preview.style.cursor = "pointer";
-    preview.style.display = "none";
-
-    preview.onclick = ()=>{
-
-        window.open(preview.src);
-
-    };
-
-    input.parentElement.appendChild(preview);
+alert("✅ تم رفع الملفات بنجاح");
 
 }
-
-const link =
-document.getElementById(fieldName + "_link");
-
-if(file.type.startsWith("image/")){
-
-    preview.src = imageUrl;
-
-    preview.style.display = "block";
-
-    if(link){
-
-        link.style.display = "none";
-
-    }
-
-}else{
-
-    preview.style.display = "none";
-
-    if(link){
-
-        link.href = imageUrl;
-
-        link.innerHTML = "📄 عرض الملف";
-
-        link.style.display = "inline-block";
-
-    }
-
-}alert("✅ تم رفع الملف بنجاح");
-
-}
-
 function toggleDarkMode(){
 
 document.body.classList.toggle("dark-mode");
