@@ -1238,6 +1238,27 @@ color:#1d4ea3;
 
 }
 
+.file-wrapper{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    margin:8px;
+}
+
+.delete-file-btn{
+    background:#d32f2f;
+    color:white;
+    border:none;
+    border-radius:6px;
+    padding:5px 12px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.delete-file-btn:hover{
+    background:#b71c1c;
+}
 
 </style>
 
@@ -6777,18 +6798,37 @@ if([
 "webp"
 ].includes(extension)){
 
+const wrapper=document.createElement("div");
+
+wrapper.className="file-wrapper";
+
 const img=document.createElement("img");
 
 img.src=file.image_url;
 
 img.onclick=()=>{
 
-window.open(file.image_url,"_blank");
+    window.open(file.image_url,"_blank");
 
 };
 
-grid.appendChild(img);
+wrapper.appendChild(img);
 
+const deleteBtn=document.createElement("button");
+
+deleteBtn.innerHTML="🗑 حذف";
+
+deleteBtn.className="delete-file-btn";
+
+deleteBtn.onclick=()=>{
+
+    alert("زر الحذف يعمل");
+
+};
+
+wrapper.appendChild(deleteBtn);
+
+grid.appendChild(wrapper);
 }else{
 
 const pdf=document.createElement("a");
@@ -6810,6 +6850,7 @@ grid.appendChild(pdf);
 }
 
 }
+
 async function loadDailyReport(){
 
 await loadFactorySection("powerstation");
@@ -7330,21 +7371,20 @@ supabaseClient.storage
 .from("daily-report-images")
 .getPublicUrl(fileName);
 
+const { error: insertError } =
 await supabaseClient
 .from("note_images")
 .insert({
-
-report_date:reportDate,
-
-factory:factory,
-
-field_name:fieldName,
-
-image_url:urlData.publicUrl,
-
-uploaded_by:user.email
-
+    report_date: reportDate,
+    factory: factory,
+    field_name: fieldName,
+    image_url: urlData.publicUrl,
+    uploaded_by: user.email
 });
+
+if(insertError){
+    console.error(insertError);
+}
 
 }
 
@@ -7355,6 +7395,7 @@ input.value="";
 alert("✅ تم رفع الملفات بنجاح");
 
 }
+
 function toggleDarkMode(){
 
 document.body.classList.toggle("dark-mode");
