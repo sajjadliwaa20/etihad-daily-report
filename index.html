@@ -57,7 +57,7 @@
 
 .dark-mode summary{
 
-color:#ffffff !important;
+color:#eef2f5 !important;
 
 }
 
@@ -1258,6 +1258,63 @@ color:#1d4ea3;
 
 .delete-file-btn:hover{
     background:#b71c1c;
+}
+
+/* انتقال عام */
+
+button,
+.sidebar-item,
+.section,
+.card,
+input,
+select,
+textarea{
+
+    transition:
+        background-color .25s ease,
+        color .25s ease,
+        transform .20s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 6px 16px rgba(0,0,0,.12);
+
+}
+
+.section:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+
+}
+
+.section{
+
+    opacity:0;
+
+    transform:translateY(10px);
+
+    transition:
+
+        opacity .35s ease,
+
+        transform .35s ease;
+
+}
+
+.section.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
 }
 
 </style>
