@@ -6745,11 +6745,14 @@ await supabaseClient
 .select("*")
 .eq("report_date", reportDate)
 .eq("factory", factory);
+console.log("Factory:", factory);
+console.log("Images:", imageRows);
+
 
 if(imageRows){
 
 // تنظيف المعارض القديمة حتى لا تتكرر الصور
-document.querySelectorAll(".files-grid").forEach(g=>g.remove());
+// document.querySelectorAll(".files-grid").forEach(g=>g.remove());
 
 const grouped={};
 
@@ -6820,26 +6823,108 @@ deleteBtn.innerHTML="🗑 حذف";
 
 deleteBtn.className="delete-file-btn";
 
-deleteBtn.onclick=()=>{
+deleteBtn.onclick=async()=>{
 
-    alert("زر الحذف يعمل");
+    if(!confirm("هل تريد حذف هذا الملف؟")) return;
+
+    try{
+
+        if(file.storage_path){
+
+            const { error:storageError }=
+            await supabaseClient
+            .storage
+            .from("daily-report-images")
+            .remove([file.storage_path]);
+
+            if(storageError) throw storageError;
+
+        }
+
+        const { error:dbError }=
+        await supabaseClient
+        .from("note_images")
+        .delete()
+        .eq("id",file.id);
+
+        if(dbError) throw dbError;
+
+        wrapper.remove();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        alert("فشل حذف الملف");
+
+    }
+
+};
+wrapper.appendChild(deleteBtn);
+
+grid.appendChild(wrapper);
+}else{
+
+const wrapper=document.createElement("div");
+wrapper.className="file-wrapper";
+
+const pdf=document.createElement("a");
+
+pdf.href=file.image_url;
+pdf.target="_blank";
+pdf.innerHTML="📄 "+file.image_url.split("/").pop();
+
+wrapper.appendChild(pdf);
+
+const deleteBtn=document.createElement("button");
+deleteBtn.className="delete-file-btn";
+deleteBtn.innerHTML="🗑 حذف";
+
+deleteBtn.onclick=async()=>{
+
+    if(!confirm("هل تريد حذف هذا الملف؟")) return;
+
+    try{
+
+        if(file.storage_path){
+
+            const { error:storageError }=
+            await supabaseClient
+            .storage
+            .from("daily-report-images")
+            .remove([file.storage_path]);
+
+            if(storageError) throw storageError;
+
+        }
+
+        const { error:dbError }=
+        await supabaseClient
+        .from("note_images")
+        .delete()
+        .eq("id",file.id);
+
+        if(dbError) throw dbError;
+
+        wrapper.remove();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        alert("فشل حذف الملف");
+
+    }
 
 };
 
 wrapper.appendChild(deleteBtn);
 
 grid.appendChild(wrapper);
-}else{
-
-const pdf=document.createElement("a");
-
-pdf.href=file.image_url;
-
-pdf.target="_blank";
-
-pdf.innerHTML="📄 "+file.image_url.split("/").pop();
-
-grid.appendChild(pdf);
 
 }
 
@@ -7379,6 +7464,7 @@ await supabaseClient
     factory: factory,
     field_name: fieldName,
     image_url: urlData.publicUrl,
+       storage_path: filePath,
     uploaded_by: user.email
 });
 
@@ -7388,7 +7474,9 @@ if(insertError){
 
 }
 
+console.log("Reloading section...");
 await loadFactorySection(factory);
+console.log("Reload finished");
 
 input.value="";
 
