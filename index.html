@@ -110,6 +110,14 @@ linear-gradient(
 #2E8B6A 100%
 );
 
+box-shadow:-8px 0 25px rgba(0,0,0,.18);
+
+border-left:1px solid rgba(255,255,255,.08);
+
+transition:all .25s ease;
+
+}
+
 box-shadow:
 0 15px 45px rgba(0,0,0,.28);
 
@@ -469,23 +477,26 @@ cursor:pointer;
 
 margin-left:10px;
 
-transition:.25s;
+transition:
+        transform .15s ease,
+        box-shadow .21s ease;
+              background-color .20s ease;
 
 }
 
 button:hover{
 
-filter:brightness(1.1);
+    transform:translateY(-2px);
 
-transform:translateY(-1px);
+    box-shadow:0 5px 12px rgba(0,0,0,.12);
 
-transform:
+}
 
-translateY(-3px);
+button:active{
 
-box-shadow:
+    transform:translateY(0);
 
-0 12px 25px rgba(0,0,0,.22);
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
 
 }
 
