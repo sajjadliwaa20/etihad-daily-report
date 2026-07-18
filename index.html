@@ -1263,19 +1263,15 @@ color:#1d4ea3;
 /* انتقال عام */
 
 button,
-.sidebar-item,
-.section,
-.card,
 input,
 select,
 textarea{
 
     transition:
         background-color .25s ease,
-        color .25s ease,
-        transform .20s ease,
+        border-color .25s ease,
         box-shadow .25s ease,
-        border-color .25s ease;
+        transform .18s ease;
 
 }
 
@@ -1283,37 +1279,15 @@ button:hover{
 
     transform:translateY(-2px);
 
-    box-shadow:0 6px 16px rgba(0,0,0,.12);
+    box-shadow:0 6px 14px rgba(0,0,0,.12);
 
 }
 
-.section:hover{
+input:hover,
+select:hover,
+textarea:hover{
 
-    transform:translateY(-2px);
-
-    box-shadow:0 8px 22px rgba(0,0,0,.08);
-
-}
-
-.section{
-
-    opacity:0;
-
-    transform:translateY(10px);
-
-    transition:
-
-        opacity .35s ease,
-
-        transform .35s ease;
-
-}
-
-.section.show{
-
-    opacity:1;
-
-    transform:translateY(0);
+    box-shadow:0 0 0 3px rgba(33,150,243,.08);
 
 }
 
