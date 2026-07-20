@@ -4942,7 +4942,7 @@ text-decoration:none;
         </section>
         <script>
 
-            const APP_VERSION = "6.1.0";
+            const APP_VERSION = "6.1.0";    
 
             const SUPABASE_URL =
                 "https://aptamsjgburgubfwamep.supabase.co";
@@ -7892,6 +7892,20 @@ setInterval(checkForUpdates,600000);
 
 </div>
 
+<div id="updateDialog" class="update-dialog">
+
+    <h3>🚀 يتوفر تحديث جديد</h3>
+
+    <p id="updateText"></p>
+
+    <button onclick="updateApplication()">
+
+        تحديث الآن
+
+    </button>
+
+</div>
+
 </div>
 
         <script>
@@ -8039,21 +8053,6 @@ navigator.serviceWorker.register('service-worker.js');
 });
 
 }
-
-<div id="updateDialog" class="update-dialog">
-
-    <h3>🚀 يتوفر تحديث جديد</h3>
-
-    <p id="updateText"></p>
-
-    <button onclick="updateApplication()">
-
-        تحديث الآن
-
-    </button>
-
-</div>
-
 
         </script>
 
