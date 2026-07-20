@@ -1574,6 +1574,69 @@ color:#777;
 
 }
 
+.update-dialog{
+
+position:fixed;
+
+top:25px;
+
+right:25px;
+
+width:320px;
+
+background:white;
+
+border-radius:18px;
+
+padding:18px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.18);
+
+display:none;
+
+z-index:999999;
+
+animation:fadeIn .3s;
+
+}
+
+.update-dialog h3{
+
+margin:0 0 10px;
+
+color:#145A46;
+
+}
+
+.update-dialog p{
+
+margin-bottom:18px;
+
+color:#555;
+
+line-height:1.7;
+
+}
+
+.update-dialog button{
+
+width:100%;
+
+padding:12px;
+
+background:#145A46;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
 
     </style>
 
@@ -4879,6 +4942,8 @@ text-decoration:none;
         </section>
         <script>
 
+            const APP_VERSION = "6.1.0";
+
             const SUPABASE_URL =
                 "https://aptamsjgburgubfwamep.supabase.co";
 
@@ -7433,6 +7498,10 @@ font-weight:bold;
 
             }, 10000);
 
+            checkForUpdates();
+
+setInterval(checkForUpdates,600000);
+
             function startRealtime() {
 
                 console.log("startRealtime CALLED");
@@ -7764,6 +7833,32 @@ font-weight:bold;
 
                 }
             }
+
+            async function checkForUpdates() {
+
+    try {
+
+        const response = await fetch("version.json?t=" + Date.now(), {
+            cache: "no-store"
+        });
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        if (data.version !== APP_VERSION) {
+
+            showUpdateDialog(data.version);
+
+        }
+
+    } catch (err) {
+
+        console.log("Version check skipped.", err);
+
+    }
+
+}
         </script>
 
 <div id="installCard" class="install-card">
@@ -7926,6 +8021,36 @@ window.addEventListener('load',()=>{
 navigator.serviceWorker.register('service-worker.js');
 
 });
+
+}
+
+<div id="updateDialog" class="update-dialog">
+
+    <h3>🚀 يتوفر تحديث جديد</h3>
+
+    <p id="updateText"></p>
+
+    <button onclick="updateApplication()">
+
+        تحديث الآن
+
+    </button>
+
+</div>
+
+function showUpdateDialog(newVersion){
+
+document.getElementById("updateText").innerHTML=
+
+"الإصدار الجديد <b>"+newVersion+"</b> جاهز للتثبيت.";
+
+document.getElementById("updateDialog").style.display="block";
+
+}
+
+function updateApplication(){
+
+location.reload(true);
 
 }
 
