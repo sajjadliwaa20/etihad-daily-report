@@ -7960,6 +7960,22 @@ setInterval(checkForUpdates,600000);
 
             }
 
+            function showUpdateDialog(newVersion){
+
+document.getElementById("updateText").innerHTML=
+
+"الإصدار الجديد <b>"+newVersion+"</b> جاهز للتثبيت.";
+
+document.getElementById("updateDialog").style.display="block";
+
+}
+
+function updateApplication(){
+
+location.reload(true);
+
+}
+
 let deferredPrompt;
 
 const installCard=document.getElementById("installCard");
@@ -8038,21 +8054,6 @@ navigator.serviceWorker.register('service-worker.js');
 
 </div>
 
-function showUpdateDialog(newVersion){
-
-document.getElementById("updateText").innerHTML=
-
-"الإصدار الجديد <b>"+newVersion+"</b> جاهز للتثبيت.";
-
-document.getElementById("updateDialog").style.display="block";
-
-}
-
-function updateApplication(){
-
-location.reload(true);
-
-}
 
         </script>
 
