@@ -7834,15 +7834,6 @@ font-weight:bold;
             }
 
 
-            if('serviceWorker' in navigator){
-
-window.addEventListener('load',()=>{
-
-navigator.serviceWorker.register('service-worker.js');
-
-});
-
-}
 
 <div id="installCard" class="install-card">
 
@@ -7930,6 +7921,16 @@ document.getElementById("splashScreen").remove();
 },900);
 
 });
+
+        if('serviceWorker' in navigator){
+
+window.addEventListener('load',()=>{
+
+navigator.serviceWorker.register('service-worker.js');
+
+});
+
+}
 
         </script>
 
