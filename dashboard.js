@@ -651,6 +651,8 @@ async function goToLogin() {
   window.location = "login.html";
 }
 
+console.log("showNotification loaded");
+
 function showNotification(message, type = "success") {
   const icons = {
     success: "✅",
