@@ -4378,7 +4378,7 @@ text-decoration:none;
 
                 await loadDailyReport();
 
-                alert("✅ تم اعتماد القسم بنجاح");
+                showNotification("تم اعتماد القسم بنجاح");
 
             }
              async function approvePowerSection() {
@@ -4387,7 +4387,10 @@ text-decoration:none;
 
                 await approveSection("blackoil");
 
-                alert("تم اعتماد تقرير محطة الطاقة والنفط الأسود بنجاح");
+              showNotification(
+    "تم اعتماد تقرير محطة الطاقة والنفط الأسود بنجاح",
+    "success"
+);
 
             }
    
@@ -5462,6 +5465,8 @@ console.log("showCurrentUser =", showCurrentUser);
 <script src="js/jsinit.js"></script>
 <script src="js/jsupdate.js"></script>
 <script src="js/dashboard.js"></script>
+
+<div id="notification-container"></div>
 
 <script>
 bootApplication();

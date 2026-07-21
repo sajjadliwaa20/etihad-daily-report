@@ -517,6 +517,12 @@ transition:.25s;
 
         }
 
+        .dark-mode input:focus,
+        .dark-mode textarea:focus,
+        .dark-mode select:focus{
+    color: #222 !important;
+}
+
         input:focus,
         select:focus {
 
@@ -525,6 +531,8 @@ transition:.25s;
             border-color: var(--main);
 
             background:#fcfffd;
+
+            color: #222020;
 
             box-shadow: 0 0 8px rgba(31, 60, 136, .25);
 
@@ -1609,5 +1617,102 @@ border-radius:10px;
 font-weight:bold;
 
 cursor:pointer;
+
+}
+
+/* ============================
+   Notifications
+============================ */
+
+#notification-container{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.notification{
+    min-width: 300px;
+    max-width: 420px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0,0,0,.18);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: notificationIn .35s ease;
+    pointer-events: auto;
+}
+
+.notification.success{
+    background:#16a34a;
+}
+
+.notification.error{
+    background:#dc2626;
+}
+
+.notification.warning{
+    background:#d97706;
+}
+
+.notification.info{
+    background:#2563eb;
+}
+
+.notification.hide{
+    animation: notificationOut .35s ease forwards;
+}
+
+.notification .icon{
+    font-size:22px;
+}
+
+.notification .message{
+    flex:1;
+}
+
+@keyframes notificationIn{
+    from{
+        opacity:0;
+        transform:translateX(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+@keyframes notificationOut{
+    from{
+        opacity:1;
+        transform:translateX(0);
+    }
+    to{
+        opacity:0;
+        transform:translateX(40px);
+    }
+}
+
+@media(max-width:768px){
+
+#notification-container{
+    right:12px;
+    left:12px;
+    top:15px;
+}
+
+.notification{
+    min-width:unset;
+    max-width:unset;
+    width:100%;
+}
 
 }
