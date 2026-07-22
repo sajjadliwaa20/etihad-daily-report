@@ -1,3 +1,5 @@
+window.testDashboard = true;
+
 async function showCurrentUser() {
   const {
     data: { user },
