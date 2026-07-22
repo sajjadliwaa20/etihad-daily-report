@@ -1,3 +1,5 @@
+window.testDashboard = true;
+
 async function showCurrentUser() {
   const {
     data: { user },
@@ -649,4 +651,36 @@ async function goToLogin() {
   await supabaseClient.auth.signOut();
 
   window.location = "login.html";
+}
+
+console.log("showNotification loaded");
+
+function showNotification(message, type = "success") {
+  const icons = {
+    success: "✅",
+    error: "❌",
+    warning: "⚠️",
+    info: "ℹ️",
+  };
+
+  const container = document.getElementById("notification-container");
+
+  const notification = document.createElement("div");
+
+  notification.className = `notification ${type}`;
+
+  notification.innerHTML = `
+        <div class="icon">${icons[type] || "ℹ️"}</div>
+        <div class="message">${message}</div>
+    `;
+
+  container.appendChild(notification);
+
+  setTimeout(() => {
+    notification.classList.add("hide");
+
+    setTimeout(() => {
+      notification.remove();
+    }, 350);
+  }, 3000);
 }
