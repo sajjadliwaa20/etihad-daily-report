@@ -2,7 +2,7 @@ async function loadArchiveReport() {
   const date = document.getElementById("archiveDate").value;
 
   if (!date) {
-    alert("اختر تاريخ التقرير");
+    showNotification("اختر تاريخ التقرير");
 
     return;
   }
@@ -16,13 +16,13 @@ async function loadArchiveReport() {
     if (error) {
       console.log(error);
 
-      alert("ERROR: " + error.message);
+      showNotification("ERROR: " + error.message);
 
       return;
     }
 
     if (!data || data.length === 0) {
-      alert("لا يوجد تقرير لهذا التاريخ");
+      showNotification("لا يوجد تقرير لهذا التاريخ");
 
       return;
     }
@@ -35,10 +35,10 @@ async function loadArchiveReport() {
       }
     });
 
-    alert("تم تحميل التقرير بنجاح");
+    showNotification("تم تحميل التقرير بنجاح", "success");
   } catch (err) {
     console.error(err);
 
-    alert("فشل تحميل التقرير");
+    showNotification("فشل تحميل التقرير", "error");
   }
 }

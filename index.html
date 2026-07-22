@@ -791,7 +791,7 @@ saveSalesField('feed_sales_premix','feed');
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>المعدة</th>
@@ -817,7 +817,7 @@ saveSalesField('feed_sales_premix','feed');
 
                     <br>
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>أعلى حمل كهربائي (MW)</th>
@@ -882,7 +882,7 @@ saveSalesField('feed_sales_premix','feed');
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>الكمية الواردة (طن)</th>
@@ -920,7 +920,7 @@ saveSalesField('feed_sales_premix','feed');
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>لون الخام (ICUMSA)</th>
@@ -953,7 +953,7 @@ saveSalesField('feed_sales_premix','feed');
 
                     <br>
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>الإذابة القديمة</th>
@@ -1037,7 +1037,7 @@ font-size:15px;
 
                     <h4>فلاتر 250</h4>
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>معدل حجم الدورة (م³)</th>
@@ -1067,7 +1067,7 @@ font-size:15px;
 
                     <h4>فلاتر 500</h4>
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>معدل حجم الدورة (م³)</th>
@@ -1240,7 +1240,7 @@ font-size:15px;
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>حرارة السكر</th>
@@ -1310,7 +1310,7 @@ font-size:15px;
 
                     <h4>تشغيل خطوط التعبئة</h4>
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th rowspan="2">الشفت</th>
@@ -1624,7 +1624,7 @@ text-decoration:none;
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>نوع الخام</th>
@@ -1945,17 +1945,17 @@ updateDashboard();
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
 
-                            <th>الخط</th>
+                            <th>الـخـط</th>
 
-                            <th>صباحي</th>
+                            <th>صـبـاحـي</th>
 
-                            <th>مسائي</th>
+                            <th>مـسـائـي</th>
 
-                            <th>ليلي</th>
+                            <th>لـيـلـي</th>
 
                         </tr>
 
@@ -2035,7 +2035,7 @@ updateDashboard();
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>الماكنة</th>
@@ -2113,7 +2113,7 @@ updateDashboard();
 
                     <br>
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>إجمالي الإنتاج (قطعة)</th>
@@ -2287,7 +2287,7 @@ text-decoration:none;
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
 
@@ -2366,7 +2366,7 @@ text-decoration:none;
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>الخط</th>
@@ -2783,7 +2783,7 @@ text-decoration:none;
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
 
@@ -2823,7 +2823,7 @@ text-decoration:none;
 
                 <div class="details-content">
 
-                    <table>
+                    <table class="wide-table">
 
                         <tr>
                             <th>الخط</th>
@@ -3651,7 +3651,7 @@ text-decoration:none;
                     reportLink
                 );
 
-                alert(
+                showNotification(
                     "تم نسخ رابط التقرير"
                 );
 
@@ -4110,7 +4110,7 @@ text-decoration:none;
 
                 if (!reportDate) {
 
-                    alert("لم يتم تحديد تاريخ التقرير");
+                    showNotification("لم يتم تحديد تاريخ التقرير");
 
                     return;
 
@@ -4121,7 +4121,7 @@ text-decoration:none;
 
                 if (!sectionElement) {
 
-                    alert("القسم غير موجود");
+                    showNotification("القسم غير موجود");
 
                     return;
 
@@ -4303,7 +4303,7 @@ text-decoration:none;
 
                         console.log(error);
 
-                        alert(error.message);
+                        showNotification(error.message);
 
                         return;
 
@@ -4313,7 +4313,7 @@ text-decoration:none;
 
                         console.log(error);
 
-                        alert(error.message);
+                        showNotification(error.message);
 
                         return;
 
@@ -4351,7 +4351,7 @@ text-decoration:none;
 
                     console.log(approvalError);
 
-                    alert("فشل الاعتماد");
+                    showNotification("فشل الاعتماد", "error");
 
                     return;
 
@@ -4378,7 +4378,7 @@ text-decoration:none;
 
                 await loadDailyReport();
 
-                showNotification("تم اعتماد القسم بنجاح");
+                showNotification("تم اعتماد القسم بنجاح","success");
 
             }
              async function approvePowerSection() {
@@ -4565,7 +4565,7 @@ text-decoration:none;
 
                                         console.error(err);
 
-                                        alert("فشل حذف الملف");
+                                        showNotification("فشل حذف الملف", "error");
 
                                     }
 
@@ -4624,7 +4624,7 @@ text-decoration:none;
 
                                         console.error(err);
 
-                                        alert("فشل حذف الملف");
+                                        showNotification("فشل حذف الملف", "error");
 
                                     }
 
@@ -5106,7 +5106,7 @@ console.log("showCurrentUser =", showCurrentUser);
 
                 if (!reportDate) {
 
-                    alert("اختر التاريخ أولاً");
+                    showNotification("اختر التاريخ أولاً");
 
                     return;
 
@@ -5182,7 +5182,7 @@ console.log("showCurrentUser =", showCurrentUser);
 
                 input.value = "";
 
-                alert("✅ تم رفع الملفات بنجاح");
+                showNotification("✅ تم رفع الملفات بنجاح","success");
 
             }
 
@@ -5217,28 +5217,22 @@ console.log("showCurrentUser =", showCurrentUser);
                 "DOMContentLoaded",
                 () => {
 
-                    const darkMode =
-                        localStorage.getItem("darkMode");
+                   const savedDarkMode = localStorage.getItem("darkMode");
 
-                    if (darkMode === "true") {
+const isDark =
+    savedDarkMode === null
+        ? true
+        : savedDarkMode === "true";
 
-                        document.body.classList.add("dark-mode");
+document.body.classList.toggle("dark-mode", isDark);
 
-                    }
+const btn = document.getElementById("darkModeBtn");
 
-                    const btn =
-                        document.getElementById("darkModeBtn");
-
-                    if (btn) {
-
-                        btn.innerHTML =
-                            document.body.classList.contains("dark-mode")
-                                ?
-                                "☀️ الوضع النهاري"
-                                :
-                                "🌙 الوضع الليلي";
-
-                    }
+if (btn) {
+    btn.innerHTML = isDark
+        ? "☀️ الوضع النهاري"
+        : "🌙 الوضع الليلي";
+        }
 
                 });
 
@@ -5396,24 +5390,6 @@ console.log("showCurrentUser =", showCurrentUser);
 <div id="notification-container"></div>
 
         <script>
-
-            document.addEventListener("DOMContentLoaded", () => {
-
-                document.querySelectorAll("table").forEach(table => {
-
-                    if (table.parentElement.classList.contains("table-scroll")) return;
-
-                    const wrapper = document.createElement("div");
-
-                    wrapper.className = "table-scroll";
-
-                    table.parentNode.insertBefore(wrapper, table);
-
-                    wrapper.appendChild(table);
-
-                });
-
-            });
 
             async function saveSalesField(fieldId, factory) {
 

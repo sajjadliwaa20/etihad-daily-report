@@ -670,11 +670,26 @@ function showNotification(message, type = "success") {
   notification.className = `notification ${type}`;
 
   notification.innerHTML = `
-        <div class="icon">${icons[type] || "ℹ️"}</div>
-        <div class="message">${message}</div>
-    `;
+    <div class="icon">${icons[type] || "ℹ️"}</div>
+
+    <div class="message">${message}</div>
+
+    <button class="close-btn">&times;</button>
+
+    <div class="progress"></div>
+`;
 
   container.appendChild(notification);
+
+  const closeBtn = notification.querySelector(".close-btn");
+
+  closeBtn.onclick = () => {
+    notification.classList.add("hide");
+
+    setTimeout(() => {
+      notification.remove();
+    }, 350);
+  };
 
   setTimeout(() => {
     notification.classList.add("hide");
@@ -684,3 +699,13 @@ function showNotification(message, type = "success") {
     }, 350);
   }, 3000);
 }
+
+document.querySelectorAll("table.wide-table").forEach((table) => {
+  const wrapper = document.createElement("div");
+
+  wrapper.className = "table-scroll";
+
+  table.parentNode.insertBefore(wrapper, table);
+
+  wrapper.appendChild(table);
+});
