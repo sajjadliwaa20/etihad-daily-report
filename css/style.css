@@ -680,44 +680,45 @@ box-shadow:
 
         .table-scroll::-webkit-scrollbar-thumb {
 
-            background: #1f3c88;
+            background: #069206;
 
             border-radius: 20px;
 
         }
 
-        .table-scroll::before {
+        .table-scroll{
+    position: relative;
+}
 
-            content: "↔";
+.table-scroll::before{
 
-            position: sticky;
+    content: "↔";
 
-            right: 8px;
+    position: absolute;
 
-            top: 6px;
+    top: 8px;
 
-            float: right;
+    right: 8px;
 
-            background: white;
+    background: white;
 
-            color: #7AA47A;
+    color: #127112;
 
-            font-size: 20px;
+    font-size: 20px;
 
-            font-weight: bold;
+    font-weight: bold;
 
-            padding: 2px 8px;
+    padding: 2px 8px;
 
-            border-radius: 20px;
+    border-radius: 20px;
 
-            box-shadow: 0 1px 5px rgba(0, 0, 0, .15);
+    box-shadow: 0 1px 5px rgba(0,0,0,.15);
 
-            z-index: 5;
+    z-index: 5;
 
-            pointer-events: none;
+    pointer-events: none;
 
-        }
-
+}
         .table-scroll table {
 
             min-width: max-content;
@@ -1668,7 +1669,7 @@ cursor:pointer;
 }
 
 .notification.hide{
-    animation: notificationOut .35s ease forwards;
+    animation: notificationOut .25s ease forwards;
 }
 
 .notification .icon{

@@ -918,7 +918,7 @@ saveSalesField('feed_sales_premix','feed');
 
                 <summary>محطة الإذابة</summary>
 
-                <div class="details-content">
+                <div class="table-scroll">
 
                     <table class="wide-table">
 
@@ -1238,7 +1238,7 @@ font-size:15px;
 
                 <summary>محطة التجفيف</summary>
 
-                <div class="details-content">
+                <div class="table-scroll">
 
                     <table class="wide-table">
 
@@ -1306,7 +1306,7 @@ font-size:15px;
 
                 <summary>قسم التعبئة</summary>
 
-                <div class="details-content">
+                <div class="table-scroll">
 
                     <h4>تشغيل خطوط التعبئة</h4>
 
@@ -2425,12 +2425,26 @@ text-decoration:none;
                         </tr>
 
                         <tr>
-                            <td><b>المجموع الكلي</b></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><input id="mill_total_prod" readonly></td>
-                        </tr>
+
+    <td><strong>المجموع الكلي</strong></td>
+
+    <td>
+        <input id="flour_total_f1" readonly>
+    </td>
+
+    <td>
+        <input id="flour_total_f3" readonly>
+    </td>
+
+    <td>
+        <input id="flour_total_wbran" readonly>
+    </td>
+
+    <td>
+        <input id="flour_grand_total" readonly>
+    </td>
+
+</tr>
 
                     </table>
 
@@ -2821,7 +2835,7 @@ text-decoration:none;
 
                 <summary>إنتاج خطوط الأعلاف</summary>
 
-                <div class="details-content">
+                <div class="table-scroll">
 
                     <table class="wide-table">
 
@@ -3482,6 +3496,44 @@ text-decoration:none;
 
             }
 
+            function updateFlourTotals(){
+
+    let totalF1 = 0;
+    let totalF3 = 0;
+    let totalWBran = 0;
+
+    document.querySelectorAll(".f1-input").forEach(input=>{
+
+        totalF1 += Number(input.value) || 0;
+
+    });
+
+    document.querySelectorAll(".f3-input").forEach(input=>{
+
+        totalF3 += Number(input.value) || 0;
+
+    });
+
+    document.querySelectorAll(".wbran-input").forEach(input=>{
+
+        totalWBran += Number(input.value) || 0;
+
+    });
+
+    document.getElementById("flour_total_f1").value =
+        totalF1.toFixed(2);
+
+    document.getElementById("flour_total_f3").value =
+        totalF3.toFixed(2);
+
+    document.getElementById("flour_total_wbran").value =
+        totalWBran.toFixed(2);
+
+    document.getElementById("flour_grand_total").value =
+        (totalF1 + totalF3 + totalWBran).toFixed(2);
+
+}
+
             /* ===========================
                أصناف الزيت الديناميكية
             =========================== */
@@ -3897,35 +3949,60 @@ text-decoration:none;
             function updateShorteningSalesTotal() {
 
             }
-            function calcMillTotals() {
+           function calcMillTotals() {
 
-                let grandTotal = 0;
+    let grandTotal = 0;
 
-                for (let i = 1; i <= 6; i++) {
+    let totalF1 = 0;
+    let totalF3 = 0;
+    let totalBran = 0;
 
-                    let f1 =
-                        parseFloat(document.getElementById(`line${i}_f1`)?.value || 0);
+    for (let i = 1; i <= 6; i++) {
 
-                    let f3 =
-                        parseFloat(document.getElementById(`line${i}_f3`)?.value || 0);
+        let f1 =
+            parseFloat(document.getElementById(`line${i}_f1`)?.value || 0);
 
-                    let bran =
-                        parseFloat(document.getElementById(`line${i}_bran`)?.value || 0);
+        let f3 =
+            parseFloat(document.getElementById(`line${i}_f3`)?.value || 0);
 
-                    let lineTotal =
-                        f1 + f3 + bran;
+        let bran =
+            parseFloat(document.getElementById(`line${i}_bran`)?.value || 0);
 
-                    document.getElementById(`line${i}_total`).value =
-                        lineTotal.toFixed(2);
+        let lineTotal =
+            f1 + f3 + bran;
 
-                    grandTotal += lineTotal;
+        document.getElementById(`line${i}_total`).value =
+            lineTotal.toFixed(2);
 
-                }
+        // مجاميع الأعمدة
+        totalF1 += f1;
+        totalF3 += f3;
+        totalBran += bran;
 
-                document.getElementById("mill_total_prod").value =
-                    grandTotal.toFixed(2);
+        // المجموع الكلي
+        grandTotal += lineTotal;
 
-            }
+    }
+
+    // مجموع كل عمود
+    document.getElementById("flour_total_f1").value =
+        totalF1.toFixed(2);
+
+    document.getElementById("flour_total_f3").value =
+        totalF3.toFixed(2);
+
+    document.getElementById("flour_total_wbran").value =
+        totalBran.toFixed(2);
+
+    // مجموع جميع الإنتاج
+    document.getElementById("flour_grand_total").value =
+        grandTotal.toFixed(2);
+
+    // الحقل القديم (إذا كنت تستخدمه في مكان آخر)
+    document.getElementById("mill_total_prod").value =
+        grandTotal.toFixed(2);
+
+}
 
             function updateGEASalesTotal() {
 

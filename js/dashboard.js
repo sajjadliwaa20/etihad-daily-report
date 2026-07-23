@@ -708,4 +708,5 @@ document.querySelectorAll("table.wide-table").forEach((table) => {
   table.parentNode.insertBefore(wrapper, table);
 
   wrapper.appendChild(table);
+  table - scroll;
 });
