@@ -1784,3 +1784,52 @@ cursor:pointer;
     transform:scale(1.2);
 
 }
+
+/* ===== جدول المطاحن ===== */
+
+#millTable th,
+#millTable td{
+
+    padding:4px 3px;
+
+}
+
+#millTable input{
+
+    width:55px !important;
+    min-width:55px;
+
+    padding:4px;
+
+    font-size:15px;
+
+    text-align:center;
+
+}
+
+#millTable th{
+
+    font-size:13px;
+
+}
+
+@media (max-width:768px){
+
+    #millTable input{
+
+        width:48px !important;
+        min-width:48px;
+
+        padding:3px;
+
+        font-size:14px;
+
+    }
+
+    #millTable th{
+
+        font-size:12px;
+
+    }
+
+}

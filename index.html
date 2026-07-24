@@ -2366,7 +2366,7 @@ text-decoration:none;
 
                 <div class="details-content">
 
-                    <table class="wide-table">
+                    <table id="millTable" class="wide-table">
 
                         <tr>
                             <th>الخط</th>
@@ -4184,7 +4184,7 @@ if (mill) {
                 }
 
             }
-            async function approveSection(section) {
+            async function approveSection(section, showMessage = true) {
 
                 console.log("approveSection START", section);
 
@@ -4460,7 +4460,7 @@ if (mill) {
 
                     btn.style.background = "#28a745";
 
-                    btn.innerHTML = "✅ تم الاعتماد";
+                    btn.innerHTML = " تم الاعتماد";
 
                 }
 
@@ -4469,21 +4469,34 @@ if (mill) {
 
                 await loadDailyReport();
 
-                showNotification("تم اعتماد القسم بنجاح","success");
+                if (showMessage) {
+
+    showNotification(
+        "تم اعتماد القسم بنجاح",
+        "success"
+    );
+
+}
 
             }
              async function approvePowerSection() {
 
-                await approveSection("powerstation");
+    await approveSection(
+        "powerstation",
+        false
+    );
 
-                await approveSection("blackoil");
+    await approveSection(
+        "blackoil",
+        false
+    );
 
-              showNotification(
-    "تم اعتماد تقرير محطة الطاقة والنفط الأسود بنجاح",
-    "success"
-);
+    showNotification(
+        "تم اعتماد تقرير محطة الطاقة والنفط الأسود بنجاح",
+        "success"
+    );
 
-            }
+}
    
             async function loadFactorySection(factory) {
 
@@ -4763,9 +4776,30 @@ if (oldGrid) {
 
                 try {
 
-                    await applyPermissions();
+                       try {
 
-                    await showCurrentUser();
+        // تطبيق الوضع الليلي افتراضياً
+        const savedTheme = localStorage.getItem("darkMode");
+        const useDark = savedTheme === null || savedTheme === "true";
+
+        if (useDark) {
+            document.body.classList.add("dark-mode");
+        }
+
+        await applyPermissions();
+
+        await showCurrentUser();
+
+        const btn = document.getElementById("darkModeBtn");
+
+        if (btn) {
+
+            btn.innerHTML = useDark
+                ? "☀️ الوضع النهاري"
+                : "🌙 الوضع الليلي";
+
+        }
+
 
                     /* أخفِ شاشة التحميل مباشرة */
                     document.getElementById("loadingScreen").style.display = "none";
