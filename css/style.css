@@ -360,7 +360,8 @@ box-shadow:
 
             font-weight: bold;
 
-            color: #2E482E margin-top:10px;
+            color: #2E482E; 
+            margin-top:10px;
 
         }
 
@@ -386,8 +387,8 @@ box-shadow:
 
             background:linear-gradient(
             90deg,
-          #014706,
-          #9e9408
+          #034c08,
+          #07b017
 );
 summary:hover{
 
