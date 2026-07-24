@@ -4184,6 +4184,9 @@ if (mill) {
                 }
 
             }
+
+            const APP_VERSION = "5.2.0";
+
             async function approveSection(
     section,
     showMessage = true,
@@ -4348,11 +4351,10 @@ if (mill) {
 
                         });
 
-                }
+                        }
 
-                if (section === "feed") {
-
-                    document
+                         if (section === "feed") {
+                        document
                         .querySelectorAll("#sales_feed [data-save]")
                         .forEach(el => {
 
@@ -4378,9 +4380,8 @@ if (mill) {
                             });
 
                         });
-
                 }
-
+                
                 /* حفظ البيانات */
 
                 if (reportRows.length) {
