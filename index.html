@@ -3991,20 +3991,30 @@ if (totalBox) {
 
     }
 
-   document.getElementById("flour_total_f1")?.value =
-    totalF1.toFixed(2);
+   const f1Total = document.getElementById("flour_total_f1");
+if (f1Total) {
+    f1Total.value = totalF1.toFixed(2);
+}
 
-document.getElementById("flour_total_f3")?.value =
-    totalF3.toFixed(2);
+const f3Total = document.getElementById("flour_total_f3");
+if (f3Total) {
+    f3Total.value = totalF3.toFixed(2);
+}
 
-document.getElementById("flour_total_wbran")?.value =
-    totalBran.toFixed(2);
+const branTotal = document.getElementById("flour_total_wbran");
+if (branTotal) {
+    branTotal.value = totalBran.toFixed(2);
+}
 
-document.getElementById("flour_grand_total")?.value =
-    grandTotal.toFixed(2);
+const grand = document.getElementById("flour_grand_total");
+if (grand) {
+    grand.value = grandTotal.toFixed(2);
+}
 
-document.getElementById("mill_total_prod")?.value =
-    grandTotal.toFixed(2);
+const mill = document.getElementById("mill_total_prod");
+if (mill) {
+    mill.value = grandTotal.toFixed(2);
+}
 
 }
 
