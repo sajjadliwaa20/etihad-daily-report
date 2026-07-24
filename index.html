@@ -4184,7 +4184,11 @@ if (mill) {
                 }
 
             }
-            async function approveSection(section, showMessage = true) {
+            async function approveSection(
+    section,
+    showMessage = true,
+    reload = true
+) {
 
                 console.log("approveSection START", section);
 
@@ -4467,9 +4471,11 @@ if (mill) {
 
                 /* إعادة تحميل البيانات */
 
-                await loadDailyReport();
+               if (reload) {
+    await loadDailyReport();
+}
 
-                if (showMessage) {
+if (showMessage) {
 
     showNotification(
         "تم اعتماد القسم بنجاح",
@@ -4483,11 +4489,13 @@ if (mill) {
 
     await approveSection(
         "powerstation",
+        false,
         false
     );
 
     await approveSection(
         "blackoil",
+        false,
         false
     );
 
