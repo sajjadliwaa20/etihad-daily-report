@@ -3951,6 +3951,10 @@ text-decoration:none;
             }
            function calcMillTotals() {
 
+            const firstRow = document.getElementById("line1_f1");
+
+if (!firstRow) return;
+
     let grandTotal = 0;
 
     let totalF1 = 0;
@@ -3971,8 +3975,11 @@ text-decoration:none;
         let lineTotal =
             f1 + f3 + bran;
 
-        document.getElementById(`line${i}_total`).value =
-            lineTotal.toFixed(2);
+        const totalBox = document.getElementById(`line${i}_total`);
+
+if (totalBox) {
+    totalBox.value = lineTotal.toFixed(2);
+}
 
         // مجاميع الأعمدة
         totalF1 += f1;
@@ -3984,23 +3991,20 @@ text-decoration:none;
 
     }
 
-    // مجموع كل عمود
-    document.getElementById("flour_total_f1").value =
-        totalF1.toFixed(2);
+   document.getElementById("flour_total_f1")?.value =
+    totalF1.toFixed(2);
 
-    document.getElementById("flour_total_f3").value =
-        totalF3.toFixed(2);
+document.getElementById("flour_total_f3")?.value =
+    totalF3.toFixed(2);
 
-    document.getElementById("flour_total_wbran").value =
-        totalBran.toFixed(2);
+document.getElementById("flour_total_wbran")?.value =
+    totalBran.toFixed(2);
 
-    // مجموع جميع الإنتاج
-    document.getElementById("flour_grand_total").value =
-        grandTotal.toFixed(2);
+document.getElementById("flour_grand_total")?.value =
+    grandTotal.toFixed(2);
 
-    // الحقل القديم (إذا كنت تستخدمه في مكان آخر)
-    document.getElementById("mill_total_prod").value =
-        grandTotal.toFixed(2);
+document.getElementById("mill_total_prod")?.value =
+    grandTotal.toFixed(2);
 
 }
 
@@ -4473,6 +4477,9 @@ text-decoration:none;
    
             async function loadFactorySection(factory) {
 
+                console.count("loadFactorySection");
+console.log(factory);
+
                 const reportDate =
                     document.getElementById("reportDateKey").value;
 
@@ -4561,6 +4568,12 @@ text-decoration:none;
                             document.getElementById(field + "_link");
 
                         if (!link) return;
+
+                        const oldGrid = link.parentNode.querySelector(".files-grid");
+
+if (oldGrid) {
+    oldGrid.remove();
+}
 
                         const grid = document.createElement("div");
 
