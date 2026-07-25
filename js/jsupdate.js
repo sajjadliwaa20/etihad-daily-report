@@ -19,11 +19,17 @@ async function checkForAppUpdate() {
     console.log("APP_VERSION =", APP_VERSION);
     console.log("DATABASE_VERSION =", data.version);
 
-  const hasUpdate = data.version !== APP_VERSION;
+    const hasUpdate = data.version !== APP_VERSION;
 
-console.log("HAS UPDATE =", hasUpdate);
+    console.log("HAS UPDATE =", hasUpdate);
 
-return hasUpdate;
+    return hasUpdate;
+  } catch (err) {
+    console.error("Update Check Error:", err);
+
+    return false;
+  }
+}
 
 function showUpdateDialog() {
   if (!latestAppUpdate) return;
@@ -66,6 +72,8 @@ async function updateApplication() {
 
   window.location.reload(true);
 }
-document.getElementById("updateNowBtn").onclick = updateApplication;
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("updateNowBtn").onclick = updateApplication;
 
-document.getElementById("updateLaterBtn").onclick = hideUpdateDialog;
+  document.getElementById("updateLaterBtn").onclick = hideUpdateDialog;
+});
