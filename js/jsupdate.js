@@ -1,30 +1,25 @@
-const APP_VERSION = "6.1.0";
-async function checkForUpdates() {
+const APP_VERSION = "5.2.0";
+
+let latestAppUpdate = null;
+
+async function checkForAppUpdate() {
   try {
-    const response = await fetch("version.json?t=" + Date.now(), {
-      cache: "no-store",
-    });
+    const { data, error } = await supabaseClient
+      .from("app_updates")
+      .select("*")
+      .eq("active", true)
+      .single();
 
-    if (!response.ok) return;
+    if (error) throw error;
 
-    const data = await response.json();
+    latestAppUpdate = data;
 
-    if (data.version !== APP_VERSION) {
-      showUpdateDialog(data.version);
-    }
+    if (!data) return false;
+
+    return data.version !== APP_VERSION;
   } catch (err) {
-    console.log("Version check skipped.", err);
+    console.error("Update Check Error:", err);
+
+    return false;
   }
 }
-function showUpdateDialog(newVersion) {
-  document.getElementById("updateText").innerHTML =
-    "الإصدار الجديد <b>" + newVersion + "</b> جاهز للتثبيت.";
-
-  document.getElementById("updateDialog").style.display = "block";
-}
-function updateApplication() {
-  location.reload(true);
-}
-checkForUpdates();
-
-setInterval(checkForUpdates, 600000);
