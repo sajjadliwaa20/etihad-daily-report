@@ -16,13 +16,14 @@ async function checkForAppUpdate() {
 
     if (!data) return false;
 
-    return data.version !== APP_VERSION;
-  } catch (err) {
-    console.error("Update Check Error:", err);
+    console.log("APP_VERSION =", APP_VERSION);
+    console.log("DATABASE_VERSION =", data.version);
 
-    return false;
-  }
-}
+  const hasUpdate = data.version !== APP_VERSION;
+
+console.log("HAS UPDATE =", hasUpdate);
+
+return hasUpdate;
 
 function showUpdateDialog() {
   if (!latestAppUpdate) return;
