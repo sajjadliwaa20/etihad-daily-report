@@ -32,6 +32,9 @@ async function checkForAppUpdate() {
 }
 
 function showUpdateDialog() {
+  console.log("🚀 showUpdateDialog CALLED");
+  console.log(document.getElementById("appUpdateModal"));
+
   if (!latestAppUpdate) return;
 
   document.getElementById("currentVersion").textContent = APP_VERSION;
