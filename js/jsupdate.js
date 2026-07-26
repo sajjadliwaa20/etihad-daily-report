@@ -148,3 +148,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("updateLaterBtn").onclick = hideUpdateDialog;
 });
+
+async function publishUpdate() {
+  const version = document.getElementById("updateVersion").value.trim();
+
+  const title = document.getElementById("updateTitle").value.trim();
+
+  const changelog = document.getElementById("updateChangelog").value.trim();
+
+  const force = document.getElementById("forceUpdate").checked;
+
+  if (!version) {
+    showNotification("أدخل رقم الإصدار", "error");
+
+    return;
+  }
+
+  if (!title) {
+    showNotification("أدخل عنوان التحديث", "error");
+
+    return;
+  }
+
+  const {
+    data: { user },
+  } = await supabaseClient.auth.getUser();
+
+  const { error } = await supabaseClient
+
+    .from("app_updates")
+
+    .upsert({
+      id: 1,
+
+      version: version,
+
+      title: title,
+
+      changelog: changelog,
+
+      force_update: force,
+
+      active: true,
+
+      created_by: user?.email || "system",
+
+      created_at: new Date().toISOString(),
+    });
+
+  if (error) {
+    console.error(error);
+
+    showNotification("فشل نشر التحديث", "error");
+
+    return;
+  }
+
+  showNotification("✅ تم نشر التحديث بنجاح", "success");
+}

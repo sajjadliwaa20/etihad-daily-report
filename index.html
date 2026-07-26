@@ -186,6 +186,61 @@ color:white;
 
                 <div id="remindersBox"></div>
 
+                <div class="admin-card">
+
+    <h3>🚀 إدارة تحديثات النظام</h3>
+
+    <label>الإصدار الجديد</label>
+
+    <input
+        id="updateVersion"
+        placeholder="مثال: 6.3.0">
+
+    <br><br>
+
+    <label>عنوان التحديث</label>
+
+    <input
+        id="updateTitle"
+        placeholder="عنوان التحديث">
+
+    <br><br>
+
+    <label>ما الجديد؟</label>
+
+    <textarea
+        id="updateChangelog"
+        rows="6"
+        placeholder="اكتب أهم التعديلات..."></textarea>
+
+    <br><br>
+
+    <div class="update-checkbox">
+
+    <input
+        type="checkbox"
+        id="forceUpdate">
+
+    <label for="forceUpdate">
+
+        تحديث إجباري
+
+    </label>
+
+</div>
+
+    <br><br>
+
+    <button
+    class="publishUpdateBtn"
+    onclick="publishUpdate()">
+
+🚀 نشر التحديث
+
+</button>
+
+</div>
+
             </details>
 
 
