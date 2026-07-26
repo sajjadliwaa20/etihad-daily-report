@@ -1,4 +1,4 @@
-const APP_VERSION = "5.2.0";
+const APP_VERSION = "5.3.0";
 
 let latestAppUpdate = null;
 
@@ -65,6 +65,9 @@ function hideUpdateDialog() {
 }
 
 async function updateApplication() {
+  showNotification("جاري تحديث التطبيق...", "info");
+
+  // تحديث جميع Service Workers
   if ("serviceWorker" in navigator) {
     const registrations = await navigator.serviceWorker.getRegistrations();
 
@@ -73,8 +76,22 @@ async function updateApplication() {
     }
   }
 
-  window.location.reload(true);
+  // حذف Cache القديم
+  if ("caches" in window) {
+    const keys = await caches.keys();
+
+    await Promise.all(keys.map((key) => caches.delete(key)));
+  }
+
+  // إخفاء النافذة
+  hideUpdateDialog();
+
+  // إعادة التحميل بعد نصف ثانية
+  setTimeout(() => {
+    location.reload();
+  }, 500);
 }
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("updateNowBtn").onclick = updateApplication;
 
