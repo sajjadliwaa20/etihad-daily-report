@@ -114,29 +114,33 @@ function compareVersions(current, latest) {
 async function updateApplication() {
   showNotification("جاري تحديث التطبيق...", "info");
 
-  // تحديث جميع Service Workers
-  if ("serviceWorker" in navigator) {
-    const registrations = await navigator.serviceWorker.getRegistrations();
+  try {
+    // حذف جميع الـ Cache
+    if ("caches" in window) {
+      const keys = await caches.keys();
 
-    for (const reg of registrations) {
-      await reg.update();
+      await Promise.all(keys.map((key) => caches.delete(key)));
     }
+
+    // حذف جميع الـ Service Workers
+    if ("serviceWorker" in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+
+      for (const reg of regs) {
+        await reg.unregister();
+      }
+    }
+
+    hideUpdateDialog();
+
+    setTimeout(() => {
+      window.location.href = window.location.pathname + "?update=" + Date.now();
+    }, 700);
+  } catch (err) {
+    console.error(err);
+
+    showNotification("فشل تحديث التطبيق", "error");
   }
-
-  // حذف Cache القديم
-  if ("caches" in window) {
-    const keys = await caches.keys();
-
-    await Promise.all(keys.map((key) => caches.delete(key)));
-  }
-
-  // إخفاء النافذة
-  hideUpdateDialog();
-
-  // إعادة التحميل بعد نصف ثانية
-  setTimeout(() => {
-    location.reload();
-  }, 500);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
