@@ -1,24 +1,23 @@
 const CACHE_NAME = "etihad-daily-v1";
 
 const FILES_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/login.html",
+  "index.html",
+  "login.html",
 
-  "/css/style.css",
+  "css/style.css",
 
-  "/js/dashboard.js",
-  "/js/jsinit.js",
-  "/js/jssplash.js",
-  "/js/jsupdate.js",
-  "/js/pwa.js",
+  "js/dashboard.js",
+  "js/jsinit.js",
+  "js/jssplash.js",
+  "js/jsupdate.js",
+  "js/pwa.js",
 
-  "/manifest.json",
+  "manifest.json",
 
-  "/favicon.png",
+  "favicon.png",
 
-  "/icon-192.png",
-  "/icon-512.png",
+  "icon-192.png",
+  "icon-512.png",
 ];
 
 self.addEventListener("install", (event) => {
