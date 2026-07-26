@@ -202,9 +202,11 @@ async function publishUpdate() {
     );
 
   if (error) {
-    console.error(error);
+    console.error("Supabase Error:", error);
 
-    showNotification("فشل نشر التحديث", "error");
+    alert(JSON.stringify(error, null, 2));
+
+    showNotification(error.message, "error");
 
     return;
   }
