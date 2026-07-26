@@ -192,7 +192,7 @@ async function publishUpdate() {
 
         active: true,
 
-        created_by: user?.email || "system",
+        published_by: user?.email || "system",
 
         created_at: new Date().toISOString(),
       },
