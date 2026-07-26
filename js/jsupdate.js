@@ -48,7 +48,7 @@ async function checkForAppUpdate() {
     console.log("APP CLEAN =", appVersion);
     console.log("DB CLEAN =", dbVersion);
 
-    const hasUpdate = dbVersion !== appVersion;
+    const hasUpdate = compareVersions(appVersion, dbVersion);
 
     console.log("HAS UPDATE =", hasUpdate);
 
@@ -91,6 +91,24 @@ function showUpdateDialog() {
 
 function hideUpdateDialog() {
   document.getElementById("appUpdateModal").classList.remove("show");
+}
+
+function compareVersions(current, latest) {
+  const c = current.split(".").map(Number);
+  const l = latest.split(".").map(Number);
+
+  const len = Math.max(c.length, l.length);
+
+  for (let i = 0; i < len; i++) {
+    const currentPart = c[i] || 0;
+    const latestPart = l[i] || 0;
+
+    if (latestPart > currentPart) return true;
+
+    if (latestPart < currentPart) return false;
+  }
+
+  return false;
 }
 
 async function updateApplication() {
