@@ -16,10 +16,19 @@ async function checkForAppUpdate() {
 
     if (!data) return false;
 
-    console.log("APP_VERSION =", APP_VERSION);
-    console.log("DATABASE_VERSION =", data.version);
+    console.log("APP_VERSION =", JSON.stringify(APP_VERSION));
+    console.log("DATABASE_VERSION =", JSON.stringify(data.version));
 
-    const hasUpdate = data.version !== APP_VERSION;
+    console.log("APP TYPE =", typeof APP_VERSION);
+    console.log("DB TYPE =", typeof data.version);
+
+    const appVersion = String(APP_VERSION).trim();
+    const dbVersion = String(data.version).trim();
+
+    console.log("APP CLEAN =", appVersion);
+    console.log("DB CLEAN =", dbVersion);
+
+    const hasUpdate = dbVersion !== appVersion;
 
     console.log("HAS UPDATE =", hasUpdate);
 
