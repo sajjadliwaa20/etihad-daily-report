@@ -1,4 +1,3 @@
-const APP_VERSION = "6.1.0";
 async function checkForUpdates() {
   try {
     const response = await fetch("version.json?t=" + Date.now(), {

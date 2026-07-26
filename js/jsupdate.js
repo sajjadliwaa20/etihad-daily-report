@@ -1,3 +1,4 @@
+const APP_VERSION = "6.9.0";
 let APP_VERSION = null;
 
 async function loadCurrentVersion() {
