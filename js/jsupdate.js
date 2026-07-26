@@ -1,8 +1,28 @@
-const APP_VERSION = "5.3.0";
+let APP_VERSION = null;
+
+async function loadCurrentVersion() {
+  try {
+    const response = await fetch("version.json?v=" + Date.now(), {
+      cache: "no-store",
+    });
+
+    const json = await response.json();
+
+    APP_VERSION = String(json.version).trim();
+
+    console.log("Current App Version:", APP_VERSION);
+  } catch (err) {
+    console.error("Cannot read version.json", err);
+
+    APP_VERSION = "0.0.0";
+  }
+}
 
 let latestAppUpdate = null;
 
 async function checkForAppUpdate() {
+  await loadCurrentVersion();
+
   try {
     const { data, error } = await supabaseClient
       .from("app_updates")
