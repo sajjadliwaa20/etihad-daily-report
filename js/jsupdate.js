@@ -1,6 +1,4 @@
-const APP_VERSION = "7.0.0";
 let APP_VERSION = null;
-
 async function loadCurrentVersion() {
   try {
     const response = await fetch("version.json?v=" + Date.now(), {
