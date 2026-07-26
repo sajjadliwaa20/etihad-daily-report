@@ -178,23 +178,28 @@ async function publishUpdate() {
 
     .from("app_updates")
 
-    .upsert({
-      id: 1,
+    .upsert(
+      {
+        id: 1,
 
-      version: version,
+        version,
 
-      title: title,
+        title,
 
-      changelog: changelog,
+        changelog,
 
-      force_update: force,
+        force_update: force,
 
-      active: true,
+        active: true,
 
-      created_by: user?.email || "system",
+        created_by: user?.email || "system",
 
-      created_at: new Date().toISOString(),
-    });
+        created_at: new Date().toISOString(),
+      },
+      {
+        onConflict: "id",
+      },
+    );
 
   if (error) {
     console.error(error);
@@ -203,6 +208,24 @@ async function publishUpdate() {
 
     return;
   }
-
+  document.getElementById("currentVersion").textContent = version;
   showNotification("✅ تم نشر التحديث بنجاح", "success");
+  await checkForAppUpdate();
+  latestAppUpdate = {
+    version,
+
+    title,
+
+    changelog,
+
+    force_update: force,
+  };
+
+  document.getElementById("updateVersion").value = "";
+
+  document.getElementById("updateTitle").value = "";
+
+  document.getElementById("updateChangelog").value = "";
+
+  document.getElementById("forceUpdate").checked = false;
 }
