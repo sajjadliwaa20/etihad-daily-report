@@ -36,16 +36,16 @@
   --orange: #5a3920;
 
   --danger: #5d2323;
+}
 
-  .dark-mode summary {
-    color: #eef2f5 !important;
-  }
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4 {
+  color: #ffffff !important;
+}
 
-  .dark-mode h2,
-  .dark-mode h3,
-  .dark-mode h4 {
-    color: #ffffff !important;
-  }
+.dark-mode summary {
+  color: #eef2f5 !important;
 }
 
 * {
@@ -278,12 +278,12 @@ body {
   backdrop-filter: blur(10px);
 
   border: 1px solid rgba(0, 0, 0, 0.05);
+}
 
-  .kpi-card:hover {
-    transform: translateY(-4px);
+.kpi-card:hover {
+  transform: translateY(-4px);
 
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  }
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .kpi-title {
@@ -319,15 +319,6 @@ summary {
   padding: 18px 20px;
 
   background: linear-gradient(90deg, #034c08, #07b017);
-  summary:hover {
-    background: linear-gradient(
-      90deg,
-      #0a2e22 0%,
-      #156b47 45%,
-      #2fae66 75%,
-      #6beb8f 100%
-    );
-  }
 
   cursor: pointer;
 
@@ -338,6 +329,16 @@ summary {
   color: #184e3b;
 
   transition: 0.25s;
+}
+
+summary:hover {
+  background: linear-gradient(
+    90deg,
+    #0c3225 15%,
+    #156b47 45%,
+    #2fae66 75%,
+    #54c173 100%
+  );
 }
 
 .details-content {
@@ -889,7 +890,7 @@ body.dark-mode details summary {
 
   background: transparent;
 
-  color: #1e6f5c;
+  color: #1a6553;
   border: none;
 
   cursor: pointer;
@@ -903,12 +904,12 @@ body.dark-mode details summary {
   border-radius: 8px;
 
   transition: 0.25s;
+}
 
-  #menuToggle:hover {
-    background: #eef5ef;
+#menuToggle:hover {
+  background: #eef5ef;
 
-    color: #2e8b6a;
-  }
+  color: #2e8b6a;
 }
 
 @media (max-width: 900px) {
