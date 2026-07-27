@@ -448,6 +448,11 @@ style="margin-top:15px;">
       role: "feed",
       name: "الأعلاف",
     },
+
+    {
+      role: "waterfiltration",
+      name: "محطات التصفية والمعالجة",
+    },
   ];
 
   let html = "";
@@ -503,7 +508,7 @@ ${approvedCount}
 
 من
 
-4
+5
 
 </b>
 `;
