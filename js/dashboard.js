@@ -71,6 +71,7 @@ async function applyPermissions() {
   document.getElementById("menu_oil").style.display = "none";
   document.getElementById("menu_flour").style.display = "none";
   document.getElementById("menu_feed").style.display = "none";
+  document.getElementById("menu_waterfiltration").style.display = "none";
   document.getElementById("menu_archive").style.display = "none";
   document.getElementById("approvalsDashboard").style.display = "none";
 
@@ -264,6 +265,28 @@ async function applyPermissions() {
     if (salesFlour) {
       salesFlour.style.display = "none";
     }
+  }
+
+  /* مسؤول محطات التصفية */
+
+  if (role === "waterfiltration") {
+    document.getElementById("home").style.display = "block";
+
+    document.getElementById("waterfiltration").style.display = "block";
+
+    document.getElementById("menu_waterfiltration").style.display = "block";
+
+    document.getElementById("darkModeBtn").style.display = "inline-block";
+
+    document.querySelector("button[onclick='window.print()']").style.display =
+      "inline-block";
+
+    document.querySelector("button[onclick='goToLogin()']").style.display =
+      "inline-block";
+
+    window.location.hash = "waterfiltration";
+
+    return;
   }
 }
 
