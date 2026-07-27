@@ -141,6 +141,7 @@ async function applyPermissions() {
     document.getElementById("menu_oil").style.display = "block";
     document.getElementById("menu_flour").style.display = "block";
     document.getElementById("menu_feed").style.display = "block";
+    document.getElementById("menu_waterfiltration").style.display = "block";
     document.getElementById("menu_archive").style.display = "block";
 
     document.querySelectorAll(".section").forEach((section) => {
