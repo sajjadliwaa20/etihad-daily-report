@@ -49,6 +49,7 @@ async function applyPermissions() {
   }
 
   const role = data.role;
+  console.log("ROLE FROM DATABASE =", JSON.stringify(role));
   const adminTools = document.getElementById("adminTools");
 
   const editBtn = document.getElementById("editModeBtn");
@@ -270,6 +271,10 @@ async function applyPermissions() {
   /* مسؤول محطات التصفية */
 
   if (role === "waterfiltration") {
+    console.log("ROLE WATERFILTRATION");
+
+    console.log(document.getElementById("waterfiltration"));
+
     document.getElementById("home").style.display = "block";
 
     document.getElementById("waterfiltration").style.display = "block";
