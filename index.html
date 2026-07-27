@@ -5017,19 +5017,71 @@ if (oldGrid) {
 
             async function loadDailyReport() {
 
-                await loadFactorySection("powerstation");
+    const {
+        data: { user }
+    } = await supabaseClient.auth.getUser();
 
-                await loadFactorySection("blackoil");
+    if (!user) return;
 
-                await loadFactorySection("sugar");
+    const { data: userInfo } =
+        await supabaseClient
+            .from("users")
+            .select("role")
+            .eq("email", user.email)
+            .single();
 
-                await loadFactorySection("oil");
+    if (!userInfo) return;
 
-                await loadFactorySection("flour");
+    switch (userInfo.role) {
 
-                await loadFactorySection("feed");
+        case "admin":
 
-            }
+        case "executive":
+
+            await loadFactorySection("powerstation");
+            await loadFactorySection("blackoil");
+            await loadFactorySection("sugar");
+            await loadFactorySection("oil");
+            await loadFactorySection("flour");
+            await loadFactorySection("feed");
+            await loadFactorySection("waterfiltration");
+
+            break;
+
+        case "power":
+
+            await loadFactorySection("powerstation");
+            break;
+
+        case "sugar":
+
+            await loadFactorySection("sugar");
+            break;
+
+        case "oil":
+
+            await loadFactorySection("oil");
+            break;
+
+        case "flour":
+
+            await loadFactorySection("flour");
+            break;
+
+        case "feed":
+
+            await loadFactorySection("feed");
+            break;
+
+        case "waterfiltration":
+
+            await loadFactorySection("waterfiltration");
+            break;
+
+    }
+
+}
+
             async function bootApplication() {
 
                        try {
