@@ -135,7 +135,7 @@ async function applyPermissions() {
     document.getElementById("lateFieldsDashboard").style.display = "block";
 
     document.getElementById("remindersBox").style.display = "block";
-
+    document.getElementById("menu_waterfiltration").style.display = "block";
     document.getElementById("menu_power").style.display = "block";
     document.getElementById("menu_sugar").style.display = "block";
     document.getElementById("menu_oil").style.display = "block";
