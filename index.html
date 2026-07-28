@@ -5089,82 +5089,6 @@ if (oldGrid) {
 
 }
 
-            async function bootApplication() {
-
-                       try {
-
-        // تطبيق الوضع الليلي افتراضياً
-        const savedTheme = localStorage.getItem("darkMode");
-        const useDark = savedTheme === null || savedTheme === "true";
-
-        if (useDark) {
-            document.body.classList.add("dark-mode");
-        }
-
-        await applyPermissions();
-
-        await showCurrentUser();
-        
-
-       const hasUpdate = await checkForAppUpdate();
-
-if (hasUpdate) {
-
-    showUpdateDialog();
-
-}
-
-
-        const btn = document.getElementById("darkModeBtn");
-
-        if (btn) {
-
-            btn.innerHTML = useDark
-                ? "☀️ الوضع النهاري"
-                : "🌙 الوضع الليلي";
-
-        }
-
-
-                    /* أخفِ شاشة التحميل مباشرة */
-                    document.getElementById("loadingScreen").style.display = "none";
-
-                    /* ثم حمّل البيانات في الخلفية */
-
-                    await loadDailyReport();
-
-                    await startRealtime();
-
-                    const {
-                        data: { user }
-                    } = await supabaseClient.auth.getUser();
-
-                    if (user) {
-
-                        const { data: userInfo } =
-                            await supabaseClient
-                                .from("users")
-                                .select("role")
-                                .eq("email", user.email)
-                                .single();
-
-                        if (userInfo?.role === "admin") {
-
-                            await refreshAdminTools();
-
-                        }
-
-                    }
-
-                }
-                catch (err) {
-
-                    console.error("BOOT ERROR:", err);
-
-                }
-
-            }
-
             const fieldLabels = {
 
                 // ==========================
@@ -5449,8 +5373,6 @@ if (hasUpdate) {
 console.log("applyPermissions =", applyPermissions);
 console.log("showCurrentUser =", showCurrentUser);
 
-            bootApplication();
-
             setInterval(async () => {
 
                 const {
@@ -5550,6 +5472,84 @@ let realtimeChannel = null;
                     });
 
             }
+
+            async function bootApplication() {
+
+                       try {
+
+        // تطبيق الوضع الليلي افتراضياً
+        const savedTheme = localStorage.getItem("darkMode");
+        const useDark = savedTheme === null || savedTheme === "true";
+
+        if (useDark) {
+            document.body.classList.add("dark-mode");
+        }
+
+        await applyPermissions();
+
+        await showCurrentUser();
+        
+
+       const hasUpdate = await checkForAppUpdate();
+
+if (hasUpdate) {
+
+    showUpdateDialog();
+
+}
+
+
+        const btn = document.getElementById("darkModeBtn");
+
+        if (btn) {
+
+            btn.innerHTML = useDark
+                ? "☀️ الوضع النهاري"
+                : "🌙 الوضع الليلي";
+
+        }
+
+
+                    /* أخفِ شاشة التحميل مباشرة */
+                    document.getElementById("loadingScreen").style.display = "none";
+
+                    /* ثم حمّل البيانات في الخلفية */
+
+                    await loadDailyReport();
+
+                    await startRealtime();
+
+                    const {
+                        data: { user }
+                    } = await supabaseClient.auth.getUser();
+
+                    if (user) {
+
+                        const { data: userInfo } =
+                            await supabaseClient
+                                .from("users")
+                                .select("role")
+                                .eq("email", user.email)
+                                .single();
+
+                        if (userInfo?.role === "admin") {
+
+                            await refreshAdminTools();
+
+                        }
+
+                    }
+
+                }
+                catch (err) {
+
+                    console.error("BOOT ERROR:", err);
+
+                }
+
+            }
+
+
             document
                 .querySelectorAll("input[data-save]")
                 .forEach(el => {
