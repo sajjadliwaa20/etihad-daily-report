@@ -280,6 +280,8 @@ async function applyPermissions() {
 
     document.getElementById("waterfiltration").style.display = "block";
 
+    document.getElementById("salesSection").style.display = "none";
+
     document.getElementById("menu_waterfiltration").style.display = "block";
 
     document.getElementById("darkModeBtn").style.display = "inline-block";
