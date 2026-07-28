@@ -5133,7 +5133,7 @@ if (hasUpdate) {
 
                     await loadDailyReport();
 
-                    startRealtime();
+                    await startRealtime();
 
                     const {
                         data: { user }
@@ -5481,14 +5481,22 @@ console.log("showCurrentUser =", showCurrentUser);
                 }
 
             }, 10000);
-            function startRealtime() {
+
+let realtimeChannel = null;
+            async function startRealtime() {
 
                 console.log("startRealtime CALLED");
 
-                console.log("Creating realtime channel...");
+                 if (realtimeChannel) {
 
-                supabaseClient
-                    .channel('live-updates')
+        await supabaseClient.removeChannel(realtimeChannel);
+
+    }
+
+    console.log("Creating realtime channel...");
+
+    realtimeChannel = supabaseClient
+        .channel("live-updates")
                     .on('postgres_changes',
                         { event: '*', schema: 'public', table: 'field_history' },
                         payload => {
@@ -5505,10 +5513,17 @@ console.log("showCurrentUser =", showCurrentUser);
                                     .select("role")
                                     .eq("email", user.email)
                                     .single();
-                                if (userInfo?.role === "admin") {
-                                    await loadApprovalsDashboard();
-                                    await loadReminders();
-                                }
+                               if (userInfo?.role === "admin") {
+
+    console.log("ADMIN REALTIME UPDATE");
+
+    await loadApprovalsDashboard();
+
+    await loadLateFieldsDashboard();
+
+    await loadReminders();
+
+}
                             }
                             setTimeout(async () => { await loadDailyReport(); }, 1000);
                         })
