@@ -1805,3 +1805,29 @@ body.dark-mode details summary {
     grid-template-columns: 1fr;
   }
 }
+
+.water-notes {
+  width: 100%;
+
+  min-height: 140px;
+
+  resize: vertical;
+
+  padding: 14px;
+
+  margin-top: 10px;
+
+  margin-bottom: 20px;
+
+  border-radius: 12px;
+
+  border: 1px solid #ccc;
+
+  font-size: 15px;
+
+  background: var(--card);
+
+  color: var(--text);
+
+  box-sizing: border-box;
+}

@@ -3382,181 +3382,47 @@ text-decoration:none;
 
 <h2>💧 محطات التصفية والمعالجة</h2>
 
-<p class="section-description">
-متابعة محطات RO ومعالجة المياه اليومية
-</p>
+<details open>
 
-<!-- محطة السكر -->
+<summary>🏭 محطة RO - مصنع السكر</summary>
 
-<div class="water-card">
+<div class="details-content">
 
-<h3>🏭 محطة RO - مصنع السكر</h3>
-
-<label>🛠 الصيانات</label>
+<label>🛠 صيانات المحطة</label>
 
 <textarea
 id="water_sugar_maintenance"
 class="water-notes"
-placeholder="اكتب أعمال الصيانة اليومية..."data-save></textarea>
-
-<h4>📊 قيم التشغيل</h4>
-
-<div class="water-grid">
-
-<div>
-
-<label>Conductivity</label>
-
-<input
-type="number"
-id="water_sugar_conductivity"data-save>
-
-</div>
-
-<div>
-
-<label>pH</label>
-
-<input
-type="number"
-step="0.1"
-id="water_sugar_ph" data-save>
-
-</div>
-
-<div>
-
-<label>TDS</label>
-
-<input
-type="number"
-id="water_sugar_tds" data-save>
-
-</div>
-
-<div>
-
-<label>Pressure</label>
-
-<input
-type="number"
-id="water_sugar_pressure" data-save>
-
-</div>
-
-<div>
-
-<label>Flow</label>
-
-<input
-type="number"
-id="water_sugar_flow" data-save>
-
-</div>
-
-<div>
-
-<label>Recovery %</label>
-
-<input
-type="number"
-id="water_sugar_recovery" data-save>
-
-</div>
-
-</div>
+placeholder="اكتب أعمال الصيانة..."
+data-save></textarea>
 
 <label>📝 ملاحظات المحطة</label>
 
 <textarea
 id="water_sugar_notes"
 class="water-notes"
-placeholder="اكتب الملاحظات..." data-save></textarea>
+placeholder="اكتب الملاحظات..."
+data-save></textarea>
 
 </div>
 
+</details>
+
 <br>
 
-<!-- محطة الزيت -->
+<details>
 
-<div class="water-card">
+<summary>🏭 محطة RO - مصنع الزيت</summary>
 
-<h3>🏭 محطة RO - مصنع الزيت</h3>
+<div class="details-content">
 
-<label>🛠 الصيانات</label>
+<label>🛠 صيانات المحطة</label>
 
 <textarea
 id="water_oil_maintenance"
 class="water-notes"
-placeholder="اكتب أعمال الصيانة اليومية..." data-save></textarea>
-
-<h4>📊 قيم التشغيل</h4>
-
-<div class="water-grid">
-
-<div>
-
-<label>Conductivity</label>
-
-<input
-type="number"
-id="water_oil_conductivity" data-save>
-
-</div>
-
-<div>
-
-<label>pH</label>
-
-<input
-type="number"
-step="0.1"
-id="water_oil_ph" data-save>
-
-</div>
-
-<div>
-
-<label>TDS</label>
-
-<input
-type="number"
-id="water_oil_tds" data-save>
-
-</div>
-
-<div>
-
-<label>Pressure</label>
-
-<input
-type="number"
-id="water_oil_pressure" data-save>
-
-</div>
-
-<div>
-
-<label>Flow</label>
-
-<input
-type="number"
-id="water_oil_flow"
-data-save>
-
-</div>
-
-<div>
-
-<label>Recovery %</label>
-
-<input
-type="number"
-id="water_oil_recovery" data-save>
-
-</div>
-
-</div>
+placeholder="اكتب أعمال الصيانة..."
+data-save></textarea>
 
 <label>📝 ملاحظات المحطة</label>
 
@@ -3564,17 +3430,21 @@ id="water_oil_recovery" data-save>
 id="water_oil_notes"
 class="water-notes"
 placeholder="اكتب الملاحظات..."
-data-save>
-</textarea>
+data-save></textarea>
 
 </div>
 
-<button id="approvewaterBtn" onclick="approveSection('waterfiltration')">
+</details>
 
-                ✅ اعتماد قسم التصفية
+<br>
 
-            </button>
+<button
+id="approvewaterBtn"
+onclick="approveSection('waterfiltration')">
 
+✅ اعتماد قسم التصفية
+
+</button>
 </section>
 
         <!-- الأرشيف -->
