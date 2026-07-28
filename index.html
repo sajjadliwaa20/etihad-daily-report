@@ -895,19 +895,45 @@ saveSalesField('feed_sales_premix','feed');
 
                     <br>
 
-                    <table>
+                    <details>
 
-                        <tr>
-                            <th>ملاحظات محطة الطاقة</th>
-                        </tr>
+<summary>📝 ملاحظات محطة الطاقة</summary>
 
-                        <tr>
-                            <td>
-                                <input id="power_station_notes" data-save>
-                            </td>
-                        </tr>
+<div class="details-content">
 
-                    </table>
+<textarea
+id="power_station_notes"
+class="notes"
+data-save
+placeholder="اكتب ملاحظات محطة الطاقة..."></textarea>
+
+<br><br>
+
+<label
+for="power_station_notes_upload"
+class="uploadImageBtn">
+
+📎 إرفاق صورة أو ملف
+
+</label>
+
+<input
+type="file"
+id="power_station_notes_upload"
+data-factory="powerstation"
+data-field="power_station_notes"
+multiple
+style="display:none;"
+onchange="uploadNoteImage(this)">
+
+<a
+id="power_station_notes_link"
+style="display:none;">
+</a>
+
+</div>
+
+</details>
 
                     <button onclick="approvePowerSection()">
 
