@@ -3493,6 +3493,8 @@ onclick="approveSection('waterfiltration')">
         </section>
         <script>
 
+            let realtimeChannel = null;
+
             const SUPABASE_URL =
                 "https://aptamsjgburgubfwamep.supabase.co";
 
@@ -5302,7 +5304,6 @@ console.log("showCurrentUser =", showCurrentUser);
 
             }, 10000);
 
-let realtimeChannel = null;
 console.log("Realtime variable created");
             async function startRealtime() {
 
