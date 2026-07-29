@@ -746,3 +746,7 @@ document.querySelectorAll("table.wide-table").forEach((table) => {
   wrapper.appendChild(table);
   table - scroll;
 });
+
+window.applyPermissions = applyPermissions;
+window.showCurrentUser = showCurrentUser;
+window.applyExecutiveMode = applyExecutiveMode;
