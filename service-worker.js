@@ -16,7 +16,7 @@ const FILES_TO_CACHE = [
 
   "favicon.png",
 
-  "icon-192.png",
+  "icons/icon-192.png",
   "icon-512.png",
 ];
 
