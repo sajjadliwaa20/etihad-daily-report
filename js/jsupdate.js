@@ -74,3 +74,92 @@ async function publishUpdate() {
 
   document.getElementById("forceUpdate").checked = false;
 }
+
+let latestAppUpdate = null;
+
+async function checkForAppUpdate() {
+  const {
+    data: { user },
+  } = await supabaseClient.auth.getUser();
+
+  if (!user) return false;
+
+  /* آخر تحديث منشور */
+
+  const { data: latest, error: latestError } = await supabaseClient
+    .from("app_updates")
+    .select("*")
+    .eq("active", true)
+    .single();
+
+  if (latestError || !latest) {
+    console.error(latestError);
+
+    return false;
+  }
+
+  latestAppUpdate = latest;
+
+  /* آخر إصدار شاهده المستخدم */
+
+  const { data: userVersion } = await supabaseClient
+    .from("user_versions")
+    .select("last_seen_version")
+    .eq("email", user.email)
+    .single();
+
+  if (!userVersion) {
+    return true;
+  }
+
+  return userVersion.last_seen_version !== latest.version;
+}
+
+function showUpdateDialog() {
+  if (!latestAppUpdate) return;
+
+  document.getElementById("updatePopup").style.display = "flex";
+
+  document.getElementById("popupVersion").textContent = latestAppUpdate.version;
+
+  document.getElementById("popupTitle").textContent = latestAppUpdate.title;
+
+  document.getElementById("popupChangelog").textContent =
+    latestAppUpdate.changelog;
+
+  const laterBtn = document.getElementById("updateLaterBtn");
+
+  if (latestAppUpdate.force_update) {
+    laterBtn.style.display = "none";
+  } else {
+    laterBtn.style.display = "inline-block";
+  }
+}
+
+async function completeUpdate() {
+  /* حذف جميع الكاش */
+
+  if ("caches" in window) {
+    const names = await caches.keys();
+
+    await Promise.all(names.map((name) => caches.delete(name)));
+  }
+
+  /* حذف Service Worker */
+
+  if ("serviceWorker" in navigator) {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+
+    for (const reg of registrations) {
+      await reg.unregister();
+    }
+  }
+
+  /* ضع علامة بأن التحديث قيد الإكمال */
+
+  localStorage.setItem("pendingUpdate", "true");
+
+  /* إعادة تحميل الصفحة */
+
+  window.location.reload();
+}
