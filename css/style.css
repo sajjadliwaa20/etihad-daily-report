@@ -1494,7 +1494,7 @@ body.dark-mode details summary {
 }
 
 #millTable input {
-  width: 55px !important;
+  width: 72px !important;
   min-width: 55px;
 
   padding: 4px;
@@ -1510,8 +1510,8 @@ body.dark-mode details summary {
 
 @media (max-width: 768px) {
   #millTable input {
-    width: 48px !important;
-    min-width: 48px;
+    width: 68px !important;
+    min-width: 50px;
 
     padding: 3px;
 
