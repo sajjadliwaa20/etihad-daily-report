@@ -113,6 +113,13 @@ async function checkForAppUpdate() {
   }
 
   if (!userVersion) {
+    await supabaseClient.from("user_versions").insert({
+      email: user.email,
+      last_seen_version: "",
+      updated_at: new Date().toISOString(),
+      last_seen_at: new Date().toISOString(),
+    });
+
     return true;
   }
 
