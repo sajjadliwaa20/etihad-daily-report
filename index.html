@@ -4799,7 +4799,11 @@ if (oldGrid) {
 
                                 img.onclick = () => {
 
-                                    window.open(file.image_url, "_blank");
+                                    if (file.image_url) {
+    window.open(file.image_url, "_blank");
+} else {
+    console.warn("No image URL", file);
+}
 
                                 };
 
@@ -4860,7 +4864,12 @@ if (oldGrid) {
 
                                 const pdf = document.createElement("a");
 
-                                pdf.href = file.image_url;
+                                if (file.image_url) {
+    pdf.href = file.image_url;
+} else {
+    console.warn("Missing image_url:", file);
+    pdf.removeAttribute("href");
+}
                                 pdf.target = "_blank";
                                 pdf.innerHTML = "📄 " + file.image_url.split("/").pop();
 
@@ -5410,20 +5419,18 @@ console.log("Realtime variable created");
 
     if (user && latestAppUpdate) {
 
-        await supabaseClient
-            .from("user_versions")
-            .upsert({
+        const { data, error } = await supabaseClient
+    .from("user_versions")
+    .upsert({
+        email: user.email,
+        last_seen_version: latestAppUpdate.version,
+        updated_at: new Date().toISOString(),
+        last_seen_at: new Date().toISOString()
+    });
 
-                email: user.email,
+console.log("USER VERSION RESULT:", data);
 
-                last_seen_version: latestAppUpdate.version,
-
-                updated_at: new Date().toISOString(),
-
-                last_seen_at: new Date().toISOString()
-
-            });
-
+console.log("USER VERSION ERROR:", error);
     }
 
     localStorage.removeItem("pendingUpdate");
