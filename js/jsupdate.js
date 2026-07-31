@@ -194,3 +194,22 @@ async function completeUpdate() {
 
   window.location.reload();
 }
+
+async function saveCurrentVersion() {
+  const {
+    data: { user },
+  } = await supabaseClient.auth.getUser();
+
+  if (!user || !latestAppUpdate) return;
+
+  const { error } = await supabaseClient.from("user_versions").upsert({
+    email: user.email,
+    last_seen_version: latestAppUpdate.version,
+    updated_at: new Date().toISOString(),
+    last_seen_at: new Date().toISOString(),
+  });
+
+  if (error) {
+    console.error("SAVE VERSION ERROR:", error);
+  }
+}
