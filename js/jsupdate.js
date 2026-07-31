@@ -108,6 +108,12 @@ async function checkForAppUpdate() {
     .select("last_seen_version")
     .eq("email", user.email)
     .maybeSingle();
+  console.log("TYPE =", typeof userVersion);
+  console.log("VALUE =", userVersion);
+  console.log("BOOLEAN =", !userVersion);
+  if (!userVersion) {
+    console.log("ENTERED IF");
+  }
 
   // ← أضف هذين السطرين
   console.log("USER VERSION:", userVersion);
