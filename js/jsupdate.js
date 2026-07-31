@@ -94,11 +94,12 @@ async function checkForAppUpdate() {
 
   if (latestError || !latest) {
     console.error(latestError);
-
     return false;
   }
 
   latestAppUpdate = latest;
+
+  console.log("LATEST UPDATE:", latest);
 
   /* آخر إصدار شاهده المستخدم */
 
@@ -108,11 +109,18 @@ async function checkForAppUpdate() {
     .eq("email", user.email)
     .maybeSingle();
 
+  // ← أضف هذين السطرين
+  console.log("USER VERSION:", userVersion);
+  console.log("USER VERSION ERROR:", error);
+
   if (error) {
     console.error("USER VERSION ERROR:", error);
   }
 
   if (!userVersion) {
+    // ← أضف هذا السطر
+    console.log("NO USER VERSION -> INSERTING");
+
     const { data, error } = await supabaseClient
       .from("user_versions")
       .insert({
