@@ -102,67 +102,69 @@ async function checkForAppUpdate() {
 
   /* آخر إصدار شاهده المستخدم */
 
- const { data: userVersion, error } = await supabaseClient
+  const { data: userVersion, error } = await supabaseClient
     .from("user_versions")
     .select("last_seen_version")
     .eq("email", user.email)
     .maybeSingle();
 
-if (error) {
+  if (error) {
     console.error("USER VERSION ERROR:", error);
-}
+  }
 
-if (!userVersion) {
+  if (!userVersion) {
     return true;
-}
-
-return userVersion.last_seen_version !== latest.version;
-
-function showUpdateDialog() {
-  if (!latestAppUpdate) return;
-
-  document.getElementById("updatePopup").style.display = "flex";
-
-  document.getElementById("popupVersion").textContent = latestAppUpdate.version;
-
-  document.getElementById("popupTitle").textContent = latestAppUpdate.title;
-
-  document.getElementById("popupChangelog").textContent =
-    latestAppUpdate.changelog;
-
-  const laterBtn = document.getElementById("updateLaterBtn");
-
-  if (latestAppUpdate.force_update) {
-    laterBtn.style.display = "none";
-  } else {
-    laterBtn.style.display = "inline-block";
-  }
-}
-
-async function completeUpdate() {
-  /* حذف جميع الكاش */
-
-  if ("caches" in window) {
-    const names = await caches.keys();
-
-    await Promise.all(names.map((name) => caches.delete(name)));
   }
 
-  /* حذف Service Worker */
+  return userVersion.last_seen_version !== latest.version;
 
-  if ("serviceWorker" in navigator) {
-    const registrations = await navigator.serviceWorker.getRegistrations();
+  function showUpdateDialog() {
+    if (!latestAppUpdate) return;
 
-    for (const reg of registrations) {
-      await reg.unregister();
+    document.getElementById("updatePopup").style.display = "flex";
+
+    document.getElementById("popupVersion").textContent =
+      latestAppUpdate.version;
+
+    document.getElementById("popupTitle").textContent = latestAppUpdate.title;
+
+    document.getElementById("popupChangelog").textContent =
+      latestAppUpdate.changelog;
+
+    const laterBtn = document.getElementById("updateLaterBtn");
+
+    if (latestAppUpdate.force_update) {
+      laterBtn.style.display = "none";
+    } else {
+      laterBtn.style.display = "inline-block";
     }
   }
 
-  /* ضع علامة بأن التحديث قيد الإكمال */
+  async function completeUpdate() {
+    /* حذف جميع الكاش */
 
-  localStorage.setItem("pendingUpdate", "true");
+    if ("caches" in window) {
+      const names = await caches.keys();
 
-  /* إعادة تحميل الصفحة */
+      await Promise.all(names.map((name) => caches.delete(name)));
+    }
 
-  window.location.reload();
+    /* حذف Service Worker */
+
+    if ("serviceWorker" in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+
+      for (const reg of registrations) {
+        await reg.unregister();
+      }
+    }
+
+    /* ضع علامة بأن التحديث قيد الإكمال */
+
+    localStorage.setItem("pendingUpdate", "true");
+
+    /* إعادة تحميل الصفحة */
+
+    window.location.reload();
+  }
 }
