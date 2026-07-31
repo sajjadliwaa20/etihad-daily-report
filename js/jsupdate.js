@@ -102,18 +102,21 @@ async function checkForAppUpdate() {
 
   /* آخر إصدار شاهده المستخدم */
 
-  const { data: userVersion } = await supabaseClient
+ const { data: userVersion, error } = await supabaseClient
     .from("user_versions")
     .select("last_seen_version")
     .eq("email", user.email)
-    .single();
+    .maybeSingle();
 
-  if (!userVersion) {
-    return true;
-  }
-
-  return userVersion.last_seen_version !== latest.version;
+if (error) {
+    console.error("USER VERSION ERROR:", error);
 }
+
+if (!userVersion) {
+    return true;
+}
+
+return userVersion.last_seen_version !== latest.version;
 
 function showUpdateDialog() {
   if (!latestAppUpdate) return;
