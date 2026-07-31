@@ -1,4 +1,4 @@
-const CACHE_NAME = "etihad-daily-v1";
+const CACHE_NAME = "etihad-daily-v2";
 
 const FILES_TO_CACHE = [
   "index.html",
@@ -17,7 +17,7 @@ const FILES_TO_CACHE = [
   "favicon.png",
 
   "icons/icon-192.png",
-  "icon-512.png",
+  "icons/icon-512.png",
 ];
 
 self.addEventListener("install", (event) => {

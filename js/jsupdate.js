@@ -117,54 +117,53 @@ async function checkForAppUpdate() {
   }
 
   return userVersion.last_seen_version !== latest.version;
+}
 
-  function showUpdateDialog() {
-    if (!latestAppUpdate) return;
+function showUpdateDialog() {
+  if (!latestAppUpdate) return;
 
-    document.getElementById("updatePopup").style.display = "flex";
+  document.getElementById("updatePopup").style.display = "flex";
 
-    document.getElementById("popupVersion").textContent =
-      latestAppUpdate.version;
+  document.getElementById("popupVersion").textContent = latestAppUpdate.version;
 
-    document.getElementById("popupTitle").textContent = latestAppUpdate.title;
+  document.getElementById("popupTitle").textContent = latestAppUpdate.title;
 
-    document.getElementById("popupChangelog").textContent =
-      latestAppUpdate.changelog;
+  document.getElementById("popupChangelog").textContent =
+    latestAppUpdate.changelog;
 
-    const laterBtn = document.getElementById("updateLaterBtn");
+  const laterBtn = document.getElementById("updateLaterBtn");
 
-    if (latestAppUpdate.force_update) {
-      laterBtn.style.display = "none";
-    } else {
-      laterBtn.style.display = "inline-block";
+  if (latestAppUpdate.force_update) {
+    laterBtn.style.display = "none";
+  } else {
+    laterBtn.style.display = "inline-block";
+  }
+}
+
+async function completeUpdate() {
+  /* حذف جميع الكاش */
+
+  if ("caches" in window) {
+    const names = await caches.keys();
+
+    await Promise.all(names.map((name) => caches.delete(name)));
+  }
+
+  /* حذف Service Worker */
+
+  if ("serviceWorker" in navigator) {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+
+    for (const reg of registrations) {
+      await reg.unregister();
     }
   }
 
-  async function completeUpdate() {
-    /* حذف جميع الكاش */
+  /* ضع علامة بأن التحديث قيد الإكمال */
 
-    if ("caches" in window) {
-      const names = await caches.keys();
+  localStorage.setItem("pendingUpdate", "true");
 
-      await Promise.all(names.map((name) => caches.delete(name)));
-    }
+  /* إعادة تحميل الصفحة */
 
-    /* حذف Service Worker */
-
-    if ("serviceWorker" in navigator) {
-      const registrations = await navigator.serviceWorker.getRegistrations();
-
-      for (const reg of registrations) {
-        await reg.unregister();
-      }
-    }
-
-    /* ضع علامة بأن التحديث قيد الإكمال */
-
-    localStorage.setItem("pendingUpdate", "true");
-
-    /* إعادة تحميل الصفحة */
-
-    window.location.reload();
-  }
+  window.location.reload();
 }
