@@ -168,60 +168,91 @@ function showUpdateDialog() {
 }
 
 async function completeUpdate() {
-  /* حذف جميع الكاش */
+  console.log("complete Update START");
 
   if ("caches" in window) {
+    console.log("Deleting cache...");
+
     const names = await caches.keys();
 
+    console.log(names);
+
     await Promise.all(names.map((name) => caches.delete(name)));
+
+    console.log("Cache deleted");
   }
 
-  /* حذف Service Worker */
-
   if ("serviceWorker" in navigator) {
+    console.log("Removing service workers...");
+
     const registrations = await navigator.serviceWorker.getRegistrations();
+
+    console.log(registrations);
 
     for (const reg of registrations) {
       await reg.unregister();
     }
+
+    console.log("Service workers removed");
   }
 
-  /* ضع علامة بأن التحديث قيد الإكمال */
+  console.log("Reloading page...");
 
   localStorage.setItem("pendingUpdate", "true");
-
-  /* إعادة تحميل الصفحة */
 
   window.location.reload();
 }
 
 async function saveCurrentVersion() {
+  console.log("saveCurrentVersion START");
+
   const {
     data: { user },
   } = await supabaseClient.auth.getUser();
 
-  if (!user || !latestAppUpdate) return;
+  console.log("USER =", user);
 
-  const { error } = await supabaseClient.from("user_versions").upsert({
-    email: user.email,
-    last_seen_version: latestAppUpdate.version,
-    updated_at: new Date().toISOString(),
-    last_seen_at: new Date().toISOString(),
-  });
+  if (!user || !latestAppUpdate) {
+    console.log("STOP: user or latestAppUpdate missing");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("user_versions")
+    .upsert({
+      email: user.email,
+      last_seen_version: latestAppUpdate.version,
+      updated_at: new Date().toISOString(),
+      last_seen_at: new Date().toISOString(),
+    })
+    .select();
+
+  console.log("UPSERT RESULT:", data);
+  console.log("UPSERT ERROR:", error);
 
   if (error) {
-    console.error("SAVE VERSION ERROR:", error);
+    console.error(error);
   }
+
+  console.log("saveCurrentVersion END");
 }
 
 document.getElementById("updateNowBtn")?.addEventListener("click", async () => {
+  console.log("1- Button Clicked");
+
   try {
+    console.log("2- Before saveCurrentVersion");
+
     await saveCurrentVersion();
 
-    await completeUpdate();
-  } catch (err) {
-    console.error(err);
+    console.log("3- saveCurrentVersion Finished");
 
-    showNotification("فشل التحديث", "error");
+    console.log("4- Before completeUpdate");
+
+    await completeUpdate();
+
+    console.log("5- completeUpdate Finished");
+  } catch (err) {
+    console.error("UPDATE ERROR:", err);
   }
 });
