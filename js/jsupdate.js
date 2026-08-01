@@ -290,3 +290,19 @@ function initializeUpdateButtons() {
     };
   }
 }
+
+async function loadSystemVersion() {
+  const { data, error } = await supabaseClient
+    .from("app_updates")
+    .select("version, created_at")
+    .eq("active", true)
+    .single();
+
+  if (error || !data) return;
+
+  document.getElementById("systemVersion").textContent = data.version;
+
+  document.getElementById("systemUpdatedAt").textContent = new Date(
+    data.created_at,
+  ).toLocaleString("ar-IQ");
+}

@@ -1897,3 +1897,31 @@ body.dark-mode details summary {
 
   overflow: auto;
 }
+
+.system-info-card {
+  margin-top: 20px;
+
+  padding: 12px;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  font-size: 13px;
+}
+
+.system-info-title {
+  font-weight: bold;
+
+  margin-bottom: 10px;
+
+  text-align: center;
+}
+
+.system-info-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin: 6px 0;
+}

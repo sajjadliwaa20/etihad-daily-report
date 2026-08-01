@@ -121,6 +121,25 @@
     <div id="sidebarOverlay" onclick="toggleSidebar()">
     </div>
 
+    <div id="systemInfoCard" class="system-info-card">
+
+    <div class="system-info-title">
+        🖥️ معلومات النظام
+    </div>
+
+    <div class="system-info-row">
+        <span>الإصدار</span>
+        <strong id="systemVersion">--</strong>
+    </div>
+
+    <div class="system-info-row">
+        <span>آخر تحديث</span>
+        <strong id="systemUpdatedAt">--</strong>
+    </div>
+
+</div>
+
+
     <div class="content">
 
         <section id="home" class="section">
@@ -5486,6 +5505,8 @@ console.log("USER VERSION ERROR:", error);
         await applyPermissions();
 
         await showCurrentUser();
+
+await loadSystemVersion();
 
         initializeUpdateButtons();
         
