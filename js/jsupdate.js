@@ -296,7 +296,9 @@ async function loadSystemVersion() {
     .from("app_updates")
     .select("version, created_at")
     .eq("active", true)
-    .single();
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
   console.log("SYSTEM VERSION DATA:", data);
   console.log("SYSTEM VERSION ERROR:", error);
