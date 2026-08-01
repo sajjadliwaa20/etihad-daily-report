@@ -5448,6 +5448,8 @@ console.log("USER VERSION ERROR:", error);
         await applyPermissions();
 
         await showCurrentUser();
+
+        initializeUpdateButtons();
         
 
        const hasUpdate = await checkForAppUpdate();

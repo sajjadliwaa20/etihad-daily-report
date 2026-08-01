@@ -1554,7 +1554,7 @@ body.dark-mode details summary {
 .app-update-card {
   width: min(92%, 430px);
 
-  background: var(--card);
+  background: #2b332e;
 
   color: var(--text);
 
@@ -1588,7 +1588,7 @@ body.dark-mode details summary {
 .version-box div {
   flex: 1;
 
-  background: var(--background);
+  background: #0f8c43;
 
   padding: 12px;
 

@@ -256,3 +256,27 @@ document.getElementById("updateNowBtn")?.addEventListener("click", async () => {
     console.error("UPDATE ERROR:", err);
   }
 });
+
+function initializeUpdateButtons() {
+  const nowBtn = document.getElementById("updateNowBtn");
+
+  if (nowBtn) {
+    nowBtn.onclick = async () => {
+      console.log("UPDATE BUTTON CLICKED");
+
+      await saveCurrentVersion();
+
+      await completeUpdate();
+    };
+  }
+
+  const laterBtn = document.getElementById("updateLaterBtn");
+
+  if (laterBtn) {
+    laterBtn.onclick = async () => {
+      await saveCurrentVersion();
+
+      document.getElementById("updatePopup").style.display = "none";
+    };
+  }
+}
