@@ -298,6 +298,9 @@ async function loadSystemVersion() {
     .eq("active", true)
     .single();
 
+  console.log("SYSTEM VERSION DATA:", data);
+  console.log("SYSTEM VERSION ERROR:", error);
+
   if (error || !data) return;
 
   document.getElementById("systemVersion").textContent = data.version;
