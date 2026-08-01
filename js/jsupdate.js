@@ -149,7 +149,11 @@ async function checkForAppUpdate() {
 function showUpdateDialog() {
   if (!latestAppUpdate) return;
 
-  document.getElementById("updatePopup").style.display = "flex";
+  const popup = document.getElementById("updatePopup");
+
+  popup.style.display = "flex";
+
+  document.body.style.overflow = "hidden";
 
   document.getElementById("popupVersion").textContent = latestAppUpdate.version;
 
@@ -277,6 +281,7 @@ function initializeUpdateButtons() {
       await saveCurrentVersion();
 
       document.getElementById("updatePopup").style.display = "none";
+      document.body.style.overflow = "";
     };
   }
 }

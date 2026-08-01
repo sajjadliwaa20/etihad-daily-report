@@ -36,6 +36,45 @@
 
 <img src="icons/icon-192.png">
 
+ <div id="updatePopup" class="update-popup" style="display:none;">
+
+    <div class="update-box">
+
+        <h2>🚀 يوجد تحديث جديد</h2>
+
+        <p>
+            الإصدار:
+            <strong id="popupVersion"></strong>
+        </p>
+
+        <h3 id="popupTitle"></h3>
+
+        <pre id="popupChangelog"></pre>
+
+        <div class="update-buttons">
+
+            <button
+                id="updateNowBtn"
+                class="update-now">
+
+                🔄 تحديث الآن
+
+            </button>
+
+            <button
+                id="updateLaterBtn"
+                class="update-later">
+
+                لاحقاً
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 <h2>Etihad Daily Report</h2>
 
 <p>Loading...</p>
@@ -5452,14 +5491,13 @@ console.log("USER VERSION ERROR:", error);
         initializeUpdateButtons();
         
 
-       const hasUpdate = await checkForAppUpdate();
+    const hasUpdate = await checkForAppUpdate();
 
 if (hasUpdate) {
 
     showUpdateDialog();
 
 }
-
 
         const btn = document.getElementById("darkModeBtn");
 
@@ -5866,50 +5904,6 @@ if (btn) {
        <script src="js/jsupdate.js"></script>
        <script src="js/dashboard.js"></script>
        <script src="js/archive.js"></script>
-
-
-
-
-       <div id="updatePopup" class="update-popup" style="display:none;">
-
-    <div class="update-box">
-
-        <h2>🚀 يوجد تحديث جديد</h2>
-
-        <p>
-            الإصدار:
-            <strong id="popupVersion"></strong>
-        </p>
-
-        <h3 id="popupTitle"></h3>
-
-        <pre id="popupChangelog"></pre>
-
-        <div class="update-buttons">
-
-            <button
-                id="updateNowBtn"
-                class="update-now">
-
-                🔄 تحديث الآن
-
-            </button>
-
-            <button
-                id="updateLaterBtn"
-                class="update-later">
-
-                لاحقاً
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
 
 <script>
 bootApplication();

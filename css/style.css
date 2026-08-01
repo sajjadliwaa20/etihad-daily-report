@@ -1841,3 +1841,59 @@ body.dark-mode details summary {
 
   box-sizing: border-box;
 }
+
+/* ===========================
+   Update Popup
+=========================== */
+
+.update-popup {
+  position: fixed;
+
+  inset: 0;
+
+  display: none;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  backdrop-filter: blur(6px);
+
+  z-index: 999999;
+}
+
+.update-box {
+  width: min(92%, 460px);
+
+  background: var(--card);
+
+  color: var(--text);
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+  text-align: center;
+}
+
+.update-box h2 {
+  margin-bottom: 15px;
+}
+
+.update-box pre {
+  white-space: pre-wrap;
+
+  text-align: right;
+
+  margin-top: 15px;
+
+  line-height: 1.8;
+
+  max-height: 250px;
+
+  overflow: auto;
+}
