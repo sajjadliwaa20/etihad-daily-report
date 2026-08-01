@@ -151,6 +151,11 @@ function showUpdateDialog() {
 
   const popup = document.getElementById("updatePopup");
 
+  if (!popup) {
+    console.error("updatePopup not found");
+    return;
+  }
+
   popup.style.display = "flex";
 
   document.body.style.overflow = "hidden";
