@@ -213,3 +213,15 @@ async function saveCurrentVersion() {
     console.error("SAVE VERSION ERROR:", error);
   }
 }
+
+document.getElementById("updateNowBtn")?.addEventListener("click", async () => {
+  try {
+    await saveCurrentVersion();
+
+    await completeUpdate();
+  } catch (err) {
+    console.error(err);
+
+    showNotification("فشل التحديث", "error");
+  }
+});
