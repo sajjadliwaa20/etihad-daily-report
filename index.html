@@ -2178,6 +2178,8 @@ updateDashboard();
 
         <h3>🏭 خطوط إنتاج الأمبولة و Spout و CAP</h3>
 
+        <div class="table-scroll">
+
         <table class="wide-table">
 
             <tr>
@@ -2196,7 +2198,7 @@ updateDashboard();
                 <td><input id="plastic_bottle1_qty" data-save></td>
                 <td><input id="plastic_bottle1_eff" data-save></td>
                 <td><input id="plastic_bottle1_cycle" data-save></td>
-                <td><input id="plastic_bottle1_resin" data-save></td>
+                <td><input id="plastic_bottle1_resin" class="text-field" data-save placeholder="مثال: صيني"></td>
                 <td><input id="plastic_bottle1_missing" data-save></td>
                 <td>-</td>
                 <td><input id="plastic_bottle1_stop" data-save></td>
@@ -2207,7 +2209,7 @@ updateDashboard();
                 <td><input id="plastic_bottle2_qty" data-save></td>
                 <td><input id="plastic_bottle2_eff" data-save></td>
                 <td><input id="plastic_bottle2_cycle" data-save></td>
-                <td><input id="plastic_bottle2_resin" data-save></td>
+                <td><input id="plastic_bottle2_resin" class="text-field" data-save placeholder="مثال: صيني"></td>
                 <td><input id="plastic_bottle2_missing" data-save></td>
                 <td>-</td>
                 <td><input id="plastic_bottle2_stop" data-save></td>
@@ -2247,11 +2249,13 @@ updateDashboard();
             </tr>
 
         </table>
+    </div>
 
         <br>
 
         <h3>⚙️ ماكينات التجميع والسداد المعدني واللحام</h3>
 
+<div class="table-scroll">
         <table class="wide-table">
 
             <tr>
@@ -2305,11 +2309,12 @@ updateDashboard();
             </tr>
 
         </table>
-
+        </div>
         <br>
 
         <h3>📝 ملاحظات وأسباب التوقف</h3>
 
+        <div class="table-scroll">
         <table class="wide-table">
 
             <tr>
@@ -2343,7 +2348,7 @@ updateDashboard();
             </tr>
 
         </table>
-
+</div>
     </div>
 
 </details>
@@ -5613,24 +5618,19 @@ if (hasUpdate) {
             }
 
 
-            document
-                .querySelectorAll("input[data-save]")
-                .forEach(el => {
+            document.querySelectorAll("input[data-save]").forEach(el => {
 
-                    if (
-                        !el.id.includes("note")
-                    ) {
+    if (
+        !el.id.includes("note") &&
+        !el.id.includes("resin")
+    ) {
 
-                        el.type = "number";
+        el.type = "number";
+        el.setAttribute("inputmode","numeric");
 
-                        el.setAttribute(
-                            "inputmode",
-                            "numeric"
-                        );
+    }
 
-                    }
-
-                });
+});
 
 
             async function uploadNoteImage(input) {

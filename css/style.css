@@ -1925,3 +1925,24 @@ body.dark-mode details summary {
 
   margin: 6px 0;
 }
+
+.text-field {
+  min-width: 140px;
+}
+
+.wide-table input {
+  min-width: 90px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  width: 100%;
+
+  margin-bottom: 20px;
+}
+.table-scroll {
+  -webkit-overflow-scrolling: touch;
+}
