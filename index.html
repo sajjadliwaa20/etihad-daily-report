@@ -2170,127 +2170,183 @@ updateDashboard();
 
             <!-- تقرير مصنع اللدائن -->
 
-            <details>
+          <details>
 
-                <summary>تقرير مصنع اللدائن</summary>
+    <summary>تقرير مصنع اللدائن</summary>
 
-                <div class="details-content">
+    <div class="details-content">
 
-                    <table class="wide-table">
+        <h3>🏭 خطوط إنتاج الأمبولة و Spout و CAP</h3>
 
-                        <tr>
-                            <th>الماكنة</th>
-                            <th> المنتج</th>
-                            <th>الإنتاج اليومي (قطعة)</th>
-                            <th>الكفاءة (%)</th>
-                            <th>الملاحظات</th>
-                        </tr>
+        <table class="wide-table">
 
-                        <tr>
-                            <td>ماكنة الأمبولة 1</td>
-                            <td><input id="plastic_bottle1_product" data-save></td>
-                            <td><input id="plastic_bottle1_qty" data-save></td>
-                            <td><input id="plastic_bottle1_eff" data-save></td>
-                            <td><input id="plastic_bottle1_note" data-save></td>
-                        </tr>
+            <tr>
+                <th>الماكنة</th>
+                <th>الإنتاج (قطعة)</th>
+                <th>الكفاءة (%)</th>
+                <th>Cycle Time (s)</th>
+                <th>نوع الرزن</th>
+                <th>خلايا النقص</th>
+                <th>الخلايا الثابتة</th>
+                <th>التوقف (دقيقة)</th>
+            </tr>
 
-                        <tr>
-                            <td>ماكنة الأمبولة 2</td>
-                            <td><input id="plastic_bottle2_product" data-save></td>
-                            <td><input id="plastic_bottle2_qty" data-save></td>
-                            <td><input id="plastic_bottle2_eff" data-save></td>
-                            <td><input id="plastic_bottle2_note" data-save></td>
-                        </tr>
+            <tr>
+                <td>الأمبولة 1</td>
+                <td><input id="plastic_bottle1_qty" data-save></td>
+                <td><input id="plastic_bottle1_eff" data-save></td>
+                <td><input id="plastic_bottle1_cycle" data-save></td>
+                <td><input id="plastic_bottle1_resin" data-save></td>
+                <td><input id="plastic_bottle1_missing" data-save></td>
+                <td>-</td>
+                <td><input id="plastic_bottle1_stop" data-save></td>
+            </tr>
 
-                        <tr>
-                            <td>ماكنة Spout 1</td>
-                            <td><input id="plastic_spout1_product" data-save></td>
-                            <td><input id="plastic_spout1_qty" data-save></td>
-                            <td><input id="plastic_spout1_eff" data-save></td>
-                            <td><input id="plastic_spout1_note" data-save></td>
-                        </tr>
+            <tr>
+                <td>الأمبولة 2</td>
+                <td><input id="plastic_bottle2_qty" data-save></td>
+                <td><input id="plastic_bottle2_eff" data-save></td>
+                <td><input id="plastic_bottle2_cycle" data-save></td>
+                <td><input id="plastic_bottle2_resin" data-save></td>
+                <td><input id="plastic_bottle2_missing" data-save></td>
+                <td>-</td>
+                <td><input id="plastic_bottle2_stop" data-save></td>
+            </tr>
 
-                        <tr>
-                            <td>ماكنة Spout 2</td>
-                            <td><input id="plastic_spout2_product" data-save></td>
-                            <td><input id="plastic_spout2_qty" data-save></td>
-                            <td><input id="plastic_spout2_eff" data-save></td>
-                            <td><input id="plastic_spout2_note" data-save></td>
-                        </tr>
+            <tr>
+                <td>Spout 1</td>
+                <td><input id="plastic_spout1_qty" data-save></td>
+                <td><input id="plastic_spout1_eff" data-save></td>
+                <td><input id="plastic_spout1_cycle" data-save></td>
+                <td>-</td>
+                <td><input id="plastic_spout1_missing" data-save></td>
+                <td><input id="plastic_spout1_fixed_missing" data-save></td>
+                <td><input id="plastic_spout1_stop" data-save></td>
+            </tr>
 
-                        <tr>
-                            <td>ماكنة Cap</td>
-                            <td><input id="plastic_cap_product" data-save></td>
-                            <td><input id="plastic_cap_qty" data-save></td>
-                            <td><input id="plastic_cap_eff" data-save></td>
-                            <td><input id="plastic_cap_note" data-save></td>
-                        </tr>
+            <tr>
+                <td>Spout 2</td>
+                <td><input id="plastic_spout2_qty" data-save></td>
+                <td><input id="plastic_spout2_eff" data-save></td>
+                <td><input id="plastic_spout2_cycle" data-save></td>
+                <td>-</td>
+                <td><input id="plastic_spout2_missing" data-save></td>
+                <td><input id="plastic_spout2_fixed_missing" data-save></td>
+                <td><input id="plastic_spout2_stop" data-save></td>
+            </tr>
 
-                        <tr>
-                            <td>ماكنة التجميع 1</td>
-                            <td><input id="plastic_assembly1_product" data-save></td>
-                            <td><input id="plastic_assembly1_qty" data-save></td>
-                            <td><input id="plastic_assembly1_eff" data-save></td>
-                            <td><input id="plastic_assembly1_note" data-save></td>
-                        </tr>
+            <tr>
+                <td>CAP</td>
+                <td><input id="plastic_cap_qty" data-save></td>
+                <td><input id="plastic_cap_eff" data-save></td>
+                <td><input id="plastic_cap_cycle" data-save></td>
+                <td>-</td>
+                <td><input id="plastic_cap_missing" data-save></td>
+                <td>-</td>
+                <td><input id="plastic_cap_stop" data-save></td>
+            </tr>
 
-                        <tr>
-                            <td>ماكنة التجميع 2</td>
-                            <td><input id="plastic_assembly2_product" data-save></td>
-                            <td><input id="plastic_assembly2_qty" data-save></td>
-                            <td><input id="plastic_assembly2_eff" data-save></td>
-                            <td><input id="plastic_assembly2_note" data-save></td>
-                        </tr>
+        </table>
 
-                        <tr>
-                            <td>ماكنة السداد المعدني</td>
-                            <td><input id="plastic_metalcap_product" data-save></td>
-                            <td><input id="plastic_metalcap_qty" data-save></td>
-                            <td><input id="plastic_metalcap_eff" data-save></td>
-                            <td><input id="plastic_metalcap_note" data-save></td>
-                        </tr>
+        <br>
 
-                    </table>
+        <h3>⚙️ ماكينات التجميع والسداد المعدني واللحام</h3>
 
-                    <br>
+        <table class="wide-table">
 
-                    <table class="wide-table">
+            <tr>
+                <th>الماكنة</th>
+                <th>الإنتاج</th>
+                <th>الكفاءة (%)</th>
+                <th>نسبة التلف (%)</th>
+                <th>الحالة</th>
+                <th>التوقف (دقيقة)</th>
+            </tr>
 
-                        <tr>
-                            <th>إجمالي الإنتاج (قطعة)</th>
-                            <th>عدد المكائن العاملة</th>
-                            <th>عدد المكائن المتوقفة</th>
-                        </tr>
+            <tr>
+                <td>التجميع 1</td>
+                <td><input id="plastic_assembly1_qty" data-save></td>
+                <td>-</td>
+                <td>-</td>
+                <td><input id="plastic_assembly1_status" data-save></td>
+                <td><input id="plastic_assembly1_stop" data-save></td>
+            </tr>
 
-                        <tr>
-                            <td><input id="plastic_total_production" data-save></td>
-                            <td><input id="plastic_running_machines" data-save></td>
-                            <td><input id="plastic_stopped_machines" data-save></td>
-                        </tr>
+            <tr>
+                <td>التجميع 2</td>
+                <td><input id="plastic_assembly2_qty" data-save></td>
+                <td><input id="plastic_assembly2_eff" data-save></td>
+                <td><input id="plastic_assembly2_scrap" data-save></td>
+                <td><input id="plastic_assembly2_status" data-save></td>
+                <td><input id="plastic_assembly2_stop" data-save></td>
+            </tr>
 
-                    </table>
+            <tr>
+                <td>السداد المعدني</td>
+                <td><input id="plastic_metalcap_qty" data-save></td>
+                <td>-</td>
+                <td>-</td>
+                <td>
+                    <select id="plastic_metalcap_status" data-save>
+                        <option>يعمل</option>
+                        <option>متوقف</option>
+                    </select>
+                </td>
+                <td><input id="plastic_metalcap_stop" data-save></td>
+            </tr>
 
-                    <br>
+            <tr>
+                <td>اللحام</td>
+                <td><input id="plastic_welding_qty" data-save></td>
+                <td>-</td>
+                <td><input id="plastic_welding_scrap" data-save></td>
+                <td><input id="plastic_welding_status" data-save></td>
+                <td><input id="plastic_welding_stop" data-save></td>
+            </tr>
 
-                    <table>
+        </table>
 
-                        <tr>
-                            <th>ملاحظات مصنع اللدائن</th>
-                        </tr>
+        <br>
 
-                        <tr>
-                            <td>
-                                <textarea id="plastic_factory_notes" data-save rows="4" style="width:100%;">
-</textarea>
-                            </td>
-                        </tr>
+        <h3>📝 ملاحظات وأسباب التوقف</h3>
 
-                    </table>
+        <table class="wide-table">
 
-                </div>
+            <tr>
+                <th>الماكنة</th>
+                <th>الملاحظات</th>
+            </tr>
 
-            </details>
+            <tr>
+                <td>Spout 1</td>
+                <td><input id="plastic_spout1_note" data-save></td>
+            </tr>
 
+            <tr>
+                <td>Spout 2</td>
+                <td><input id="plastic_spout2_note" data-save></td>
+            </tr>
+
+            <tr>
+                <td>التجميع 2</td>
+                <td><input id="plastic_assembly2_note" data-save></td>
+            </tr>
+
+            <tr>
+                <td>ملاحظات عامة للمصنع</td>
+                <td>
+                    <textarea id="plastic_factory_notes"
+                        data-save
+                        rows="4"
+                        style="width:100%;"></textarea>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
             <!-- الجودة والسلامة -->
 
             <details>
@@ -2301,15 +2357,15 @@ updateDashboard();
 
                     <table>
 
-                        <tr>
-                            <th>ملاحظات قسم الجودة</th>
-                        </tr>
+                    <tr>
+                        <th>ملاحظات قسم الجودة</th>
+                    </tr>
 
                         <tr>
                             <td>
 
                                 <textarea id="oil_quality_notes" data-save>
-</textarea>
+                                </textarea>
 
                                 <br><br>
 
@@ -2322,59 +2378,47 @@ updateDashboard();
                                 <input type="file" multiple accept="image/*,application/pdf"
                                     id="oil_quality_notes_image" data-factory="oil" data-field="oil_quality_notes"
                                     onchange="uploadNoteImage(this)" style="display:none;">
-
                                 <br>
-
                                 <a id="oil_quality_notes_link" target="_blank" style="
-display:none;
-font-size:13px;
-text-decoration:none;
-">
-
+                                   display:none;
+                                   font-size:13px;
+                                   text-decoration:none;
+                                   ">
                                     👁 عرض الملف
-
                                 </a>
                             </td>
                         </tr>
-
                     </table>
 
                     <br>
-
                     <table>
-
                         <tr>
                             <th>ملاحظات قسم السلامة</th>
                         </tr>
 
                         <tr>
                             <td>
-
                                 <textarea id="oil_safety_notes" data-save>
-</textarea>
-
+                                </textarea>
                                 <br><br>
 
                                 <label for="oil_safety_notes_image" class="uploadImageBtn">
 
                                     📎 إرفاق ملف
-
                                 </label>
 
                                 <input type="file" multiple accept="image/*,application/pdf" id="oil_safety_notes_image"
                                     data-factory="oil" data-field="oil_safety_notes" onchange="uploadNoteImage(this)"
                                     style="display:none;">
-
                                 <br>
 
                                 <a id="oil_safety_notes_link" target="_blank" style="
-display:none;
-font-size:13px;
-text-decoration:none;
-">
+                                   display:none;
+                                   font-size:13px;
+                                   text-decoration:none;
+                                      ">
 
                                     👁 عرض الملف
-
                                 </a>
                             </td>
                         </tr>
