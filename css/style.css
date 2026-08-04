@@ -318,7 +318,7 @@ details {
 summary {
   padding: 18px 20px;
 
-  background: linear-gradient(90deg, #034c08, #079b16);
+  background: #3d8152;
 
   cursor: pointer;
 
@@ -337,7 +337,7 @@ summary:hover {
     #0c3225 15%,
     #156b47 45%,
     #289356 75%,
-    #38894f 100%
+    #49b166 100%
   );
 }
 
