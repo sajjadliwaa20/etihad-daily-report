@@ -13,9 +13,6 @@ async function loadArchiveReport() {
     document.getElementById("reportDateKey").value,
   );
 
-  // امسح القيم الحالية
-  clearDailyReport();
-
   // استخدم نظام التحميل الأصلي
   await loadDailyReport();
 
