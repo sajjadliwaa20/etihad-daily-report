@@ -3,42 +3,21 @@ async function loadArchiveReport() {
 
   if (!date) {
     showNotification("اختر تاريخ التقرير");
-
     return;
   }
 
-  try {
-    const { data, error } = await supabaseClient
-      .from("daily_reports")
-      .select("*")
-      .eq("report_date", date);
+  // اجعل تاريخ التقرير الحالي هو تاريخ الأرشيف
+  document.getElementById("reportDateKey").value = date;
+  console.log(
+    "reportDateKey =",
+    document.getElementById("reportDateKey").value,
+  );
 
-    if (error) {
-      console.log(error);
+  // امسح القيم الحالية
+  clearDailyReport();
 
-      showNotification("ERROR: " + error.message);
+  // استخدم نظام التحميل الأصلي
+  await loadDailyReport();
 
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      showNotification("لا يوجد تقرير لهذا التاريخ");
-
-      return;
-    }
-
-    data.forEach((row) => {
-      const element = document.getElementById(row.field_name);
-
-      if (element) {
-        element.value = row.field_value;
-      }
-    });
-
-    showNotification("تم تحميل التقرير بنجاح", "success");
-  } catch (err) {
-    console.error(err);
-
-    showNotification("فشل تحميل التقرير", "error");
-  }
+  showNotification("تم تحميل التقرير بنجاح", "success");
 }
