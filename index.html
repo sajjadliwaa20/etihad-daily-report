@@ -770,6 +770,73 @@ saveSalesField('feed_sales_premix','feed');
 
             <details open>
 
+    <summary>📊 ملخص أرصدة النفط الأسود</summary>
+
+    <div class="details-content">
+
+        <table class="wide-table">
+
+            <tr>
+                <th>الموقع</th>
+                <th>الرصيد (م³)</th>
+            </tr>
+
+            <tr>
+                <td>محطة الطاقة (الاتحاد)</td>
+                <td><input id="blackoil_union_power_stock" data-save
+                    oninput="updateBlackOilStockTotals();"></td>
+            </tr>
+
+            <tr>
+                <td>محطة الطاقة (الريان)</td>
+                <td><input id="blackoil_union_boiler_stock" data-save
+                    oninput="updateBlackOilStockTotals();"></td>
+            </tr>
+
+            <tr>
+                <td>بويلرات الاستخلاص</td>
+                <td><input id="blackoil_extraction_stock" data-save
+                    oninput="updateBlackOilStockTotals();"></td>
+            </tr>
+
+            <tr>
+                <td><b>رصيد موقع الاتحاد</b></td>
+                <td>
+                    <input
+                        id="blackoil_union_total_stock"
+                        readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>صحارى كربلاء</td>
+                <td><input id="blackoil_sahara_stock" data-save
+                    oninput="updateBlackOilStockTotals();"></td>
+            </tr>
+
+            <tr>
+                <td>شركة ديوان</td>
+                <td><input id="blackoil_diwan_stock" data-save
+                    oninput="updateBlackOilStockTotals();"></td>
+            </tr>
+
+            <tr>
+                <td><b>إجمالي رصيد النفط الأسود</b></td>
+                <td>
+                    <input
+                        id="blackoil_total_stock"
+                        readonly>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
+
+            <details open>
+
                 <summary>محطة الطاقة - الاتحاد</summary>
 
                 <div class="details-content">
@@ -784,11 +851,6 @@ saveSalesField('feed_sales_premix','feed');
                         <tr>
                             <td>القطوعات غير المستلمة</td>
                             <td><input id="union_cuttings" data-save></td>
-                        </tr>
-
-                        <tr>
-                            <td>رصيد النفط الخام (م³)</td>
-                            <td><input id="union_stock" data-save></td>
                         </tr>
 
                         <tr>
@@ -833,11 +895,6 @@ saveSalesField('feed_sales_premix','feed');
                         </tr>
 
                         <tr>
-                            <td>رصيد النفط الخام (م³)</td>
-                            <td><input id="sahara_stock" data-save></td>
-                        </tr>
-
-                        <tr>
                             <td>المستوى الفارغ (م³)</td>
                             <td><input id="sahara_empty" data-save></td>
                         </tr>
@@ -864,11 +921,6 @@ saveSalesField('feed_sales_premix','feed');
                         <tr>
                             <td>القطوعات غير المستلمة</td>
                             <td><input id="diwan_cuttings" data-save></td>
-                        </tr>
-
-                        <tr>
-                            <td>رصيد النفط الخام (م³)</td>
-                            <td><input id="diwan_stock" data-save></td>
                         </tr>
 
                         <tr>
@@ -4094,6 +4146,38 @@ onclick="approveSection('waterfiltration')">
 
             }
 
+            function updateBlackOilStockTotals() {
+
+    const unionPower =
+        Number(document.getElementById("blackoil_union_power_stock").value) || 0;
+
+    const unionRayyan =
+        Number(document.getElementById("blackoil_union_boiler_stock").value) || 0;
+
+    const extraction =
+        Number(document.getElementById("blackoil_extraction_stock").value) || 0;
+
+    const sahara =
+        Number(document.getElementById("blackoil_sahara_stock").value) || 0;
+
+    const diwan =
+        Number(document.getElementById("blackoil_diwan_stock").value) || 0;
+
+    // مجموع موقع الاتحاد
+    document.getElementById("blackoil_union_total_stock").value =
+        unionPower +
+        unionRayyan +
+        extraction;
+
+    // المجموع الكلي
+    document.getElementById("blackoil_total_stock").value =
+        unionPower +
+        unionRayyan +
+        extraction +
+        sahara +
+        diwan;
+}
+
             function updateFlourSalesTotal() {
 
                 let f1 =
@@ -4157,6 +4241,8 @@ onclick="approveSection('waterfiltration')">
                 // لوحة التحكم
                 updateDashboard();
                 updatePowerStation();
+
+                updateBlackOilStockTotals();
 
             }
 
