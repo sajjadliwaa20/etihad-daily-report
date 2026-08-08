@@ -92,8 +92,6 @@ body {
 
   margin-bottom: 10px;
 
-  border-radius: 16px;
-
   background: rgba(233, 218, 218, 0.08);
 
   backdrop-filter: blur(8px);
@@ -113,6 +111,10 @@ body {
   overflow: hidden;
 
   border-radius: 16px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sidebar a::before {
@@ -139,7 +141,7 @@ body {
 
 /* محطة الطاقة */
 #menu_power::before {
-  background: #d6a84a;
+  background: #374151;
 }
 
 /* النفط الأسود */
@@ -149,7 +151,7 @@ body {
 
 /* مصنع السكر */
 #menu_sugar::before {
-  background: #d3d1d6;
+  border-top: 5px solid #d4cedd;
 }
 
 /* مصنع الزيت */
