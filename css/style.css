@@ -92,7 +92,7 @@ body {
 
   margin-bottom: 10px;
 
-  border-radius: 14px;
+  border-radius: 16px;
 
   background: rgba(233, 218, 218, 0.08);
 
@@ -107,6 +107,73 @@ body {
   color: white;
 
   transition: 0.25s;
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+}
+
+.sidebar a::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 4px;
+
+  background: transparent;
+}
+
+/* الرئيسية */
+#menu_home::before {
+  background: #3b82f6;
+}
+
+/* محطة الطاقة */
+#menu_power::before {
+  background: #f59e0b;
+}
+
+/* النفط الأسود */
+#menu_blackoil::before {
+  background: #374151;
+}
+
+/* مصنع السكر */
+#menu_sugar::before {
+  background: #a855f7;
+}
+
+/* مصنع الزيت */
+#menu_oil::before {
+  background: #eab308;
+}
+
+/* مصنع الطحين */
+#menu_flour::before {
+  background: #d97706;
+}
+
+/* مصنع الأعلاف */
+#menu_feed::before {
+  background: #22c55e;
+}
+
+/* محطات التصفية */
+#menu_waterfiltration::before {
+  background: #06b6d4;
+}
+
+/* الأرشيف */
+#menu_archive::before {
+  background: #6366f1;
 }
 
 .sidebar a:hover {
