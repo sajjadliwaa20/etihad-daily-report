@@ -149,7 +149,7 @@ body {
 
 /* مصنع السكر */
 #menu_sugar::before {
-  background: #8f63d6;
+  background: #d3d1d6;
 }
 
 /* مصنع الزيت */
@@ -159,7 +159,7 @@ body {
 
 /* مصنع الطحين */
 #menu_flour::before {
-  background: #d97706;
+  background: #817f7b;
 }
 
 /* مصنع الأعلاف */
