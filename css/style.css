@@ -112,7 +112,7 @@ body {
 
   border-radius: 16px;
 
-  overflow: hidden;
+  border-top: 5px solid transparent;
 
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -151,7 +151,7 @@ body {
 
 /* مصنع السكر */
 #menu_sugar::before {
-  border-top: 5px solid #d4cedd;
+  border-top-color: #c1bcca;
 }
 
 /* مصنع الزيت */
