@@ -134,7 +134,7 @@ body {
 
   color: var(--text);
 
-  border-radius: 15px;
+  border-radius: 20px;
 
   padding: 20px;
 
@@ -306,7 +306,7 @@ details {
 
   border: 1px solid var(--border);
 
-  border-radius: 10px;
+  border-radius: 18px;
 
   overflow: hidden;
 
@@ -327,6 +327,8 @@ summary {
   font-weight: 700;
 
   color: #184e3b;
+
+  border-radius: 16px;
 
   transition: 0.25s;
 }
@@ -352,23 +354,16 @@ summary:hover {
 table {
   width: 100%;
 
-  border-collapse: collapse;
-
-  margin-top: 18px;
-
-  background: var(--card);
-
-  color: var(--text);
-
-  border-radius: 16px;
-
+  border-collapse: separate;
+  border-spacing: 0;
   overflow: hidden;
-
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  background: #2d333b;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 th {
-  background: #7aa47a;
+  background: #18563f;
 
   color: rgb(240, 238, 238);
 
@@ -379,10 +374,15 @@ td {
   padding: 12px;
 
   border: 1px solid var(--border);
+  transition: 0.18s;
 
   background: var(--card);
 
   color: var(--text);
+}
+
+tbody tr:hover {
+  background: #39414b;
 }
 
 input {
@@ -414,6 +414,7 @@ input {
   color: #ffffff;
 
   border: 1px solid #5c6672;
+  border-radius: 10px;
 }
 
 textarea {
@@ -460,7 +461,7 @@ button {
 
   border: none;
 
-  border-radius: 8px;
+  border-radius: 12px;
 
   background: var(--main);
 
@@ -1149,7 +1150,7 @@ body.dark-mode details summary {
 
   background: #ffffff;
 
-  border-radius: 18px;
+  border-radius: 20px;
 
   padding: 18px;
 
@@ -1634,7 +1635,7 @@ body.dark-mode details summary {
 
   border: 1px solid var(--border);
 
-  border-radius: 18px;
+  border-radius: 20px;
 
   padding: 25px;
 
@@ -1871,7 +1872,7 @@ body.dark-mode details summary {
 
   color: var(--text);
 
-  border-radius: 18px;
+  border-radius: 22px;
 
   padding: 25px;
 
@@ -1903,7 +1904,7 @@ body.dark-mode details summary {
 
   padding: 12px;
 
-  border-radius: 12px;
+  border-radius: 20px;
 
   background: rgba(255, 255, 255, 0.08);
 
