@@ -151,7 +151,7 @@ body {
 
 /* مصنع السكر */
 #menu_sugar::before {
-  border-top-color: #c1bcca;
+  border-top: 5px solid #d4cedd;
 }
 
 /* مصنع الزيت */
@@ -218,6 +218,44 @@ body {
 
   overflow: hidden;
 }
+
+.menu-accent {
+  display: block;
+
+  padding: 3px;
+
+  border-radius: 18px;
+
+  background: #888;
+}
+
+.menu-accent span {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #3e816b;
+
+  border-radius: 15px;
+
+  min-height: 54px;
+
+  font-weight: bold;
+}
+
+.menu-accent.sugar {
+  background: linear-gradient(
+    180deg,
+    #9a70d7 0%,
+
+    #9a70d7 12%,
+
+    transparent 12%
+  );
+}
+
 .header {
   display: flex;
 
