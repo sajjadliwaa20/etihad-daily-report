@@ -2026,3 +2026,7 @@ body.dark-mode details summary {
 .table-scroll {
   -webkit-overflow-scrolling: touch;
 }
+
+.feed-stop-panel {
+  flex: 1.4;
+}
