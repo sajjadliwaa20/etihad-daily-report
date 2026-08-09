@@ -2135,6 +2135,24 @@ text-decoration:none;
 
                         </tr>
 
+                        <tr>
+
+    <td>زيت الستيارين الخام</td>
+
+    <td>
+        <input id="raw_stearin_in" data-save step="any">
+    </td>
+
+    <td>
+        <input id="raw_stearin_used" data-save step="any">
+    </td>
+
+    <td>
+        <input id="raw_stearin_stock" data-save step="any">
+    </td>
+
+</tr>
+
                     </table>
 
                 </div>
@@ -2153,49 +2171,81 @@ text-decoration:none;
 
                         <tr>
 
-                            <th>الخط</th>
-                            <th>الإنتاج اليومي</th>
+    <th>الخط</th>
+    <th>نوع الزيت</th>
+    <th>الإنتاج اليومي (طن)</th>
 
-                        </tr>
+</tr>
 
                         <tr>
 
-                            <td>خط التكرير 1</td>
+    <td>خط التكرير 1</td>
 
-                            <td>
-                                <input id="refinery1" data-save step="any" oninput="
-updateDashboard();
-">
-                            </td>
+    <td>
 
-                        </tr>
+        <select id="refinery1_type" data-save>
+
+            <option value="">اختر النوع</option>
+
+            <option>زيت عباد الشمس</option>
+
+            <option>زيت الأولين</option>
+
+            <option>زيت الستيارين</option>
+
+            <option>الشورتنينغ</option>
+
+        </select>
+
+    </td>
+
+    <td>
+
+        <input
+            id="refinery1"
+            data-save
+            step="any"
+            oninput="updateDashboard();">
+
+    </td>
+
+</tr>
 
                         <tr>
 
                             <td>خط التكرير 2</td>
 
                             <td>
-                                <input id="refinery2" data-save step="any" oninput="
-updateDashboard();
-">
+                                <select id="refinery2_type" data-save>
+                                    <option value="">اختر النوع</option>
+                                    <option>زيت عباد الشمس</option>
+                                    <option>زيت الأولين</option>
+                                    <option>زيت الستيارين</option>
+                                    <option>الشورتنينغ</option>
+                                </select>
+                                <input id="refinery2" data-save step="any" oninput="updateDashboard();">
                             </td>
 
                         </tr>
 
                         <tr>
 
-                            <td>
+    <td colspan="2">
 
-                                <b>المجموع</b>
+        <b>المجموع</b>
 
-                            </td>
+    </td>
 
-                            <td>
+    <td>
 
-                                <input id="refinery_total" readonly step="any">
-                            </td>
+        <input
+            id="refinery_total"
+            readonly
+            step="any">
 
-                        </tr>
+    </td>
+
+</tr>
 
                     </table>
 
@@ -3770,7 +3820,7 @@ text-decoration:none;
 
                         <tr>
                             <th>المادة</th>
-                            <th>الكمية</th>
+                            <th>الكمية (طن)</th>
                         </tr>
 
                         <tr>
@@ -3824,8 +3874,8 @@ text-decoration:none;
                         </tr>
 
                         <tr>
-                            <td>زيت الرندر</td>
-                            <td><input id="poultryoil" data-save step="any"></td>
+                            <td>زيت الاولين</td>
+                            <td><input id="oilenoil" data-save step="any"></td>
                         </tr>
 
                         <tr>

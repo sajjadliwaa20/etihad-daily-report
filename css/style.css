@@ -514,6 +514,24 @@ textarea {
   color: #222 !important;
 }
 
+select {
+  width: 100%;
+
+  padding: 8px 10px;
+
+  border-radius: 12px;
+
+  background: #eef4ff;
+
+  color: #163a7d;
+
+  font-weight: 600;
+
+  text-align: center;
+
+  border: 1px solid #b7c7e8;
+}
+
 input:focus,
 select:focus {
   outline: none;
