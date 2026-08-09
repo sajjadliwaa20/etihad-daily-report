@@ -2027,6 +2027,22 @@ body.dark-mode details summary {
   -webkit-overflow-scrolling: touch;
 }
 
+.feed-production-layout {
+  display: flex;
+
+  gap: 20px;
+
+  align-items: flex-start;
+
+  width: 100%;
+}
+
+.feed-production-layout .table-scroll {
+  flex: 3;
+
+  min-width: 0;
+}
+
 .feed-stop-panel {
-  flex: 1.4;
+  flex: 1.3;
 }
