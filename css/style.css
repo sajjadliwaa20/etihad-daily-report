@@ -82,101 +82,72 @@ body {
 }
 
 .sidebar a {
+  position: relative;
   display: flex;
 
   align-items: center;
 
   justify-content: center;
-
+  margin: 10px 0;
   padding: 14px 18px;
 
-  margin-bottom: 10px;
-
-  background: rgba(233, 218, 218, 0.08);
-
-  backdrop-filter: blur(8px);
-
-  text-decoration: none;
-
-  font-weight: bold;
-
-  letter-spacing: 0.2px;
-
+  border-radius: 18px;
+  border: 3px solid transparent;
   color: white;
-
+  font-weight: 700;
+  text-decoration: none;
   transition: 0.25s;
 
-  position: relative;
-
   overflow: hidden;
-
-  border-radius: 16px;
-
-  border-top: 5px solid transparent;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.sidebar a::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 5px;
-  border-radius: 8px 8px 0 0;
-
-  background: transparent;
+#menu_sugar {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #e5ebe6 8px, #e5ebe6 14px, transparent 16px)
+      border-box;
 }
 
-/* الرئيسية */
-#menu_home::before {
-  background: #5c8fd6;
+#menu_power {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #2a3450 8px, #2a3450 14px, transparent 16px)
+      border-box;
 }
 
-/* محطة الطاقة */
-#menu_power::before {
-  background: #374151;
+#menu_oil {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #758335 8px, #758335 14px, transparent 16px)
+      border-box;
 }
 
-/* النفط الأسود */
-#menu_blackoil::before {
-  background: #374151;
+#menu_flour {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #8f9494 8px, #8f9494 14px, transparent 16px)
+      border-box;
 }
 
-/* مصنع السكر */
-#menu_sugar::before {
-  border-top: 5px solid #d4cedd;
+#menu_feed {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #1ddf57 8px, #1ddf57 14px, transparent 16px)
+      border-box;
 }
 
-/* مصنع الزيت */
-#menu_oil::before {
-  background: #eab308;
+#menu_waterfiltration {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #3d90c0 8px, #3d90c0 14px, transparent 16px)
+      border-box;
 }
 
-/* مصنع الطحين */
-#menu_flour::before {
-  background: #817f7b;
-}
-
-/* مصنع الأعلاف */
-#menu_feed::before {
-  background: #4fae73;
-}
-
-/* محطات التصفية */
-#menu_waterfiltration::before {
-  background: #06b6d4;
-}
-
-/* الأرشيف */
-#menu_archive::before {
-  background: #6366f1;
+#menu_archive {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #d14c3b 8px, #d14c3b 14px, transparent 16px)
+      border-box;
 }
 
 .sidebar a:hover {
