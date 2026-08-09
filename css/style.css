@@ -796,7 +796,7 @@ input[type="number"] {
 /* الهاتف */
 @media (max-width: 768px) {
   input[type="number"] {
-    width: 75px;
+    width: 100px;
 
     min-width: 75px;
 

@@ -1147,6 +1147,172 @@ style="display:none;">
 
             </details>
 
+            <details>
+
+    <summary>🔥 مراجل الريان</summary>
+
+    <div class="details-content">
+
+        <!-- البويلرات -->
+
+        <table class="wide-table">
+
+            <tr>
+
+                <th>البيان</th>
+
+                <th>القيمة</th>
+
+            </tr>
+
+            <tr>
+
+                <td>عدد البويلرات العاملة</td>
+
+                <td>
+
+                    <input
+                        id="boilers_running"
+                        data-save
+                        step="any">
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>صيانة البويلرات</td>
+
+                <td>
+
+                    <textarea
+                        id="boilers_maintenance"
+                        data-save
+                        rows="3">
+                    </textarea>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <br>
+
+        <!-- الضواغط -->
+
+        <table class="wide-table">
+
+            <tr>
+
+                <th>Air Compressor</th>
+
+                <th>Operating Hours</th>
+
+            </tr>
+
+            <tr>
+
+                <td>Air Compressor 1</td>
+
+                <td>
+                    <input
+                        id="air_compressor1_hours"
+                        data-save
+                        step="any">
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>Air Compressor 2</td>
+
+                <td>
+                    <input
+                        id="air_compressor2_hours"
+                        data-save
+                        step="any">
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>Air Compressor 3</td>
+
+                <td>
+                    <input
+                        id="air_compressor3_hours"
+                        data-save
+                        step="any">
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>Service Compressor</td>
+
+                <td>
+                    <input
+                        id="service_compressor_hours"
+                        data-save
+                        step="any">
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td><b>عدد الضواغط العاملة</b></td>
+
+                <td>
+
+                    <input
+                        id="compressors_running"
+                        data-save
+                        step="any">
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <br>
+
+        <!-- ملاحظات -->
+
+        <table class="wide-table">
+
+            <tr>
+
+                <th>ملاحظات مراجل الريان</th>
+
+            </tr>
+
+            <tr>
+
+                <td>
+
+                    <textarea
+                        id="boilers_notes"
+                        data-save
+                        rows="4">
+                    </textarea>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
+
         </section>
 
         <!-- ===================================== -->
@@ -3137,7 +3303,7 @@ text-decoration:none;
 
                             <th>ذرة مغربلة</th>
                             <th>ذرة غير مغربلة</th>
-                            <th>كسر ذرة</th>
+                            <th> الحنطة </th>
                             <th>كسبة صويا</th>
                             <th>زيت صويا</th>
 
@@ -5454,7 +5620,7 @@ if (oldGrid) {
 
                 corn_clean: "🌽 رصيد الذرة المغربلة",
                 corn_unclean: "🌽 رصيد الذرة غير المغربلة",
-                corn_broken: "🌽 رصيد كسر الذرة",
+                WHEAT_STOCK: "🌾 رصيد الحنطة",
                 soybean_meal: "🟤 رصيد كسبة الصويا",
                 soy_oil: "🛢 رصيد زيت الصويا",
 
@@ -5473,8 +5639,6 @@ if (oldGrid) {
                 feed_line6: "🏭 إنتاج خط الأعلاف السادس",
 
                 premix_line1: "🧪 إنتاج خط البريمكس الأول",
-                premix_line2: "🧪 إنتاج خط البريمكس الثاني",
-                premix_line3: "🧪 إنتاج خط البريمكس الثالث",
 
                 feed_total: "📊 إجمالي إنتاج الأعلاف",
                 premix_total: "📊 إجمالي إنتاج البريمكس",
