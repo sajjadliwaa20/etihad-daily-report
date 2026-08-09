@@ -306,7 +306,7 @@ border:1px solid rgba(24,78,59,.12);
             </details>
 
 
-            <!-- المبيعات والتسويق -->
+            <!-- المبيعات والارصدة-->
 
             <details id="salesSection" open>
 
@@ -540,7 +540,7 @@ saveSalesField('sun_sales_750','oil');
 updateSunSalesTotal();
 saveSalesField('sun_sales_900','oil');
 " step="any">
-"></td>
+</td>
                                     </tr>
                                     <tr>
                                         <td>1 لتر</td>
@@ -694,66 +694,154 @@ saveSalesField('flour_sales_bran','flour');
 
                         <summary>مبيعات الأعلاف</summary>
 
-                        <div class="details-content">
+<div class="details-content">
 
-                            <table>
+<table>
 
-                                <tr>
-                                    <th>المادة</th>
-                                    <th>مبيعات الوكلاء (طن)</th>
-                                </tr>
+    <tr>
+        <th>المادة</th>
+        <th>الوكلاء (طن)</th>
+        <th>صحاري(طن)</th>
+        <th>المجموع (طن)</th>
+    </tr>
 
-                                <tr>
-                                    <td>الذرة</td>
-                                    <td>
-                                        <input id="feed_sales_corn" data-save oninput="
-updateFeedSalesTotal();
-saveSalesField('feed_sales_corn','feed');
-" step="any">
-                                    </td>
-                                </tr>
+    <tr>
+        <td>الذرة</td>
 
-                                <tr>
-                                    <td>كسبة الصويا</td>
-                                    <td>
-                                        <input id="feed_sales_soybean" data-save oninput="
-updateFeedSalesTotal();
-saveSalesField('feed_sales_soybean','feed');
-" step="any">
-">
-                                    </td>
-                                </tr>
+        <td>
+            <input
+                id="feed_sales_corn"
+                data-save
+                step="any"
+                oninput="
+                    updateFeedSalesTotal();
+                    saveSalesField('feed_sales_corn','feed');
+                ">
+        </td>
 
-                                <tr>
-                                    <td>الأعلاف</td>
-                                    <td>
-                                        <input id="feed_sales_feed" data-save oninput="
-updateFeedSalesTotal();
-saveSalesField('feed_sales_feed','feed');
-" step="any">
-                                    </td>
-                                </tr>
+        <td style="text-align:center;">—</td>
 
-                                <tr>
-                                    <td>البريمكس</td>
-                                    <td>
-                                        <input id="feed_sales_premix" data-save oninput="
-updateFeedSalesTotal();
-saveSalesField('feed_sales_premix','feed');
-" step="any">
-                                    </td>
-                                </tr>
+        <td style="text-align:center;">—</td>
 
-                                <tr>
-                                    <td><b>المجموع</b></td>
-                                    <td>
-                                        <input id="feed_sales_total" readonly>
-                                    </td>
-                                </tr>
+    </tr>
 
-                            </table>
+    <tr>
+        <td>كسبة الصويا</td>
 
-                        </div>
+        <td>
+            <input
+                id="feed_sales_soybean"
+                data-save
+                step="any"
+                oninput="
+                    updateFeedSalesTotal();
+                    saveSalesField('feed_sales_soybean','feed');
+                ">
+        </td>
+
+        <td style="text-align:center;">—</td>
+
+        <td style="text-align:center;">—</td>
+
+    </tr>
+
+    <tr>
+
+        <td>الأعلاف</td>
+
+        <td>
+
+            <input
+                id="feed_sales_feed_agents"
+                data-save
+                step="any"
+                oninput="
+                    updateFeedSalesTotal();
+                    saveSalesField('feed_sales_feed_agents','feed');
+                ">
+
+        </td>
+
+        <td>
+
+            <input
+                id="feed_sales_feed_sahara"
+                data-save
+                step="any"
+                oninput="
+                    updateFeedSalesTotal();
+                    saveSalesField('feed_sales_feed_sahara','feed');
+                ">
+
+        </td>
+
+        <td>
+
+            <input
+                id="feed_sales_feed_total"
+                readonly>
+
+        </td>
+
+    </tr>
+
+    <tr>
+
+        <td>البريمكس</td>
+
+        <td>
+
+            <input
+                id="feed_sales_premix_agents"
+                data-save
+                step="any"
+                oninput="
+                    updateFeedSalesTotal();
+                    saveSalesField('feed_sales_premix_agents','feed');
+                ">
+
+        </td>
+
+        <td>
+
+            <input
+                id="feed_sales_premix_sahara"
+                data-save
+                step="any"
+                oninput="
+                    updateFeedSalesTotal();
+                    saveSalesField('feed_sales_premix_sahara','feed');
+                ">
+
+        </td>
+
+        <td>
+
+            <input
+                id="feed_sales_premix_total"
+                readonly>
+
+        </td>
+
+    </tr>
+
+    <tr>
+
+        <td><b>إجمالي المبيعات</b></td>
+
+        <td colspan="3">
+
+            <input
+                id="feed_sales_total"
+                readonly>
+
+        </td>
+
+    </tr>
+
+</table>
+
+</div>
 
                     </details>
 
@@ -4128,27 +4216,49 @@ onclick="approveSection('waterfiltration')">
 
             function updateFeedSalesTotal() {
 
-                let corn =
-                    parseFloat(document.getElementById("feed_sales_corn")?.value) || 0;
+    let corn =
+        parseFloat(document.getElementById("feed_sales_corn")?.value) || 0;
 
-                let soybean =
-                    parseFloat(document.getElementById("feed_sales_soybean")?.value) || 0;
+    let soybean =
+        parseFloat(document.getElementById("feed_sales_soybean")?.value) || 0;
 
-                let feed =
-                    parseFloat(document.getElementById("feed_sales_feed")?.value) || 0;
+    let feedAgents =
+        parseFloat(document.getElementById("feed_sales_feed_agents")?.value) || 0;
 
-                let premix =
-                    parseFloat(document.getElementById("feed_sales_premix")?.value) || 0;
+    let feedSahara =
+        parseFloat(document.getElementById("feed_sales_feed_sahara")?.value) || 0;
 
-                let total =
-                    corn + soybean + feed + premix;
+    let premixAgents =
+        parseFloat(document.getElementById("feed_sales_premix_agents")?.value) || 0;
 
-                document.getElementById("feed_sales_total").value =
-                    total.toFixed(2);
+    let premixSahara =
+        parseFloat(document.getElementById("feed_sales_premix_sahara")?.value) || 0;
 
-                saveSalesField("feed_sales_total", "feed");
+    // مجموع الأعلاف
+    let feedTotal =
+        feedAgents + feedSahara;
 
-            }
+    document.getElementById("feed_sales_feed_total").value =
+        feedTotal.toFixed(2);
+        saveSalesField("feed_sales_feed_total", "feed");
+
+    // مجموع البريمكس
+    let premixTotal =
+        premixAgents + premixSahara;
+
+    document.getElementById("feed_sales_premix_total").value =
+        premixTotal.toFixed(2);
+        saveSalesField("feed_sales_premix_total", "feed");
+    // إجمالي المبيعات
+    let total =
+        corn + soybean + feedTotal + premixTotal;
+
+    document.getElementById("feed_sales_total").value =
+        total.toFixed(2);
+
+    saveSalesField("feed_sales_total", "feed");
+
+}
 
             function updateBlackOilStockTotals() {
 
