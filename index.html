@@ -1147,7 +1147,7 @@ style="display:none;">
 
             </details>
 
-            <details>
+            <details open>
 
     <summary>🔥 مراجل الريان</summary>
 
@@ -1206,9 +1206,9 @@ style="display:none;">
 
             <tr>
 
-                <th>Air Compressor</th>
+                <th>ضواغط الهواء</th>
 
-                <th>Operating Hours</th>
+                <th>ساعات الحمل</th>
 
             </tr>
 
@@ -1260,21 +1260,6 @@ style="display:none;">
                         id="service_compressor_hours"
                         data-save
                         step="any">
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td><b>عدد الضواغط العاملة</b></td>
-
-                <td>
-
-                    <input
-                        id="compressors_running"
-                        data-save
-                        step="any">
-
                 </td>
 
             </tr>
@@ -2211,23 +2196,39 @@ text-decoration:none;
 
 </tr>
 
-                        <tr>
+                       <tr>
 
-                            <td>خط التكرير 2</td>
+    <td>خط التكرير 2</td>
 
-                            <td>
-                                <select id="refinery2_type" data-save>
-                                    <option value="">اختر النوع</option>
-                                    <option>زيت عباد الشمس</option>
-                                    <option>زيت الأولين</option>
-                                    <option>زيت الستيارين</option>
-                                    <option>الشورتنينغ</option>
-                                </select>
-                                <input id="refinery2" data-save step="any" oninput="updateDashboard();">
-                            </td>
+    <td>
 
-                        </tr>
+        <select id="refinery2_type" data-save>
 
+            <option value="">اختر النوع</option>
+
+            <option>زيت عباد الشمس</option>
+
+            <option>زيت الأولين</option>
+
+            <option>زيت الستيارين</option>
+
+            <option>الشورتنينغ</option>
+
+        </select>
+
+    </td>
+
+    <td>
+
+        <input
+            id="refinery1"
+            data-save
+            step="any"
+            oninput="updateDashboard();">
+
+    </td>
+
+</tr>
                         <tr>
 
     <td colspan="2">
