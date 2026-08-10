@@ -104,56 +104,56 @@ body {
 #menu_home {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
-    linear-gradient(to bottom, #c3c640 8px, #c3c640 14px, transparent 16px)
+    linear-gradient(to bottom, #c3c640 8px, #c3c640 18px, transparent 16px)
       border-box;
 }
 
 #menu_sugar {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
-    linear-gradient(to bottom, #e5ebe6 8px, #e5ebe6 14px, transparent 16px)
+    linear-gradient(to bottom, #e5ebe6 8px, #e5ebe6 18px, transparent 16px)
       border-box;
 }
 
 #menu_power {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
-    linear-gradient(to bottom, #2a3450 8px, #2a3450 14px, transparent 16px)
+    linear-gradient(to bottom, #2a3450 8px, #2a3450 18px, transparent 16px)
       border-box;
 }
 
 #menu_oil {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
-    linear-gradient(to bottom, #758335 8px, #758335 14px, transparent 16px)
+    linear-gradient(to bottom, #758335 8px, #758335 18px, transparent 16px)
       border-box;
 }
 
 #menu_flour {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
-    linear-gradient(to bottom, #8f9494 8px, #8f9494 14px, transparent 16px)
+    linear-gradient(to bottom, #8f9494 8px, #8f9494 18px, transparent 16px)
       border-box;
 }
 
 #menu_feed {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
-    linear-gradient(to bottom, #1ddf57 8px, #1ddf57 14px, transparent 16px)
+    linear-gradient(to bottom, #1ddf57 8px, #1ddf57 18px, transparent 16px)
       border-box;
 }
 
 #menu_waterfiltration {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
-    linear-gradient(to bottom, #3d90c0 8px, #3d90c0 14px, transparent 16px)
+    linear-gradient(to bottom, #3d90c0 8px, #3d90c0 18px, transparent 16px)
       border-box;
 }
 
 #menu_archive {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
-    linear-gradient(to bottom, #d14c3b 8px, #d14c3b 14px, transparent 16px)
+    linear-gradient(to bottom, #d14c3b 8px, #d14c3b 18px, transparent 16px)
       border-box;
 }
 
