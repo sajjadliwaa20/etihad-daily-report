@@ -852,81 +852,6 @@ saveSalesField('flour_sales_bran','flour');
 
         </section>
 
-        <!-- موقف النفط الأسود -->
-
-        <section id="blackoil" class="section">
-
-            <h2>
-                🛢️ موقف النفط الأسود
-            </h2>
-
-            <details open>
-
-    <summary>📊 ملخص أرصدة النفط الأسود</summary>
-
-    <div class="details-content">
-
-        <table class="wide-table">
-
-            <tr>
-                <th>الموقع</th>
-                <th>الرصيد (م³)</th>
-            </tr>
-
-            <tr>
-                <td>محطة الطاقة (الاتحاد)</td>
-                <td><input id="blackoil_union_power_stock" data-save
-                    oninput="updateBlackOilStockTotals();" step="any"></td>
-            </tr>
-
-            <tr>
-                <td>محطة الطاقة (الريان)</td>
-                <td><input id="blackoil_union_boiler_stock" data-save
-                    oninput="updateBlackOilStockTotals();" step="any"></td>
-            </tr>
-
-            <tr>
-                <td>بويلرات الاستخلاص</td>
-                <td><input id="blackoil_extraction_stock" data-save
-                    oninput="updateBlackOilStockTotals();" step="any"></td>
-            </tr>
-
-            <tr>
-                <td><b>رصيد موقع الاتحاد</b></td>
-                <td>
-                    <input
-                        id="blackoil_union_total_stock"
-                        readonly>
-                </td>
-            </tr>
-
-            <tr>
-                <td>صحارى كربلاء</td>
-                <td><input id="blackoil_sahara_stock" data-save
-                    oninput="updateBlackOilStockTotals();" step="any"></td>
-            </tr>
-
-            <tr>
-                <td>شركة ديوان</td>
-                <td><input id="blackoil_diwan_stock" data-save
-                    oninput="updateBlackOilStockTotals();" step="any"></td>
-            </tr>
-
-            <tr>
-                <td><b>إجمالي رصيد النفط الأسود</b></td>
-                <td>
-                    <input
-                        id="blackoil_total_stock"
-                        readonly>
-                </td>
-            </tr>
-
-        </table>
-
-    </div>
-
-</details>
-
             <details open>
 
                 <summary>محطة الطاقة - الاتحاد</summary>
@@ -1033,15 +958,88 @@ saveSalesField('flour_sales_bran','flour');
 
         </section>
 
-        </section>
-
         <!-- موقف محطة الطاقة -->
 
         <section id="powerstation" class="section">
 
             <h2 class="sectionTitle">
-                ⚡ موقف محطة الطاقة
-            </h2>
+محطات الطاقة والنفط الاسود            
+</h2>
+
+  <!-- موقف النفط الأسود -->
+
+        <details open>
+
+    <summary>🛢️ موقف النفط الأسود</summary>
+
+    <div class="details-content">
+
+            <details open>
+
+    <summary>📊 ملخص أرصدة النفط الأسود</summary>
+
+    <div class="details-content">
+
+        <table class="wide-table">
+
+            <tr>
+                <th>الموقع</th>
+                <th>الرصيد (م³)</th>
+            </tr>
+
+            <tr>
+                <td>محطة الطاقة (الاتحاد)</td>
+                <td><input id="blackoil_union_power_stock" data-save
+                    oninput="updateBlackOilStockTotals();" step="any"></td>
+            </tr>
+
+            <tr>
+                <td>محطة الطاقة (الريان)</td>
+                <td><input id="blackoil_union_boiler_stock" data-save
+                    oninput="updateBlackOilStockTotals();" step="any"></td>
+            </tr>
+
+            <tr>
+                <td>بويلرات الاستخلاص</td>
+                <td><input id="blackoil_extraction_stock" data-save
+                    oninput="updateBlackOilStockTotals();" step="any"></td>
+            </tr>
+
+            <tr>
+                <td><b>رصيد موقع الاتحاد</b></td>
+                <td>
+                    <input
+                        id="blackoil_union_total_stock"
+                        readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>صحارى كربلاء</td>
+                <td><input id="blackoil_sahara_stock" data-save
+                    oninput="updateBlackOilStockTotals();" step="any"></td>
+            </tr>
+
+            <tr>
+                <td>شركة ديوان</td>
+                <td><input id="blackoil_diwan_stock" data-save
+                    oninput="updateBlackOilStockTotals();" step="any"></td>
+            </tr>
+
+            <tr>
+                <td><b>إجمالي رصيد النفط الأسود</b></td>
+                <td>
+                    <input
+                        id="blackoil_total_stock"
+                        readonly>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
 
 
             <details open>
@@ -1147,7 +1145,7 @@ style="display:none;">
 
             </details>
 
-            <details>
+            <details open>  
 
     <summary>🔥 مراجل الريان</summary>
 
