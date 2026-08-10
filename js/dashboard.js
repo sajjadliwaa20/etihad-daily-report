@@ -747,6 +747,24 @@ document.querySelectorAll("table.wide-table").forEach((table) => {
   table - scroll;
 });
 
+function toggleSeparationStation() {
+  const status = document.getElementById("separation_status")?.value;
+
+  const acidOil = document.getElementById("separation_acid_oil");
+
+  const notes = document.getElementById("separation_notes");
+
+  const disabled = status !== "running";
+
+  if (acidOil) {
+    acidOil.disabled = disabled;
+  }
+
+  if (notes) {
+    notes.disabled = disabled;
+  }
+}
+
 window.applyPermissions = applyPermissions;
 window.showCurrentUser = showCurrentUser;
 window.applyExecutiveMode = applyExecutiveMode;

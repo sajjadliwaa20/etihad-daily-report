@@ -1147,11 +1147,11 @@ style="display:none;">
 
             </details>
 
-            <details open>
+            <details>
 
     <summary>🔥 مراجل الريان</summary>
 
-    <div class="details-content">
+    <div class="details-content" open>
 
         <!-- البويلرات -->
 
@@ -2255,7 +2255,7 @@ text-decoration:none;
                     <table>
 
                         <tr>
-                            <th>حالة المحطة</th>
+                            <th>ملاحظات بناية التكرير</th>
                         </tr>
 
                         <tr>
@@ -2272,11 +2272,101 @@ text-decoration:none;
 
             </details>
 
+            <details open>
+
+    <summary>موقف محطة الفصل</summary>
+
+    <div class="details-content">
+
+        <!-- حالة المحطة -->
+
+        <table>
+
+            <tr>
+                <th>حالة المحطة</th>
+            </tr>
+
+            <tr>
+                <td>
+
+                    <select
+                        id="separation_status"
+                        data-save
+                        onchange="toggleSeparationStation()"
+                    >
+
+                        <option value="">-- اختر الحالة --</option>
+
+                        <option value="running">بالخدمة</option>
+
+                        <option value="stopped">خارج الخدمة</option>
+
+                    </select>
+
+                </td>
+            </tr>
+
+        </table>
+
+        <br>
+
+        <!-- بيانات محطة الفصل -->
+
+        <table>
+
+            <tr>
+                <th>البيان</th>
+                <th>القيمة</th>
+            </tr>
+
+            <tr>
+                <td>إنتاج Acid Oil (طن)</td>
+
+                <td>
+                    <input
+                        id="separation_acid_oil"
+                        data-save
+                        step="any"
+                    >
+                </td>
+            </tr>
+
+        </table>
+
+        <br>
+
+        <!-- ملاحظات المحطة -->
+
+        <table>
+
+            <tr>
+                <th>ملاحظات محطة الفصل</th>
+            </tr>
+
+            <tr>
+                <td>
+
+                    <textarea
+                        id="separation_notes"
+                        class="station-status"
+                        data-save
+                        rows="3"
+                    ></textarea>
+
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
+
             <!-- موقف وأرصدة المنتج النهائي -->
 
             <details open>
 
-                <summary>موقف وأرصدة المنتج النهائي</summary>
+                <summary>ارصدة المنتج النهائي</summary>
 
                 <div class="details-content">
 
@@ -5371,6 +5461,8 @@ console.log(factory);
                 });
 
                 recalculateAll();
+
+                toggleSeparationStation();
 
 
                 /* إعادة حساب جميع القيم المشتقة */

@@ -101,6 +101,13 @@ body {
   overflow: hidden;
 }
 
+#menu_home {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #c3c640 8px, #c3c640 14px, transparent 16px)
+      border-box;
+}
+
 #menu_sugar {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
@@ -1998,12 +2005,15 @@ body.dark-mode details summary {
 
 .system-info-card {
   margin-top: 20px;
-
   padding: 12px;
 
-  border-radius: 20px;
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to top, #dbd80fef 8px, #0b062b 40px, transparent 16px)
+      border-box;
 
-  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid transparent;
+  border-radius: 20px;
 
   font-size: 13px;
 }
@@ -2073,4 +2083,11 @@ body.dark-mode details summary {
   resize: vertical;
 
   box-sizing: border-box;
+}
+
+#separation_acid_oil:disabled,
+#separation_notes:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: #e9ecef;
 }
