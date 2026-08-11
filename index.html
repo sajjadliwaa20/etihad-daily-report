@@ -320,76 +320,191 @@ border:1px solid rgba(24,78,59,.12);
 
                     <details id="sales_sugar" open>
 
-                        <summary>مبيعات السكر</summary>
+    <summary>مبيعات وأرصدة السكر المعبأ</summary>
 
-                        <div class="details-content">
+    <div class="details-content">
 
-                            <table>
+        <table>
 
-                                <tr>
-                                    <th>الفئة</th>
-                                    <th>المبيعات (طن)</th>
-                                </tr>
+            <tr>
+                <th>الفئة</th>
+                <th>المبيعات (طن)</th>
+                <th>الرصيد الحالي (طن)</th>
+            </tr>
 
-                                <tr>
-                                    <td>1 كغم</td>
-                                    <td>
-                                        <input id="sugar_sales_1kg" data-save oninput="
-updateSugarSalesTotal();
-saveSalesField('sugar_sales_1kg','sugar');
-">
-                                    </td>
-                                </tr>
+            <!-- 1 كغم -->
+            <tr>
 
-                                <tr>
-                                    <td>10 كغم</td>
-                                    <td>
-                                        <input id="sugar_sales_10kg" data-save oninput="
-updateSugarSalesTotal();
-saveSalesField('sugar_sales_10kg','sugar');
-" step="any">
-                                    </td>
-                                </tr>
+                <td>1 كغم</td>
 
-                                <tr>
-                                    <td>25 كغم</td>
-                                    <td><input id="sugar_sales_25kg" data-save oninput="
-updateSugarSalesTotal();
-saveSalesField('sugar_sales_25kg','sugar');
-" step="any">
-                                    </td>
-                                </tr>
+                <td>
+                    <input
+                        id="sugar_sales_1kg"
+                        data-save
+                        step="any"
+                        oninput="
+                            updateSugarSalesTotal();
+                            saveSalesField('sugar_sales_1kg','sugar');
+                        "
+                    >
+                </td>
 
-                                <tr>
-                                    <td>50 كغم</td>
-                                    <td><input id="sugar_sales_50kg" data-save oninput="
-updateSugarSalesTotal();
-saveSalesField('sugar_sales_50kg','sugar');
-" step="any">
-                                    </td>
-                                </tr>
+                <td>
+                    <input
+                        id="stock_1kg"
+                        data-save
+                        step="any"
+                    >
+                </td>
 
-                                <tr>
-                                    <td>1 طن</td>
-                                    <td><input id="sugar_sales_1ton" data-save oninput="
-updateSugarSalesTotal();
-saveSalesField('sugar_sales_1ton','sugar');
-" step="any">
-                                    </td>
-                                </tr>
+            </tr>
 
-                                <tr>
-                                    <td><b>المجموع</b></td>
-                                    <td><input id="sugar_sales_total" readonly onchange="
-saveSalesField('sugar_sales_total','sugar');
-" step="any"></td>
-                                </tr>
 
-                            </table>
+            <!-- 10 كغم -->
+            <tr>
 
-                        </div>
+                <td>10 كغم</td>
 
-                    </details>
+                <td>
+                    <input
+                        id="sugar_sales_10kg"
+                        data-save
+                        step="any"
+                        oninput="
+                            updateSugarSalesTotal();
+                            saveSalesField('sugar_sales_10kg','sugar');
+                        "
+                    >
+                </td>
+
+                <td>
+                    <input
+                        id="stock_10kg"
+                        data-save
+                        step="any"
+                    >
+                </td>
+
+            </tr>
+
+
+            <!-- 25 كغم -->
+            <tr>
+
+                <td>25 كغم</td>
+
+                <td>
+                    <input
+                        id="sugar_sales_25kg"
+                        data-save
+                        step="any"
+                        oninput="
+                            updateSugarSalesTotal();
+                            saveSalesField('sugar_sales_25kg','sugar');
+                        "
+                    >
+                </td>
+
+                <td>
+                    <input
+                        id="stock_25kg"
+                        data-save
+                        step="any"
+                    >
+                </td>
+
+            </tr>
+
+
+            <!-- 50 كغم -->
+            <tr>
+
+                <td>50 كغم</td>
+
+                <td>
+                    <input
+                        id="sugar_sales_50kg"
+                        data-save
+                        step="any"
+                        oninput="
+                            updateSugarSalesTotal();
+                            saveSalesField('sugar_sales_50kg','sugar');
+                        "
+                    >
+                </td>
+
+                <td>
+                    <input
+                        id="stock_50kg"
+                        data-save
+                        step="any"
+                    >
+                </td>
+
+            </tr>
+
+
+            <!-- 1 طن -->
+            <tr>
+
+                <td>1 طن</td>
+
+                <td>
+                    <input
+                        id="sugar_sales_1ton"
+                        data-save
+                        step="any"
+                        oninput="
+                            updateSugarSalesTotal();
+                            saveSalesField('sugar_sales_1ton','sugar');
+                        "
+                    >
+                </td>
+
+                <td>
+                    <input
+                        id="stock_1t"
+                        data-save
+                        step="any"
+                    >
+                </td>
+
+            </tr>
+
+
+            <!-- المجموع -->
+            <tr>
+
+                <td>
+                    <b>المجموع</b>
+                </td>
+
+                <td>
+                    <input
+                        id="sugar_sales_total"
+                        readonly
+                        step="any"
+                        onchange="
+                            saveSalesField('sugar_sales_total','sugar');
+                        "
+                    >
+                </td>
+
+                <td>
+                    <input
+                        id="sugar_stock_total"
+                        readonly
+                        step="any"
+                    >
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
 
                     <br>
 
@@ -1031,12 +1146,6 @@ style="display:none;">
 
 </details>
 
-                    <button onclick="approvePowerSection()">
-
-                        اعتماد محطة الطاقة
-
-                    </button>
-
                 </div>
 
             </details>
@@ -1298,6 +1407,12 @@ style="display:none;">
     </div>
 
 </details>
+
+<button onclick="approvePowerSection()">
+
+                        اعتماد محطة الطاقة
+
+                    </button>
 
         </section>
 
@@ -1844,51 +1959,7 @@ font-size:15px;
 
                     </table>
 
-                    <table>
-
-                        <tr>
-                            <th colspan="2">
-                                أرصدة المنتج النهائي المعبأ
-                            </th>
-                        </tr>
-
-                    </table>
-
-                    <table>
-
-                        <tr>
-                            <th>الفئة</th>
-                            <th>الرصيد (طن)</th>
-                        </tr>
-
-                        <tr>
-                            <td>1 طن</td>
-                            <td><input id="stock_1t" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>50 كغم</td>
-                            <td><input id="stock_50kg" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>25 كغم</td>
-                            <td><input id="stock_25kg" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>10 كغم</td>
-                            <td><input id="stock_10kg" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>1 كغم</td>
-                            <td><input id="stock_1kg" data-save step="any"></td>
-                        </tr>
-
-                    </table>
-
-                    <h4>ملاحظات التعبئة</h4>
+                    <h3>ملاحظات التعبئة</h3>
 
                     <table>
 
@@ -4779,6 +4850,34 @@ onclick="approveSection('waterfiltration')">
 
             }
 
+            function updateSugarStockTotal() {
+
+    let total = 0;
+
+    total += parseFloat(
+        document.getElementById("stock_1kg")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("stock_10kg")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("stock_25kg")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("stock_50kg")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("stock_1t")?.value
+    ) || 0;
+
+    document.getElementById("sugar_stock_total").value =
+        total.toFixed(2);
+}
+
             function recalculateAll() {
 
                 // الإنتاج
@@ -4789,6 +4888,7 @@ onclick="approveSection('waterfiltration')">
                 updateSugarSalesTotal();
                 updateShorteningSalesTotal();
                 updateGEASalesTotal();
+                updateSugarStockTotal();
                 updateSunSalesTotal();
                 updateOleinSalesTotal();
                 updateFlourSalesTotal();
@@ -5395,12 +5495,6 @@ if (showMessage) {
 
     await approveSection(
         "powerstation",
-        false,
-        false
-    );
-
-    await approveSection(
-        "blackoil",
         false,
         false
     );
