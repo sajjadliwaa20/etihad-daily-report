@@ -745,63 +745,124 @@ saveSalesField('olein_sales_20kg','oil');
 
                     <br>
 
-                    <!-- مبيعات الطحين -->
+                   <!-- مبيعات وأرصدة الطحين -->
 
-                    <details id="sales_flour" open>
+<details id="sales_flour" open>
 
-                        <summary>مبيعات الطحين</summary>
+    <summary>مبيعات وأرصدة الطحين</summary>
 
-                        <div class="details-content">
+    <div class="details-content">
 
-                            <table>
+        <table class="wide-table">
 
-                                <tr>
-                                    <th>الصنف</th>
-                                    <th>المبيعات (طن)</th>
-                                </tr>
+            <tr>
 
-                                <tr>
-                                    <td>F1</td>
-                                    <td>
-                                        <input id="flour_sales_f1" data-save oninput="
-updateFlourSalesTotal();
-saveSalesField('flour_sales_f1','flour');
-" step="any">
-                                    </td>
-                                </tr>
+                <th>الصنف</th>
+                <th>المبيعات (طن)</th>
+                <th>الرصيد الحالي (طن)</th>
 
-                                <tr>
-                                    <td>F3</td>
-                                    <td>
-                                        <input id="flour_sales_f3" data-save oninput="
-updateFlourSalesTotal();
-saveSalesField('flour_sales_f3','flour');
-" step="any">
-                                    </td>
-                                </tr>
+            </tr>
 
-                                <tr>
-                                    <td>W.Bran</td>
-                                    <td>
-                                        <input id="flour_sales_bran" data-save oninput="
-updateFlourSalesTotal();
-saveSalesField('flour_sales_bran','flour');
-" step="any">
-                                    </td>
-                                </tr>
 
-                                <tr>
-                                    <td><b>المجموع</b></td>
-                                    <td>
-                                        <input id="flour_sales_total" readonly>
-                                    </td>
-                                </tr>
+            <!-- الطحين -->
 
-                            </table>
+            <tr>
 
-                        </div>
+                <td>طحين</td>
 
-                    </details>
+                <td>
+
+                    <input
+                        id="flour_sales_flour"
+                        data-save
+                        step="any"
+                        oninput="
+                            updateFlourSalesTotal();
+                            saveSalesField('flour_sales_flour','flour');
+                        "
+                    >
+
+                </td>
+
+                <td>
+
+                    <input
+                        id="flour_stock_flour"
+                        data-save
+                        step="any"
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <!-- النخالة -->
+
+            <tr>
+
+                <td>نخالة</td>
+
+                <td>
+
+                    <input
+                        id="flour_sales_bran"
+                        data-save
+                        step="any"
+                        oninput="
+                            updateFlourSalesTotal();
+                            saveSalesField('flour_sales_bran','flour');
+                        "
+                    >
+
+                </td>
+
+                <td>
+
+                    <input
+                        id="flour_stock_bran"
+                        data-save
+                        step="any"
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <!-- المجموع -->
+
+            <tr>
+
+                <td>
+                    <b>المجموع</b>
+                </td>
+
+                <td>
+
+                    <input
+                        id="flour_sales_total"
+                        readonly
+                    >
+
+                </td>
+
+                <td>
+
+                    <input
+                        id="flour_stock_total"
+                        readonly
+                    >
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
 
                     <!-- مبيعات الأعلاف -->
 
@@ -3202,59 +3263,6 @@ text-decoration:none;
 
             </details>
 
-            <!-- أرصدة المنتج النهائي -->
-
-            <details open>
-
-                <summary>أرصدة المنتج النهائي</summary>
-
-                <div class="details-content">
-
-                    <table>
-
-                        <tr>
-
-                            <th>المنتج</th>
-                            <th>مخزون السايلوات</th>
-                            <th>المخزون المعبأ</th>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>F1</td>
-
-                            <td>
-                                <input id="f1silostock" data-save step="any">
-                            </td>
-
-                            <td>
-                                <input id="f1bagstock" data-save step="any">
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>النخالة</td>
-
-                            <td>
-                                <input id="bransilostock" data-save step="any">
-                            </td>
-
-                            <td>
-                                <input id="branbagstock" data-save step="any">
-                            </td>
-
-                        </tr>
-
-                    </table>
-
-                </div>
-
-            </details>
-
-
             <!-- توقفات الخطوط -->
 
             <details open>
@@ -4807,24 +4815,40 @@ onclick="approveSection('waterfiltration')">
 
             function updateFlourSalesTotal() {
 
-                let f1 =
-                    parseFloat(document.getElementById("flour_sales_f1")?.value) || 0;
+    let flour =
+        parseFloat(
+            document.getElementById("flour_sales_flour")?.value
+        ) || 0;
 
-                let f3 =
-                    parseFloat(document.getElementById("flour_sales_f3")?.value) || 0;
+    let bran =
+        parseFloat(
+            document.getElementById("flour_sales_bran")?.value
+        ) || 0;
 
-                let bran =
-                    parseFloat(document.getElementById("flour_sales_bran")?.value) || 0;
+    document.getElementById("flour_sales_total").value =
+        (flour + bran).toFixed(2);
 
-                let total =
-                    f1 + f3 + bran;
+    saveSalesField(
+        "flour_sales_total",
+        "flour"
+    );
+}
 
-                document.getElementById("flour_sales_total").value =
-                    total.toFixed(2);
+function updateFlourStockTotal() {
 
-                saveSalesField("flour_sales_total", "flour");
+    let flour =
+        parseFloat(
+            document.getElementById("flour_stock_flour")?.value
+        ) || 0;
 
-            }
+    let bran =
+        parseFloat(
+            document.getElementById("flour_stock_bran")?.value
+        ) || 0;
+
+    document.getElementById("flour_stock_total").value =
+        (flour + bran).toFixed(2);
+}
 
             function updateSugarSalesTotal() {
 
@@ -4893,6 +4917,7 @@ onclick="approveSection('waterfiltration')">
                 updateOleinSalesTotal();
                 updateFlourSalesTotal();
                 updateFeedSalesTotal();
+                updateFlourStockTotal();
 
                 // لوحة التحكم
                 updateDashboard();
