@@ -1038,7 +1038,7 @@ saveSalesField('olein_sales_20kg','oil');
 محطات الطاقة والنفط الاسود            
 </h2>
 
-  <!-- موقف النفط الأسود -->
+  <!-- الموقف العام لمحطات الطاقة والنفط الأسود-->
 
         <details open>
 
@@ -1440,30 +1440,65 @@ style="display:none;">
         <br>
 
         <!-- ملاحظات -->
+<table class="wide-table">
 
-        <table class="wide-table">
+    <tr>
 
-            <tr>
+        <th>ملاحظات مراجل الريان</th>
 
-                <th>ملاحظات مراجل الريان</th>
+    </tr>
 
-            </tr>
+    <tr>
 
-            <tr>
+        <td>
 
-                <td>
+            <textarea
+                id="boilers_notes"
+                data-save
+                rows="4"
+                placeholder="اكتب ملاحظات مراجل الريان...">
+            </textarea>
 
-                    <textarea
-                        id="boilers_notes"
-                        data-save
-                        rows="4">
-                    </textarea>
+            <br><br>
 
-                </td>
+            <label
+                for="boilers_notes_upload"
+                class="uploadImageBtn">
 
-            </tr>
+                📎 إرفاق صورة أو ملف
 
-        </table>
+            </label>
+
+            <input
+                type="file"
+                accept="image/*,application/pdf"
+                id="boilers_notes_upload"
+                data-factory="powerstation"
+                data-field="boilers_notes"
+                multiple
+                style="display:none;"
+                onchange="uploadNoteImage(this)">
+
+            <br>
+
+            <a
+                id="boilers_notes_link"
+                target="_blank"
+                style="
+                    display:none;
+                    font-size:13px;
+                    text-decoration:none;
+                ">
+
+                👁 عرض الملف
+
+            </a>
+
+        </td>
+
+    </tr>
+
+</table>
 
     </div>
 
