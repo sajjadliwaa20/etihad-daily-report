@@ -49,6 +49,9 @@ async function applyPermissions() {
   }
 
   const role = data.role;
+
+  window.currentUserRole = role;
+
   console.log("ROLE FROM DATABASE =", JSON.stringify(role));
   const adminTools = document.getElementById("adminTools");
 

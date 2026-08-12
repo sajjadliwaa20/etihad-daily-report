@@ -101,21 +101,26 @@
             <b>سجاد لواء</b>
         </p>
 
-        <a id="menu_home" href="#home" onclick="toggleSidebar()">الرئيسية</a>
+        <a id="menu_home"
+         href="#home"
+          onclick="showAllSections();">
+          الرئيسية</a>
 
-        <a id="menu_power" href="#powerstation" onclick="toggleSidebar()">⚡ محطة الطاقة</a>
+        <a id="menu_power" 
+        href="#powerstation" 
+        onclick="showOnlySection('powerstation');">⚡ محطة الطاقة</a>
 
-        <a id="menu_sugar" href="#sugar" onclick="toggleSidebar()"><SPAN>
+        <a id="menu_sugar" href="#sugar" onclick="showOnlySection('sugar')"><SPAN>
 
         🍚مصنع السكر</SPAN></a>
 
-        <a id="menu_oil" href="#oil" onclick="toggleSidebar()">🌻مصنع الزيت</a>
+        <a id="menu_oil" href="#oil" onclick="showOnlySection('oil')">🌻مصنع الزيت</a>
 
-        <a id="menu_flour" href="#flour" onclick="toggleSidebar()">🍞مصنع الطحين</a>
+        <a id="menu_flour" href="#flour" onclick="showOnlySection('flour')">🍞مصنع الطحين</a>
 
-        <a id="menu_feed" href="#feed" onclick="toggleSidebar()">🐓مصنع الأعلاف</a>
+        <a id="menu_feed" href="#feed" onclick="showOnlySection('feed')">🐓مصنع الأعلاف</a>
 
-        <a id="menu_waterfiltration" href="#waterfiltration" onclick="toggleSidebar()">💧محطات التصفية و المعالجة</a>
+        <a id="menu_waterfiltration" href="#waterfiltration" onclick="showOnlySection('waterfiltration')">💧محطات التصفية و المعالجة</a>
 
         <a id="menu_archive" href="#archive" onclick="toggleSidebar()">📚 الأرشيف</a>
 
@@ -5186,6 +5191,57 @@ if (mill) {
                 document.getElementById("remindersBox").style.display = "none";
 
             }
+
+            function showOnlySection(sectionId) {
+
+    // هذا السلوك مخصص فقط للإدارة والتنفيذي
+    if (
+        window.currentUserRole !== "admin" &&
+        window.currentUserRole !== "executive"
+    ) {
+        return;
+    }
+
+    document.querySelectorAll(".section").forEach(section => {
+        section.style.display = "none";
+    });
+
+    const target = document.getElementById(sectionId);
+
+    if (target) {
+        target.style.display = "block";
+    }
+
+    window.location.hash = sectionId;
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function showAllSections() {
+
+    // هذا السلوك مخصص فقط للإدارة والتنفيذي
+    if (
+        window.currentUserRole !== "admin" &&
+        window.currentUserRole !== "executive"
+    ) {
+        return;
+    }
+
+    document.querySelectorAll(".section").forEach(section => {
+        section.style.display = "block";
+    });
+
+    window.location.hash = "home";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
             function showAllMenus() {
 
