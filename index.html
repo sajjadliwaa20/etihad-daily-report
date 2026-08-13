@@ -5375,40 +5375,63 @@ function showAllSections() {
 
                     });
 
-                /* حفظ البيانات */
+       /* =========================
+   تنظيف الصفوف المكررة
+   ========================= */
 
-                if (reportRows.length) {
+const uniqueRows = [
+    ...new Map(
+        reportRows.map(row => [
+            `${row.report_date}|${row.factory}|${row.field_name}`,
+            row
+        ])
+    ).values()
+];
 
-                    const { error } =
-                        await supabaseClient
-                            .from("daily_reports")
-                            .upsert(
-                                reportRows,
-                                {
-                                    onConflict: "report_date,factory,field_name"
-                                });
 
-                    if (error) {
+console.log(
+    "REPORT ROWS:",
+    reportRows.length
+);
 
-                        console.log(error);
+console.log(
+    "UNIQUE ROWS:",
+    uniqueRows.length
+);
 
-                        showNotification(error.message);
 
-                        return;
+/* =========================
+   حفظ البيانات
+   ========================= */
 
-                    }
+if (uniqueRows.length) {
 
-                    if (error) {
-
-                        console.log(error);
-
-                        showNotification(error.message);
-
-                        return;
-
-                    }
-
+    const { error } =
+        await supabaseClient
+            .from("daily_reports")
+            .upsert(
+                uniqueRows,
+                {
+                    onConflict:
+                        "report_date,factory,field_name"
                 }
+            );
+
+    if (error) {
+
+        console.error(
+            "DAILY REPORT UPSERT ERROR:",
+            error
+        );
+
+        showNotification(
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+}
 
 
                 /* حفظ السجل */
