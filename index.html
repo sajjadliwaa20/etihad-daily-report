@@ -5409,68 +5409,6 @@ function showAllSections() {
 
                 }
 
-                if (section === "sugar") {
-
-                    document
-                        .querySelectorAll("#sales_sugar [data-save]")
-                        .forEach(el => {
-
-                            historyRows.push({
-
-                                field_name: el.id,
-                                field_value: el.value || "",
-                                updated_by: user.email,
-                                factory: "sugar",
-                                updated_at: new Date().toISOString()
-
-                            });
-
-                            reportRows.push({
-
-                                report_date: reportDate,
-                                factory: "sugar",
-                                field_name: el.id,
-                                field_value: el.value || "",
-                                updated_by: user.email,
-                                updated_at: new Date().toISOString()
-
-                            });
-
-                        });
-
-                }
-
-                if (section === "flour") {
-
-                    document
-                        .querySelectorAll("#sales_flour [data-save]")
-                        .forEach(el => {
-
-                            historyRows.push({
-
-                                field_name: el.id,
-                                field_value: el.value || "",
-                                updated_by: user.email,
-                                factory: "flour",
-                                updated_at: new Date().toISOString()
-
-                            });
-
-                            reportRows.push({
-
-                                report_date: reportDate,
-                                factory: "flour",
-                                field_name: el.id,
-                                field_value: el.value || "",
-                                updated_by: user.email,
-                                updated_at: new Date().toISOString()
-
-                            });
-
-                        });
-
-                }
-
                 if (section === "feed") {
 
                     document
