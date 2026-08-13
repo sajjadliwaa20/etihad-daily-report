@@ -5621,16 +5621,42 @@ if (showMessage) {
 
 }
    
-            async function loadFactorySection(factory) {
+           async function loadFactorySection(factory) {
 
-                console.count("loadFactorySection");
-console.log(factory);
+    console.count("loadFactorySection");
+    console.log("Factory:", factory);
 
-                const reportDate =
-                    document.getElementById("reportDateKey").value;
+    const dateElement =
+        document.getElementById("reportDateKey");
 
-                if (!reportDate) return;
+    if (!dateElement) {
+        console.error("❌ reportDateKey غير موجود في الصفحة");
+        return;
+    }
 
+    // التأكد من وجود تاريخ قبل طلب البيانات
+    if (!dateElement.value) {
+
+        const now = new Date();
+
+        const localDate =
+            now.getFullYear() + "-" +
+            String(now.getMonth() + 1).padStart(2, "0") + "-" +
+            String(now.getDate()).padStart(2, "0");
+
+        dateElement.value = localDate;
+
+        console.log(
+            "📅 تم تعيين تاريخ التقرير تلقائيًا:",
+            localDate
+        );
+    }
+
+    const reportDate = dateElement.value;
+
+     console.log("DEVICE:", navigator.userAgent);
+    console.log("DATE ELEMENT:", dateElement);
+    console.log("📅 Report Date:",reportDate);
                 const { data, error } =
                     await supabaseClient
                         .from("daily_reports")
