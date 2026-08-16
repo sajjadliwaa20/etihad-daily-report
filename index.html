@@ -630,119 +630,545 @@ saveSalesField('GEA_sales_14l','oil');
 
                             </div>
 
-                            <div class="details-content">
-
-                                <table>
+                          <div class="details-content">
+      <table>
                                     <tr>
-                                        <th colspan="2">
-                                            مبيعات زيت العباد (طن)
+                                        <th colspan="1">
+مبيعات و ارصدة زيت العباد
                                         </th>
                                     </tr>
-                                </table>
+                                </table>                      
+    <table class="wide-table">
 
-                                <table>
-
-                                    <tr>
-                                        <th>الفئة</th>
-                                        <th>المبيعات (طن)</th>
-                                    </tr>
-
-                                    <tr>
-                                        <td>750 مل</td>
-                                        <td><input id="sun_sales_750" data-save oninput="
-updateSunSalesTotal();
-saveSalesField('sun_sales_750','oil');
-" step="any"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>900 مل</td>
-                                        <td><input id="sun_sales_900" data-save oninput="
-updateSunSalesTotal();
-saveSalesField('sun_sales_900','oil');
-" step="any">
-</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1 لتر</td>
-                                        <td><input id="sun_sales_1l" data-save oninput="
-updateSunSalesTotal();
-saveSalesField('sun_sales_1l','oil');
-" step="any"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>المجموع</b></td>
-                                        <td><input id="sun_sales_total" readonly></td>
-                                    </tr>
-
-                                </table>
-
-                            </div>
+        <tr>
+            <th>الفئة</th>
+            <th>المبيعات (طن)</th>
+            <th>الرصيد الحالي (طن)</th>
+        </tr>
 
 
-                            <div class="details-content">
+        <!-- 750 مل -->
 
-                                <table>
-                                    <tr>
-                                        <th colspan="2">
-                                            مبيعات زيت الأولين (طن)
-                                        </th>
-                                    </tr>
-                                </table>
+        <tr>
 
-                                <table>
+            <td>750 مل</td>
 
-                                    <tr>
-                                        <th>الفئة</th>
-                                        <th>المبيعات (طن)</th>
-                                    </tr>
+            <td>
+                <input
+                    id="sun_sales_750"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_750','oil');
+                    "
+                >
+            </td>
 
-                                    <tr>
-                                        <td>5 لتر</td>
-                                        <td><input id="olein_sales_5l" data-save oninput="
-updateOleinSalesTotal();
-saveSalesField('olein_sales_5l','oil');
-" step="any"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>6 لتر</td>
-                                        <td><input id="olein_sales_6l" data-save oninput="
-updateOleinSalesTotal();
-saveSalesField('olein_sales_6l','oil');
-" step="any"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>10 لتر</td>
-                                        <td><input id="olein_sales_10l" data-save oninput="
-updateOleinSalesTotal();
-saveSalesField('olein_sales_10l','oil');
-" step="any"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>18 لتر</td>
-                                        <td><input id="olein_sales_18l_big" data-save oninput="
-updateOleinSalesTotal();
-saveSalesField('olein_sales_18l_big','oil');
-" step="any"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>20 كغم</td>
-                                        <td><input id="olein_sales_20kg" data-save oninput="
-updateOleinSalesTotal();
-saveSalesField('olein_sales_20kg','oil');
-" step="any">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>المجموع</b></td>
-                                        <td>
-                                            <input id="olein_sales_total" readonly>
-                                        </td>
-                                    </tr>
+            <td>
+                <input
+                    id="sun_750_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                                </table>
+        </tr>
 
-                            </div>
 
+        <!-- 900 مل -->
+
+        <tr>
+
+            <td>900 مل</td>
+
+            <td>
+                <input
+                    id="sun_sales_900"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_900','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="sun_900_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+
+        <!-- 1 لتر -->
+
+        <tr>
+
+            <td>1 لتر</td>
+
+            <td>
+                <input
+                    id="sun_sales_1l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_1l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="sun_1l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+
+        <!-- 1 لتر وزارة -->
+
+        <tr>
+
+            <td>1 لتر وزارة</td>
+
+            <td>
+                <input
+                    id="sun_sales_1_1lirq"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_1_1lirq','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="sun_1_1lirq_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+
+        <!-- 1 لتر ×15 -->
+
+        <tr>
+
+            <td>1 لتر ×15</td>
+
+            <td>
+                <input
+                    id="sun_sales_1_1l15"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_1_1l15','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="sun_1_1l15_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+
+        <!-- المجموع -->
+
+        <tr>
+
+            <td>
+                <b>المجموع</b>
+            </td>
+
+            <td>
+                <input
+                    id="sun_sales_total"
+                    readonly
+                >
+            </td>
+
+            <td>
+                <input
+                    id="sun_stock_total"
+                    readonly
+                >
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
+
+
+<div class="details-content">
+
+    <table class="wide-table">
+
+        <tr>
+
+            <th>الحجم</th>
+            <th>مبيعات الأولين (طن)</th>
+            <th>رصيد الأولين (طن)</th>
+            <th>مبيعات النخيل (طن)</th>
+            <th>رصيد النخيل (طن)</th>
+
+        </tr>
+
+
+        <!-- 5 لتر -->
+
+        <tr>
+
+            <td>5 لتر</td>
+
+            <td>
+                <input
+                    id="olein_sales_5l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateOleinSalesTotal();
+                        saveSalesField('olein_sales_5l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="olein_5l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_sales_5l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updatePalmSalesTotal();
+                        saveSalesField('palm_sales_5l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_5l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+         <!-- 6 لتر -->
+
+        <tr>
+
+            <td>6 لتر</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>
+                <input
+                    id="palm_sales_6l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updatePalmSalesTotal();
+                        saveSalesField('palm_sales_6l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_6l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+
+        <!-- 10 لتر -->
+
+        <tr>
+
+            <td>10 لتر</td>
+
+            <td>
+                <input
+                    id="olein_sales_10l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateOleinSalesTotal();
+                        saveSalesField('olein_sales_10l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="olein_10l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_sales_10l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updatePalmSalesTotal();
+                        saveSalesField('palm_sales_10l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_10l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+        <!-- 12 لتر -->
+
+        <tr>
+
+            <td>12 لتر</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>
+                <input
+                    id="palm_sales_12l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updatePalmSalesTotal();
+                        saveSalesField('palm_sales_12l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_12l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+         <!-- 14 لتر -->
+
+        <tr>
+
+            <td>14 لتر</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>
+                <input
+                    id="palm_sales_14l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updatePalmSalesTotal();
+                        saveSalesField('palm_sales_14l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_14l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+        <!-- 18 لتر -->
+
+        <tr>
+
+            <td>18 لتر</td>
+
+            <td>
+                <input
+                    id="olein_sales_18l_big"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateOleinSalesTotal();
+                        saveSalesField('olein_sales_18l_big','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="olein_18l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+        </tr>
+
+
+        <!-- 20 لتر -->
+
+        <tr>
+
+            <td>20 لتر</td>
+
+            <td>
+                <input
+                    id="olein_sales_20l"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateOleinSalesTotal();
+                        saveSalesField('olein_sales_20l','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="olein_20l_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+        </tr>
+
+
+        <!-- 20 كغم -->
+
+        <tr>
+
+            <td>20 كغم</td>
+
+            <td>
+                <input
+                    id="olein_sales_20kg"
+                    data-save
+                    step="any"
+                    oninput="
+                        updateOleinSalesTotal();
+                        saveSalesField('olein_sales_20kg','oil');
+                    "
+                >
+            </td>
+
+            <td>
+                <input
+                    id="olein_20kg_stock"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+        </tr>
+
+
+        <!-- المجموع -->
+
+        <tr>
+
+            <td>
+                <b>المجموع</b>
+            </td>
+
+            <td>
+                <input
+                    id="olein_sales_total"
+                    readonly
+                >
+            </td>
+
+            <td>
+                <input
+                    id="olein_stock_total"
+                    readonly
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_sales_total"
+                    readonly
+                >
+            </td>
+
+            <td>
+                <input
+                    id="palm_stock_total"
+                    readonly
+                >
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
 
                         </div>
 
@@ -2542,76 +2968,6 @@ text-decoration:none;
 
                 <div class="details-content">
 
-                    <!-- زيت العباد -->
-
-                    <details open>
-
-                        <summary>زيت العباد</summary>
-
-                        <div class="details-content">
-
-                            <table>
-
-                                <tr>
-                                    <th>الحجم</th>
-                                    <th>الرصيد (طن)</th>
-                                </tr>
-
-                                <tr>
-                                    <td>750 مل</td>
-                                    <td><input id="sun_750_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>900 مل</td>
-                                    <td><input id="sun_900_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>1 لتر</td>
-                                    <td><input id="sun_1l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>1.8 لتر</td>
-                                    <td><input id="sun_18_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>5 لتر</td>
-                                    <td><input id="sun_5l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>6 لتر</td>
-                                    <td><input id="sun_6l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>10 لتر</td>
-                                    <td><input id="sun_10l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>12 لتر</td>
-                                    <td><input id="sun_12l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>14 لتر</td>
-                                    <td><input id="sun_14l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>18 لتر</td>
-                                    <td><input id="sun_18l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>20 لتر</td>
-                                    <td><input id="sun_20l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>20 كغم</td>
-                                    <td><input id="sun_20kg_stock" data-save step="any"></td>
-                                </tr>
-
-                            </table>
-
-                        </div>
-
-                    </details>
-
                     <br>
 
                     <!-- زيت الأولين والنخيل -->
@@ -2631,33 +2987,13 @@ text-decoration:none;
                                 </tr>
 
                                 <tr>
-                                    <td>750 مل</td>
-                                    <td><input id="olein_750_stock" data-save step="any"></td>
-                                    <td><input id="palm_750_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>900 مل</td>
-                                    <td><input id="olein_900_stock" data-save step="any"></td>
-                                    <td><input id="palm_900_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>1 لتر</td>
-                                    <td><input id="olein_1l_stock" data-save step="any"></td>
-                                    <td><input id="palm_1l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>1.8 لتر</td>
-                                    <td><input id="olein_18_stock" data-save step="any"></td>
-                                    <td><input id="palm_18_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
                                     <td>5 لتر</td>
                                     <td><input id="olein_5l_stock" data-save step="any"></td>
                                     <td><input id="palm_5l_stock" data-save step="any"></td>
                                 </tr>
                                 <tr>
                                     <td>6 لتر</td>
-                                    <td><input id="olein_6l_stock" data-save step="any"></td>
+                                    <td>-</td>
                                     <td><input id="palm_6l_stock" data-save step="any"></td>
                                 </tr>
                                 <tr>
@@ -2667,18 +3003,18 @@ text-decoration:none;
                                 </tr>
                                 <tr>
                                     <td>12 لتر</td>
-                                    <td><input id="olein_12l_stock" data-save step="any"></td>
+                                    <td>-</td>
                                     <td><input id="palm_12l_stock" data-save step="any"></td>
                                 </tr>
                                 <tr>
                                     <td>14 لتر</td>
-                                    <td><input id="olein_14l_stock" data-save step="any"></td>
+                                    <td>-</td>
                                     <td><input id="palm_14l_stock" data-save step="any"></td>
                                 </tr>
                                 <tr>
                                     <td>18 لتر</td>
                                     <td><input id="olein_18l_stock" data-save step="any"></td>
-                                    <td><input id="palm_18l_stock" data-save step="any"></td>
+                                    <td>-</td>
                                 </tr>
                                 <tr>
                                     <td>20 لتر</td>
@@ -2688,7 +3024,7 @@ text-decoration:none;
                                 <tr>
                                     <td>20 كغم</td>
                                     <td><input id="olein_20kg_stock" data-save step="any"></td>
-                                    <td><input id="palm_20kg_stock" data-save step="any"></td>
+                                    <td>-</td>
                                 </tr>
 
                             </table>
@@ -2705,99 +3041,265 @@ text-decoration:none;
 
             <details open>
 
-                <summary>موقف خطوط التعبئة</summary>
+               <summary>موقف خطوط التعبئة</summary>
 
-                <div class="details-content">
+<div class="details-content">
 
-                    <table class="wide-table">
+    <table class="wide-table">
 
-                        <tr>
+        <tr>
 
-                            <th>الـخـط</th>
+            <th>الـخـط</th>
 
-                            <th>صـبـاحـي</th>
+            <th>صـبـاحـي</th>
 
-                            <th>مـسـائـي</th>
+            <th>مـسـائـي</th>
 
-                            <th>لـيـلـي</th>
+            <th>لـيـلـي</th>
 
-                        </tr>
+        </tr>
 
-                        <tr>
 
-                            <td>كرونس 1</td>
+        <!-- كرونس 1 -->
 
-                            <td><input id="krones1a" data-save step="any"></td>
+        <tr>
 
-                            <td><input id="krones1b" data-save step="any"></td>
+            <td>كرونس 1 (كارتون)</td>
 
-                            <td><input id="krones1c" data-save step="any"></td>
+            <td>
+                <input
+                    id="krones1a"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                        </tr>
+            <td>
+                <input
+                    id="krones1b"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                        <tr>
+            <td>
+                <input
+                    id="krones1c"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                            <td>كرونس 2</td>
+        </tr>
 
-                            <td><input id="krones2a" data-save step="any"></td>
 
-                            <td><input id="krones2b" data-save step="any"></td>
+        <!-- كرونس 2 -->
 
-                            <td><input id="krones2c" data-save step="any"></td>
+        <tr>
 
-                        </tr>
+            <td>كرونس 2 (كارتون)</td>
 
-                        <tr>
+            <td>
+                <input
+                    id="krones2a"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                            <td>كرونس 3</td>
+            <td>
+                <input
+                    id="krones2b"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                            <td><input id="krones3a" data-save step="any"></td>
+            <td>
+                <input
+                    id="krones2c"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                            <td><input id="krones3b" data-save step="any"></td>
+        </tr>
 
-                            <td><input id="krones3c" data-save step="any"></td>
 
-                        </tr>
+        <!-- كرونس 3 -->
 
-                        <tr>
+        <tr>
 
-                            <td>خط السمنة</td>
+            <td>كرونس 3 (كارتون)</td>
 
-                            <td><input id="geaa" data-save step="any"></td>
+            <td>
+                <input
+                    id="krones3a"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                            <td><input id="geab" data-save step="any"></td>
+            <td>
+                <input
+                    id="krones3b"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                            <td><input id="geac" data-save step="any"></td>
+            <td>
+                <input
+                    id="krones3c"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                        </tr>
+        </tr>
 
-                        <tr>
 
-                            <td>خط الشورتنينغ</td>
+        <!-- خط السمنة -->
 
-                            <td><input id="shorta" data-save step="any"></td>
+        <tr>
 
-                            <td><input id="shortb" data-save step="any"></td>
+            <td>خط السمنة (علبة)</td>
 
-                            <td><input id="shortc" data-save step="any"></td>
+            <td>
+                <input
+                    id="geaa"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                        </tr>
+            <td>
+                <input
+                    id="geab"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                    </table>
+            <td>
+                <input
+                    id="geac"
+                    data-save
+                    step="any"
+                >
+            </td>
 
-                    <br>
+        </tr>
+
+
+        <!-- خط الرونو -->
+
+        <tr>
+
+            <td>خط الرونو (كارتون)</td>
+
+
+            <!-- صباحي -->
+
+            <td>
+
+                <div class="runo-production-cell">
+
+                    <input
+                        id="shorta"
+                        data-save
+                        step="any"
+                    >
+
+                    <select
+                        id="shorta_product"
+                        data-save
+                    >
+
+                        <option value="">المنتج</option>
+                        <option value="مارغرين">مارغرين</option>
+                        <option value="شورتنينغ">شورتنينغ</option>
+                        <option value="اولين">اولين</option>
+
+                    </select>
 
                 </div>
 
-            </details>
+            </td>
 
-            <!-- تقرير مصنع اللدائن -->
 
-          <details open>
+            <!-- مسائي -->
+
+            <td>
+
+                <div class="runo-production-cell">
+
+                    <input
+                        id="shortb"
+                        data-save
+                        step="any"
+                    >
+
+                    <select
+                        id="shortb_product"
+                        data-save
+                    >
+
+                        <option value="">المنتج</option>
+                        <option value="مارغرين">مارغرين</option>
+                        <option value="شورتنينغ">شورتنينغ</option>
+                        <option value="اولين">اولين</option>
+
+                    </select>
+
+                </div>
+
+            </td>
+
+
+            <!-- ليلي -->
+
+            <td>
+
+                <div class="runo-production-cell">
+
+                    <input
+                        id="shortc"
+                        data-save
+                        step="any"
+                    >
+
+                    <select
+                        id="shortc_product"
+                        data-save
+                    >
+
+                        <option value="">المنتج</option>
+                        <option value="مارغرين">مارغرين</option>
+                        <option value="شورتنينغ">شورتنينغ</option>
+                        <option value="اولين">اولين</option>
+
+                    </select>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+</div>
+
+</details>
+
+<details open>
 
     <summary>تقرير مصنع اللدائن</summary>
 
-    <div class="details-content">
+     <div class="details-content">
 
         <h3>🏭 خطوط إنتاج الأمبولة و Spout و CAP</h3>
 
@@ -2874,67 +3376,244 @@ text-decoration:none;
         </table>
     </div>
 
-        <br>
+    <div class="details-content">
 
-        <h3>⚙️ ماكينات التجميع والسداد المعدني واللحام</h3>
+<h3>⚙️ ماكينات التجميع والسداد المعدني و UST واللحام</h3>
 
 <div class="table-scroll">
-        <table class="wide-table">
 
-            <tr>
-                <th>الماكنة</th>
-                <th>الإنتاج</th>
-                <th>الكفاءة (%)</th>
-                <th>نسبة التلف (%)</th>
-                <th>الحالة</th>
-                <th>التوقف (دقيقة)</th>
-            </tr>
+    <table class="wide-table">
 
-            <tr>
-                <td>التجميع 1</td>
-                <td><input id="plastic_assembly1_qty" data-save step="any"></td>
-                <td>-</td>
-                <td>-</td>
-                <td><input id="plastic_assembly1_status" data-save></td>
-                <td><input id="plastic_assembly1_stop" data-save step="any"></td>
-            </tr>
+        <tr>
 
-            <tr>
-                <td>التجميع 2</td>
-                <td><input id="plastic_assembly2_qty" data-save step="any"></td>
-                <td><input id="plastic_assembly2_eff" data-save step="any"></td>
-                <td><input id="plastic_assembly2_scrap" data-save step="any"></td>
-                <td><input id="plastic_assembly2_status" data-save></td>
-                <td><input id="plastic_assembly2_stop" data-save step="any"></td>
-            </tr>
+            <th>الماكنة</th>
+            <th>الإنتاج</th>
+            <th>الكفاءة (%)</th>
+            <th>نسبة التلف (%)</th>
+            <th>الحالة</th>
 
-            <tr>
-                <td>السداد المعدني</td>
-                <td><input id="plastic_metalcap_qty" data-save step="any"></td>
-                <td>-</td>
-                <td>-</td>
-                <td>
-                    <select id="plastic_metalcap_status" data-save>
-                        <option>يعمل</option>
-                        <option>متوقف</option>
-                    </select>
-                </td>
-                <td><input id="plastic_metalcap_stop" data-save step="any"></td>
-            </tr>
+        </tr>
 
-            <tr>
-                <td>اللحام</td>
-                <td><input id="plastic_welding_qty" data-save step="any"></td>
-                <td>-</td>
-                <td><input id="plastic_welding_scrap" data-save step="any"></td>
-                <td><input id="plastic_welding_status" data-save step="any"></td>
-                <td><input id="plastic_welding_stop" data-save step="any"></td>
-            </tr>
 
-        </table>
-        </div>
-        <br>
+        <!-- التجميع 1 -->
 
+        <tr>
+
+            <td>التجميع 1</td>
+
+            <td>
+                <input
+                    id="plastic_assembly1_qty"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="plastic_assembly1_eff"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="plastic_assembly1_scrap"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+
+                <textarea
+                    id="plastic_assembly1_status"
+                    data-save
+                    rows="2"
+                    placeholder="اكتب حالة الماكينة..."
+                ></textarea>
+
+            </td>
+
+        </tr>
+
+
+        <!-- التجميع 2 -->
+
+        <tr>
+
+            <td>التجميع 2</td>
+
+            <td>
+                <input
+                    id="plastic_assembly2_qty"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="plastic_assembly2_eff"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="plastic_assembly2_scrap"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+
+                <textarea
+                    id="plastic_assembly2_status"
+                    data-save
+                    rows="2"
+                    placeholder="اكتب حالة الماكينة..."
+                ></textarea>
+
+            </td>
+
+        </tr>
+
+
+        <!-- السداد المعدني -->
+
+        <tr>
+
+            <td>السداد المعدني</td>
+
+            <td>
+                <input
+                    id="plastic_metalcap_qty"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="plastic_metalcap_eff"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>-</td>
+
+            <td>
+
+                <select
+                    id="plastic_metalcap_status"
+                    data-save
+                >
+
+                    <option value="">-- اختر الحالة --</option>
+                    <option value="يعمل">يعمل</option>
+                    <option value="متوقف">متوقف</option>
+
+                </select>
+
+            </td>
+
+        </tr>
+
+
+        <!-- ماكينة UST -->
+
+        <tr>
+
+            <td>ماكينة UST</td>
+
+            <td>
+                <input
+                    id="plastic_ust_qty"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="plastic_ust_eff"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>-</td>
+
+            <td>
+
+                <select
+                    id="plastic_ust_status"
+                    data-save
+                >
+
+                    <option value="">-- اختر الحالة --</option>
+                    <option value="يعمل">يعمل</option>
+                    <option value="لا يعمل">لا يعمل</option>
+
+                </select>
+
+            </td>
+
+        </tr>
+
+
+        <!-- ماكينة اللحام -->
+
+        <tr>
+
+            <td>ماكينة اللحام</td>
+
+            <td>
+                <input
+                    id="plastic_welding_qty"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="plastic_welding_eff"
+                    data-save
+                    step="any"
+                >
+            </td>
+
+            <td>-</td>
+
+            <td>
+
+                <select
+                    id="plastic_welding_status"
+                    data-save
+                >
+
+                    <option value="">-- اختر الحالة --</option>
+                    <option value="يعمل">يعمل</option>
+                    <option value="لا يعمل">لا يعمل</option>
+
+                </select>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
+
+<br>
+<br>
         <h3>📝 ملاحظات وأسباب التوقف</h3>
 
         <div class="table-scroll">
@@ -2946,32 +3625,16 @@ text-decoration:none;
             </tr>
 
             <tr>
-                <td>Spout 1</td>
-                <td><input id="plastic_spout1_note" data-save step="any"></td>
-            </tr>
-
-            <tr>
-                <td>Spout 2</td>
-                <td><input id="plastic_spout2_note" data-save step="any"></td>
-            </tr>
-
-            <tr>
-                <td>التجميع 2</td>
-                <td><input id="plastic_assembly2_note" data-save step="any"></td>
-            </tr>
-
-            <tr>
                 <td>ملاحظات عامة للمصنع</td>
                 <td>
                     <textarea id="plastic_factory_notes"
                         data-save
-                        rows="4"
+                        rows="6"
                         style="width:100%;"></textarea>
                 </td>
             </tr>
 
         </table>
-</div>
     </div>
 
 </details>
@@ -4748,6 +5411,31 @@ onclick="approveSection('waterfiltration')">
 
             }
 
+            function updateOleinStockTotal() {
+
+    let total =
+        (parseFloat(document.getElementById("olein_5l_stock")?.value) || 0) +
+        (parseFloat(document.getElementById("olein_10l_stock")?.value) || 0) +
+        (parseFloat(document.getElementById("olein_18l_stock")?.value) || 0) +
+        (parseFloat(document.getElementById("olein_20l_stock")?.value) || 0) +
+        (parseFloat(document.getElementById("olein_20kg_stock")?.value) || 0);
+
+    document.getElementById("olein_stock_total").value =
+        total.toFixed(2);
+}
+
+
+function updatePalmStockTotal() {
+
+    let total =
+        (parseFloat(document.getElementById("palm_5l_stock")?.value) || 0) +
+        (parseFloat(document.getElementById("palm_10l_stock")?.value) || 0) +
+        (parseFloat(document.getElementById("palm_20l_stock")?.value) || 0);
+
+    document.getElementById("palm_stock_total").value =
+        total.toFixed(2);
+}
+
             function updateNetFeedProduction() {
 
                 let gross = 0;
@@ -4850,6 +5538,34 @@ onclick="approveSection('waterfiltration')">
         extraction +
         sahara +
         diwan;
+}
+
+function updateSunStockTotal() {
+
+    let total = 0;
+
+    total += parseFloat(
+        document.getElementById("sun_750_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("sun_900_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("sun_1l_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("sun_1_1lirq_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("sun_1_1l15_stock")?.value
+    ) || 0;
+
+    document.getElementById("sun_stock_total").value =
+        total.toFixed(2);
 }
 
             function updateFlourSalesTotal() {
@@ -4957,6 +5673,9 @@ function updateFlourStockTotal() {
                 updateFlourSalesTotal();
                 updateFeedSalesTotal();
                 updateFlourStockTotal();
+                updateSunStockTotal();
+                updateOleinStockTotal();
+updatePalmStockTotal();
 
                 // لوحة التحكم
                 updateDashboard();

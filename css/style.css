@@ -2137,3 +2137,25 @@ body.dark-mode details summary {
     font-size: 13px;
   }
 }
+
+.runo-production-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.runo-production-cell input {
+  width: 90px;
+}
+
+.runo-production-cell select {
+  min-width: 110px;
+  padding: 9px 8px;
+  border-radius: 10px;
+  border: 1px solid #5d5f63;
+  background: #666769;
+  font-size: 14px;
+  text-align: center;
+}
