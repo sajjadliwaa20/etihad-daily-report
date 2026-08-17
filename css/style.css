@@ -1616,8 +1616,8 @@ body.dark-mode details summary {
 
 @media (max-width: 768px) {
   #millTable input {
-    width: 68px !important;
-    min-width: 50px;
+    width: 78px !important;
+    min-width: 60px;
 
     padding: 3px;
 

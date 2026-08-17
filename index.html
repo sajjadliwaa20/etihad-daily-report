@@ -823,6 +823,13 @@ saveSalesField('GEA_sales_14l','oil');
 
 <div class="details-content">
 
+    <table>
+                                    <tr>
+                                        <th colspan="1">
+مبيعات وارصدة الاولين والنخيل                                         </th>
+                                    </tr>
+                                </table>
+
     <table class="wide-table">
 
         <tr>
@@ -3840,92 +3847,355 @@ text-decoration:none;
 
                 <summary>إنتاج المطحنة</summary>
 
-                <div class="details-content">
+<div class="details-content">
 
-                    <table id="millTable" class="wide-table">
+    <table id="millTable" class="wide-table">
 
-                        <tr>
-                            <th>الخط</th>
-                            <th>F1 (طن)</th>
-                            <th>F3 (طن)</th>
-                            <th>W.Bran (طن)</th>
-                            <th>المجموع (طن)</th>
-                        </tr>
+        <tr>
+            <th>الخط</th>
+            <th>الحنطة المطحونة (طن)</th>
+            <th> F1 (طن) </th>
+            <th> F3 (طن) </th>
+            <th>W.Bran (طن)</th>
+            <th> المجموع (طن) </th>
+        </tr>
 
-                        <tr>
-                            <td>A</td>
-                            <td><input id="line1_f1" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line1_f3" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line1_bran" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line1_total" readonly></td>
-                        </tr>
 
-                        <tr>
-                            <td>B</td>
-                            <td><input id="line2_f1" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line2_f3" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line2_bran" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line2_total" readonly></td>
-                        </tr>
+        <!-- A -->
 
-                        <tr>
-                            <td>C</td>
-                            <td><input id="line3_f1" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line3_f3" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line3_bran" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line3_total" readonly></td>
-                        </tr>
+        <tr>
+            <td>A</td>
 
-                        <tr>
-                            <td>D</td>
-                            <td><input id="line4_f1" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line4_f3" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line4_bran" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line4_total" readonly></td>
-                        </tr>
+            <td>
+                <input
+                    id="line1_ground_wheat"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
 
-                        <tr>
-                            <td>E</td>
-                            <td><input id="line5_f1" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line5_f3" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line5_bran" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line5_total" readonly></td>
-                        </tr>
+            <td>
+                <input
+                    id="line1_f1"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
 
-                        <tr>
-                            <td>F</td>
-                            <td><input id="line6_f1" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line6_f3" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line6_bran" data-save onkeyup="calcMillTotals()" step="any"></td>
-                            <td><input id="line6_total" readonly></td>
-                        </tr>
+            <td>
+                <input
+                    id="line1_f3"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
 
-                        <tr>
+            <td>
+                <input
+                    id="line1_bran"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
 
-    <td><strong>المجموع الكلي</strong></td>
+            <td>
+                <input id="line1_total" readonly>
+            </td>
+        </tr>
 
-    <td>
-        <input id="flour_total_f1" readonly step="any">
-    </td>
 
-    <td>
-        <input id="flour_total_f3" readonly step="any">
-    </td>
+        <!-- B -->
 
-    <td>
-        <input id="flour_total_wbran" readonly step="any">
-    </td>
+        <tr>
+            <td>B</td>
 
-    <td>
-        <input id="flour_grand_total" readonly step="any">
-    </td>
+            <td>
+                <input
+                    id="line2_ground_wheat"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
 
-</tr>
+            <td>
+                <input
+                    id="line2_f1"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
 
-                    </table>
+            <td>
+                <input
+                    id="line2_f3"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
 
-                </div>
+            <td>
+                <input
+                    id="line2_bran"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
 
+            <td>
+                <input id="line2_total" readonly>
+            </td>
+        </tr>
+
+
+        <!-- C -->
+
+        <tr>
+            <td>C</td>
+
+            <td>
+                <input
+                    id="line3_ground_wheat"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line3_f1"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line3_f3"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line3_bran"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input id="line3_total" readonly>
+            </td>
+        </tr>
+
+
+        <!-- D -->
+
+        <tr>
+            <td>D</td>
+
+            <td>
+                <input
+                    id="line4_ground_wheat"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line4_f1"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line4_f3"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line4_bran"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input id="line4_total" readonly>
+            </td>
+        </tr>
+
+
+        <!-- E -->
+
+        <tr>
+            <td>E</td>
+
+            <td>
+                <input
+                    id="line5_ground_wheat"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line5_f1"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line5_f3"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line5_bran"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input id="line5_total" readonly>
+            </td>
+        </tr>
+
+
+        <!-- F -->
+
+        <tr>
+            <td>F</td>
+
+            <td>
+                <input
+                    id="line6_ground_wheat"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line6_f1"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line6_f3"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="line6_bran"
+                    data-save
+                    step="any"
+                    onkeyup="calcMillTotals()"
+                >
+            </td>
+
+            <td>
+                <input id="line6_total" readonly>
+            </td>
+        </tr>
+
+
+        <!-- المجموع الكلي -->
+
+        <tr>
+
+            <td>
+                <strong>المجموع الكلي</strong>
+            </td>
+
+            <td>
+                <input
+                    id="flour_total_ground_wheat"
+                    readonly
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="flour_total_f1"
+                    readonly
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="flour_total_f3"
+                    readonly
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="flour_total_wbran"
+                    readonly
+                    step="any"
+                >
+            </td>
+
+            <td>
+                <input
+                    id="flour_grand_total"
+                    readonly
+                    step="any"
+                >
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
             </details>
 
             <!-- كفاءة الاستخراج -->
@@ -4086,6 +4356,95 @@ box-sizing:border-box;
                 </div>
 
             </details>
+
+            <!-- موقف قسم التعبئة -->
+
+<details open>
+
+    <summary>موقف قسم التعبئة</summary>
+
+    <div class="details-content">
+
+        <table class="wide-table">
+
+            <tr>
+                <th>المنتج</th>
+                <th>الكمية (طن)</th>
+            </tr>
+
+
+            <tr>
+
+                <td>الطحين</td>
+
+                <td>
+                    <input
+                        id="flour_packaging_stock"
+                        data-save
+                        step="any"
+                    >
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>النخالة</td>
+
+                <td>
+                    <input
+                        id="bran_packaging_stock"
+                        data-save
+                        step="any"
+                    >
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <br>
+
+
+        <!-- المرفقات -->
+
+        <label
+            for="flour_packaging_notes_image"
+            class="uploadImageBtn"
+        >
+            📎 إرفاق ملف أو صورة
+        </label>
+
+        <input
+            type="file"
+            multiple
+            accept="image/*,application/pdf"
+            id="flour_packaging_notes_image"
+            data-factory="flour"
+            data-field="flour_packaging_notes"
+            onchange="uploadNoteImage(this)"
+            style="display:none;"
+        >
+
+        <br>
+
+        <a
+            id="flour_packaging_notes_link"
+            target="_blank"
+            style="
+                display:none;
+                font-size:13px;
+                text-decoration:none;
+            "
+        >
+            👁 عرض الملف
+        </a>
+
+    </div>
+
+</details>
 
             <!-- الجودة والسلامة -->
 
@@ -5735,73 +6094,103 @@ updatePalmStockTotal();
             function updateShorteningSalesTotal() {
 
             }
-           function calcMillTotals() {
+          function calcMillTotals() {
 
-            const firstRow = document.getElementById("line1_f1");
-
-if (!firstRow) return;
-
-    let grandTotal = 0;
-
+    let totalGroundWheat = 0;
     let totalF1 = 0;
     let totalF3 = 0;
     let totalBran = 0;
+    let grandTotal = 0;
+
 
     for (let i = 1; i <= 6; i++) {
 
-        let f1 =
-            parseFloat(document.getElementById(`line${i}_f1`)?.value || 0);
+        const groundWheat =
+            parseFloat(
+                document.getElementById(`line${i}_ground_wheat`)?.value
+            ) || 0;
 
-        let f3 =
-            parseFloat(document.getElementById(`line${i}_f3`)?.value || 0);
+        const f1 =
+            parseFloat(
+                document.getElementById(`line${i}_f1`)?.value
+            ) || 0;
 
-        let bran =
-            parseFloat(document.getElementById(`line${i}_bran`)?.value || 0);
+        const f3 =
+            parseFloat(
+                document.getElementById(`line${i}_f3`)?.value
+            ) || 0;
 
-        let lineTotal =
+        const bran =
+            parseFloat(
+                document.getElementById(`line${i}_bran`)?.value
+            ) || 0;
+
+
+        /* مجموع منتجات الخط */
+        const lineTotal =
             f1 + f3 + bran;
 
-        const totalBox = document.getElementById(`line${i}_total`);
 
-if (totalBox) {
-    totalBox.value = lineTotal.toFixed(2);
-}
+        const lineTotalElement =
+            document.getElementById(`line${i}_total`);
 
-        // مجاميع الأعمدة
+        if (lineTotalElement) {
+            lineTotalElement.value =
+                lineTotal.toFixed(2);
+        }
+
+
+        /* المجاميع الكلية */
+
+        totalGroundWheat += groundWheat;
         totalF1 += f1;
         totalF3 += f3;
         totalBran += bran;
-
-        // المجموع الكلي
         grandTotal += lineTotal;
 
     }
 
-   const f1Total = document.getElementById("flour_total_f1");
-if (f1Total) {
-    f1Total.value = totalF1.toFixed(2);
-}
 
-const f3Total = document.getElementById("flour_total_f3");
-if (f3Total) {
-    f3Total.value = totalF3.toFixed(2);
-}
+    const groundWheatTotal =
+        document.getElementById("flour_total_ground_wheat");
 
-const branTotal = document.getElementById("flour_total_wbran");
-if (branTotal) {
-    branTotal.value = totalBran.toFixed(2);
-}
+    const f1Total =
+        document.getElementById("flour_total_f1");
 
-const grand = document.getElementById("flour_grand_total");
-if (grand) {
-    grand.value = grandTotal.toFixed(2);
-}
+    const f3Total =
+        document.getElementById("flour_total_f3");
 
-const mill = document.getElementById("mill_total_prod");
-if (mill) {
-    mill.value = grandTotal.toFixed(2);
-}
+    const branTotal =
+        document.getElementById("flour_total_wbran");
 
+    const grandTotalElement =
+        document.getElementById("flour_grand_total");
+
+
+    if (groundWheatTotal) {
+        groundWheatTotal.value =
+            totalGroundWheat.toFixed(2);
+    }
+
+    if (f1Total) {
+        f1Total.value =
+            totalF1.toFixed(2);
+    }
+
+    if (f3Total) {
+        f3Total.value =
+            totalF3.toFixed(2);
+    }
+
+    if (branTotal) {
+        branTotal.value =
+            totalBran.toFixed(2);
+    }
+
+    if (grandTotalElement) {
+        grandTotalElement.value =
+            grandTotal.toFixed(2);
+    }
 }
 
             function updateGEASalesTotal() {
