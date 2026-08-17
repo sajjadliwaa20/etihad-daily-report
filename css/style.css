@@ -2159,3 +2159,30 @@ body.dark-mode details summary {
   font-size: 14px;
   text-align: center;
 }
+
+/* حقول الأرقام والاختيارات داخل المطحنة */
+
+#flour input,
+#flour select {
+  width: 115px;
+  min-width: 115px;
+}
+
+/* الحقول النصية */
+
+#flour textarea {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  #flour input,
+  #flour select {
+    width: 105px;
+    min-width: 105px;
+  }
+
+  #flour textarea {
+    width: 100%;
+  }
+}
