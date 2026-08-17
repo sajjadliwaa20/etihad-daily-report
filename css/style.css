@@ -2186,3 +2186,16 @@ body.dark-mode details summary {
     width: 100%;
   }
 }
+
+#sales_feed input,
+#sales_feed select {
+  width: 125px;
+  min-width: 115px;
+}
+@media (max-width: 768px) {
+  #sales_feed input,
+  #sales_feed select {
+    width: 105px;
+    min-width: 105px;
+  }
+}
