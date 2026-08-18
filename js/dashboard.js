@@ -303,6 +303,55 @@ async function applyPermissions() {
   }
 }
 
+function showOnlySection(sectionId) {
+  console.log("SHOW SECTION:", sectionId);
+
+  // إخفاء جميع الأقسام الرئيسية
+  document.querySelectorAll(".section").forEach((section) => {
+    section.style.display = "none";
+  });
+
+  // إظهار القسم المطلوب
+  const targetSection = document.getElementById(sectionId);
+
+  if (!targetSection) {
+    console.error("SECTION NOT FOUND:", sectionId);
+
+    return;
+  }
+
+  targetSection.style.display = "block";
+
+  // فتح الـ details الداخلي إن كان موجودًا
+  const innerDetails = targetSection.querySelector("details");
+
+  if (innerDetails) {
+    innerDetails.open = true;
+  }
+
+  // الانتقال إلى أعلى القسم
+  targetSection.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+
+  // تحديث الرابط
+  history.replaceState(null, "", "#" + sectionId);
+}
+
+function showAllSections() {
+  document.querySelectorAll(".section").forEach((section) => {
+    section.style.display = "block";
+  });
+
+  window.location.hash = "home";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
 async function loadReminders() {
   const {
     data: { user },

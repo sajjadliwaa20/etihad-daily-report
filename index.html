@@ -101,10 +101,13 @@
             <b>سجاد لواء</b>
         </p>
 
-        <a id="menu_home"
-         href="#home"
-          onclick="showAllSections();">
-          الرئيسية</a>
+        <a
+    id="menu_home"
+    href="#home"
+    onclick="showAllSections(); toggleSidebar(); return false;"
+>
+    الرئيسية
+</a>
 
         <a
     id="menu_sales_marketing"
@@ -318,6 +321,7 @@ border:1px solid rgba(24,78,59,.12);
 
             </details>
 
+            </section>
 
             <!-- المبيعات والارصدة-->
 
@@ -1433,19 +1437,13 @@ saveSalesField('GEA_sales_14l','oil');
 
 </div>
 
-                    </details>
+</details>
 
-            </details>
+</div>
 
-            </details>
+</details>
 
-
-        </section>
-
-
-        </section>
-
-        </section>
+</section>
 
         <!-- موقف محطة الطاقة -->
 
@@ -2805,7 +2803,7 @@ text-decoration:none;
     <td>
 
         <input
-            id="refinery1"
+            id="refinery2"
             data-save
             step="any"
             oninput="updateDashboard();">
