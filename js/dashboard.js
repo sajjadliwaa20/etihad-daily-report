@@ -77,6 +77,7 @@ async function applyPermissions() {
   document.getElementById("menu_feed").style.display = "none";
   document.getElementById("menu_waterfiltration").style.display = "none";
   document.getElementById("menu_archive").style.display = "none";
+  document.getElementById("menu_sales_marketing").style.display = "none";
   document.getElementById("approvalsDashboard").style.display = "none";
 
   document.getElementById("lateFieldsDashboard").style.display = "none";
@@ -90,7 +91,7 @@ async function applyPermissions() {
   });
 
   if (role === "power") {
-    document.getElementById("salesSection").style.display = "none";
+    document.getElementById("salesMarketing").style.display = "none";
 
     document.getElementById("home").style.display = "block";
 
@@ -146,6 +147,7 @@ async function applyPermissions() {
     document.getElementById("menu_feed").style.display = "block";
     document.getElementById("menu_waterfiltration").style.display = "block";
     document.getElementById("menu_archive").style.display = "block";
+    document.getElementById("menu_sales_marketing").style.display = "block";
 
     document.querySelectorAll(".section").forEach((section) => {
       section.style.display = "block";
@@ -283,7 +285,7 @@ async function applyPermissions() {
 
     document.getElementById("waterfiltration").style.display = "block";
 
-    document.getElementById("salesSection").style.display = "none";
+    document.getElementById("salesMarketing").style.display = "none";
 
     document.getElementById("menu_waterfiltration").style.display = "block";
 

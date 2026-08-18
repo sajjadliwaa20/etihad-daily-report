@@ -108,6 +108,13 @@ body {
       border-box;
 }
 
+#menu_sales_marketing {
+  background:
+    linear-gradient(#569b83, #41685a) padding-box,
+    linear-gradient(to bottom, #c9a227 8px, #c9a227 14px, transparent 16px)
+      border-box;
+}
+
 #menu_sugar {
   background:
     linear-gradient(#569b83, #41685a) padding-box,
