@@ -5970,23 +5970,23 @@ updatePalmStockTotal();
 
                 let total = 0;
 
-                total += parseFloat(document.getElementById("sales_olein_750")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_900")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_1l")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_18l")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_5l")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_6l")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_10l")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_12l")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_14l")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_18l_big")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_20l")?.value) || 0;
-                total += parseFloat(document.getElementById("sales_olein_20kg")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_750")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_900")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_1l")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_18l")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_5l")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_6l")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_10l")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_12l")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_14l")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_18l_big")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_20l")?.value) || 0;
+                total += parseFloat(document.getElementById("olein_sales_20kg")?.value) || 0;
 
-                document.getElementById("sales_olein_total").value =
+                document.getElementById("olein_sales_total").value =
                     total.toFixed(2);
 
-                saveSalesField("sales_olein_total", "oil");
+                saveSalesField("olein_sales_total", "oil");
             }
 
             function updateShorteningSalesTotal() {
