@@ -566,83 +566,239 @@ saveSalesField('shortening_sales_20kg','oil');
 
                             </div>
 
-                            <div class="details-content">
+                          <div class="details-content">
 
-                                <table>
-                                    <tr>
-                                        <th colspan="2">
-                                            مبيعات السمنة (طن)
-                                        </th>
-                                    </tr>
-                                </table>
+    <table>
 
-                                <table>
+        <tr>
+            <th colspan="3">
+                مبيعات وأرصدة السمنة (طن)
+            </th>
+        </tr>
 
-                                    <tr>
-                                        <th>الفئة</th>
-                                        <th>المبيعات (طن)</th>
-                                    </tr>
+    </table>
 
-                                    <tr>
-                                        <td>5 لتر</td>
-                                        <td>
-                                            <input id="GEA_sales_5l" data-save oninput="
-updateGEASalesTotal();
-saveSalesField('GEA_sales_5l','oil');
-" step="any">
-                                        </td>
-                                    </tr>
 
-                                    <tr>
-                                        <td>6 لتر</td>
-                                        <td>
-                                            <input id="GEA_sales_6l" data-save oninput="
-updateGEASalesTotal();
-saveSalesField('GEA_sales_6l','oil');
-" step="any">
-                                        </td>
-                                    </tr>
+    <table>
 
-                                    <tr>
-                                        <td>10 لتر</td>
-                                        <td>
-                                            <input id="GEA_sales_10l" data-save oninput="
-updateGEASalesTotal();
-saveSalesField('GEA_sales_10l','oil');
-" step="any">
-                                        </td>
-                                    </tr>
+        <tr>
 
-                                    <tr>
-                                        <td>12 لتر</td>
-                                        <td>
-                                            <input id="GEA_sales_12l" data-save oninput="
-updateGEASalesTotal();
-saveSalesField('GEA_sales_12l','oil');
-" step="any">
-                                        </td>
-                                    </tr>
+            <th>الفئة</th>
 
-                                    <tr>
-                                        <td>14 لتر</td>
-                                        <td>
-                                            <input id="GEA_sales_14l" data-save oninput="
-updateGEASalesTotal();
-saveSalesField('GEA_sales_14l','oil');
-" step="any">
-                                        </td>
-                                    </tr>
+            <th>المبيعات (طن)</th>
 
-                                    <tr>
-                                        <td><b>المجموع</b></td>
-                                        <td>
-                                            <input id="GEA_sales_total" readonly>
-                                        </td>
-                                    </tr>
+            <th>الرصيد (طن)</th>
 
-                                </table>
+        </tr>
 
-                            </div>
+
+        <!-- 5 لتر -->
+
+        <tr>
+
+            <td>5 لتر</td>
+
+            <td>
+
+                <input
+                    id="GEA_sales_5l"
+                    data-save
+                    oninput="
+                        updateGEASalesTotal();
+                        saveSalesField('GEA_sales_5l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+            <td>
+
+                <input
+                    id="GEA_stock_5l"
+                    data-save
+                    oninput="
+                        updateGEAStockTotal();
+                        saveSalesField('GEA_stock_5l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+        </tr>
+
+
+        <!-- 6 لتر -->
+
+        <tr>
+
+            <td>6 لتر</td>
+
+            <td>
+
+                <input
+                    id="GEA_sales_6l"
+                    data-save
+                    oninput="
+                        updateGEASalesTotal();
+                        saveSalesField('GEA_sales_6l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+            <td>
+
+                <input
+                    id="GEA_stock_6l"
+                    data-save
+                    oninput="
+                        updateGEAStockTotal();
+                        saveSalesField('GEA_stock_6l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+        </tr>
+
+
+        <!-- 10 لتر -->
+
+        <tr>
+
+            <td>10 لتر</td>
+
+            <td>
+
+                <input
+                    id="GEA_sales_10l"
+                    data-save
+                    oninput="
+                        updateGEASalesTotal();
+                        saveSalesField('GEA_sales_10l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+            <td>
+
+                <input
+                    id="GEA_stock_10l"
+                    data-save
+                    oninput="
+                        updateGEAStockTotal();
+                        saveSalesField('GEA_stock_10l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+        </tr>
+
+
+        <!-- 12 لتر -->
+
+        <tr>
+
+            <td>12 لتر</td>
+
+            <td>
+
+                <input
+                    id="GEA_sales_12l"
+                    data-save
+                    oninput="
+                        updateGEASalesTotal();
+                        saveSalesField('GEA_sales_12l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+            <td>
+
+                <input
+                    id="GEA_stock_12l"
+                    data-save
+                    oninput="
+                        updateGEAStockTotal();
+                        saveSalesField('GEA_stock_12l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+        </tr>
+
+
+        <!-- 14 لتر -->
+
+        <tr>
+
+            <td>14 لتر</td>
+
+            <td>
+
+                <input
+                    id="GEA_sales_14l"
+                    data-save
+                    oninput="
+                        updateGEASalesTotal();
+                        saveSalesField('GEA_sales_14l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+            <td>
+
+                <input
+                    id="GEA_stock_14l"
+                    data-save
+                    oninput="
+                        updateGEAStockTotal();
+                        saveSalesField('GEA_stock_14l','oil');
+                    "
+                    step="any">
+
+            </td>
+
+        </tr>
+
+
+        <!-- المجموع -->
+
+        <tr>
+
+            <td>
+                <b>المجموع</b>
+            </td>
+
+
+            <td>
+
+                <input
+                    id="GEA_sales_total"
+                    readonly>
+
+            </td>
+
+
+            <td>
+
+                <input
+                    id="GEA_stock_total"
+                    readonly>
+
+            </td>
+
+        </tr>
+
+
+    </table>
+
+</div>
 
                           <div class="details-content">
       <table>
@@ -880,6 +1036,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="olein_5l_stock"
                     data-save
                     step="any"
+                    oninput="
+        updateOleinStockTotal();
+        saveSalesField('olein_5l_stock','oil');
+    "
                 >
             </td>
 
@@ -900,6 +1060,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="palm_5l_stock"
                     data-save
                     step="any"
+                     oninput="
+        updatePalmStockTotal();
+        saveSalesField('palm_5l_stock','oil');
+    "
                 >
             </td>
 
@@ -932,6 +1096,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="palm_6l_stock"
                     data-save
                     step="any"
+                     oninput="
+        updatePalmStockTotal();
+        saveSalesField('palm_6l_stock','oil');
+    "
                 >
             </td>
 
@@ -961,6 +1129,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="olein_10l_stock"
                     data-save
                     step="any"
+                     oninput="
+        updateOleinStockTotal();
+        saveSalesField('olein_10l_stock','oil');
+    "
                 >
             </td>
 
@@ -981,6 +1153,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="palm_10l_stock"
                     data-save
                     step="any"
+                     oninput="
+        updatePalmStockTotal();
+        saveSalesField('palm_10l_stock','oil');
+    "
                 >
             </td>
 
@@ -1013,6 +1189,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="palm_12l_stock"
                     data-save
                     step="any"
+                    oninput="
+                        updatePalmStockTotal();
+                        saveSalesField('palm_12l_stock','oil');
+                    "
                 >
             </td>
 
@@ -1045,6 +1225,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="palm_14l_stock"
                     data-save
                     step="any"
+                    oninput="
+                        updatePalmStockTotal();
+                        saveSalesField('palm_14l_stock','oil');
+                    "
                 >
             </td>
 
@@ -1073,6 +1257,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="olein_18l_stock"
                     data-save
                     step="any"
+                    oninput="
+                        updateOleinStockTotal();
+                        saveSalesField('olein_18l_stock','oil');
+                    "
                 >
             </td>
 
@@ -1105,6 +1293,10 @@ saveSalesField('GEA_sales_14l','oil');
                     id="olein_20kg_stock"
                     data-save
                     step="any"
+                    oninput="
+                        updateOleinStockTotal();
+                        saveSalesField('olein_20kg_stock','oil');
+                    "
                 >
             </td>
 
@@ -4876,27 +5068,99 @@ text-decoration:none;
 
             <details open>
 
-                <summary>إنتاج مصنع البريمكس</summary>
+    <summary>إنتاج مصنع البريمكس</summary>
 
-                <div class="details-content">
+    <div class="details-content">
 
-                    <table>
+        <table>
 
-                        <tr>
-                            <th>الصنف</th>
-                            <th>الإنتاج (طن)</th>
-                        </tr>
+            <tr>
+                <th>الصنف</th>
+                <th>الإنتاج (طن)</th>
+            </tr>
 
-                        <tr>
-                            <td>Premix </td>
-                            <td><input id="premix1_prod" data-save step="any"></td>
-                        </tr>
+            <tr>
+                <td>Premix</td>
 
-                    </table>
+                <td>
+                    <input
+                        id="premix1_prod"
+                        data-save
+                        step="any">
+                </td>
+            </tr>
 
-                </div>
+        </table>
 
-            </details>
+        <br>
+
+        <!-- ملاحظات مصنع البريمكس -->
+
+        <table>
+
+            <tr>
+                <th>
+                    ملاحظات مصنع البريمكس
+                </th>
+            </tr>
+
+            <tr>
+
+                <td>
+
+                    <textarea
+                        id="premix_notes"
+                        data-save
+                        style="
+                            width:100%;
+                            min-height:120px;
+                            resize:vertical;
+                        "
+                    ></textarea>
+
+                    <br><br>
+
+                    <label
+                        for="premix_notes_image"
+                        class="uploadImageBtn"
+                    >
+                        📎 إرفاق ملف
+                    </label>
+
+                    <input
+                        type="file"
+                        multiple
+                        accept="image/*,application/pdf"
+                        id="premix_notes_image"
+                        data-factory="feed"
+                        data-field="premix_notes"
+                        onchange="uploadNoteImage(this)"
+                        style="display:none;"
+                    >
+
+                    <br>
+
+                    <a
+                        id="premix_notes_link"
+                        target="_blank"
+                        style="
+                            display:none;
+                            font-size:13px;
+                            text-decoration:none;
+                        "
+                    >
+                        👁 عرض الملف
+                    </a>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
 
             <details open>
 
@@ -5684,13 +5948,36 @@ onclick="approveSection('waterfiltration')">
 
 function updatePalmStockTotal() {
 
-    let total =
-        (parseFloat(document.getElementById("palm_5l_stock")?.value) || 0) +
-        (parseFloat(document.getElementById("palm_10l_stock")?.value) || 0) +
-        (parseFloat(document.getElementById("palm_20l_stock")?.value) || 0);
+    let total = 0;
 
-    document.getElementById("palm_stock_total").value =
-        total.toFixed(2);
+    total += parseFloat(
+        document.getElementById("palm_5l_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("palm_6l_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("palm_10l_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("palm_12l_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("palm_14l_stock")?.value
+    ) || 0;
+
+    const totalEl =
+        document.getElementById("palm_stock_total");
+
+    if (totalEl) {
+        totalEl.value = total.toFixed(2);
+    }
+
+    saveSalesField("palm_stock_total", "oil");
 }
 
             function updateNetFeedProduction() {
@@ -5966,28 +6253,98 @@ updatePalmStockTotal();
 
             }
 
-            function updateOleinSalesTotal() {
+           function updateOleinSalesTotal() {
 
-                let total = 0;
+    let total = 0;
 
-                total += parseFloat(document.getElementById("olein_sales_750")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_900")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_1l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_18l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_5l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_6l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_10l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_12l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_14l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_18l_big")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_20l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_20kg")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_750")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_900")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_1l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_18l")?.value) || 0;
 
-                document.getElementById("olein_sales_total").value =
-                    total.toFixed(2);
+    total += parseFloat(document.getElementById("olein_sales_5l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_6l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_10l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_12l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_14l")?.value) || 0;
 
-                saveSalesField("olein_sales_total", "oil");
-            }
+    total += parseFloat(document.getElementById("olein_sales_18l_big")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_20l")?.value) || 0;
+    total += parseFloat(document.getElementById("olein_sales_20kg")?.value) || 0;
+
+    const totalEl =
+        document.getElementById("olein_sales_total");
+
+    if (totalEl) {
+        totalEl.value = total.toFixed(2);
+    }
+
+    saveSalesField("olein_sales_total", "oil");
+}
+
+function updatePalmSalesTotal() {
+
+    let total = 0;
+
+    total += parseFloat(
+        document.getElementById("palm_sales_5l")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("palm_sales_6l")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("palm_sales_10l")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("palm_sales_12l")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("palm_sales_14l")?.value
+    ) || 0;
+
+    const totalEl =
+        document.getElementById("palm_sales_total");
+
+    if (totalEl) {
+        totalEl.value = total.toFixed(2);
+    }
+
+    saveSalesField("palm_sales_total", "oil");
+}
+
+function updateOleinStockTotal() {
+
+    let total = 0;
+
+    total += parseFloat(
+        document.getElementById("olein_5l_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("olein_10l_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("olein_18l_stock")?.value
+    ) || 0;
+
+    total += parseFloat(
+        document.getElementById("olein_20kg_stock")?.value
+    ) || 0;
+
+    const totalEl =
+        document.getElementById("olein_stock_total");
+
+    if (totalEl) {
+        totalEl.value = total.toFixed(2);
+    }
+
+    saveSalesField("olein_stock_total", "oil");
+}
 
             function updateShorteningSalesTotal() {
 
@@ -6106,6 +6463,48 @@ updatePalmStockTotal();
 
                 saveSalesField("GEA_sales_total", "oil");
             }
+
+            function updateGEAStockTotal() {
+
+    const stockIds = [
+
+        "GEA_stock_5l",
+        "GEA_stock_6l",
+        "GEA_stock_10l",
+        "GEA_stock_12l",
+        "GEA_stock_14l"
+
+    ];
+
+    let total = 0;
+
+    stockIds.forEach(id => {
+
+        const el =
+            document.getElementById(id);
+
+        if (!el) return;
+
+        total +=
+            parseFloat(el.value) || 0;
+
+    });
+
+
+    const totalEl =
+        document.getElementById(
+            "GEA_stock_total"
+        );
+
+
+    if (totalEl) {
+
+        totalEl.value =
+            total.toFixed(2);
+
+    }
+
+}
 
             function applyReadOnlyMode() {
 
@@ -7071,9 +7470,19 @@ function createSubsectionApprovalButton(
 
                 });
 
-                recalculateAll();
+               recalculateAll();
 
-                toggleSeparationStation();
+               toggleSeparationStation();
+
+/* إعادة حساب مجاميع مصنع الزيت */
+if (factory === "oil") {
+
+    updateOleinSalesTotal();
+    updateOleinStockTotal();
+    updatePalmSalesTotal();
+    updatePalmStockTotal();
+
+}
 
 
                 /* إعادة حساب جميع القيم المشتقة */
@@ -7975,7 +8384,7 @@ if (hasUpdate) {
 
                 input.value = "";
 
-                showNotification("✅ تم رفع الملفات بنجاح","success");
+                showNotification(" تم رفع الملفات بنجاح","success");
 
             }
 
