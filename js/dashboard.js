@@ -92,17 +92,13 @@ async function applyPermissions() {
 
   if (role === "power") {
     document.getElementById("salesMarketing").style.display = "none";
-
     document.getElementById("home").style.display = "block";
-
     document.getElementById("powerstation").style.display = "block";
-
     document.getElementById("blackoil").style.display = "block";
-
     document.getElementById("menu_power").style.display = "block";
-
+    document.getElementById("menu_archive").style.display = "block";
+    document.getElementById("archive").style.display = "block";
     document.getElementById("darkModeBtn").style.display = "inline-block";
-
     document.querySelector("button[onclick='window.print()']").style.display =
       "inline-block";
 
@@ -116,7 +112,7 @@ async function applyPermissions() {
 
   if (role === "executive") {
     applyExecutiveMode();
-
+    document.getElementById("menu_archive").style.display = "block";
     window.location.hash = "home";
 
     return;
@@ -162,7 +158,8 @@ async function applyPermissions() {
 
   if (role === "sugar") {
     document.getElementById("menu_sugar").style.display = "block";
-
+    document.getElementById("menu_archive").style.display = "block";
+    document.getElementById("archive").style.display = "block";
     document.getElementById("home").style.display = "block";
     document.getElementById("sugar").style.display = "block";
 
@@ -191,7 +188,8 @@ async function applyPermissions() {
 
   if (role === "oil") {
     document.getElementById("menu_oil").style.display = "block";
-
+    document.getElementById("menu_archive").style.display = "block";
+    document.getElementById("archive").style.display = "block";
     document.getElementById("home").style.display = "block";
     document.getElementById("oil").style.display = "block";
 
@@ -220,7 +218,8 @@ async function applyPermissions() {
 
   if (role === "flour") {
     document.getElementById("menu_flour").style.display = "block";
-
+    document.getElementById("menu_archive").style.display = "block";
+    document.getElementById("archive").style.display = "block";
     document.getElementById("home").style.display = "block";
     document.getElementById("flour").style.display = "block";
 
@@ -249,7 +248,8 @@ async function applyPermissions() {
 
   if (role === "feed") {
     document.getElementById("menu_feed").style.display = "block";
-
+    document.getElementById("menu_archive").style.display = "block";
+    document.getElementById("archive").style.display = "block";
     document.getElementById("home").style.display = "block";
     document.getElementById("feed").style.display = "block";
 
@@ -280,17 +280,13 @@ async function applyPermissions() {
     console.log("ROLE WATERFILTRATION");
 
     console.log(document.getElementById("waterfiltration"));
-
     document.getElementById("home").style.display = "block";
-
     document.getElementById("waterfiltration").style.display = "block";
-
     document.getElementById("salesMarketing").style.display = "none";
-
+    document.getElementById("menu_archive").style.display = "block";
+    document.getElementById("archive").style.display = "block";
     document.getElementById("menu_waterfiltration").style.display = "block";
-
     document.getElementById("darkModeBtn").style.display = "inline-block";
-
     document.querySelector("button[onclick='window.print()']").style.display =
       "inline-block";
 
