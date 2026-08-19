@@ -2944,85 +2944,6 @@ text-decoration:none;
 
 </details>
 
-            <!-- موقف وأرصدة المنتج النهائي -->
-
-            <details open>
-
-                <summary>ارصدة المنتج النهائي</summary>
-
-                <div class="details-content">
-
-                    <br>
-
-                    <!-- زيت الأولين والنخيل -->
-
-                    <details open>
-
-                        <summary>زيت الأولين والنخيل</summary>
-
-                        <div class="details-content">
-
-                            <table>
-
-                                <tr>
-                                    <th>الحجم</th>
-                                    <th>الأولين (طن)</th>
-                                    <th>النخيل (طن)</th>
-                                </tr>
-
-                                <tr>
-                                    <td>5 لتر</td>
-                                    <td><input id="olein_5l_stock" data-save step="any"></td>
-                                    <td><input id="palm_5l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>6 لتر</td>
-                                    <td>-</td>
-                                    <td><input id="palm_6l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>10 لتر</td>
-                                    <td><input id="olein_10l_stock" data-save step="any"></td>
-                                    <td><input id="palm_10l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>12 لتر</td>
-                                    <td>-</td>
-                                    <td><input id="palm_12l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>14 لتر</td>
-                                    <td>-</td>
-                                    <td><input id="palm_14l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>18 لتر</td>
-                                    <td><input id="olein_18l_stock" data-save step="any"></td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>20 لتر</td>
-                                    <td><input id="olein_20l_stock" data-save step="any"></td>
-                                    <td><input id="palm_20l_stock" data-save step="any"></td>
-                                </tr>
-                                <tr>
-                                    <td>20 كغم</td>
-                                    <td><input id="olein_20kg_stock" data-save step="any"></td>
-                                    <td>-</td>
-                                </tr>
-
-                            </table>
-
-                        </div>
-
-                    </details>
-
-                    <br>
-
-                </div>
-
-            </details>
-
             <details open>
 
                <summary>موقف خطوط التعبئة</summary>
@@ -6049,23 +5970,23 @@ updatePalmStockTotal();
 
                 let total = 0;
 
-                total += parseFloat(document.getElementById("olein_sales_750")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_900")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_1l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_18l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_5l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_6l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_10l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_12l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_14l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_18l_big")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_20l")?.value) || 0;
-                total += parseFloat(document.getElementById("olein_sales_20kg")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_750")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_900")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_1l")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_18l")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_5l")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_6l")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_10l")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_12l")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_14l")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_18l_big")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_20l")?.value) || 0;
+                total += parseFloat(document.getElementById("sales_olein_20kg")?.value) || 0;
 
-                document.getElementById("olein_sales_total").value =
+                document.getElementById("sales_olein_total").value =
                     total.toFixed(2);
 
-                saveSalesField("olein_sales_total", "oil");
+                saveSalesField("sales_olein_total", "oil");
             }
 
             function updateShorteningSalesTotal() {
@@ -6588,6 +6509,478 @@ if (showMessage) {
 }
 
             }
+
+/* =========================================================
+   الاعتماد الفرعي
+========================================================= */
+
+async function approveSubsection(
+    subsection,
+    fields,
+    showMessage = true,
+    reload = true
+) {
+
+    console.log(
+        "approveSubsection START:",
+        subsection
+    );
+
+
+    /* =========================
+       المستخدم الحالي
+    ========================= */
+
+    const {
+        data: { user },
+        error: authError
+    } = await supabaseClient.auth.getUser();
+
+
+    if (authError || !user) {
+
+        showNotification(
+            "يجب تسجيل الدخول أولاً",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       تاريخ التقرير
+    ========================= */
+
+    const reportDate =
+        document.getElementById(
+            "reportDateKey"
+        )?.value;
+
+
+    if (!reportDate) {
+
+        showNotification(
+            "لم يتم تحديد تاريخ التقرير",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       أسماء الأقسام
+    ========================= */
+
+    const subsectionNames = {
+
+        feed_production:
+            "إنتاج الأعلاف",
+
+        feed_sales:
+            "مبيعات الأعلاف",
+
+        feed_premix:
+            "إنتاج البريمكس",
+
+        oil_production:
+            "إنتاج الزيت",
+
+        oil_sales:
+            "مبيعات الزيت"
+
+    };
+
+
+    const subsectionName =
+        subsectionNames[subsection] ||
+        "القسم الفرعي";
+
+
+    /* =========================
+       التحقق من الحقول
+    ========================= */
+
+    if (
+        !Array.isArray(fields) ||
+        fields.length === 0
+    ) {
+
+        showNotification(
+            "لم يتم تحديد بيانات القسم الفرعي",
+            "error"
+        );
+
+        return;
+    }
+
+
+    let historyRows = [];
+    let reportRows = [];
+
+
+    /* =========================
+       جمع البيانات
+    ========================= */
+
+    fields.forEach(fieldId => {
+
+        const el =
+            document.getElementById(fieldId);
+
+
+        if (!el) {
+
+            console.warn(
+                "SUBSECTION FIELD NOT FOUND:",
+                fieldId
+            );
+
+            return;
+        }
+
+
+        historyRows.push({
+
+            field_name:
+                el.id,
+
+            field_value:
+                el.value || "",
+
+            updated_by:
+                user.email,
+
+            factory:
+                subsection,
+
+            updated_at:
+                new Date().toISOString()
+
+        });
+
+
+        reportRows.push({
+
+            report_date:
+                reportDate,
+
+            factory:
+                subsection,
+
+            field_name:
+                el.id,
+
+            field_value:
+                el.value || "",
+
+            updated_by:
+                user.email,
+
+            updated_at:
+                new Date().toISOString()
+
+        });
+
+    });
+
+
+    /* =========================
+       تنظيف الصفوف المكررة
+    ========================= */
+
+    const uniqueRows = [
+
+        ...new Map(
+
+            reportRows.map(row => [
+
+                `${row.report_date}|${row.factory}|${row.field_name}`,
+
+                row
+
+            ])
+
+        ).values()
+
+    ];
+
+
+    console.log(
+        "SUBSECTION REPORT ROWS:",
+        reportRows.length
+    );
+
+    console.log(
+        "SUBSECTION UNIQUE ROWS:",
+        uniqueRows.length
+    );
+
+
+    /* =========================
+       حفظ التقرير
+    ========================= */
+
+    if (uniqueRows.length) {
+
+        const {
+            error: reportError
+        } =
+            await supabaseClient
+                .from("daily_reports")
+                .upsert(
+                    uniqueRows,
+                    {
+                        onConflict:
+                            "report_date,factory,field_name"
+                    }
+                );
+
+
+        if (reportError) {
+
+            console.error(
+                "SUBSECTION DAILY REPORT ERROR:",
+                reportError
+            );
+
+            showNotification(
+                reportError.message,
+                "error"
+            );
+
+            return;
+        }
+    }
+
+
+    /* =========================
+       حفظ التاريخ
+    ========================= */
+
+    if (historyRows.length) {
+
+        const {
+            error: historyError
+        } =
+            await supabaseClient
+                .from("field_history")
+                .insert(historyRows);
+
+
+        if (historyError) {
+
+            console.error(
+                "SUBSECTION HISTORY ERROR:",
+                historyError
+            );
+
+            showNotification(
+                historyError.message,
+                "error"
+            );
+
+            return;
+        }
+    }
+
+
+    /* =========================
+       تسجيل الاعتماد
+    ========================= */
+
+    const {
+        error: approvalError
+    } =
+        await supabaseClient
+            .from("section_approvals")
+            .insert([{
+
+                report_date:
+                    reportDate,
+
+                section_name:
+                    subsection,
+
+                approved_by:
+                    user.email
+
+            }]);
+
+
+    if (approvalError) {
+
+        console.error(
+            "SUBSECTION APPROVAL ERROR:",
+            approvalError
+        );
+
+        showNotification(
+            approvalError.message ||
+            "فشل اعتماد القسم الفرعي",
+
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       تحويل الزر
+    ========================= */
+
+    const btn =
+        document.querySelector(
+            `[data-subsection-approval="${subsection}"]`
+        );
+
+
+    if (btn) {
+
+        btn.style.background =
+            "#28a745";
+
+        btn.innerHTML =
+            "✅ تم اعتماد " +
+            subsectionName;
+
+        btn.disabled = true;
+
+        btn.style.cursor =
+            "default";
+
+        btn.style.opacity =
+            "0.9";
+
+    }
+
+
+    /* =========================
+       إعادة تحميل التقرير
+    ========================= */
+
+    if (reload) {
+
+        await loadDailyReport();
+
+    }
+
+
+    /* =========================
+       رسالة النجاح
+    ========================= */
+
+    if (showMessage) {
+
+        showNotification(
+            `تم اعتماد ${subsectionName} بنجاح`,
+            "success"
+        );
+
+    }
+
+
+    console.log(
+        "approveSubsection SUCCESS:",
+        subsection
+    );
+
+}
+
+/* =========================================================
+   إنشاء زر اعتماد القسم الفرعي
+========================================================= */
+
+function createSubsectionApprovalButton(
+    subsection,
+    text,
+    fields,
+    container
+) {
+
+    if (!container) {
+
+        console.warn(
+            "SUBSECTION CONTAINER NOT FOUND:",
+            subsection
+        );
+
+        return;
+    }
+
+
+    /* منع إنشاء الزر مرتين */
+
+    if (
+        container.querySelector(
+            `[data-subsection-approval="${subsection}"]`
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const button =
+        document.createElement("button");
+
+
+    button.type =
+        "button";
+
+
+    button.dataset.subsectionApproval =
+        subsection;
+
+
+    button.innerHTML =
+        "✅ " + text;
+
+
+    button.style.marginTop =
+        "15px";
+
+    button.style.padding =
+        "10px 20px";
+
+    button.style.border =
+        "none";
+
+    button.style.borderRadius =
+        "8px";
+
+    button.style.background =
+        "#3b9b5f";
+
+    button.style.color =
+        "white";
+
+    button.style.cursor =
+        "pointer";
+
+    button.style.fontWeight =
+        "bold";
+
+
+    button.onclick = function () {
+
+        approveSubsection(
+            subsection,
+            fields
+        );
+
+    };
+
+
+    container.appendChild(
+        button
+    );
+
+}
+
              async function approvePowerSection() {
 
     await approveSection(

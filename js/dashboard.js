@@ -19,6 +19,294 @@ async function showCurrentUser() {
     "👤 " + data.name + " | " + data.role;
 }
 
+function applySubsectionPermissions(role, subsection) {
+  console.log("SUBSECTION PERMISSIONS:", role, subsection);
+
+  const feedSection = document.getElementById("feed");
+
+  const oilSection = document.getElementById("oil");
+
+  const salesMarketing = document.getElementById("salesMarketing");
+
+  const salesSection = document.getElementById("salesSection");
+
+  const feedSales = document.getElementById("sales_feed");
+
+  const oilSales = document.getElementById("sales_oil");
+
+  /* =====================================================
+       الحسابات الفرعية للأعلاف
+    ===================================================== */
+
+  if (role === "feed") {
+    /* -------------------------------------------------
+           إنتاج الأعلاف
+        ------------------------------------------------- */
+
+    if (subsection === "production") {
+      if (!feedSection) return;
+
+      feedSection.style.display = "block";
+
+      feedSection.querySelectorAll("details").forEach((detail) => {
+        detail.style.display = "none";
+      });
+
+      const allowedSections = [
+        "أرصدة المواد الخام",
+
+        "إنتاج خطوط الأعلاف",
+
+        "العلف المرتجع",
+
+        "استهلاك المواد الخام",
+
+        "الملاحظات العامة",
+      ];
+
+      feedSection.querySelectorAll("details").forEach((detail) => {
+        const summary = detail.querySelector("summary");
+
+        if (!summary) return;
+
+        if (allowedSections.includes(summary.textContent.trim())) {
+          detail.style.display = "block";
+        }
+      });
+
+      return;
+    }
+
+    /* -------------------------------------------------
+           البريمكس
+        ------------------------------------------------- */
+
+    if (subsection === "premix") {
+      if (!feedSection) return;
+
+      feedSection.style.display = "block";
+
+      feedSection.querySelectorAll("details").forEach((detail) => {
+        detail.style.display = "none";
+      });
+
+      feedSection.querySelectorAll("details").forEach((detail) => {
+        const summary = detail.querySelector("summary");
+
+        if (!summary) return;
+
+        if (summary.textContent.trim() === "إنتاج مصنع البريمكس") {
+          detail.style.display = "block";
+        }
+      });
+
+      return;
+    }
+
+    /* -------------------------------------------------
+           مبيعات الأعلاف
+        ------------------------------------------------- */
+
+    if (subsection === "sales") {
+      /*
+       * إخفاء مصنع الأعلاف بالكامل
+       */
+
+      if (feedSection) {
+        feedSection.style.display = "none";
+
+        feedSection.querySelectorAll("details").forEach((detail) => {
+          detail.style.display = "none";
+        });
+      }
+
+      /*
+       * إخفاء قسم المبيعات بالكامل أولاً
+       */
+
+      if (salesMarketing) {
+        salesMarketing.style.display = "none";
+      }
+
+      if (salesSection) {
+        salesSection.style.display = "none";
+      }
+
+      /*
+       * إخفاء جميع أقسام المبيعات
+       */
+
+      document
+        .querySelectorAll("#salesMarketing > details details")
+        .forEach((detail) => {
+          detail.style.display = "none";
+        });
+
+      /*
+       * إظهار قسم المبيعات الرئيسي
+       */
+
+      if (salesMarketing) {
+        salesMarketing.style.display = "block";
+      }
+
+      if (salesSection) {
+        salesSection.style.display = "block";
+      }
+
+      /*
+       * إظهار مبيعات الأعلاف فقط
+       */
+
+      if (feedSales) {
+        feedSales.style.display = "block";
+      }
+
+      /*
+       * إخفاء بقية أقسام المبيعات
+       */
+
+      const salesSugar = document.getElementById("sales_sugar");
+
+      const salesOil = document.getElementById("sales_oil");
+
+      const salesFlour = document.getElementById("sales_flour");
+
+      if (salesSugar) salesSugar.style.display = "none";
+
+      if (salesOil) salesOil.style.display = "none";
+
+      if (salesFlour) salesFlour.style.display = "none";
+
+      return;
+    }
+  }
+
+  /* =====================================================
+       الحسابات الفرعية للزيت
+    ===================================================== */
+
+  if (role === "oil") {
+    /* -------------------------------------------------
+           إنتاج الزيت
+        ------------------------------------------------- */
+
+    if (subsection === "production") {
+      if (!oilSection) return;
+
+      oilSection.style.display = "block";
+
+      oilSection.querySelectorAll("details").forEach((detail) => {
+        detail.style.display = "none";
+      });
+
+      const allowedSections = [
+        "أرصدة الزيوت الخام",
+
+        "إنتاج خطوط التكرير",
+
+        "موقف وأرصدة المنتج النهائي",
+
+        "موقف محطة الفصل",
+      ];
+
+      oilSection.querySelectorAll("details").forEach((detail) => {
+        const summary = detail.querySelector("summary");
+
+        if (!summary) return;
+
+        if (allowedSections.includes(summary.textContent.trim())) {
+          detail.style.display = "block";
+        }
+      });
+
+      return;
+    }
+
+    /* -------------------------------------------------
+       مبيعات الزيت
+------------------------------------------------- */
+
+    if (subsection === "sales") {
+      /*
+       * 1️⃣ إخفاء مصنع الزيت بالكامل أولاً
+       */
+      if (oilSection) {
+        oilSection.style.display = "none";
+
+        oilSection.querySelectorAll("details").forEach((detail) => {
+          detail.style.display = "none";
+        });
+      }
+
+      /*
+       * 2️⃣ إظهار قسم المبيعات والتسويق
+       */
+      if (salesMarketing) {
+        salesMarketing.style.display = "block";
+      }
+
+      if (salesSection) {
+        salesSection.style.display = "block";
+      }
+
+      /*
+       * 3️⃣ إخفاء جميع أقسام المبيعات
+       */
+      const salesSugar = document.getElementById("sales_sugar");
+      const salesFlour = document.getElementById("sales_flour");
+      const salesFeed = document.getElementById("sales_feed");
+
+      if (salesSugar) salesSugar.style.display = "none";
+
+      if (salesFlour) salesFlour.style.display = "none";
+
+      if (salesFeed) salesFeed.style.display = "none";
+
+      /*
+       * 4️⃣ إظهار مبيعات الزيت فقط
+       */
+      if (oilSales) {
+        oilSales.style.display = "block";
+      }
+
+      /*
+       * =================================================
+       * 5️⃣ إظهار أجزاء معينة من مصنع الزيت
+       * =================================================
+       */
+
+      if (oilSection) {
+        oilSection.style.display = "block";
+
+        oilSection.querySelectorAll("details").forEach((detail) => {
+          const summary = detail.querySelector(":scope > summary");
+
+          if (!summary) return;
+
+          const title = summary.textContent.trim();
+
+          /*
+           * موقف خطوط التعبئة
+           */
+          if (title === "موقف خطوط التعبئة") {
+            detail.style.display = "block";
+          }
+
+          /*
+           * تقرير مصنع اللدائن
+           */
+          if (title === "تقرير مصنع اللدائن") {
+            detail.style.display = "block";
+          }
+        });
+      }
+
+      return;
+    }
+  }
+}
+
 async function applyPermissions() {
   console.log("applyPermissions started");
 
@@ -49,8 +337,13 @@ async function applyPermissions() {
   }
 
   const role = data.role;
+  const subsection = data.subsection || null;
 
   window.currentUserRole = role;
+  window.currentUserSubsection = subsection;
+
+  console.log("ROLE =", role);
+  console.log("SUBSECTION =", subsection);
 
   console.log("ROLE FROM DATABASE =", JSON.stringify(role));
   const adminTools = document.getElementById("adminTools");
@@ -89,6 +382,31 @@ async function applyPermissions() {
   buttons.forEach((btn) => {
     btn.style.display = "inline-block";
   });
+
+  /* =========================================
+   الحسابات الفرعية
+   لا تؤثر على الحسابات الرئيسية
+========================================= */
+
+  if (subsection && (role === "feed" || role === "oil")) {
+    // الحساب الفرعي يرى الأرشيف
+    document.getElementById("menu_archive").style.display = "block";
+    document.getElementById("archive").style.display = "block";
+
+    // الصفحة الرئيسية
+    document.getElementById("home").style.display = "block";
+
+    // إظهار مصنعه فقط
+    document.getElementById(role).style.display = "block";
+    document.getElementById("menu_sales_marketing").style.display = "none";
+
+    // تطبيق الصلاحيات التفصيلية
+    applySubsectionPermissions(role, subsection);
+
+    console.log("SUBSECTION MODE ACTIVE:", role, subsection);
+
+    return;
+  }
 
   if (role === "power") {
     document.getElementById("salesMarketing").style.display = "none";
