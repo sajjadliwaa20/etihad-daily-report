@@ -2206,3 +2206,136 @@ body.dark-mode details summary {
     min-width: 105px;
   }
 }
+
+#premix1_prod {
+  width: 120px;
+  max-width: 120px;
+  box-sizing: border-box;
+}
+/* =========================================
+   ETIHAD DAILY REPORT - SPLASH TITLE
+========================================= */
+
+#splashScreen h2 {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px;
+
+  margin-top: 18px;
+
+  /* اللون المتحرك */
+  background: linear-gradient(
+    90deg,
+    #1d356d,
+    #2f7d68,
+    #1d356d,
+    #2f7d68,
+    #1d356d
+  ) !important;
+
+  background-size: 300% 100% !important;
+  background-position: 0% 50%;
+
+  /* مهم جدًا */
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+
+  animation:
+    splashTextColor 4s ease-in-out infinite,
+    splashTextAppear 1.2s ease-out;
+}
+
+/* =========================================
+   حركة تغير اللون
+========================================= */
+
+@keyframes splashTextColor {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* =========================================
+   حركة ظهور العنوان
+========================================= */
+
+@keyframes splashTextAppear {
+  0% {
+    opacity: 0;
+
+    transform: translateY(12px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+#splashScreen img {
+  animation:
+    splashLogoAppear 1.2s ease-out,
+    splashLogoGlow 2.5s ease-in-out 1.2s infinite;
+}
+
+@keyframes splashLogoAppear {
+  0% {
+    opacity: 0;
+
+    transform: scale(0.85);
+  }
+
+  60% {
+    opacity: 1;
+
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+}
+
+@keyframes splashLogoGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(29, 53, 109, 0));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 10px rgba(29, 53, 109, 0.25));
+  }
+}
+
+#splashScreen p {
+  font-size: 14px;
+
+  color: #777;
+
+  animation: splashLoading 1.5s ease-in-out infinite;
+}
+
+@keyframes splashLoading {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
