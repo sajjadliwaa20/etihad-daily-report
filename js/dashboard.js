@@ -307,6 +307,206 @@ function applySubsectionPermissions(role, subsection) {
   }
 }
 
+async function goToHomeByRole() {
+  console.log("🏠 GO HOME BY ROLE");
+
+  const role = window.currentUserRole;
+  const subsection = window.currentUserSubsection;
+
+  console.log("ROLE =", role);
+  console.log("SUBSECTION =", subsection);
+
+  if (!role) {
+    console.error("❌ currentUserRole غير موجود");
+    return;
+  }
+
+  /*
+   * ==========================================
+   * إخفاء جميع الأقسام أولاً
+   * ==========================================
+   */
+
+  document.querySelectorAll(".section").forEach((section) => {
+    section.style.display = "none";
+  });
+
+  /*
+   * ==========================================
+   * الرئيسية تظهر للجميع
+   * ==========================================
+   */
+
+  const home = document.getElementById("home");
+
+  if (home) {
+    home.style.display = "block";
+  }
+
+  /*
+   * ==========================================
+   * ADMIN
+   * ==========================================
+   */
+
+  if (role === "admin") {
+    showAllSections();
+
+    window.location.hash = "home";
+
+    return;
+  }
+
+  /*
+   * ==========================================
+   * EXECUTIVE
+   * ==========================================
+   */
+
+  if (role === "executive") {
+    showAllSections();
+
+    window.location.hash = "home";
+
+    return;
+  }
+
+  /*
+   * ==========================================
+   * POWER
+   * ==========================================
+   */
+
+  if (role === "power") {
+    const power = document.getElementById("powerstation");
+    const blackoil = document.getElementById("blackoil");
+
+    if (power) {
+      power.style.display = "block";
+    }
+
+    if (blackoil) {
+      blackoil.style.display = "block";
+    }
+
+    window.location.hash = "home";
+
+    return;
+  }
+
+  /*
+   * ==========================================
+   * SUGAR
+   * ==========================================
+   */
+
+  if (role === "sugar") {
+    const sugar = document.getElementById("sugar");
+
+    if (sugar) {
+      sugar.style.display = "block";
+    }
+
+    window.location.hash = "home";
+
+    return;
+  }
+
+  /*
+   * ==========================================
+   * FLOUR
+   * ==========================================
+   */
+
+  if (role === "flour") {
+    const flour = document.getElementById("flour");
+
+    if (flour) {
+      flour.style.display = "block";
+    }
+
+    window.location.hash = "home";
+
+    return;
+  }
+
+  /*
+   * ==========================================
+   * WATER FILTRATION
+   * ==========================================
+   */
+
+  if (role === "waterfiltration") {
+    const water = document.getElementById("waterfiltration");
+
+    if (water) {
+      water.style.display = "block";
+    }
+
+    window.location.hash = "home";
+
+    return;
+  }
+
+  /*
+   * ==========================================
+   * OIL
+   * ==========================================
+   */
+
+  if (role === "oil") {
+    const oil = document.getElementById("oil");
+
+    if (oil) {
+      oil.style.display = "block";
+    }
+
+    /*
+     * إذا كان الحساب فرعياً
+     * نعيد تطبيق صلاحيات الفرع
+     */
+
+    if (subsection) {
+      applySubsectionPermissions("oil", subsection);
+    }
+
+    window.location.hash = "home";
+
+    return;
+  }
+
+  /*
+   * ==========================================
+   * FEED
+   * ==========================================
+   */
+
+  if (role === "feed") {
+    const feed = document.getElementById("feed");
+
+    if (feed) {
+      feed.style.display = "block";
+    }
+
+    /*
+     * إذا كان الحساب فرعياً
+     * نعيد تطبيق صلاحيات الفرع
+     */
+
+    if (subsection) {
+      applySubsectionPermissions("feed", subsection);
+    }
+
+    window.location.hash = "home";
+
+    return;
+  }
+
+  console.warn("⚠️ لم يتم تعريف صلاحيات العودة للرئيسية لهذا الدور:", role);
+
+  window.location.hash = "home";
+}
+
 async function applyPermissions() {
   console.log("applyPermissions started");
 
