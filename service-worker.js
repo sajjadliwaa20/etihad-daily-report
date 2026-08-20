@@ -1,4 +1,4 @@
-const CACHE_NAME = "etihad-daily-v9.5.5";
+const CACHE_NAME = "etihad-daily-v9.5.6";
 
 const FILES_TO_CACHE = [
   "index.html",
