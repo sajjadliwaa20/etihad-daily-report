@@ -526,7 +526,7 @@ textarea {
 .dark-mode input:focus,
 .dark-mode textarea:focus,
 .dark-mode select:focus {
-  color: #ffffff !important;
+  color: #201d1d !important;
 }
 
 select {
@@ -2299,4 +2299,12 @@ body.dark-mode details summary {
   50% {
     opacity: 1;
   }
+}
+
+/* حقول استهلاك المواد الخام - مصنع الأعلاف */
+#feedRawConsumptionTable input {
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+  box-sizing: border-box;
 }
