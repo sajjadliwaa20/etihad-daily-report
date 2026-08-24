@@ -1124,8 +1124,10 @@ async function loadLateFieldsDashboard() {
   let latestFields = {};
 
   data.forEach((row) => {
-    if (!latestFields[row.field_name]) {
-      latestFields[row.field_name] = row;
+    const key = `${row.factory}::${row.field_name}`;
+
+    if (!latestFields[key]) {
+      latestFields[key] = row;
     }
   });
 
@@ -1336,3 +1338,261 @@ function toggleSeparationStation() {
 window.applyPermissions = applyPermissions;
 window.showCurrentUser = showCurrentUser;
 window.applyExecutiveMode = applyExecutiveMode;
+
+/* =========================================================
+   نظام متابعة تحديث الحقول
+   - يحتفظ بآخر قيمة معروفة
+   - يحتفظ بوقت آخر تغيير حقيقي
+   - يلوّن الحقل بعد 24 ساعة
+========================================================= */
+
+window.fieldLastSavedValues = window.fieldLastSavedValues || new Map();
+
+window.fieldLastUpdatedAt = window.fieldLastUpdatedAt || new Map();
+
+window.fieldFactoryById = window.fieldFactoryById || new Map();
+
+window.fieldHistoryTimers = window.fieldHistoryTimers || new Map();
+
+function fieldStateKey(factory, fieldId) {
+  return `${factory}::${fieldId}`;
+}
+
+/* القيمة التي سنستخدمها للمقارنة */
+function normalizeFieldValue(el) {
+  if (!el) return "";
+
+  const raw = String(el.value ?? "").trim();
+
+  /* الأرقام:
+       5 و 5.0 يعتبران نفس القيمة */
+  if (el.type === "number" && raw !== "") {
+    const numberValue = Number(raw);
+
+    if (Number.isFinite(numberValue)) {
+      return String(numberValue);
+    }
+  }
+
+  return raw;
+}
+
+/* تاريخ اليوم حسب الجهاز */
+function getTodayLocalDate() {
+  const now = new Date();
+
+  return (
+    now.getFullYear() +
+    "-" +
+    String(now.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(now.getDate()).padStart(2, "0")
+  );
+}
+
+/* هل الصفحة تعرض تقرير اليوم؟ */
+function isCurrentReportDate() {
+  const dateElement = document.getElementById("reportDateKey");
+
+  if (!dateElement) return false;
+
+  return dateElement.value === getTodayLocalDate();
+}
+
+/* تطبيق لون التأخير على حقل واحد */
+function updateFieldStaleStyle(el, factory) {
+  if (!el) return;
+
+  const key = fieldStateKey(factory, el.id);
+
+  /* لا نلوّن الأرشيف */
+  if (!isCurrentReportDate()) {
+    el.classList.remove("field-stale");
+
+    return;
+  }
+
+  const currentValue = normalizeFieldValue(el);
+
+  /* الحقل الفارغ ليس "قيمة قديمة" */
+  if (!currentValue) {
+    el.classList.remove("field-stale");
+
+    return;
+  }
+
+  const lastUpdated = window.fieldLastUpdatedAt.get(key);
+
+  /* لا يوجد تاريخ معروف */
+  if (!lastUpdated) {
+    el.classList.remove("field-stale");
+
+    return;
+  }
+
+  const lastUpdateTime = new Date(lastUpdated).getTime();
+
+  if (!Number.isFinite(lastUpdateTime)) {
+    el.classList.remove("field-stale");
+
+    return;
+  }
+
+  const age = Date.now() - lastUpdateTime;
+
+  const twentyFourHours = 24 * 60 * 60 * 1000;
+
+  if (age >= twentyFourHours) {
+    el.classList.add("field-stale");
+  } else {
+    el.classList.remove("field-stale");
+  }
+}
+
+/* تحديث كل الحقول الموجودة حاليًا */
+function refreshAllFieldStaleStyles() {
+  document.querySelectorAll("[data-save]").forEach((el) => {
+    const factory = window.fieldFactoryById.get(el.id);
+
+    if (!factory) return;
+
+    updateFieldStaleStyle(el, factory);
+  });
+}
+
+/* تحميل آخر تاريخ تحديث للحقول */
+async function loadFieldHistoryForFactory(factory, fieldIds) {
+  const ids = [...new Set(fieldIds.filter(Boolean))];
+
+  if (!ids.length) return;
+
+  let from = 0;
+
+  const pageSize = 1000;
+
+  const found = new Set();
+
+  while (true) {
+    const { data, error } = await supabaseClient
+      .from("field_history")
+      .select("field_name,field_value,updated_at")
+      .eq("factory", factory)
+      .in("field_name", ids)
+      .order("updated_at", { ascending: false })
+      .range(from, from + pageSize - 1);
+
+    if (error) {
+      console.error("FIELD HISTORY LOAD ERROR:", error);
+
+      return;
+    }
+
+    if (!data || !data.length) {
+      break;
+    }
+
+    data.forEach((row) => {
+      const key = fieldStateKey(factory, row.field_name);
+
+      /* بما أن النتائج مرتبة من الأحدث
+               إلى الأقدم، أول سجل هو الأحدث */
+      if (!window.fieldLastUpdatedAt.has(key)) {
+        window.fieldLastUpdatedAt.set(key, row.updated_at);
+
+        window.fieldLastSavedValues.set(
+          key,
+          String(row.field_value ?? "").trim(),
+        );
+
+        found.add(row.field_name);
+      }
+    });
+
+    /* إذا وجدنا آخر سجل لكل الحقول المطلوبة */
+    if (found.size >= ids.length) {
+      break;
+    }
+
+    if (data.length < pageSize) {
+      break;
+    }
+
+    from += pageSize;
+  }
+}
+
+/* تسجيل تغيير حقيقي */
+async function saveFieldHistoryIfChanged(fieldId, factory, value, email) {
+  const el = document.getElementById(fieldId);
+
+  if (!el) return;
+
+  const key = fieldStateKey(factory, fieldId);
+
+  const newValue = normalizeFieldValue(el);
+
+  const hasPrevious = window.fieldLastSavedValues.has(key);
+
+  const previousValue = window.fieldLastSavedValues.get(key);
+
+  /* لم تتغير القيمة */
+  if (hasPrevious && newValue === previousValue) {
+    updateFieldStaleStyle(el, factory);
+
+    return;
+  }
+
+  /* أول قيمة وهي فارغة:
+       لا نسجلها كتحديث */
+  if (!hasPrevious && !newValue) {
+    return;
+  }
+
+  const now = new Date().toISOString();
+
+  const { error } = await supabaseClient.from("field_history").insert([
+    {
+      field_name: fieldId,
+
+      field_value: el.value || "",
+
+      updated_by: email,
+
+      factory: factory,
+
+      updated_at: now,
+    },
+  ]);
+
+  if (error) {
+    console.error("FIELD HISTORY SAVE ERROR:", error);
+
+    return;
+  }
+
+  window.fieldLastSavedValues.set(key, newValue);
+
+  window.fieldLastUpdatedAt.set(key, now);
+
+  updateFieldStaleStyle(el, factory);
+}
+
+/* الحقول التي تحفظ مباشرة أثناء الكتابة */
+function scheduleFieldHistoryUpdate(fieldId, factory, value, email) {
+  const key = fieldStateKey(factory, fieldId);
+
+  if (window.fieldHistoryTimers.has(key)) {
+    clearTimeout(window.fieldHistoryTimers.get(key));
+  }
+
+  const timer = setTimeout(async () => {
+    await saveFieldHistoryIfChanged(fieldId, factory, value, email);
+
+    window.fieldHistoryTimers.delete(key);
+  }, 800);
+
+  window.fieldHistoryTimers.set(key, timer);
+}
+
+/* يبدأ فحص الحقول كل دقيقة */
+setInterval(refreshAllFieldStaleStyles, 60 * 1000);

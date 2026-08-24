@@ -2308,3 +2308,21 @@ body.dark-mode details summary {
   max-width: 90px;
   box-sizing: border-box;
 }
+
+/* =========================================
+   الحقل الذي لم يتم تحديثه منذ 24 ساعة
+========================================= */
+
+.field-stale {
+  background: #ffe0e0 !important;
+  border-color: #e06161 !important;
+  color: #7a1f1f !important;
+  box-shadow: 0 0 0 2px rgba(217, 107, 107, 0.12) !important;
+}
+
+.field-stale {
+  background-color: #ffd6d6 !important;
+  border: 2px solid #dc3545 !important;
+  color: #721c24 !important;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.12);
+}

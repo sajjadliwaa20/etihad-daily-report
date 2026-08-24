@@ -571,240 +571,6 @@ saveSalesField('shortening_sales_20kg','oil');
                             </div>
 
                           <div class="details-content">
-
-    <table>
-
-        <tr>
-            <th colspan="3">
-                مبيعات وأرصدة السمنة (طن)
-            </th>
-        </tr>
-
-    </table>
-
-
-    <table>
-
-        <tr>
-
-            <th>الفئة</th>
-
-            <th>المبيعات (طن)</th>
-
-            <th>الرصيد (طن)</th>
-
-        </tr>
-
-
-        <!-- 5 لتر -->
-
-        <tr>
-
-            <td>5 لتر</td>
-
-            <td>
-
-                <input
-                    id="GEA_sales_5l"
-                    data-save
-                    oninput="
-                        updateGEASalesTotal();
-                        saveSalesField('GEA_sales_5l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-            <td>
-
-                <input
-                    id="GEA_stock_5l"
-                    data-save
-                    oninput="
-                        updateGEAStockTotal();
-                        saveSalesField('GEA_stock_5l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-        </tr>
-
-
-        <!-- 6 لتر -->
-
-        <tr>
-
-            <td>6 لتر</td>
-
-            <td>
-
-                <input
-                    id="GEA_sales_6l"
-                    data-save
-                    oninput="
-                        updateGEASalesTotal();
-                        saveSalesField('GEA_sales_6l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-            <td>
-
-                <input
-                    id="GEA_stock_6l"
-                    data-save
-                    oninput="
-                        updateGEAStockTotal();
-                        saveSalesField('GEA_stock_6l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-        </tr>
-
-
-        <!-- 10 لتر -->
-
-        <tr>
-
-            <td>10 لتر</td>
-
-            <td>
-
-                <input
-                    id="GEA_sales_10l"
-                    data-save
-                    oninput="
-                        updateGEASalesTotal();
-                        saveSalesField('GEA_sales_10l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-            <td>
-
-                <input
-                    id="GEA_stock_10l"
-                    data-save
-                    oninput="
-                        updateGEAStockTotal();
-                        saveSalesField('GEA_stock_10l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-        </tr>
-
-
-        <!-- 12 لتر -->
-
-        <tr>
-
-            <td>12 لتر</td>
-
-            <td>
-
-                <input
-                    id="GEA_sales_12l"
-                    data-save
-                    oninput="
-                        updateGEASalesTotal();
-                        saveSalesField('GEA_sales_12l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-            <td>
-
-                <input
-                    id="GEA_stock_12l"
-                    data-save
-                    oninput="
-                        updateGEAStockTotal();
-                        saveSalesField('GEA_stock_12l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-        </tr>
-
-
-        <!-- 14 لتر -->
-
-        <tr>
-
-            <td>14 لتر</td>
-
-            <td>
-
-                <input
-                    id="GEA_sales_14l"
-                    data-save
-                    oninput="
-                        updateGEASalesTotal();
-                        saveSalesField('GEA_sales_14l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-            <td>
-
-                <input
-                    id="GEA_stock_14l"
-                    data-save
-                    oninput="
-                        updateGEAStockTotal();
-                        saveSalesField('GEA_stock_14l','oil');
-                    "
-                    step="any">
-
-            </td>
-
-        </tr>
-
-
-        <!-- المجموع -->
-
-        <tr>
-
-            <td>
-                <b>المجموع</b>
-            </td>
-
-
-            <td>
-
-                <input
-                    id="GEA_sales_total"
-                    readonly>
-
-            </td>
-
-
-            <td>
-
-                <input
-                    id="GEA_stock_total"
-                    readonly>
-
-            </td>
-
-        </tr>
-
-
-    </table>
-
-</div>
-
-                          <div class="details-content">
       <table>
                                     <tr>
                                         <th colspan="1">
@@ -5128,7 +4894,7 @@ text-decoration:none;
                         data-save
                         style="
                             width:100%;
-                            min-height:120px;
+                            min-height:100px;
                             resize:vertical;
                         "
                     ></textarea>
@@ -6753,36 +6519,99 @@ function showAllSections() {
                 }
 
                 let historyRows = [];
-                let reportRows = [];
+let reportRows = [];
 
-                /* بيانات القسم */
+const now =
+    new Date().toISOString();
 
-                sectionElement
-                    .querySelectorAll("[data-save]")
-                    .forEach(el => {
 
-                        historyRows.push({
+/* =========================
+   بيانات القسم
+========================= */
 
-                            field_name: el.id,
-                            field_value: el.value || "",
-                            updated_by: user.email,
-                            factory: section,
-                            updated_at: new Date().toISOString()
+sectionElement
+    .querySelectorAll("[data-save]")
+    .forEach(el => {
 
-                        });
+        const key =
+            fieldStateKey(
+                section,
+                el.id
+            );
 
-                        reportRows.push({
+        const currentValue =
+            normalizeFieldValue(el);
 
-                            report_date: reportDate,
-                            factory: section,
-                            field_name: el.id,
-                            field_value: el.value || "",
-                            updated_by: user.email,
-                            updated_at: new Date().toISOString()
+        const hasPrevious =
+            window.fieldLastSavedValues.has(
+                key
+            );
 
-                        });
+        const previousValue =
+            window.fieldLastSavedValues.get(
+                key
+            );
 
-                    });
+
+        /* =========================
+           حفظ التقرير اليومي
+           يحصل لكل الحقول
+        ========================= */
+
+        reportRows.push({
+
+            report_date:
+                reportDate,
+
+            factory:
+                section,
+
+            field_name:
+                el.id,
+
+            field_value:
+                el.value || "",
+
+            updated_by:
+                user.email,
+
+            updated_at:
+                now
+        });
+
+
+        /* =========================
+           التاريخ:
+           فقط إذا تغيرت القيمة فعليًا
+        ========================= */
+
+        const valueChanged =
+            hasPrevious
+                ? currentValue !== previousValue
+                : currentValue !== "";
+
+
+        if (valueChanged) {
+
+            historyRows.push({
+
+                field_name:
+                    el.id,
+
+                field_value:
+                    el.value || "",
+
+                updated_by:
+                    user.email,
+
+                factory:
+                    section,
+
+                updated_at:
+                    now
+            });
+        }
+    });
 
        /* =========================
    تنظيف الصفوف المكررة
@@ -6847,12 +6676,64 @@ if (uniqueRows.length) {
 
                 if (historyRows.length) {
 
-                    await supabaseClient
-                        .from("field_history")
-                        .insert(historyRows);
+    const {
+        error: historyError
+    } = await supabaseClient
+        .from("field_history")
+        .insert(historyRows);
 
-                }
+    if (historyError) {
 
+        console.error(
+            "FIELD HISTORY ERROR:",
+            historyError
+        );
+
+        showNotification(
+            historyError.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* تحديث حالة الحقول محليًا */
+
+    historyRows.forEach(row => {
+
+        const key =
+            fieldStateKey(
+                section,
+                row.field_name
+            );
+
+        window.fieldLastSavedValues.set(
+            key,
+            String(
+                row.field_value ?? ""
+            ).trim()
+        );
+
+        window.fieldLastUpdatedAt.set(
+            key,
+            row.updated_at
+        );
+
+        const element =
+            document.getElementById(
+                row.field_name
+            );
+
+        if (element) {
+
+            updateFieldStaleStyle(
+                element,
+                section
+            );
+        }
+    });
+}
 
                 /* اعتماد القسم */
 
@@ -7018,30 +6899,116 @@ async function approveSubsection(
     }
 
 
-    let historyRows = [];
-    let reportRows = [];
+  let historyRows = [];
+let reportRows = [];
+
+const now =
+    new Date().toISOString();
+
+
+/* =========================
+   جمع البيانات
+========================= */
+
+fields.forEach(fieldId => {
+
+    const el =
+        document.getElementById(fieldId);
+
+
+    if (!el) {
+
+        console.warn(
+            "SUBSECTION FIELD NOT FOUND:",
+            fieldId
+        );
+
+        return;
+    }
 
 
     /* =========================
-       جمع البيانات
+       القيمة الحالية
     ========================= */
 
-    fields.forEach(fieldId => {
-
-        const el =
-            document.getElementById(fieldId);
+    const currentValue =
+        normalizeFieldValue(el);
 
 
-        if (!el) {
+    /* =========================
+       مفتاح الحقل
+       مثال:
+       feed_sales::field_name
+    ========================= */
 
-            console.warn(
-                "SUBSECTION FIELD NOT FOUND:",
-                fieldId
-            );
+    const key =
+        fieldStateKey(
+            subsection,
+            fieldId
+        );
 
-            return;
-        }
 
+    /* =========================
+       القيمة السابقة
+    ========================= */
+
+    const hasPrevious =
+        window.fieldLastSavedValues.has(
+            key
+        );
+
+
+    const previousValue =
+        window.fieldLastSavedValues.get(
+            key
+        );
+
+
+    /* =========================
+       حفظ نسخة التقرير اليومية
+       
+       هذا يحصل دائمًا
+    ========================= */
+
+    reportRows.push({
+
+        report_date:
+            reportDate,
+
+        factory:
+            subsection,
+
+        field_name:
+            el.id,
+
+        field_value:
+            el.value || "",
+
+        updated_by:
+            user.email,
+
+        updated_at:
+            now
+
+    });
+
+
+    /* =========================
+       هل تغيرت القيمة فعليًا؟
+    ========================= */
+
+    const valueChanged =
+        hasPrevious
+            ? currentValue !== previousValue
+            : currentValue !== "";
+
+
+    /* =========================
+       إذا تغيرت القيمة فقط
+       نسجلها في field_history
+    ========================= */
+
+    if (valueChanged) {
 
         historyRows.push({
 
@@ -7058,34 +7025,13 @@ async function approveSubsection(
                 subsection,
 
             updated_at:
-                new Date().toISOString()
+                now
 
         });
 
+    }
 
-        reportRows.push({
-
-            report_date:
-                reportDate,
-
-            factory:
-                subsection,
-
-            field_name:
-                el.id,
-
-            field_value:
-                el.value || "",
-
-            updated_by:
-                user.email,
-
-            updated_at:
-                new Date().toISOString()
-
-        });
-
-    });
+});
 
 
     /* =========================
@@ -7156,36 +7102,83 @@ async function approveSubsection(
         }
     }
 
+    /* =========================
+   حفظ التاريخ
+========================= */
+
+if (historyRows.length) {
+
+    const {
+        error: historyError
+    } =
+        await supabaseClient
+            .from("field_history")
+            .insert(historyRows);
+
+
+    if (historyError) {
+
+        console.error(
+            "SUBSECTION HISTORY ERROR:",
+            historyError
+        );
+
+        showNotification(
+            historyError.message ||
+            "فشل حفظ تاريخ الحقول",
+
+            "error"
+        );
+
+        return;
+    }
+
 
     /* =========================
-       حفظ التاريخ
+       تحديث حالة الحقول محليًا
     ========================= */
 
-    if (historyRows.length) {
+    historyRows.forEach(row => {
 
-        const {
-            error: historyError
-        } =
-            await supabaseClient
-                .from("field_history")
-                .insert(historyRows);
-
-
-        if (historyError) {
-
-            console.error(
-                "SUBSECTION HISTORY ERROR:",
-                historyError
+        const key =
+            fieldStateKey(
+                subsection,
+                row.field_name
             );
 
-            showNotification(
-                historyError.message,
-                "error"
+
+        window.fieldLastSavedValues.set(
+            key,
+            String(
+                row.field_value ?? ""
+            ).trim()
+        );
+
+
+        window.fieldLastUpdatedAt.set(
+            key,
+            row.updated_at
+        );
+
+
+        const element =
+            document.getElementById(
+                row.field_name
             );
 
-            return;
+
+        if (element) {
+
+            updateFieldStaleStyle(
+                element,
+                subsection
+            );
+
         }
-    }
+
+    });
+
+}
 
 
     /* =========================
@@ -7434,44 +7427,232 @@ function createSubsectionApprovalButton(
      console.log("DEVICE:", navigator.userAgent);
     console.log("DATE ELEMENT:", dateElement);
     console.log("📅 Report Date:",reportDate);
-                const { data, error } =
-                    await supabaseClient
-                        .from("daily_reports")
-                        .select("*")
-                        .eq("report_date", reportDate)
-                        .eq("factory", factory);
+              const { data, error } =
+    await supabaseClient
+        .from("daily_reports")
+        .select("*")
+        .eq("report_date", reportDate)
+        .eq("factory", factory);
 
-                if (error) {
+if (error) {
 
-                    console.log(error);
+    console.log(error);
 
-                    return;
+    return;
+}
 
-                }
+const currentRows =
+    data || [];
 
-                if (!data) return;
 
-                data.forEach(row => {
+/* =========================================
+   الحقول الموجودة في هذا المصنع
+========================================= */
 
-                    let element =
-                        document.getElementById(row.field_name);
+const sectionElement =
+    document.getElementById(factory);
 
-                    console.log(
-                        "FIELD:",
-                        row.field_name,
-                        "FOUND:",
-                        element
-                    );
+const fieldIds =
+    sectionElement
+        ? [
+            ...sectionElement
+                .querySelectorAll("[data-save]")
+        ]
+            .map(el => el.id)
+            .filter(Boolean)
+        : [];
 
-                    if (!element) {
 
+/* تسجيل علاقة الحقل بالمصنع */
+fieldIds.forEach(fieldId => {
+
+    window.fieldFactoryById.set(
+        fieldId,
+        factory
+    );
+});
+
+
+/* =========================================
+   تحميل آخر تاريخ تحديث
+========================================= */
+
+await loadFieldHistoryForFactory(
+    factory,
+    fieldIds
+);
+
+
+/* =========================================
+   تحميل بيانات اليوم
+========================================= */
+
+const currentFieldNames =
+    new Set(
+        currentRows.map(
+            row => row.field_name
+        )
+    );
+
+
+/* =========================================
+   إذا كان هذا تقرير اليوم:
+   نكمل الحقول غير الموجودة من آخر قيمة
+========================================= */
+
+let inheritedRows = [];
+
+if (
+    reportDate ===
+    getTodayLocalDate()
+) {
+
+    const missingFieldIds =
+        fieldIds.filter(
+            id => !currentFieldNames.has(id)
+        );
+
+    if (missingFieldIds.length) {
+
+        const {
+            data: previousRows,
+            error: previousError
+        } = await supabaseClient
+            .from("daily_reports")
+            .select(
+                "field_name,field_value,report_date,updated_at"
+            )
+            .eq("factory", factory)
+            .lt(
+                "report_date",
+                reportDate
+            )
+            .in(
+                "field_name",
+                missingFieldIds
+            )
+            .order(
+                "report_date",
+                { ascending: false }
+            )
+            .order(
+                "updated_at",
+                { ascending: false }
+            )
+            .range(0, 999);
+
+        if (previousError) {
+
+            console.error(
+                "PREVIOUS VALUES LOAD ERROR:",
+                previousError
+            );
+
+        } else {
+
+            const found =
+                new Set();
+
+            (previousRows || [])
+                .forEach(row => {
+
+                    if (
+                        found.has(
+                            row.field_name
+                        )
+                    ) {
                         return;
                     }
 
-                    element.value =
-                        row.field_value;
+                    found.add(
+                        row.field_name
+                    );
 
+                    inheritedRows.push(row);
                 });
+        }
+    }
+}
+
+
+/* =========================================
+   دمج بيانات اليوم + القيم الموروثة
+========================================= */
+
+const rowsToApply = [
+    ...currentRows,
+    ...inheritedRows
+];
+
+
+rowsToApply.forEach(row => {
+
+    const element =
+        document.getElementById(
+            row.field_name
+        );
+
+    if (!element) return;
+
+    element.value =
+        row.field_value ?? "";
+
+    const key =
+        fieldStateKey(
+            factory,
+            row.field_name
+        );
+
+    /*
+       إذا كانت هذه أول مرة نرى الحقل
+       ولا توجد له قيمة محفوظة في الذاكرة
+    */
+    if (
+        !window.fieldLastSavedValues.has(key)
+    ) {
+
+        window.fieldLastSavedValues.set(
+            key,
+            normalizeFieldValue(element)
+        );
+    }
+
+    /*
+       fallback احتياطي:
+       إذا لم يوجد field_history
+       نستخدم updated_at من daily_reports
+    */
+    if (
+        !window.fieldLastUpdatedAt.has(key) &&
+        row.updated_at
+    ) {
+
+        window.fieldLastUpdatedAt.set(
+            key,
+            row.updated_at
+        );
+    }
+});
+
+
+/* تحديث ألوان الحقول */
+refreshAllFieldStaleStyles();
+
+
+/* الحسابات الموجودة أصلًا */
+recalculateAll();
+
+toggleSeparationStation();
+
+
+if (factory === "oil") {
+
+    updateOleinSalesTotal();
+    updateOleinStockTotal();
+    updatePalmSalesTotal();
+    updatePalmStockTotal();
+}
+
 
                recalculateAll();
 
@@ -8100,11 +8281,64 @@ console.log("Realtime variable created");
     realtimeChannel = supabaseClient
         .channel("live-updates")
                     .on('postgres_changes',
-                        { event: '*', schema: 'public', table: 'field_history' },
+                        { event: '*', 
+                        schema: 'public', 
+                        table: 'field_history' 
+                    },
                         payload => {
-                            console.log("FIELD HISTORY UPDATE", payload);
-                            loadLateFieldsDashboard();
-                        })
+
+    console.log(
+        "FIELD HISTORY UPDATE",
+        payload
+    );
+
+
+    const row =
+        payload.new;
+
+    if (row) {
+
+        const key =
+            fieldStateKey(
+                row.factory,
+                row.field_name
+            );
+
+
+        window.fieldLastSavedValues.set(
+            key,
+            String(
+                row.field_value ?? ""
+            ).trim()
+        );
+
+
+        window.fieldLastUpdatedAt.set(
+            key,
+            row.updated_at
+        );
+
+
+        const element =
+            document.getElementById(
+                row.field_name
+            );
+
+
+        if (element) {
+
+            updateFieldStaleStyle(
+                element,
+                row.factory
+            );
+        }
+    }
+
+
+    /* يبقى نظام لوحة الأدمن القديم كما هو */
+    loadLateFieldsDashboard();
+}
+                    )
                     .on('postgres_changes',
                         { event: '*', schema: 'public', table: 'section_approvals' },
                         async payload => {
@@ -8136,6 +8370,15 @@ console.log("Realtime variable created");
                             let element = document.getElementById(row.field_name);
                             if (element) {
                                 element.value = row.field_value;
+                                const factory =
+    window.fieldFactoryById.get(row.field_name);
+
+if (factory) {
+    updateFieldStaleStyle(
+        element,
+        factory
+    );
+}
                             }
 
                             // إعادة حساب المجاميع بعد وصول البيانات 
@@ -8581,51 +8824,100 @@ if (btn) {
 
         <script>
 
-            async function saveSalesField(fieldId, factory) {
+          async function saveSalesField(
+    fieldId,
+    factory
+) {
 
-                if (document.activeElement.id !== fieldId) {
-                    return;
+    if (
+        document.activeElement.id !== fieldId
+    ) {
+        return;
+    }
+
+    const reportDate =
+        document.getElementById(
+            "reportDateKey"
+        ).value;
+
+    if (!reportDate) return;
+
+
+    const field =
+        document.getElementById(fieldId);
+
+    if (!field) return;
+
+
+    const value =
+        field.value;
+
+
+    const {
+        data: { user }
+    } =
+        await supabaseClient.auth.getUser();
+
+    if (!user) return;
+
+
+    /* =========================
+       حفظ التقرير اليومي
+       كما كان سابقًا
+    ========================= */
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("daily_reports")
+            .upsert(
+                {
+                    report_date:
+                        reportDate,
+
+                    factory:
+                        factory,
+
+                    field_name:
+                        fieldId,
+
+                    field_value:
+                        value,
+
+                    updated_by:
+                        user.email,
+
+                    updated_at:
+                        new Date().toISOString()
+                },
+                {
+                    onConflict:
+                        "report_date,factory,field_name"
                 }
+            );
 
-                const reportDate =
-                    document.getElementById("reportDateKey").value;
 
-                if (!reportDate) return;
+    if (error) {
 
-                const field =
-                    document.getElementById(fieldId);
+        console.error(error);
 
-                if (!field) return;
+        return;
+    }
 
-                const value = field.value;
 
-                const {
-                    data: { user }
-                } = await supabaseClient.auth.getUser();
+    /* =========================
+       لا نسجل history مع كل ضغطة
+       ننتظر توقف الكتابة
+    ========================= */
 
-                if (!user) return;
-
-                const { error } =
-                    await supabaseClient
-                        .from("daily_reports")
-                        .upsert(
-                            {
-                                report_date: reportDate,
-                                factory: factory,
-                                field_name: fieldId,
-                                field_value: value,
-                                updated_by: user.email,
-                                updated_at: new Date().toISOString()
-                            },
-                            {
-                                onConflict: "report_date,factory,field_name"
-                            });
-
-                if (error) {
-                    console.error(error);
-                }
-
-            }
+    scheduleFieldHistoryUpdate(
+        fieldId,
+        factory,
+        value,
+        user.email
+    );
+}
         </script>
 
        <script src="js/pwa.js"></script>
