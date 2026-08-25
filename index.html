@@ -6219,19 +6219,49 @@ function updateOleinStockTotal() {
 
             function updateGEASalesTotal() {
 
-                let total = 0;
+    const totalElement =
+        document.getElementById("GEA_sales_total");
 
-                total += parseFloat(document.getElementById("GEA_sales_5l")?.value || 0);
-                total += parseFloat(document.getElementById("GEA_sales_6l")?.value || 0);
-                total += parseFloat(document.getElementById("GEA_sales_10l")?.value || 0);
-                total += parseFloat(document.getElementById("GEA_sales_12l")?.value || 0);
-                total += parseFloat(document.getElementById("GEA_sales_14l")?.value || 0);
+    /* إذا لم يكن قسم GEA موجودًا في الصفحة */
+    if (!totalElement) {
+        return;
+    }
 
-                document.getElementById("GEA_sales_total").value =
-                    total.toFixed(2);
+    let total = 0;
 
-                saveSalesField("GEA_sales_total", "oil");
-            }
+    total +=
+        parseFloat(
+            document.getElementById("GEA_sales_5l")?.value || 0
+        );
+
+    total +=
+        parseFloat(
+            document.getElementById("GEA_sales_6l")?.value || 0
+        );
+
+    total +=
+        parseFloat(
+            document.getElementById("GEA_sales_10l")?.value || 0
+        );
+
+    total +=
+        parseFloat(
+            document.getElementById("GEA_sales_12l")?.value || 0
+        );
+
+    total +=
+        parseFloat(
+            document.getElementById("GEA_sales_14l")?.value || 0
+        );
+
+    totalElement.value =
+        total.toFixed(2);
+
+    saveSalesField(
+        "GEA_sales_total",
+        "oil"
+    );
+}
 
             function updateGEAStockTotal() {
 
