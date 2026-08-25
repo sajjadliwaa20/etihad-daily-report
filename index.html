@@ -6910,11 +6910,32 @@ const now =
    جمع البيانات
 ========================= */
 
+const subsectionFactoryMap = {
+
+    feed_production: "feed",
+    feed_sales: "feed",
+    feed_premix: "feed",
+
+    oil_production: "oil",
+    oil_sales: "oil"
+
+};
+
+const parentFactory =
+    subsectionFactoryMap[subsection] ||
+    subsection;
+
 fields.forEach(fieldId => {
 
     const el =
         document.getElementById(fieldId);
 
+
+    const key =
+    fieldStateKey(
+        parentFactory,
+        fieldId
+    );
 
     if (!el) {
 
@@ -6933,19 +6954,6 @@ fields.forEach(fieldId => {
 
     const currentValue =
         normalizeFieldValue(el);
-
-
-    /* =========================
-       مفتاح الحقل
-       مثال:
-       feed_sales::field_name
-    ========================= */
-
-    const key =
-        fieldStateKey(
-            subsection,
-            fieldId
-        );
 
 
     /* =========================
@@ -6976,7 +6984,7 @@ fields.forEach(fieldId => {
             reportDate,
 
         factory:
-            subsection,
+            parentFactory,
 
         field_name:
             el.id,
@@ -7022,7 +7030,7 @@ fields.forEach(fieldId => {
                 user.email,
 
             factory:
-                subsection,
+                parentFactory,
 
             updated_at:
                 now
@@ -7142,7 +7150,7 @@ if (historyRows.length) {
 
         const key =
             fieldStateKey(
-                subsection,
+                parentFactory,
                 row.field_name
             );
 
@@ -7171,7 +7179,7 @@ if (historyRows.length) {
 
             updateFieldStaleStyle(
                 element,
-                subsection
+                parentFactory
             );
 
         }
@@ -7474,6 +7482,25 @@ fieldIds.forEach(fieldId => {
 
 
 /* =========================================
+   تحديد مالك كل حقل
+========================================= */
+
+const fieldGroups = {};
+
+
+/* القسم الرئيسي */
+fieldIds.forEach(fieldId => {
+
+    if (!fieldGroups[factory]) {
+        fieldGroups[factory] = [];
+    }
+
+    fieldGroups[factory].push(fieldId);
+
+});
+
+
+/* =========================================
    تحميل آخر تاريخ تحديث
 ========================================= */
 
@@ -7481,7 +7508,6 @@ await loadFieldHistoryForFactory(
     factory,
     fieldIds
 );
-
 
 /* =========================================
    تحميل بيانات اليوم
