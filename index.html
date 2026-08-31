@@ -280,1277 +280,2125 @@
 
       <!-- المبيعات والارصدة-->
 
-      <section id="salesMarketing" class="section">
-        <h2 class="sectionTitle">قسم المبيعات والارصدة</h2>
+    <!-- ========================================================= -->
+<!--                 قسم المبيعات والأرصدة                     -->
+<!-- ========================================================= -->
 
-        <details id="salesSection" open>
-          <summary>📈 موقف المبيعات والارصدة</summary>
+<section id="salesMarketing" class="section sales-dashboard">
 
-          <div class="details-content">
-            <!-- مبيعات السكر -->
+  <!-- العنوان الرئيسي -->
+  <div class="sales-dashboard-header">
+    <div class="sales-title-wrap">
+      <div class="sales-main-icon">📊</div>
 
-            <details id="sales_sugar" open>
-              <summary>مبيعات وأرصدة السكر المعبأ</summary>
+      <div>
+        <h2 class="sectionTitle">قسم المبيعات والأرصدة</h2>
+        <p>موقف المبيعات والأرصدة اليومية للمصانع والمنتجات</p>
+      </div>
+    </div>
 
-              <div class="details-content">
-                <table>
-                  <tr>
-                    <th>الفئة</th>
-                    <th>المبيعات (طن)</th>
-                    <th>الرصيد الحالي (طن)</th>
-                  </tr>
+    <div class="sales-status">
+      <span class="sales-status-dot"></span>
+      بيانات اليوم
+    </div>
+  </div>
 
-                  <!-- 1 كغم -->
-                  <tr>
-                    <td>1 كغم</td>
 
-                    <td>
-                      <input
-                        id="sugar_sales_1kg"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateSugarSalesTotal();
-                          saveSalesField('sugar_sales_1kg', 'sugar');
-                        "
-                      />
-                    </td>
+  <!-- ========================================================= -->
+  <!--                    السكر المعبأ                            -->
+  <!-- ========================================================= -->
 
-                    <td>
-                      <input id="stock_1kg" data-save step="any" />
-                    </td>
-                  </tr>
+  <details id="salesSection" open class="sales-main-section">
 
-                  <!-- 10 كغم -->
-                  <tr>
-                    <td>10 كغم</td>
+    <summary class="sales-main-summary">
+      <div>
+        <span class="summary-icon">📈</span>
+        <span>موقف المبيعات والأرصدة</span>
+      </div>
 
-                    <td>
-                      <input
-                        id="sugar_sales_10kg"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateSugarSalesTotal();
-                          saveSalesField('sugar_sales_10kg', 'sugar');
-                        "
-                      />
-                    </td>
+      <span class="summary-arrow">▼</span>
+    </summary>
 
-                    <td>
-                      <input id="stock_10kg" data-save step="any" />
-                    </td>
-                  </tr>
 
-                  <!-- 25 كغم -->
-                  <tr>
-                    <td>25 كغم</td>
+    <div class="sales-dashboard-content">
 
-                    <td>
-                      <input
-                        id="sugar_sales_25kg"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateSugarSalesTotal();
-                          saveSalesField('sugar_sales_25kg', 'sugar');
-                        "
-                      />
-                    </td>
 
-                    <td>
-                      <input id="stock_25kg" data-save step="any" />
-                    </td>
-                  </tr>
+      <!-- ================= السكر ================= -->
 
-                  <!-- 50 كغم -->
-                  <tr>
-                    <td>50 كغم</td>
+      <details id="sales_sugar"
+               open
+               class="sales-product-card sugar-sales-card">
 
-                    <td>
-                      <input
-                        id="sugar_sales_50kg"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateSugarSalesTotal();
-                          saveSalesField('sugar_sales_50kg', 'sugar');
-                        "
-                      />
-                    </td>
+        <summary class="sales-product-header">
 
-                    <td>
-                      <input id="stock_50kg" data-save step="any" />
-                    </td>
-                  </tr>
+          <div class="sales-product-title">
 
-                  <!-- 1 طن -->
-                  <tr>
-                    <td>1 طن</td>
+            <div class="sales-product-icon">
+              🍬
+            </div>
 
-                    <td>
-                      <input
-                        id="sugar_sales_1ton"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateSugarSalesTotal();
-                          saveSalesField('sugar_sales_1ton', 'sugar');
-                        "
-                      />
-                    </td>
+            <div>
+              <strong>مبيعات وأرصدة السكر المعبأ</strong>
+              <span>منتجات السكر الجاهزة للبيع</span>
+            </div>
 
-                    <td>
-                      <input id="stock_1t" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <!-- المجموع -->
-                  <tr>
-                    <td>
-                      <b>المجموع</b>
-                    </td>
-
-                    <td>
-                      <input
-                        id="sugar_sales_total"
-                        readonly
-                        step="any"
-                        onchange="saveSalesField('sugar_sales_total', 'sugar')"
-                      />
-                    </td>
-
-                    <td>
-                      <input id="sugar_stock_total" readonly step="any" />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </details>
-
-            <br />
-
-            <!-- مبيعات الزيت -->
-
-            <details id="sales_oil" open>
-              <summary>مبيعات الزيت</summary>
-
-              <div class="details-content">
-                <div class="details-content">
-                  <table>
-                    <tr>
-                      <th colspan="2">مبيعات الشورتنينغ (طن)</th>
-                    </tr>
-                  </table>
-
-                  <table>
-                    <tr>
-                      <th>الفئة</th>
-                      <th>المبيعات (طن)</th>
-                    </tr>
-
-                    <tr>
-                      <td>20 كغم</td>
-                      <td>
-                        <input
-                          id="shortening_sales_20kg"
-                          data-save
-                          oninput="
-                            updateShorteningSalesTotal();
-                            saveSalesField('shortening_sales_20kg', 'oil');
-                          "
-                          step="any"
-                        />
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-
-                <div class="details-content">
-                  <table>
-                    <tr>
-                      <th colspan="1">مبيعات و ارصدة زيت العباد</th>
-                    </tr>
-                  </table>
-                  <table class="wide-table">
-                    <tr>
-                      <th>الفئة</th>
-                      <th>المبيعات (طن)</th>
-                      <th>الرصيد الحالي (طن)</th>
-                    </tr>
-
-                    <!-- 750 مل -->
-
-                    <tr>
-                      <td>750 مل</td>
-
-                      <td>
-                        <input
-                          id="sun_sales_750"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateSunSalesTotal();
-                            saveSalesField('sun_sales_750', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input id="sun_750_stock" data-save step="any" />
-                      </td>
-                    </tr>
-
-                    <!-- 900 مل -->
-
-                    <tr>
-                      <td>900 مل</td>
-
-                      <td>
-                        <input
-                          id="sun_sales_900"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateSunSalesTotal();
-                            saveSalesField('sun_sales_900', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input id="sun_900_stock" data-save step="any" />
-                      </td>
-                    </tr>
-
-                    <!-- 1 لتر -->
-
-                    <tr>
-                      <td>1 لتر</td>
-
-                      <td>
-                        <input
-                          id="sun_sales_1l"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateSunSalesTotal();
-                            saveSalesField('sun_sales_1l', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input id="sun_1l_stock" data-save step="any" />
-                      </td>
-                    </tr>
-
-                    <!-- 1 لتر وزارة -->
-
-                    <tr>
-                      <td>1 لتر وزارة</td>
-
-                      <td>
-                        <input
-                          id="sun_sales_1_1lirq"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateSunSalesTotal();
-                            saveSalesField('sun_sales_1_1lirq', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input id="sun_1_1lirq_stock" data-save step="any" />
-                      </td>
-                    </tr>
-
-                    <!-- 1 لتر ×15 -->
-
-                    <tr>
-                      <td>1 لتر ×15</td>
-
-                      <td>
-                        <input
-                          id="sun_sales_1_1l15"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateSunSalesTotal();
-                            saveSalesField('sun_sales_1_1l15', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input id="sun_1_1l15_stock" data-save step="any" />
-                      </td>
-                    </tr>
-
-                    <!-- المجموع -->
-
-                    <tr>
-                      <td>
-                        <b>المجموع</b>
-                      </td>
-
-                      <td>
-                        <input id="sun_sales_total" readonly />
-                      </td>
-
-                      <td>
-                        <input id="sun_stock_total" readonly />
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-
-                <div class="details-content">
-                  <table>
-                    <tr>
-                      <th colspan="1">مبيعات وارصدة الاولين والنخيل</th>
-                    </tr>
-                  </table>
-
-                  <table class="wide-table">
-                    <tr>
-                      <th>الحجم</th>
-                      <th>مبيعات الأولين (طن)</th>
-                      <th>رصيد الأولين (طن)</th>
-                      <th>مبيعات النخيل (طن)</th>
-                      <th>رصيد النخيل (طن)</th>
-                    </tr>
-
-                    <!-- 5 لتر -->
-
-                    <tr>
-                      <td>5 لتر</td>
-
-                      <td>
-                        <input
-                          id="olein_sales_5l"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateOleinSalesTotal();
-                            saveSalesField('olein_sales_5l', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="olein_5l_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateOleinStockTotal();
-                            saveSalesField('olein_5l_stock', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="palm_sales_5l"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmSalesTotal();
-                            saveSalesField('palm_sales_5l', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="palm_5l_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmStockTotal();
-                            saveSalesField('palm_5l_stock', 'oil');
-                          "
-                        />
-                      </td>
-                    </tr>
-
-                    <!-- 6 لتر -->
-
-                    <tr>
-                      <td>6 لتر</td>
-
-                      <td>-</td>
-
-                      <td>-</td>
-
-                      <td>
-                        <input
-                          id="palm_sales_6l"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmSalesTotal();
-                            saveSalesField('palm_sales_6l', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="palm_6l_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmStockTotal();
-                            saveSalesField('palm_6l_stock', 'oil');
-                          "
-                        />
-                      </td>
-                    </tr>
-
-                    <!-- 10 لتر -->
-
-                    <tr>
-                      <td>10 لتر</td>
-
-                      <td>
-                        <input
-                          id="olein_sales_10l"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateOleinSalesTotal();
-                            saveSalesField('olein_sales_10l', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="olein_10l_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateOleinStockTotal();
-                            saveSalesField('olein_10l_stock', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="palm_sales_10l"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmSalesTotal();
-                            saveSalesField('palm_sales_10l', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="palm_10l_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmStockTotal();
-                            saveSalesField('palm_10l_stock', 'oil');
-                          "
-                        />
-                      </td>
-                    </tr>
-
-                    <!-- 12 لتر -->
-
-                    <tr>
-                      <td>12 لتر</td>
-
-                      <td>-</td>
-
-                      <td>-</td>
-
-                      <td>
-                        <input
-                          id="palm_sales_12l"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmSalesTotal();
-                            saveSalesField('palm_sales_12l', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="palm_12l_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmStockTotal();
-                            saveSalesField('palm_12l_stock', 'oil');
-                          "
-                        />
-                      </td>
-                    </tr>
-
-                    <!-- 14 لتر -->
-
-                    <tr>
-                      <td>14 لتر</td>
-
-                      <td>-</td>
-
-                      <td>-</td>
-
-                      <td>
-                        <input
-                          id="palm_sales_14l"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmSalesTotal();
-                            saveSalesField('palm_sales_14l', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="palm_14l_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updatePalmStockTotal();
-                            saveSalesField('palm_14l_stock', 'oil');
-                          "
-                        />
-                      </td>
-                    </tr>
-
-                    <!-- 18 لتر -->
-
-                    <tr>
-                      <td>18 لتر</td>
-
-                      <td>
-                        <input
-                          id="olein_sales_18l_big"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateOleinSalesTotal();
-                            saveSalesField('olein_sales_18l_big', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="olein_18l_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateOleinStockTotal();
-                            saveSalesField('olein_18l_stock', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>-</td>
-
-                      <td>-</td>
-                    </tr>
-
-                    <!-- 20 كغم -->
-
-                    <tr>
-                      <td>20 كغم</td>
-
-                      <td>
-                        <input
-                          id="olein_sales_20kg"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateOleinSalesTotal();
-                            saveSalesField('olein_sales_20kg', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="olein_20kg_stock"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateOleinStockTotal();
-                            saveSalesField('olein_20kg_stock', 'oil');
-                          "
-                        />
-                      </td>
-
-                      <td>-</td>
-
-                      <td>-</td>
-                    </tr>
-
-                    <!-- المجموع -->
-
-                    <tr>
-                      <td>
-                        <b>المجموع</b>
-                      </td>
-
-                      <td>
-                        <input id="olein_sales_total" readonly />
-                      </td>
-
-                      <td>
-                        <input id="olein_stock_total" readonly />
-                      </td>
-
-                      <td>
-                        <input id="palm_sales_total" readonly />
-                      </td>
-
-                      <td>
-                        <input id="palm_stock_total" readonly />
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </details>
-
-            <br />
-
-            <!-- مبيعات وأرصدة الطحين -->
-
-            <details id="sales_flour" open>
-              <summary>مبيعات وأرصدة الطحين</summary>
-
-              <div class="details-content">
-                <table class="wide-table">
-                  <tr>
-                    <th>الصنف</th>
-                    <th>المبيعات (طن)</th>
-                    <th>الرصيد الحالي (طن)</th>
-                  </tr>
-
-                  <!-- الطحين -->
-
-                  <tr>
-                    <td>طحين</td>
-
-                    <td>
-                      <input
-                        id="flour_sales_flour"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateFlourSalesTotal();
-                          saveSalesField('flour_sales_flour', 'flour');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input id="flour_stock_flour" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <!-- النخالة -->
-
-                  <tr>
-                    <td>نخالة</td>
-
-                    <td>
-                      <input
-                        id="flour_sales_bran"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateFlourSalesTotal();
-                          saveSalesField('flour_sales_bran', 'flour');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input id="flour_stock_bran" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <!-- المجموع -->
-
-                  <tr>
-                    <td>
-                      <b>المجموع</b>
-                    </td>
-
-                    <td>
-                      <input id="flour_sales_total" readonly />
-                    </td>
-
-                    <td>
-                      <input id="flour_stock_total" readonly />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </details>
-
-            <!-- مبيعات الأعلاف -->
-
-            <details id="sales_feed" open>
-              <summary>مبيعات الأعلاف</summary>
-
-              <div class="details-content">
-                <div class="table-scroll">
-                  <table>
-                    <tr>
-                      <th>المادة</th>
-                      <th>الوكلاء (طن)</th>
-                      <th>صحاري(طن)</th>
-                      <th>المجموع (طن)</th>
-                    </tr>
-
-                    <tr>
-                      <td>الذرة</td>
-
-                      <td>
-                        <input
-                          id="feed_sales_corn"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateFeedSalesTotal();
-                            saveSalesField('feed_sales_corn', 'feed');
-                          "
-                        />
-                      </td>
-
-                      <td style="text-align: center">—</td>
-
-                      <td style="text-align: center">—</td>
-                    </tr>
-
-                    <tr>
-                      <td>كسبة الصويا</td>
-
-                      <td>
-                        <input
-                          id="feed_sales_soybean"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateFeedSalesTotal();
-                            saveSalesField('feed_sales_soybean', 'feed');
-                          "
-                        />
-                      </td>
-
-                      <td style="text-align: center">—</td>
-
-                      <td style="text-align: center">—</td>
-                    </tr>
-
-                    <tr>
-                      <td>الأعلاف</td>
-
-                      <td>
-                        <input
-                          id="feed_sales_feed_agents"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateFeedSalesTotal();
-                            saveSalesField('feed_sales_feed_agents', 'feed');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="feed_sales_feed_sahara"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateFeedSalesTotal();
-                            saveSalesField('feed_sales_feed_sahara', 'feed');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input id="feed_sales_feed_total" readonly />
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>البريمكس</td>
-
-                      <td>
-                        <input
-                          id="feed_sales_premix_agents"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateFeedSalesTotal();
-                            saveSalesField('feed_sales_premix_agents', 'feed');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input
-                          id="feed_sales_premix_sahara"
-                          data-save
-                          step="any"
-                          oninput="
-                            updateFeedSalesTotal();
-                            saveSalesField('feed_sales_premix_sahara', 'feed');
-                          "
-                        />
-                      </td>
-
-                      <td>
-                        <input id="feed_sales_premix_total" readonly />
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td><b>إجمالي المبيعات</b></td>
-
-                      <td colspan="5">
-                        <input id="feed_sales_total" readonly />
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </details>
           </div>
-        </details>
-      </section>
+
+          <div class="sales-product-tag">
+            السكر
+          </div>
+
+        </summary>
+
+
+        <div class="sales-product-body">
+
+          <div class="sales-table-container">
+
+            <table class="sales-modern-table">
+
+              <thead>
+                <tr>
+                  <th>الفئة</th>
+                  <th>المبيعات<br><small>(طن)</small></th>
+                  <th>الرصيد الحالي<br><small>(طن)</small></th>
+                </tr>
+              </thead>
+
+
+              <tbody>
+
+                <tr>
+                  <td>1 كغم</td>
+
+                  <td>
+                    <input
+                      id="sugar_sales_1kg"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSugarSalesTotal();
+                        saveSalesField('sugar_sales_1kg', 'sugar');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input id="stock_1kg" data-save step="any" />
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>10 كغم</td>
+
+                  <td>
+                    <input
+                      id="sugar_sales_10kg"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSugarSalesTotal();
+                        saveSalesField('sugar_sales_10kg', 'sugar');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input id="stock_10kg" data-save step="any" />
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>25 كغم</td>
+
+                  <td>
+                    <input
+                      id="sugar_sales_25kg"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSugarSalesTotal();
+                        saveSalesField('sugar_sales_25kg', 'sugar');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input id="stock_25kg" data-save step="any" />
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>50 كغم</td>
+
+                  <td>
+                    <input
+                      id="sugar_sales_50kg"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSugarSalesTotal();
+                        saveSalesField('sugar_sales_50kg', 'sugar');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input id="stock_50kg" data-save step="any" />
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>1 طن</td>
+
+                  <td>
+                    <input
+                      id="sugar_sales_1ton"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSugarSalesTotal();
+                        saveSalesField('sugar_sales_1ton', 'sugar');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input id="stock_1t" data-save step="any" />
+                  </td>
+                </tr>
+
+              </tbody>
+
+
+              <tfoot>
+                <tr>
+                  <td>
+                    <strong>الإجمالي</strong>
+                  </td>
+
+                  <td>
+                    <input
+                      id="sugar_sales_total"
+                      readonly
+                      step="any"
+                      onchange="saveSalesField('sugar_sales_total', 'sugar')"
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      id="sugar_stock_total"
+                      readonly
+                      step="any"
+                    />
+                  </td>
+                </tr>
+              </tfoot>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </details>
+
+
+
+      <!-- ===================================================== -->
+      <!--                         الزيت                           -->
+      <!-- ===================================================== -->
+
+      <details id="sales_oil"
+               open
+               class="sales-product-card oil-sales-card">
+
+        <summary class="sales-product-header">
+
+          <div class="sales-product-title">
+
+            <div class="sales-product-icon">
+              🫒
+            </div>
+
+            <div>
+              <strong>مبيعات وأرصدة الزيوت</strong>
+              <span>العباد والأولين والنخيل والشورتنينغ</span>
+            </div>
+
+          </div>
+
+          <div class="sales-product-tag oil-tag">
+            مصنع الزيت
+          </div>
+
+        </summary>
+
+
+        <div class="sales-product-body oil-sales-body">
+
+
+          <!-- الشورتنينغ -->
+
+          <div class="oil-sub-card">
+
+            <div class="oil-sub-header">
+              <span>🥫</span>
+
+              <div>
+                <strong>مبيعات الشورتنينغ</strong>
+                <small>بالطن</small>
+              </div>
+            </div>
+
+
+            <table class="sales-modern-table compact-table">
+
+              <thead>
+                <tr>
+                  <th>الفئة</th>
+                  <th>المبيعات (طن)</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>20 كغم</td>
+
+                  <td>
+                    <input
+                      id="shortening_sales_20kg"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateShorteningSalesTotal();
+                        saveSalesField('shortening_sales_20kg', 'oil');
+                      "
+                    />
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+
+
+          <!-- زيت العباد -->
+
+          <div class="oil-sub-card">
+
+            <div class="oil-sub-header">
+              <span>☀️</span>
+
+              <div>
+                <strong>مبيعات وأرصدة زيت العباد</strong>
+                <small>مبيعات ورصيد المنتج</small>
+              </div>
+            </div>
+
+
+            <table class="sales-modern-table">
+
+              <thead>
+                <tr>
+                  <th>الفئة</th>
+                  <th>المبيعات<br>(طن)</th>
+                  <th>الرصيد<br>(طن)</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>750 مل</td>
+
+                  <td>
+                    <input
+                      id="sun_sales_750"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_750', 'oil');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      id="sun_750_stock"
+                      data-save
+                      step="any"
+                    />
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>900 مل</td>
+
+                  <td>
+                    <input
+                      id="sun_sales_900"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_900', 'oil');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      id="sun_900_stock"
+                      data-save
+                      step="any"
+                    />
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>1 لتر</td>
+
+                  <td>
+                    <input
+                      id="sun_sales_1l"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_1l', 'oil');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      id="sun_1l_stock"
+                      data-save
+                      step="any"
+                    />
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>1 لتر وزارة</td>
+
+                  <td>
+                    <input
+                      id="sun_sales_1_1lirq"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_1_1lirq', 'oil');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      id="sun_1_1lirq_stock"
+                      data-save
+                      step="any"
+                    />
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>1 لتر ×15</td>
+
+                  <td>
+                    <input
+                      id="sun_sales_1_1l15"
+                      data-save
+                      step="any"
+                      oninput="
+                        updateSunSalesTotal();
+                        saveSalesField('sun_sales_1_1l15', 'oil');
+                      "
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      id="sun_1_1l15_stock"
+                      data-save
+                      step="any"
+                    />
+                  </td>
+                </tr>
+
+              </tbody>
+
+
+              <tfoot>
+
+                <tr>
+                  <td><strong>الإجمالي</strong></td>
+
+                  <td>
+                    <input
+                      id="sun_sales_total"
+                      readonly
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      id="sun_stock_total"
+                      readonly
+                    />
+                  </td>
+                </tr>
+
+              </tfoot>
+
+            </table>
+
+          </div>
+
+
+
+          <!-- الأولين والنخيل -->
+
+          <div class="oil-sub-card wide-oil-card">
+
+            <div class="oil-sub-header">
+
+              <span>🌴</span>
+
+              <div>
+                <strong>مبيعات وأرصدة الأولين والنخيل</strong>
+                <small>حسب الحجم</small>
+              </div>
+
+            </div>
+
+
+            <div class="sales-table-container">
+
+              <table class="sales-modern-table">
+
+                <thead>
+                  <tr>
+                    <th>الحجم</th>
+                    <th>مبيعات الأولين<br>(طن)</th>
+                    <th>رصيد الأولين<br>(طن)</th>
+                    <th>مبيعات النخيل<br>(طن)</th>
+                    <th>رصيد النخيل<br>(طن)</th>
+                  </tr>
+                </thead>
+
+
+                <tbody>
+
+                  <tr>
+                    <td>5 لتر</td>
+
+                    <td>
+                      <input
+                        id="olein_sales_5l"
+                        data-save
+                        step="any"
+                        oninput="
+                          updateOleinSalesTotal();
+                          saveSalesField('olein_sales_5l', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="olein_5l_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updateOleinStockTotal();
+                          saveSalesField('olein_5l_stock', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_sales_5l"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmSalesTotal();
+                          saveSalesField('palm_sales_5l', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_5l_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmStockTotal();
+                          saveSalesField('palm_5l_stock', 'oil');
+                        "
+                      />
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>6 لتر</td>
+
+                    <td>—</td>
+                    <td>—</td>
+
+                    <td>
+                      <input
+                        id="palm_sales_6l"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmSalesTotal();
+                          saveSalesField('palm_sales_6l', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_6l_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmStockTotal();
+                          saveSalesField('palm_6l_stock', 'oil');
+                        "
+                      />
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>10 لتر</td>
+
+                    <td>
+                      <input
+                        id="olein_sales_10l"
+                        data-save
+                        step="any"
+                        oninput="
+                          updateOleinSalesTotal();
+                          saveSalesField('olein_sales_10l', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="olein_10l_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updateOleinStockTotal();
+                          saveSalesField('olein_10l_stock', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_sales_10l"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmSalesTotal();
+                          saveSalesField('palm_sales_10l', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_10l_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmStockTotal();
+                          saveSalesField('palm_10l_stock', 'oil');
+                        "
+                      />
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>12 لتر</td>
+
+                    <td>—</td>
+                    <td>—</td>
+
+                    <td>
+                      <input
+                        id="palm_sales_12l"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmSalesTotal();
+                          saveSalesField('palm_sales_12l', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_12l_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmStockTotal();
+                          saveSalesField('palm_12l_stock', 'oil');
+                        "
+                      />
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>14 لتر</td>
+
+                    <td>—</td>
+                    <td>—</td>
+
+                    <td>
+                      <input
+                        id="palm_sales_14l"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmSalesTotal();
+                          saveSalesField('palm_sales_14l', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_14l_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updatePalmSalesTotal();
+                          saveSalesField('palm_14l_stock', 'oil');
+                        "
+                      />
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>18 لتر</td>
+
+                    <td>
+                      <input
+                        id="olein_sales_18l_big"
+                        data-save
+                        step="any"
+                        oninput="
+                          updateOleinSalesTotal();
+                          saveSalesField('olein_sales_18l_big', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="olein_18l_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updateOleinStockTotal();
+                          saveSalesField('olein_18l_stock', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>—</td>
+                    <td>—</td>
+                  </tr>
+
+
+                  <tr>
+                    <td>20 كغم</td>
+
+                    <td>
+                      <input
+                        id="olein_sales_20kg"
+                        data-save
+                        step="any"
+                        oninput="
+                          updateOleinSalesTotal();
+                          saveSalesField('olein_sales_20kg', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="olein_20kg_stock"
+                        data-save
+                        step="any"
+                        oninput="
+                          updateOleinStockTotal();
+                          saveSalesField('olein_20kg_stock', 'oil');
+                        "
+                      />
+                    </td>
+
+                    <td>—</td>
+                    <td>—</td>
+                  </tr>
+
+                </tbody>
+
+
+                <tfoot>
+
+                  <tr>
+
+                    <td>
+                      <strong>الإجمالي</strong>
+                    </td>
+
+                    <td>
+                      <input
+                        id="olein_sales_total"
+                        readonly
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="olein_stock_total"
+                        readonly
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_sales_total"
+                        readonly
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        id="palm_stock_total"
+                        readonly
+                      />
+                    </td>
+
+                  </tr>
+
+                </tfoot>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </details>
+
+
+
+      <!-- ===================================================== -->
+      <!--                         الطحين                          -->
+      <!-- ===================================================== -->
+
+      <details id="sales_flour"
+               open
+               class="sales-product-card flour-sales-card">
+
+        <summary class="sales-product-header">
+
+          <div class="sales-product-title">
+
+            <div class="sales-product-icon">
+              🌾
+            </div>
+
+            <div>
+              <strong>مبيعات وأرصدة الطحين</strong>
+              <span>الطحين والنخالة</span>
+            </div>
+
+          </div>
+
+          <div class="sales-product-tag flour-tag">
+            المطاحن
+          </div>
+
+        </summary>
+
+
+        <div class="sales-product-body">
+
+          <table class="sales-modern-table">
+
+            <thead>
+
+              <tr>
+                <th>الصنف</th>
+                <th>المبيعات<br>(طن)</th>
+                <th>الرصيد الحالي<br>(طن)</th>
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              <tr>
+
+                <td>
+                  <span class="product-name">🌾 طحين</span>
+                </td>
+
+                <td>
+
+                  <input
+                    id="flour_sales_flour"
+                    data-save
+                    step="any"
+                    oninput="
+                      updateFlourSalesTotal();
+                      saveSalesField('flour_sales_flour', 'flour');
+                    "
+                  />
+
+                </td>
+
+                <td>
+
+                  <input
+                    id="flour_stock_flour"
+                    data-save
+                    step="any"
+                  />
+
+                </td>
+
+              </tr>
+
+
+              <tr>
+
+                <td>
+                  <span class="product-name">🌿 نخالة</span>
+                </td>
+
+                <td>
+
+                  <input
+                    id="flour_sales_bran"
+                    data-save
+                    step="any"
+                    oninput="
+                      updateFlourSalesTotal();
+                      saveSalesField('flour_sales_bran', 'flour');
+                    "
+                  />
+
+                </td>
+
+                <td>
+
+                  <input
+                    id="flour_stock_bran"
+                    data-save
+                    step="any"
+                  />
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+
+            <tfoot>
+
+              <tr>
+
+                <td>
+                  <strong>الإجمالي</strong>
+                </td>
+
+                <td>
+
+                  <input
+                    id="flour_sales_total"
+                    readonly
+                  />
+
+                </td>
+
+                <td>
+
+                  <input
+                    id="flour_stock_total"
+                    readonly
+                  />
+
+                </td>
+
+              </tr>
+
+            </tfoot>
+
+          </table>
+
+        </div>
+
+      </details>
+
+
+
+      <!-- ===================================================== -->
+      <!--                         الأعلاف                         -->
+      <!-- ===================================================== -->
+
+      <details id="sales_feed"
+               open
+               class="sales-product-card feed-sales-card">
+
+        <summary class="sales-product-header">
+
+          <div class="sales-product-title">
+
+            <div class="sales-product-icon">
+              🐄
+            </div>
+
+            <div>
+              <strong>مبيعات الأعلاف</strong>
+              <span>الأعلاف والبريمكس والمواد المرتبطة</span>
+            </div>
+
+          </div>
+
+          <div class="sales-product-tag feed-tag">
+            مصنع الأعلاف
+          </div>
+
+        </summary>
+
+
+        <div class="sales-product-body">
+
+          <table class="sales-modern-table">
+
+            <thead>
+
+              <tr>
+                <th>المادة</th>
+                <th>الوكلاء<br>(طن)</th>
+                <th>صحاري<br>(طن)</th>
+                <th>المجموع<br>(طن)</th>
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              <tr>
+
+                <td>
+                  🌽 الذرة
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_corn"
+                    data-save
+                    step="any"
+                    oninput="
+                      updateFeedSalesTotal();
+                      saveSalesField('feed_sales_corn', 'feed');
+                    "
+                  />
+
+                </td>
+
+                <td class="not-applicable">—</td>
+
+                <td class="not-applicable">—</td>
+
+              </tr>
+
+
+              <tr>
+
+                <td>
+                  🫘 كسبة الصويا
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_soybean"
+                    data-save
+                    step="any"
+                    oninput="
+                      updateFeedSalesTotal();
+                      saveSalesField('feed_sales_soybean', 'feed');
+                    "
+                  />
+
+                </td>
+
+                <td class="not-applicable">—</td>
+
+                <td class="not-applicable">—</td>
+
+              </tr>
+
+
+              <tr>
+
+                <td>
+                  🐄 الأعلاف
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_feed_agents"
+                    data-save
+                    step="any"
+                    oninput="
+                      updateFeedSalesTotal();
+                      saveSalesField('feed_sales_feed_agents', 'feed');
+                    "
+                  />
+
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_feed_sahara"
+                    data-save
+                    step="any"
+                    oninput="
+                      updateFeedSalesTotal();
+                      saveSalesField('feed_sales_feed_sahara', 'feed');
+                    "
+                  />
+
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_feed_total"
+                    readonly
+                  />
+
+                </td>
+
+              </tr>
+
+
+              <tr>
+
+                <td>
+                  🧪 البريمكس
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_premix_agents"
+                    data-save
+                    step="any"
+                    oninput="
+                      updateFeedSalesTotal();
+                      saveSalesField('feed_sales_premix_agents', 'feed');
+                    "
+                  />
+
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_premix_sahara"
+                    data-save
+                    step="any"
+                    oninput="
+                      updateFeedSalesTotal();
+                      saveSalesField('feed_sales_premix_sahara', 'feed');
+                    "
+                  />
+
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_premix_total"
+                    readonly
+                  />
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+
+            <tfoot>
+
+              <tr>
+
+                <td colspan="3">
+                  <strong>إجمالي مبيعات الأعلاف</strong>
+                </td>
+
+                <td>
+
+                  <input
+                    id="feed_sales_total"
+                    readonly
+                  />
+
+                </td>
+
+              </tr>
+
+            </tfoot>
+
+          </table>
+
+        </div>
+
+      </details>
+
+
+    </div>
+
+  </details>
+
+</section>
 
       <!-- موقف محطة الطاقة -->
 
-      <section id="powerstation" class="section">
-        <h2 class="sectionTitle">محطات الطاقة والنفط الاسود</h2>
-
-        <!-- الموقف العام لمحطات الطاقة والنفط الأسود-->
-
-        <details open>
-          <summary>🛢️ موقف النفط الأسود</summary>
-
-          <div class="details-content">
-            <details open>
-              <summary>📊 ملخص أرصدة النفط الأسود</summary>
-
-              <div class="details-content">
-                <table class="wide-table">
-                  <tr>
-                    <th>الموقع</th>
-                    <th>الرصيد (م³)</th>
-                  </tr>
-
-                  <tr>
-                    <td>محطة الطاقة (الاتحاد)</td>
-                    <td>
-                      <input
-                        id="blackoil_union_power_stock"
-                        data-save
-                        oninput="updateBlackOilStockTotals()"
-                        step="any"
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>محطة الطاقة (الريان)</td>
-                    <td>
-                      <input
-                        id="blackoil_union_boiler_stock"
-                        data-save
-                        oninput="updateBlackOilStockTotals()"
-                        step="any"
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>بويلرات الاستخلاص</td>
-                    <td>
-                      <input
-                        id="blackoil_extraction_stock"
-                        data-save
-                        oninput="updateBlackOilStockTotals()"
-                        step="any"
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td><b>رصيد موقع الاتحاد</b></td>
-                    <td>
-                      <input id="blackoil_union_total_stock" readonly />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>صحارى كربلاء</td>
-                    <td>
-                      <input
-                        id="blackoil_sahara_stock"
-                        data-save
-                        oninput="updateBlackOilStockTotals()"
-                        step="any"
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>شركة ديوان</td>
-                    <td>
-                      <input
-                        id="blackoil_diwan_stock"
-                        data-save
-                        oninput="updateBlackOilStockTotals()"
-                        step="any"
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td><b>إجمالي رصيد النفط الأسود</b></td>
-                    <td>
-                      <input id="blackoil_total_stock" readonly />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </details>
-
-            <details open>
-              <summary>موقف محطة الطاقة</summary>
-
-              <div class="details-content">
-                <table class="wide-table">
-                  <tr>
-                    <th>المعدة</th>
-                    <th>حالة التشغيل</th>
-                  </tr>
-
-                  <tr>
-                    <td>البويلرات</td>
-                    <td><input id="boilers_status" data-save step="any" /></td>
-                  </tr>
-
-                  <tr>
-                    <td>توربينات 20MW</td>
-                    <td>
-                      <input id="turbine20_status" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>توربينات 10MW</td>
-                    <td>
-                      <input id="turbine10_status" data-save step="any" />
-                    </td>
-                  </tr>
-                </table>
-
-                <br />
-
-                <table class="wide-table">
-                  <tr>
-                    <th>أعلى حمل كهربائي (MW)</th>
-                    <th>أقل حمل كهربائي (MW)</th>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <input id="max_electrical_load" data-save step="any" />
-                    </td>
-
-                    <td>
-                      <input id="min_electrical_load" data-save step="any" />
-                    </td>
-                  </tr>
-                </table>
-
-                <br />
-
-                <details open>
-                  <summary>📝 ملاحظات محطة الطاقة</summary>
-
-                  <div class="details-content">
-                    <textarea
-                      id="power_station_notes"
-                      class="notes"
-                      data-save
-                      placeholder="اكتب ملاحظات محطة الطاقة..."
-                    ></textarea>
-
-                    <br /><br />
-
-                    <label
-                      for="power_station_notes_upload"
-                      class="uploadImageBtn"
-                    >
-                      📎 إرفاق صورة أو ملف
-                    </label>
-
-                    <input
-                      type="file"
-                      id="power_station_notes_upload"
-                      data-factory="powerstation"
-                      data-field="power_station_notes"
-                      multiple
-                      style="display: none"
-                      onchange="uploadNoteImage(this)"
-                    />
-
-                    <a id="power_station_notes_link" style="display: none"> </a>
-                  </div>
-                </details>
-              </div>
-            </details>
-
-            <details open>
-              <summary>استهلاكات محطة الطاقة و مراجل الريان</summary>
-
-              <div class="details-content">
-                <table>
-                  <tr>
-                    <th>البيان</th>
-                    <th>القيمة</th>
-                  </tr>
-
-                  <tr>
-                    <td>القطوعات غير المستلمة</td>
-                    <td><input id="union_cuttings" data-save step="any" /></td>
-                  </tr>
-
-                  <tr>
-                    <td>المستوى الفارغ (م³)</td>
-                    <td><input id="union_empty" data-save step="any" /></td>
-                  </tr>
-
-                  <tr>
-                    <td>استهلاك محطة الطاقة (م³)</td>
-                    <td><input id="union_power_use" data-save step="any" /></td>
-                  </tr>
-
-                  <tr>
-                    <td>استهلاك بويلرات الريان (م³)</td>
-                    <td>
-                      <input id="union_boiler_use" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td><b>الاستهلاك الكلي (م³)</b></td>
-                    <td>
-                      <input id="union_total_use" readonly step="any" />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </details>
-
-            <details open>
-              <summary>محطة الطاقة - صحاري كربلاء</summary>
-
-              <div class="details-content">
-                <table>
-                  <tr>
-                    <td>القطوعات غير المستلمة</td>
-                    <td><input id="sahara_cuttings" data-save step="any" /></td>
-                  </tr>
-
-                  <tr>
-                    <td>المستوى الفارغ (م³)</td>
-                    <td><input id="sahara_empty" data-save step="any" /></td>
-                  </tr>
-
-                  <tr>
-                    <td>استهلاك محطة الطاقة (م³)</td>
-                    <td><input id="sahara_use" data-save step="any" /></td>
-                  </tr>
-                </table>
-              </div>
-            </details>
-
-            <details open>
-              <summary>محطة الطاقة - شركة ديوان</summary>
-
-              <div class="details-content">
-                <table>
-                  <tr>
-                    <td>القطوعات غير المستلمة</td>
-                    <td><input id="diwan_cuttings" data-save step="any" /></td>
-                  </tr>
-
-                  <tr>
-                    <td>المستوى الفارغ (م³)</td>
-                    <td><input id="diwan_empty" data-save step="any" /></td>
-                  </tr>
-
-                  <tr>
-                    <td>الاستهلاك اليومي (م³)</td>
-                    <td><input id="diwan_use" data-save step="any" /></td>
-                  </tr>
-                </table>
-              </div>
-            </details>
-
-            <details open>
-              <summary>🔥 مراجل الريان</summary>
-
-              <div class="details-content" open>
-                <!-- البويلرات -->
-
-                <table class="wide-table">
-                  <tr>
-                    <th>البيان</th>
-
-                    <th>القيمة</th>
-                  </tr>
-
-                  <tr>
-                    <td>عدد البويلرات العاملة</td>
-
-                    <td>
-                      <input id="boilers_running" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>صيانة البويلرات</td>
-
-                    <td>
-                      <textarea id="boilers_maintenance" data-save rows="3">
-                      </textarea>
-                    </td>
-                  </tr>
-                </table>
-
-                <br />
-
-                <!-- الضواغط -->
-
-                <table class="wide-table">
-                  <tr>
-                    <th>ضواغط الهواء</th>
-
-                    <th>ساعات الحمل</th>
-                  </tr>
-
-                  <tr>
-                    <td>Air Compressor 1</td>
-
-                    <td>
-                      <input id="air_compressor1_hours" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>Air Compressor 2</td>
-
-                    <td>
-                      <input id="air_compressor2_hours" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>Air Compressor 3</td>
-
-                    <td>
-                      <input id="air_compressor3_hours" data-save step="any" />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>Service Compressor</td>
-
-                    <td>
-                      <input
-                        id="service_compressor_hours"
-                        data-save
-                        step="any"
-                      />
-                    </td>
-                  </tr>
-                </table>
-
-                <br />
-
-                <!-- ملاحظات -->
-                <table class="wide-table">
-                  <tr>
-                    <th>ملاحظات مراجل الريان</th>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <textarea
-                        id="boilers_notes"
-                        data-save
-                        rows="4"
-                        placeholder="اكتب ملاحظات مراجل الريان..."
-                      >
-                      </textarea>
-
-                      <br /><br />
-
-                      <label for="boilers_notes_upload" class="uploadImageBtn">
-                        📎 إرفاق صورة أو ملف
-                      </label>
-
-                      <input
-                        type="file"
-                        accept="image/*,application/pdf"
-                        id="boilers_notes_upload"
-                        data-factory="powerstation"
-                        data-field="boilers_notes"
-                        multiple
-                        style="display: none"
-                        onchange="uploadNoteImage(this)"
-                      />
-
-                      <br />
-
-                      <a
-                        id="boilers_notes_link"
-                        target="_blank"
-                        style="
-                          display: none;
-                          font-size: 13px;
-                          text-decoration: none;
-                        "
-                      >
-                        👁 عرض الملف
-                      </a>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </details>
+ <!-- ========================================================= -->
+<!--              محطات الطاقة والنفط الأسود                   -->
+<!-- ========================================================= -->
+
+<section id="powerstation" class="section power-dashboard-section">
+
+  <!-- ======================= العنوان ======================= -->
+
+  <div class="power-dashboard-header">
+
+    <div class="power-header-icon">
+      ⚡
+    </div>
+
+    <div class="power-header-title">
+      <h2>محطات الطاقة والنفط الأسود</h2>
+      <span>Power Stations & Black Oil Management</span>
+    </div>
+
+    <div class="power-header-status">
+      <span class="power-status-dot"></span>
+      التشغيل اليومي
+    </div>
+
+  </div>
+
+
+  <!-- ======================================================= -->
+  <!--                    موقف النفط الأسود                     -->
+  <!-- ======================================================= -->
+
+  <details open class="power-main-panel blackoil-panel">
+
+    <summary class="power-panel-summary">
+
+      <div class="power-summary-left">
+        <div class="power-summary-icon oil-icon">
+          🛢️
+        </div>
+
+        <div>
+          <strong>موقف النفط الأسود</strong>
+          <small>Black Oil Status</small>
+        </div>
+      </div>
+
+      <div class="power-summary-badge oil-badge">
+        ⛽ إدارة الأرصدة والاستهلاك
+      </div>
+
+    </summary>
+
+
+    <div class="power-panel-content">
+
+
+      <!-- =================================================== -->
+      <!--                 KPI الأرصدة                          -->
+      <!-- =================================================== -->
+
+      <div class="power-section-heading">
+
+        <div class="heading-icon">
+          📊
+        </div>
+
+        <div>
+          <h3>ملخص أرصدة النفط الأسود</h3>
+          <span>Black Oil Stock Overview</span>
+        </div>
+
+      </div>
+
+
+      <div class="oil-kpi-grid">
+
+
+        <!-- الاتحاد -->
+
+        <div class="oil-kpi-card union-oil-card">
+
+          <div class="oil-kpi-top">
+            <span class="oil-kpi-icon">🏭</span>
+
+            <span class="oil-kpi-label">
+الطاقة - الاتحاد 
+            </span>
           </div>
-        </details>
 
-        <button onclick="approvePowerSection()">اعتماد القسم ✅</button>
-      </section>
+          <div class="oil-kpi-value">
+            <input
+              id="blackoil_union_power_stock"
+              data-save
+              oninput="updateBlackOilStockTotals()"
+              step="any"
+            />
+          </div>
+
+          <div class="oil-kpi-unit">
+            م³
+          </div>
+
+        </div>
+
+
+        <!-- الريان -->
+
+        <div class="oil-kpi-card rayan-oil-card">
+
+          <div class="oil-kpi-top">
+            <span class="oil-kpi-icon">🔥</span>
+
+            <span class="oil-kpi-label">
+الطاقة - الريان 
+            </span>
+          </div>
+
+          <div class="oil-kpi-value">
+            <input
+              id="blackoil_rayan_boiler_stock"
+              data-save
+              oninput="updateBlackOilStockTotals()"
+              step="any"
+            />
+          </div>
+
+          <div class="oil-kpi-unit">
+            م³
+          </div>
+
+        </div>
+
+
+        <!-- الاستخلاص -->
+
+        <div class="oil-kpi-card extraction-oil-card">
+
+          <div class="oil-kpi-top">
+            <span class="oil-kpi-icon">⚙️</span>
+
+            <span class="oil-kpi-label">
+              بويلرات الاستخلاص
+              <small>Extraction Boilers</small>
+              
+            </span>
+          </div>
+
+          <div class="oil-kpi-value">
+            <input
+              id="blackoil_extraction_stock"
+              data-save
+              oninput="updateBlackOilStockTotals()"
+              step="any"
+            />
+          </div>
+
+          <div class="oil-kpi-unit">
+            م³
+          </div>
+
+        </div>
+
+
+        <!-- إجمالي الاتحاد -->
+
+        <div class="oil-kpi-card oil-total-card">
+
+          <div class="oil-kpi-top">
+            <span class="oil-kpi-icon">📦</span>
+
+            <span class="oil-kpi-label">
+              رصيد موقع الاتحاد
+              <small>Union Total Stock</small>
+            </span>
+          </div>
+
+          <div class="oil-kpi-value total-value">
+            <input
+              id="blackoil_union_total_stock"
+              readonly
+            />
+          </div>
+
+          <div class="oil-kpi-unit">
+            م³
+          </div>
+
+        </div>
+
+
+        <!-- صحاري -->
+
+        <div class="oil-kpi-card external-oil-card">
+
+          <div class="oil-kpi-top">
+            <span class="oil-kpi-icon">🏢</span>
+
+            <span class="oil-kpi-label">
+              صحاري كربلاء
+              <small>External Site</small>
+            </span>
+          </div>
+
+          <div class="oil-kpi-value">
+            <input
+              id="blackoil_sahara_stock"
+              data-save
+              oninput="updateBlackOilStockTotals()"
+              step="any"
+            />
+          </div>
+
+          <div class="oil-kpi-unit">
+            م³
+          </div>
+
+        </div>
+
+
+        <!-- ديوان -->
+
+        <div class="oil-kpi-card external-oil-card">
+
+          <div class="oil-kpi-top">
+            <span class="oil-kpi-icon">🏢</span>
+
+            <span class="oil-kpi-label">
+              شركة ديوان
+              <small>External Site</small>
+            </span>
+          </div>
+
+          <div class="oil-kpi-value">
+            <input
+              id="blackoil_diwan_stock"
+              data-save
+              oninput="updateBlackOilStockTotals()"
+              step="any"
+            />
+          </div>
+
+          <div class="oil-kpi-unit">
+            م³
+          </div>
+
+        </div>
+
+
+        <!-- الإجمالي النهائي -->
+
+        <div class="oil-grand-total">
+
+          <div class="grand-total-icon">
+            🛢️
+          </div>
+
+          <div class="grand-total-text">
+            <span>إجمالي رصيد النفط الأسود</span>
+            <small>Total Black Oil Stock</small>
+          </div>
+
+          <input
+            id="blackoil_total_stock"
+            readonly
+          />
+
+          <b>م³</b>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================== -->
+      <!--                 محطة الطاقة                          -->
+      <!-- =================================================== -->
+
+      <div class="power-section-heading energy-heading">
+
+        <div class="heading-icon">
+          ⚡
+        </div>
+
+        <div>
+          <h3>موقف محطة الطاقة</h3>
+          <span>Power Station Operating Status</span>
+        </div>
+
+      </div>
+
+
+      <div class="equipment-grid">
+
+
+        <div class="equipment-card">
+
+          <div class="equipment-icon">
+            🔥
+          </div>
+
+          <div class="equipment-info">
+            <strong>البويلرات</strong>
+            <span>Boilers</span>
+          </div>
+
+          <input
+            id="boilers_status"
+            data-save
+            step="any"
+          />
+
+        </div>
+
+
+        <div class="equipment-card">
+
+          <div class="equipment-icon turbine-icon">
+            ⚙️
+          </div>
+
+          <div class="equipment-info">
+            <strong>توربينات 20MW</strong>
+            <span>20 MW Turbines</span>
+          </div>
+
+          <input
+            id="turbine20_status"
+            data-save
+            step="any"
+          />
+
+        </div>
+
+
+        <div class="equipment-card">
+
+          <div class="equipment-icon turbine-icon">
+            ⚙️
+          </div>
+
+          <div class="equipment-info">
+            <strong>توربينات 10MW</strong>
+            <span>10 MW Turbines</span>
+          </div>
+
+          <input
+            id="turbine10_status"
+            data-save
+            step="any"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================== -->
+      <!--                 الأحمال الكهربائية                    -->
+      <!-- =================================================== -->
+
+      <div class="load-dashboard">
+
+        <div class="load-card max-load-card">
+
+          <div class="load-icon">
+            📈
+          </div>
+
+          <div class="load-content">
+            <span>أعلى حمل كهربائي</span>
+            <small>Maximum Electrical Load</small>
+          </div>
+
+          <div class="load-value">
+            <input
+              id="max_electrical_load"
+              data-save
+              step="any"
+            />
+            <b>MW</b>
+          </div>
+
+        </div>
+
+
+        <div class="load-card min-load-card">
+
+          <div class="load-icon">
+            📉
+          </div>
+
+          <div class="load-content">
+            <span>أقل حمل كهربائي</span>
+            <small>Minimum Electrical Load</small>
+          </div>
+
+          <div class="load-value">
+            <input
+              id="min_electrical_load"
+              data-save
+              step="any"
+            />
+            <b>MW</b>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================== -->
+      <!--                   ملاحظات الطاقة                      -->
+      <!-- =================================================== -->
+
+      <div class="power-notes-card">
+
+        <div class="power-notes-header">
+
+          <div class="notes-icon">
+            📝
+          </div>
+
+          <div>
+            <strong>ملاحظات محطة الطاقة</strong>
+            <span>Operating Notes & Daily Observations</span>
+          </div>
+
+        </div>
+
+
+        <textarea
+          id="power_station_notes"
+          class="notes"
+          data-save
+          placeholder="اكتب ملاحظات محطة الطاقة، الحالة التشغيلية، الأعطال أو الإجراءات المتخذة..."
+        ></textarea>
+
+
+        <div class="power-upload-row">
+
+          <label
+            for="power_station_notes_upload"
+            class="power-upload-btn"
+          >
+            📎 إرفاق صورة أو ملف
+          </label>
+
+          <input
+            type="file"
+            id="power_station_notes_upload"
+            data-factory="powerstation"
+            data-field="power_station_notes"
+            multiple
+            style="display:none"
+            onchange="uploadNoteImage(this)"
+          />
+
+          <a
+            id="power_station_notes_link"
+            target="_blank"
+            class="power-file-link"
+            style="display:none"
+          >
+            👁 عرض الملف
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================== -->
+      <!--            استهلاكات الاتحاد والريان                 -->
+      <!-- =================================================== -->
+
+      <div class="power-section-heading consumption-heading">
+
+        <div class="heading-icon">
+          ⛽
+        </div>
+
+        <div>
+          <h3>استهلاكات محطة الطاقة ومراجل الريان</h3>
+          <span>Union Power Station & Rayan Boiler Consumption</span>
+        </div>
+
+      </div>
+
+
+      <div class="consumption-grid">
+
+        <div class="consumption-item">
+          <span>القطوعات غير المستلمة</span>
+          <input
+            id="union_cuttings"
+            data-save
+            step="any"
+          />
+        </div>
+
+        <div class="consumption-item">
+          <span>المستوى الفارغ</span>
+          <input
+            id="union_empty"
+            data-save
+            step="any"
+          />
+          <b>م³</b>
+        </div>
+
+        <div class="consumption-item">
+          <span>استهلاك محطة الطاقة</span>
+          <input
+            id="union_power_use"
+            data-save
+            step="any"
+          />
+          <b>م³</b>
+        </div>
+
+        <div class="consumption-item">
+          <span>استهلاك بويلرات الريان</span>
+          <input
+            id="union_boiler_use"
+            data-save
+            step="any"
+          />
+          <b>م³</b>
+        </div>
+
+      </div>
+
+
+      <div class="consumption-total">
+
+        <span>
+          الاستهلاك الكلي
+          <small>Total Consumption</small>
+        </span>
+
+        <input
+          id="union_total_use"
+          readonly
+          step="any"
+        />
+
+        <b>م³</b>
+
+      </div>
+
+
+      <!-- =================================================== -->
+      <!--                    صحاري كربلاء                      -->
+      <!-- =================================================== -->
+
+      <div class="external-station-card sahara-card">
+
+        <div class="external-station-header">
+
+          <div class="external-station-icon">
+            🏭
+          </div>
+
+          <div>
+            <strong>محطة الطاقة — صحاري كربلاء</strong>
+            <span>Sahara Karbala Power Station</span>
+          </div>
+
+        </div>
+
+
+        <div class="external-fields">
+
+          <div>
+            <label>القطوعات غير المستلمة</label>
+            <input
+              id="sahara_cuttings"
+              data-save
+              step="any"
+            />
+          </div>
+
+          <div>
+            <label>المستوى الفارغ</label>
+            <input
+              id="sahara_empty"
+              data-save
+              step="any"
+            />
+            <small>م³</small>
+          </div>
+
+          <div>
+            <label>استهلاك محطة الطاقة</label>
+            <input
+              id="sahara_use"
+              data-save
+              step="any"
+            />
+            <small>م³</small>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================== -->
+      <!--                      شركة ديوان                      -->
+      <!-- =================================================== -->
+
+      <div class="external-station-card diwan-card">
+
+        <div class="external-station-header">
+
+          <div class="external-station-icon">
+            🏢
+          </div>
+
+          <div>
+            <strong>محطة الطاقة — شركة ديوان</strong>
+            <span>Diwan Power Station</span>
+          </div>
+
+        </div>
+
+
+        <div class="external-fields">
+
+          <div>
+            <label>القطوعات غير المستلمة</label>
+            <input
+              id="diwan_cuttings"
+              data-save
+              step="any"
+            />
+          </div>
+
+          <div>
+            <label>المستوى الفارغ</label>
+            <input
+              id="diwan_empty"
+              data-save
+              step="any"
+            />
+            <small>م³</small>
+          </div>
+
+          <div>
+            <label>الاستهلاك اليومي</label>
+            <input
+              id="diwan_use"
+              data-save
+              step="any"
+            />
+            <small>م³</small>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================== -->
+      <!--                     مراجل الريان                     -->
+      <!-- =================================================== -->
+
+      <div class="power-section-heading boiler-heading">
+
+        <div class="heading-icon">
+          🔥
+        </div>
+
+        <div>
+          <h3>مراجل الريان</h3>
+          <span>Rayan Boilers & Air Compressors</span>
+        </div>
+
+      </div>
+
+
+      <div class="boiler-dashboard">
+
+
+        <!-- عدد البويلرات -->
+
+        <div class="boiler-main-card">
+
+          <div class="boiler-card-icon">
+            🔥
+          </div>
+
+          <div>
+            <span>عدد البويلرات العاملة</span>
+            <small>Running Boilers</small>
+          </div>
+
+          <input
+            id="boilers_running"
+            data-save
+            step="any"
+          />
+
+        </div>
+
+
+        <!-- الضواغط -->
+
+        <div class="compressors-card">
+
+          <div class="compressors-header">
+            <span>💨</span>
+
+            <div>
+              <strong>ضواغط الهواء</strong>
+              <small>Air Compressors</small>
+            </div>
+          </div>
+
+
+          <div class="compressor-grid">
+
+            <div class="compressor-item">
+              <span>Air Compressor 1</span>
+              <input
+                id="air_compressor1_hours"
+                data-save
+                step="any"
+              />
+              <b>ساعة</b>
+            </div>
+
+            <div class="compressor-item">
+              <span>Air Compressor 2</span>
+              <input
+                id="air_compressor2_hours"
+                data-save
+                step="any"
+              />
+              <b>ساعة</b>
+            </div>
+
+            <div class="compressor-item">
+              <span>Air Compressor 3</span>
+              <input
+                id="air_compressor3_hours"
+                data-save
+                step="any"
+              />
+              <b>ساعة</b>
+            </div>
+
+            <div class="compressor-item service-compressor">
+              <span>Service Compressor</span>
+              <input
+                id="service_compressor_hours"
+                data-save
+                step="any"
+              />
+              <b>ساعة</b>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- صيانة البويلرات -->
+
+        <div class="boiler-maintenance-card">
+
+          <div class="boiler-card-title">
+            <span>🛠️</span>
+
+            <div>
+              <strong>صيانة البويلرات</strong>
+              <small>Boiler Maintenance</small>
+            </div>
+          </div>
+
+          <textarea
+            id="boilers_maintenance"
+            data-save
+            rows="4"
+            placeholder="اكتب أعمال الصيانة، الأعطال، الاستبدالات والإجراءات التصحيحية..."
+          ></textarea>
+
+        </div>
+
+
+        <!-- ملاحظات الريان -->
+
+        <div class="boiler-notes-card">
+
+          <div class="boiler-card-title">
+
+            <span>📝</span>
+
+            <div>
+              <strong>ملاحظات مراجل الريان</strong>
+              <small>Rayan Boilers Notes</small>
+            </div>
+
+          </div>
+
+
+          <textarea
+            id="boilers_notes"
+            data-save
+            rows="4"
+            placeholder="اكتب ملاحظات مراجل الريان..."
+          ></textarea>
+
+
+          <div class="boiler-upload-row">
+
+            <label
+              for="boilers_notes_upload"
+              class="power-upload-btn"
+            >
+              📎 إرفاق صورة أو ملف
+            </label>
+
+            <input
+              type="file"
+              accept="image/*,application/pdf"
+              id="boilers_notes_upload"
+              data-factory="powerstation"
+              data-field="boilers_notes"
+              multiple
+              style="display:none"
+              onchange="uploadNoteImage(this)"
+            />
+
+            <a
+              id="boilers_notes_link"
+              target="_blank"
+              class="power-file-link"
+              style="display:none"
+            >
+              👁 عرض الملف
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </details>
+
+
+<!-- ======================================================= -->
+<!--                    اعتماد القسم                         -->
+<!-- ======================================================= -->
+
+<div class="power-approval-area">
+
+  <div class="approval-info">
+
+    <span class="approval-icon">
+      ✅
+    </span>
+
+    <div>
+      <strong>اعتماد تقرير محطات الطاقة والنفط الأسود</strong>
+
+      <small>
+        تأكد من إدخال جميع البيانات والملاحظات قبل اعتماد القسم
+      </small>
+    </div>
+
+  </div>
+
+  <button
+    id="approvePowerBtn"
+    class="power-approve-btn"
+    onclick="approvePowerSection()"
+  >
+    <span>✓</span>
+    <span>اعتماد القسم</span>
+  </button>
+
+</div>
+
+</section>
 
       <!-- ===================================== -->
       <!-- مصنع السكر -->
@@ -6290,211 +7138,402 @@
         </details>
 
         <!-- الجودة والسلامة -->
+<!-- ========================================================= -->
+<!--              الجودة والسلامة - مصنع الأعلاف               -->
+<!-- ========================================================= -->
 
-        <!-- ========================================================= -->
-        <!--                  الجودة والسلامة - مصنع الأعلاف           -->
-        <!-- ========================================================= -->
+<details open class="feed-quality-section">
+  <summary>🛡️ الجودة والسلامة</summary>
 
-        <details open class="feed-quality-section">
-          <summary>🛡️ الجودة والسلامة</summary>
+  <div class="details-content feed-quality-content">
 
-          <div class="details-content">
-            <!-- ================================================= -->
-            <!--                    قسم الجودة                     -->
-            <!-- ================================================= -->
+    <!-- ================= قسم الجودة ================= -->
 
-            <div class="feed-qc-card feed-quality-card">
-              <div class="feed-qc-header">
-                <div class="feed-qc-icon">🔬</div>
+    <div class="feed-qc-card feed-quality-card">
 
-                <div class="feed-qc-title">
-                  <strong>ملاحظات قسم الجودة</strong>
+      <div class="feed-qc-header">
+        <div class="feed-qc-icon">
+          🔬
+        </div>
 
-                  <span> Quality Control </span>
+        <div class="feed-qc-title">
+          <strong>ملاحظات قسم الجودة</strong>
+          <span>Quality Control</span>
+        </div>
+      </div>
+
+      <div class="feed-qc-body">
+
+        <textarea
+          id="feed_quality_notes"
+          data-save
+          placeholder="اكتب ملاحظات قسم الجودة، نتائج الفحوصات، حالات عدم المطابقة أو أي ملاحظات تخص جودة الإنتاج..."
+        ></textarea>
+
+        <div class="feed-attachment-area">
+
+          <label
+            for="feed_quality_notes_image"
+            class="feed-upload-btn"
+          >
+            📎 إرفاق ملف
+          </label>
+
+          <input
+            type="file"
+            multiple
+            accept="image/*,application/pdf"
+            id="feed_quality_notes_image"
+            data-factory="feed"
+            data-field="feed_quality_notes"
+            onchange="uploadNoteImage(this)"
+            style="display:none"
+          />
+
+          <a
+            id="feed_quality_notes_link"
+            target="_blank"
+            class="feed-file-link"
+            style="display:none"
+          >
+            👁 عرض الملف
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ================= قسم السلامة ================= -->
+
+    <div class="feed-qc-card feed-safety-card">
+
+      <div class="feed-qc-header">
+
+        <div class="feed-qc-icon">
+          🦺
+        </div>
+
+        <div class="feed-qc-title">
+          <strong>ملاحظات قسم السلامة</strong>
+          <span>Health & Safety</span>
+        </div>
+
+      </div>
+
+      <div class="feed-qc-body">
+
+        <textarea
+          id="feed_safety_notes"
+          data-save
+          placeholder="اكتب ملاحظات قسم السلامة، المخاطر، الحوادث، إجراءات السلامة أو أعمال المعالجة والمتابعة..."
+        ></textarea>
+
+        <div class="feed-attachment-area">
+
+          <label
+            for="feed_safety_notes_image"
+            class="feed-upload-btn"
+          >
+            📎 إرفاق ملف
+          </label>
+
+          <input
+            type="file"
+            multiple
+            accept="image/*,application/pdf"
+            id="feed_safety_notes_image"
+            data-factory="feed"
+            data-field="feed_safety_notes"
+            onchange="uploadNoteImage(this)"
+            style="display:none"
+          />
+
+          <a
+            id="feed_safety_notes_link"
+            target="_blank"
+            class="feed-file-link"
+            style="display:none"
+          >
+            👁 عرض الملف
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</details>
+
+
+<!-- ========================================================= -->
+<!--                    الملاحظات العامة                        -->
+<!-- ========================================================= -->
+
+<details open class="feed-general-notes-section">
+
+  <summary>📝 الملاحظات العامة</summary>
+
+  <div class="details-content">
+
+    <div class="feed-general-notes-card">
+
+      <div class="feed-general-notes-header">
+
+        <div class="feed-general-icon">
+          📝
+        </div>
+
+        <div>
+          <strong>ملاحظات مصنع الأعلاف</strong>
+          <span>ملاحظات تشغيلية وإدارية عامة</span>
+        </div>
+
+      </div>
+
+      <textarea
+        class="notes"
+        id="feed_notes"
+        data-save
+        placeholder="اكتب هنا أي ملاحظات عامة تخص مصنع الأعلاف، الإنتاج، التشغيل، الصيانة أو أي موضوع آخر..."
+      ></textarea>
+
+    </div>
+
+  </div>
+
+</details>
+
+
+<!-- ========================================================= -->
+<!--                     اعتماد قسم الأعلاف                     -->
+<!-- ========================================================= -->
+
+<div class="feed-approval-area">
+
+  <button
+    id="approveFeedBtn"
+    class="feed-approve-btn"
+    onclick="approveSection('feed')"
+  >
+    <span>✓</span>
+    اعتماد قسم الأعلاف
+  </button>
+
+</div>
+
+      <section id="waterfiltration" class="section water-dashboard-section">
+        <h2 class="water-main-title">
+          <span class="water-main-icon">💧</span>
+
+          <span>
+            محطات التصفية والمعالجة
+            <small>Water Treatment & Filtration</small>
+          </span>
+        </h2>
+
+        <div class="water-dashboard-grid">
+          <!-- =====================================================
+             محطة مصنع السكر
+             ===================================================== -->
+
+          <details open class="water-station-card sugar-water-station">
+            <summary class="water-station-summary">
+              <div class="water-station-summary-main">
+                <div class="water-station-icon">🏭</div>
+
+                <div class="water-station-title">
+                  <strong> محطة مصنع السكر </strong>
+
+                  <span> محطة التصفية والمعالجة </span>
                 </div>
               </div>
 
-              <div class="feed-qc-body">
+              <div class="water-station-badge">💧 سجل المحطة</div>
+            </summary>
+
+            <div class="details-content water-station-content">
+              <!-- المسار الزخرفي -->
+
+              <div class="water-process-line">
+                <div class="water-process-node">
+                  <span>💧</span>
+                  <small>المحطة</small>
+                </div>
+
+                <div class="water-process-connector"></div>
+
+                <div class="water-process-node">
+                  <span>🔧</span>
+                  <small>الصيانة</small>
+                </div>
+
+                <div class="water-process-connector"></div>
+
+                <div class="water-process-node">
+                  <span>📝</span>
+                  <small>الملاحظات</small>
+                </div>
+              </div>
+
+              <!-- الصيانة -->
+
+              <div class="water-entry-card maintenance-card">
+                <div class="water-entry-header">
+                  <div class="water-entry-icon">🛠️</div>
+
+                  <div>
+                    <strong> صيانات المحطة </strong>
+
+                    <span> أعمال الصيانة والإصلاح والمعالجة </span>
+                  </div>
+                </div>
+
                 <textarea
-                  id="feed_quality_notes"
+                  id="water_sugar_maintenance"
+                  class="water-notes water-dashboard-textarea"
+                  placeholder="اكتب أعمال الصيانة المنفذة، الأعطال، الاستبدالات أو الإجراءات التصحيحية..."
                   data-save
-                  placeholder="اكتب ملاحظات قسم الجودة، نتائج الفحوصات، حالات عدم المطابقة أو أي ملاحظات تخص جودة الإنتاج..."
                 ></textarea>
-
-                <div class="feed-attachment-area">
-                  <label for="feed_quality_notes_image" class="feed-upload-btn">
-                    📎 إرفاق ملف
-                  </label>
-
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*,application/pdf"
-                    id="feed_quality_notes_image"
-                    data-factory="feed"
-                    data-field="feed_quality_notes"
-                    onchange="uploadNoteImage(this)"
-                    style="display: none"
-                  />
-
-                  <a
-                    id="feed_quality_notes_link"
-                    target="_blank"
-                    class="feed-file-link"
-                    style="display: none"
-                  >
-                    👁 عرض الملف
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- ================================================= -->
-            <!--                    قسم السلامة                    -->
-            <!-- ================================================= -->
-
-            <div class="feed-qc-card feed-safety-card">
-              <div class="feed-qc-header">
-                <div class="feed-qc-icon">🦺</div>
-
-                <div class="feed-qc-title">
-                  <strong>ملاحظات قسم السلامة</strong>
-
-                  <span> Health & Safety </span>
-                </div>
               </div>
 
-              <div class="feed-qc-body">
+              <!-- الملاحظات -->
+
+              <div class="water-entry-card notes-card">
+                <div class="water-entry-header">
+                  <div class="water-entry-icon">📝</div>
+
+                  <div>
+                    <strong> ملاحظات المحطة </strong>
+
+                    <span> الحالة التشغيلية والملاحظات اليومية </span>
+                  </div>
+                </div>
+
                 <textarea
-                  id="feed_safety_notes"
+                  id="water_sugar_notes"
+                  class="water-notes water-dashboard-textarea"
+                  placeholder="اكتب الملاحظات التشغيلية أو أي حالة تحتاج متابعة..."
                   data-save
-                  placeholder="اكتب ملاحظات قسم السلامة، المخاطر، الحوادث، إجراءات السلامة أو أعمال المعالجة والمتابعة..."
                 ></textarea>
-
-                <div class="feed-attachment-area">
-                  <label for="feed_safety_notes_image" class="feed-upload-btn">
-                    📎 إرفاق ملف
-                  </label>
-
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*,application/pdf"
-                    id="feed_safety_notes_image"
-                    data-factory="feed"
-                    data-field="feed_safety_notes"
-                    onchange="uploadNoteImage(this)"
-                    style="display: none"
-                  />
-
-                  <a
-                    id="feed_safety_notes_link"
-                    target="_blank"
-                    class="feed-file-link"
-                    style="display: none"
-                  >
-                    👁 عرض الملف
-                  </a>
-                </div>
               </div>
             </div>
-          </div>
-        </details>
+          </details>
 
-        <!-- ========================================================= -->
-        <!--                     الملاحظات العامة                      -->
-        <!-- ========================================================= -->
+          <!-- =====================================================
+             محطة مصنع الزيت
+             ===================================================== -->
 
-        <details open class="feed-general-notes-section">
-          <summary>📝 الملاحظات العامة</summary>
+          <details open class="water-station-card oil-water-station">
+            <summary class="water-station-summary">
+              <div class="water-station-summary-main">
+                <div class="water-station-icon">🌻</div>
 
-          <div class="details-content">
-            <div class="feed-general-notes-card">
-              <div class="feed-general-notes-header">
-                <div class="feed-general-icon">📝</div>
+                <div class="water-station-title">
+                  <strong> محطة مصنع الزيت </strong>
 
-                <div>
-                  <strong>ملاحظات مصنع الأعلاف</strong>
-
-                  <span> ملاحظات تشغيلية وإدارية عامة </span>
+                  <span> محطة التصفية والمعالجة </span>
                 </div>
               </div>
 
-              <textarea
-                class="notes"
-                id="feed_notes"
-                data-save
-                placeholder="اكتب هنا أي ملاحظات عامة تخص مصنع الأعلاف، الإنتاج، التشغيل، الصيانة أو أي موضوع آخر..."
-              ></textarea>
+              <div class="water-station-badge">💧 سجل المحطة</div>
+            </summary>
+
+            <div class="details-content water-station-content">
+              <!-- المسار الزخرفي -->
+
+              <div class="water-process-line">
+                <div class="water-process-node">
+                  <span>💧</span>
+                  <small>المحطة</small>
+                </div>
+
+                <div class="water-process-connector"></div>
+
+                <div class="water-process-node">
+                  <span>🔧</span>
+                  <small>الصيانة</small>
+                </div>
+
+                <div class="water-process-connector"></div>
+
+                <div class="water-process-node">
+                  <span>📝</span>
+                  <small>الملاحظات</small>
+                </div>
+              </div>
+
+              <!-- الصيانة -->
+
+              <div class="water-entry-card maintenance-card">
+                <div class="water-entry-header">
+                  <div class="water-entry-icon">🛠️</div>
+
+                  <div>
+                    <strong> صيانات المحطة </strong>
+
+                    <span> أعمال الصيانة والإصلاح والمعالجة </span>
+                  </div>
+                </div>
+
+                <textarea
+                  id="water_oil_maintenance"
+                  class="water-notes water-dashboard-textarea"
+                  placeholder="اكتب أعمال الصيانة المنفذة، الأعطال، الاستبدالات أو الإجراءات التصحيحية..."
+                  data-save
+                ></textarea>
+              </div>
+
+              <!-- الملاحظات -->
+
+              <div class="water-entry-card notes-card">
+                <div class="water-entry-header">
+                  <div class="water-entry-icon">📝</div>
+
+                  <div>
+                    <strong> ملاحظات المحطة </strong>
+
+                    <span> الحالة التشغيلية والملاحظات اليومية </span>
+                  </div>
+                </div>
+
+                <textarea
+                  id="water_oil_notes"
+                  class="water-notes water-dashboard-textarea"
+                  placeholder="اكتب الملاحظات التشغيلية أو أي حالة تحتاج متابعة..."
+                  data-save
+                ></textarea>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- =====================================================
+     اعتماد القسم
+     ===================================================== -->
+
+        <div class="water-approval-area">
+          <div class="water-approval-info">
+            <div class="water-approval-icon">✓</div>
+
+            <div>
+              <strong> اعتماد تقرير محطات التصفية </strong>
+
+              <span> تأكد من مراجعة بيانات المحطتين قبل الاعتماد </span>
             </div>
           </div>
-        </details>
-        <button id="approveFeedBtn" onclick="approveSection('feed')">
-          ✅ اعتماد قسم الأعلاف
-        </button>
-      </section>
 
-      <section id="waterfiltration" class="section">
-        <h2>💧 محطات التصفية والمعالجة</h2>
-
-        <details open>
-          <summary>🏭 محطة مصنع السكر</summary>
-
-          <div class="details-content">
-            <label>🛠 صيانات المحطة</label>
-
-            <textarea
-              id="water_sugar_maintenance"
-              class="water-notes"
-              placeholder="اكتب أعمال الصيانة..."
-              data-save
-            ></textarea>
-
-            <label>📝 ملاحظات المحطة</label>
-
-            <textarea
-              id="water_sugar_notes"
-              class="water-notes"
-              placeholder="اكتب الملاحظات..."
-              data-save
-            ></textarea>
-          </div>
-        </details>
-
-        <br />
-
-        <details open>
-          <summary>🏭 محطة مصنع الزيت</summary>
-
-          <div class="details-content">
-            <label>🛠 صيانات المحطة</label>
-
-            <textarea
-              id="water_oil_maintenance"
-              class="water-notes"
-              placeholder="اكتب أعمال الصيانة..."
-              data-save
-            ></textarea>
-
-            <label>📝 ملاحظات المحطة</label>
-
-            <textarea
-              id="water_oil_notes"
-              class="water-notes"
-              placeholder="اكتب الملاحظات..."
-              data-save
-            ></textarea>
-          </div>
-        </details>
-
-        <br />
-
-        <button
-          id="approvewaterBtn"
-          onclick="approveSection('waterfiltration')"
-        >
-          ✅ اعتماد قسم التصفية
-        </button>
+          <button
+            type="button"
+            id="approvewaterBtn"
+            class="water-approve-btn"
+            onclick="approveSection('waterfiltration')"
+          >
+            ✅ اعتماد قسم التصفية
+          </button>
+        </div>
       </section>
 
       <!-- الأرشيف -->

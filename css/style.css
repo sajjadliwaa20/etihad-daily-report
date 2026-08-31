@@ -8497,3 +8497,3791 @@ body.dark-mode details summary {
     min-height: 130px;
   }
 }
+
+/* =========================================================
+   WATER FILTRATION DASHBOARD
+   محطات التصفية والمعالجة
+   ========================================================= */
+
+/* =========================================================
+   عنوان القسم
+   ========================================================= */
+
+.water-main-title {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  margin: 8px 0 22px;
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+.water-main-title > span:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  font-size: 25px;
+
+  font-weight: 900;
+}
+
+.water-main-title small {
+  font-size: 11px;
+
+  font-weight: 500;
+
+  letter-spacing: 1px;
+
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.water-main-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(44, 160, 210, 0.22),
+    rgba(20, 100, 160, 0.12)
+  );
+
+  border: 1px solid rgba(90, 190, 235, 0.25);
+
+  font-size: 27px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================================================
+   شبكة المحطات
+   ========================================================= */
+
+.water-dashboard-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+
+  align-items: start;
+}
+
+/* =========================================================
+   بطاقة المحطة
+   ========================================================= */
+
+.water-station-card {
+  overflow: hidden;
+
+  margin: 0 !important;
+
+  border-radius: 20px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(40, 48, 59, 0.98),
+    rgba(31, 39, 49, 0.98)
+  );
+
+  border: 1px solid rgba(115, 140, 160, 0.28);
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.water-station-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.26);
+}
+
+/* =========================================================
+   رأس المحطة
+   ========================================================= */
+
+.water-station-summary {
+  display: flex !important;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 17px 20px !important;
+
+  border-radius: 0 !important;
+
+  cursor: pointer;
+
+  list-style: none;
+}
+
+.water-station-summary::-webkit-details-marker {
+  display: none;
+}
+
+.water-station-summary-main {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+}
+
+.water-station-icon {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.11);
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  font-size: 23px;
+}
+
+.water-station-title {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  text-align: right;
+}
+
+.water-station-title strong {
+  color: #ffffff;
+
+  font-size: 18px;
+
+  font-weight: 900;
+}
+
+.water-station-title span {
+  font-size: 11px;
+
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* محطة السكر */
+
+.sugar-water-station .water-station-summary {
+  background: linear-gradient(135deg, #14533f, #1b7554);
+}
+
+/* محطة الزيت */
+
+.oil-water-station .water-station-summary {
+  background: linear-gradient(135deg, #134f43, #176f62);
+}
+
+/* =========================================================
+   Badge
+   ========================================================= */
+
+.water-station-badge {
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   جسم المحطة
+   ========================================================= */
+
+.water-station-content {
+  padding: 18px !important;
+}
+
+/* =========================================================
+   المسار البصري
+   ========================================================= */
+
+.water-process-line {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  padding: 11px 15px;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.water-process-node {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 3px;
+
+  min-width: 62px;
+}
+
+.water-process-node span {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(35, 140, 180, 0.13);
+
+  border: 1px solid rgba(60, 170, 210, 0.18);
+
+  font-size: 17px;
+}
+
+.water-process-node small {
+  font-size: 10px;
+
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.water-process-connector {
+  flex: 1;
+
+  max-width: 85px;
+
+  height: 2px;
+
+  margin: 0 5px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(50, 160, 200, 0.12),
+    rgba(70, 190, 215, 0.55),
+    rgba(50, 160, 200, 0.12)
+  );
+}
+
+/* =========================================================
+   بطاقات الإدخال
+   ========================================================= */
+
+.water-entry-card {
+  position: relative;
+
+  overflow: hidden;
+
+  margin-bottom: 14px;
+
+  padding: 15px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(51, 60, 72, 0.92),
+    rgba(43, 51, 62, 0.94)
+  );
+
+  border: 1px solid rgba(125, 145, 160, 0.25);
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+/* الخط الجانبي */
+
+.water-entry-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 4px;
+  height: 100%;
+}
+
+/* الصيانة */
+
+.maintenance-card::before {
+  background: linear-gradient(#d9a833, #b68219);
+}
+
+/* الملاحظات */
+
+.notes-card::before {
+  background: linear-gradient(#3ba3c9, #247da4);
+}
+
+/* =========================================================
+   عنوان البطاقة الداخلية
+   ========================================================= */
+
+.water-entry-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  margin-bottom: 12px;
+}
+
+.water-entry-icon {
+  width: 38px;
+  height: 38px;
+
+  min-width: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  font-size: 18px;
+}
+
+.water-entry-header > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.water-entry-header strong {
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 800;
+}
+
+.water-entry-header span {
+  color: rgba(255, 255, 255, 0.46);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   Textarea
+   ========================================================= */
+
+.water-dashboard-textarea {
+  display: block;
+
+  width: 100% !important;
+
+  min-height: 135px !important;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  background: #343e4b !important;
+
+  color: #f5f7fa !important;
+
+  border: 1px solid rgba(125, 145, 160, 0.38);
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.water-dashboard-textarea::placeholder {
+  color: rgba(235, 240, 245, 0.34);
+}
+
+.water-dashboard-textarea:focus {
+  background: #3b4654 !important;
+
+  border-color: rgba(60, 170, 205, 0.75);
+
+  box-shadow: 0 0 0 3px rgba(50, 150, 190, 0.1);
+}
+
+/* =========================================================
+   اعتماد القسم
+   ========================================================= */
+
+.water-approval-area {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-top: 22px;
+
+  padding: 17px 20px;
+
+  border-radius: 17px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(30, 75, 60, 0.3),
+    rgba(35, 50, 60, 0.7)
+  );
+
+  border: 1px solid rgba(70, 175, 120, 0.24);
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+}
+
+.water-approval-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.water-approval-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: rgba(55, 170, 105, 0.16);
+
+  border: 1px solid rgba(70, 190, 120, 0.25);
+
+  color: #8de0ad;
+
+  font-size: 22px;
+
+  font-weight: 900;
+}
+
+.water-approval-info > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.water-approval-info strong {
+  color: #ffffff;
+
+  font-size: 15px;
+}
+
+.water-approval-info span {
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 11px;
+}
+
+.water-approve-btn {
+  min-width: 185px;
+
+  padding: 12px 19px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  background: linear-gradient(135deg, #268753, #32995e);
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 15px rgba(30, 130, 75, 0.2);
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.water-approve-btn:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+
+  box-shadow: 0 8px 20px rgba(30, 130, 75, 0.28);
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .water-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .water-station-summary {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .water-station-badge {
+    align-self: flex-start;
+  }
+
+  .water-station-content {
+    padding: 12px !important;
+  }
+
+  .water-process-line {
+    padding: 10px 5px;
+  }
+
+  .water-process-connector {
+    max-width: 45px;
+  }
+
+  .water-approval-area {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .water-approve-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   زر اعتماد قسم التصفية
+   ========================================================= */
+
+.water-approval-area {
+  display: flex !important;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin-top: 22px;
+
+  padding: 18px 20px;
+
+  border-radius: 17px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(25, 75, 58, 0.55),
+    rgba(38, 48, 59, 0.95)
+  );
+
+  border: 1px solid rgba(70, 175, 120, 0.3);
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* معلومات الاعتماد */
+
+.water-approval-info {
+  display: flex !important;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex: 1;
+}
+
+.water-approval-icon {
+  width: 44px;
+
+  height: 44px;
+
+  min-width: 44px;
+
+  display: flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(60, 180, 110, 0.16);
+
+  border: 1px solid rgba(70, 190, 120, 0.3);
+
+  color: #9ae6b5;
+
+  font-size: 22px;
+
+  font-weight: 900;
+}
+
+.water-approval-info > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.water-approval-info strong {
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 800;
+}
+
+.water-approval-info span {
+  color: rgba(255, 255, 255, 0.52);
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   زر الاعتماد
+   ========================================================= */
+
+#approvewaterBtn.water-approve-btn {
+  display: flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  visibility: visible !important;
+
+  opacity: 1 !important;
+
+  position: relative;
+
+  z-index: 10;
+
+  flex-shrink: 0;
+
+  min-width: 200px;
+
+  min-height: 48px;
+
+  padding: 12px 22px;
+
+  margin: 0;
+
+  border: none !important;
+
+  border-radius: 12px;
+
+  background: linear-gradient(135deg, #278b55, #35a565) !important;
+
+  color: #ffffff !important;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(35, 135, 80, 0.28);
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#approvewaterBtn.water-approve-btn:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+
+  box-shadow: 0 9px 24px rgba(35, 135, 80, 0.38);
+}
+
+#approvewaterBtn.water-approve-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   الهاتف
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .water-approval-area {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  #approvewaterBtn.water-approve-btn {
+    width: 100%;
+
+    min-width: 0;
+  }
+}
+
+/* =========================================================
+   الجودة والسلامة - مصنع الأعلاف
+   ========================================================= */
+
+.feed-quality-section,
+.feed-general-notes-section {
+  margin-top: 18px;
+}
+
+/* =========================================================
+   محتوى قسم الجودة والسلامة
+   ========================================================= */
+
+.feed-quality-content {
+  padding: 18px;
+}
+
+/* =========================================================
+   بطاقات الجودة والسلامة
+   ========================================================= */
+
+.feed-qc-card {
+  position: relative;
+  overflow: hidden;
+
+  margin-bottom: 18px;
+  padding: 0;
+
+  background: linear-gradient(
+    145deg,
+    rgba(54, 64, 78, 0.98),
+    rgba(43, 51, 63, 0.98)
+  );
+
+  border: 1px solid rgba(130, 145, 160, 0.2);
+  border-radius: 18px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* خط جانبي للجودة */
+
+.feed-quality-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 5px;
+  height: 100%;
+
+  background: #d9a928;
+
+  border-radius: 0 18px 18px 0;
+}
+
+/* خط جانبي للسلامة */
+
+.feed-safety-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 5px;
+  height: 100%;
+
+  background: #29a9d6;
+
+  border-radius: 0 18px 18px 0;
+}
+
+.feed-qc-card:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(130, 170, 190, 0.35);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+/* =========================================================
+   رأس البطاقة
+   ========================================================= */
+
+.feed-qc-header {
+  display: flex;
+
+  align-items: center;
+  gap: 14px;
+
+  padding: 18px 22px 14px;
+
+  direction: rtl;
+}
+
+/* الأيقونة */
+
+.feed-qc-icon {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+
+  background: rgba(255, 255, 255, 0.055);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 14px;
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* عنوان البطاقة */
+
+.feed-qc-title {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  text-align: right;
+}
+
+.feed-qc-title strong {
+  font-size: 18px;
+
+  font-weight: 700;
+
+  color: #f4f7fa;
+}
+
+.feed-qc-title span {
+  font-size: 12px;
+
+  color: #9ca9b7;
+
+  letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   جسم البطاقة
+   ========================================================= */
+
+.feed-qc-body {
+  padding: 0 22px 22px;
+}
+
+/* =========================================================
+   حقول الملاحظات
+   ========================================================= */
+
+.feed-qc-body textarea {
+  width: 100%;
+
+  min-height: 165px;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
+  padding: 18px;
+
+  background: rgba(55, 65, 79, 0.92);
+
+  color: #f1f5f9;
+
+  border: 1px solid rgba(145, 160, 175, 0.28);
+
+  border-radius: 13px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  text-align: right;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.feed-qc-body textarea::placeholder {
+  color: #8995a3;
+
+  opacity: 1;
+}
+
+.feed-qc-body textarea:focus {
+  background: rgba(59, 70, 85, 0.98);
+
+  border-color: rgba(64, 174, 215, 0.65);
+
+  box-shadow: 0 0 0 3px rgba(64, 174, 215, 0.1);
+}
+
+/* =========================================================
+   منطقة المرفقات
+   ========================================================= */
+
+.feed-attachment-area {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 15px;
+
+  flex-wrap: wrap;
+}
+
+/* زر إرفاق الملف */
+
+.feed-upload-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 125px;
+
+  padding: 9px 18px;
+
+  background: linear-gradient(135deg, #244c9b, #1f438d);
+
+  color: #ffffff;
+
+  border: 1px solid rgba(100, 145, 230, 0.25);
+
+  border-radius: 9px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.feed-upload-btn:hover {
+  transform: translateY(-1px);
+
+  background: linear-gradient(135deg, #2c5bb4, #244c9b);
+
+  box-shadow: 0 5px 14px rgba(20, 65, 145, 0.28);
+}
+
+.feed-upload-btn:active {
+  transform: translateY(0);
+}
+
+/* رابط الملف */
+
+.feed-file-link {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  background: rgba(255, 255, 255, 0.055);
+
+  color: #d9e5ef;
+
+  border: 1px solid rgba(150, 165, 180, 0.2);
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.feed-file-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   الملاحظات العامة
+   ========================================================= */
+
+.feed-general-notes-section {
+  margin-top: 18px;
+}
+
+.feed-general-notes-card {
+  position: relative;
+
+  padding: 22px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(50, 60, 73, 0.98),
+    rgba(43, 51, 63, 0.98)
+  );
+
+  border: 1px solid rgba(130, 145, 160, 0.2);
+
+  border-radius: 17px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+
+.feed-general-notes-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 15px;
+
+  direction: rtl;
+}
+
+.feed-general-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+
+  background: rgba(255, 255, 255, 0.055);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 12px;
+}
+
+.feed-general-notes-header > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  text-align: right;
+}
+
+.feed-general-notes-header strong {
+  font-size: 17px;
+
+  color: #f3f6f9;
+}
+
+.feed-general-notes-header span {
+  font-size: 12px;
+
+  color: #98a5b3;
+}
+
+/* حقل الملاحظات العامة */
+
+.feed-general-notes-card textarea.notes {
+  width: 100%;
+
+  min-height: 170px;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
+  padding: 18px;
+
+  background: rgba(55, 65, 79, 0.92);
+
+  color: #f1f5f9;
+
+  border: 1px solid rgba(145, 160, 175, 0.28);
+
+  border-radius: 13px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  text-align: right;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.feed-general-notes-card textarea.notes::placeholder {
+  color: #8995a3;
+}
+
+.feed-general-notes-card textarea.notes:focus {
+  border-color: rgba(64, 174, 215, 0.65);
+
+  box-shadow: 0 0 0 3px rgba(64, 174, 215, 0.1);
+}
+
+/* =========================================================
+   منطقة زر الاعتماد
+   ========================================================= */
+
+.feed-approval-area {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 18px;
+
+  padding: 2px 0 8px;
+}
+
+/* زر الاعتماد */
+
+.feed-approve-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-width: 155px;
+
+  padding: 11px 22px;
+
+  background: linear-gradient(135deg, #3b8d57, #34834f);
+
+  color: #ffffff;
+
+  border: 1px solid rgba(100, 200, 125, 0.2);
+
+  border-radius: 11px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 14px rgba(20, 80, 40, 0.2);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.feed-approve-btn span {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+
+  background: rgba(255, 255, 255, 0.14);
+
+  border-radius: 50%;
+
+  font-size: 13px;
+}
+
+.feed-approve-btn:hover {
+  transform: translateY(-2px);
+
+  background: linear-gradient(135deg, #449d61, #398a54);
+
+  box-shadow: 0 8px 20px rgba(20, 90, 45, 0.3);
+}
+
+.feed-approve-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   الشاشات الصغيرة
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .feed-quality-content {
+    padding: 12px;
+  }
+
+  .feed-qc-header {
+    padding: 15px;
+  }
+
+  .feed-qc-body {
+    padding: 0 15px 17px;
+  }
+
+  .feed-qc-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-basis: 42px;
+
+    font-size: 21px;
+  }
+
+  .feed-qc-title strong {
+    font-size: 16px;
+  }
+
+  .feed-qc-body textarea {
+    min-height: 140px;
+
+    font-size: 14px;
+  }
+
+  .feed-general-notes-card {
+    padding: 15px;
+  }
+
+  .feed-general-notes-card textarea.notes {
+    min-height: 145px;
+  }
+
+  .feed-approve-btn {
+    width: 100%;
+    max-width: 220px;
+  }
+}
+
+/* =========================================================
+   SALES DASHBOARD
+   قسم المبيعات والأرصدة
+   ========================================================= */
+
+#salesMarketing.sales-dashboard {
+  position: relative;
+  padding: 22px;
+  margin-top: 24px;
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(39, 47, 58, 0.98),
+    rgba(29, 36, 46, 0.98)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================================
+   العنوان الرئيسي
+   ========================================================= */
+
+.sales-dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 4px 8px 18px;
+}
+
+.sales-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sales-main-icon {
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  font-size: 27px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(39, 139, 94, 0.28),
+    rgba(18, 91, 69, 0.18)
+  );
+
+  border: 1px solid rgba(75, 190, 135, 0.25);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sales-title-wrap h2 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 800;
+  color: #f5f7fa;
+}
+
+.sales-title-wrap p {
+  margin: 5px 0 0;
+  color: rgba(220, 228, 235, 0.55);
+  font-size: 13px;
+}
+
+.sales-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 15px;
+
+  border-radius: 30px;
+
+  background: rgba(53, 177, 112, 0.1);
+  border: 1px solid rgba(53, 177, 112, 0.2);
+
+  color: rgba(235, 255, 245, 0.8);
+  font-size: 13px;
+}
+
+.sales-status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #54d68c;
+
+  box-shadow: 0 0 10px rgba(84, 214, 140, 0.7);
+}
+
+/* =========================================================
+   القسم الرئيسي
+   ========================================================= */
+
+.sales-main-section {
+  border: 0;
+  margin: 0;
+}
+
+.sales-main-summary {
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 60px;
+  padding: 0 22px;
+
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #267f52, #328d57);
+
+  color: #fff;
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.sales-main-summary:hover {
+  transform: translateY(-1px);
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+.sales-main-summary::-webkit-details-marker {
+  display: none;
+}
+
+.sales-main-summary > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.summary-icon {
+  font-size: 21px;
+}
+
+.summary-arrow {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* =========================================================
+   شبكة المنتجات
+   ========================================================= */
+
+.sales-dashboard-content {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-top: 18px;
+}
+
+/* =========================================================
+   بطاقة المنتج
+   ========================================================= */
+
+.sales-product-card {
+  overflow: hidden;
+
+  margin: 0;
+
+  border-radius: 19px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(52, 61, 73, 0.98),
+    rgba(43, 51, 62, 0.98)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.sales-product-card:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(255, 255, 255, 0.13);
+
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.27);
+}
+
+/* =========================================================
+   رأس البطاقة
+   ========================================================= */
+
+.sales-product-header {
+  list-style: none;
+
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 12px 17px;
+
+  cursor: pointer;
+
+  background: linear-gradient(
+    135deg,
+    rgba(22, 94, 72, 0.96),
+    rgba(24, 113, 80, 0.88)
+  );
+
+  color: #fff;
+}
+
+.sales-product-header::-webkit-details-marker {
+  display: none;
+}
+
+.sales-product-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sales-product-icon {
+  width: 45px;
+  height: 45px;
+
+  flex: 0 0 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  font-size: 23px;
+}
+
+.sales-product-title strong {
+  display: block;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.sales-product-title span {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sales-product-tag {
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  background: rgba(255, 255, 255, 0.09);
+
+  border: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+/* =========================================================
+   هوية الزيت
+   ========================================================= */
+
+.oil-sales-card .sales-product-header {
+  background: linear-gradient(135deg, #7d5a18, #a77b20);
+}
+
+.oil-sales-card {
+  --sales-accent: #e1ad38;
+}
+
+.oil-tag {
+  background: rgba(255, 214, 91, 0.14);
+  border-color: rgba(255, 214, 91, 0.2);
+}
+
+/* =========================================================
+   هوية الطحين
+   ========================================================= */
+
+.flour-sales-card .sales-product-header {
+  background: linear-gradient(135deg, #806329, #a78239);
+}
+
+.flour-sales-card {
+  --sales-accent: #e2bd65;
+}
+
+.flour-tag {
+  background: rgba(255, 224, 143, 0.13);
+}
+
+/* =========================================================
+   هوية الأعلاف
+   ========================================================= */
+
+.feed-sales-card .sales-product-header {
+  background: linear-gradient(135deg, #236f49, #318453);
+}
+
+.feed-sales-card {
+  --sales-accent: #55c477;
+}
+
+.feed-tag {
+  background: rgba(101, 221, 135, 0.13);
+}
+
+/* =========================================================
+   محتوى البطاقة
+   ========================================================= */
+
+.sales-product-body {
+  padding: 18px;
+}
+
+.sales-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* =========================================================
+   الجداول
+   ========================================================= */
+
+.sales-modern-table {
+  width: 100%;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  overflow: hidden;
+
+  border-radius: 13px;
+
+  background: rgba(19, 25, 33, 0.35);
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sales-modern-table th {
+  padding: 13px 10px;
+
+  background: rgba(8, 72, 54, 0.85);
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sales-modern-table th small {
+  font-size: 10px;
+  opacity: 0.65;
+}
+
+.sales-modern-table td {
+  height: 61px;
+
+  padding: 7px 10px;
+
+  text-align: center;
+
+  color: #e5e9ef;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  transition: background 0.2s ease;
+}
+
+.sales-modern-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.sales-modern-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.sales-modern-table td:first-child {
+  font-weight: 700;
+  text-align: right;
+  padding-right: 16px;
+}
+
+/* =========================================================
+   حقول الإدخال
+   ========================================================= */
+
+.sales-modern-table input {
+  width: min(120px, 90%);
+
+  min-height: 42px;
+
+  padding: 7px 12px;
+
+  box-sizing: border-box;
+
+  border-radius: 11px;
+
+  border: 1px solid rgba(174, 194, 215, 0.25);
+
+  background: rgba(239, 245, 251, 0.96);
+
+  color: #193b70;
+
+  text-align: center;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  outline: none;
+
+  transition:
+    width 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.sales-modern-table input:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.sales-modern-table input:focus {
+  transform: scale(1.03);
+
+  border-color: rgba(83, 207, 146, 0.85);
+
+  box-shadow: 0 0 0 3px rgba(83, 207, 146, 0.12);
+}
+
+/* =========================================================
+   حقول الإجمالي
+   ========================================================= */
+
+.sales-modern-table tfoot td {
+  padding: 10px;
+
+  background: rgba(7, 18, 27, 0.55);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sales-modern-table tfoot td:first-child {
+  color: #ffffff;
+
+  font-size: 14px;
+}
+
+.sales-modern-table tfoot input {
+  background: linear-gradient(135deg, #eef4fb, #dce8f4);
+
+  color: #173a70;
+
+  border-color: rgba(255, 255, 255, 0.25);
+
+  font-size: 16px;
+}
+
+/* =========================================================
+   القيم غير المتاحة
+   ========================================================= */
+
+.not-applicable {
+  color: rgba(255, 255, 255, 0.28) !important;
+
+  font-size: 18px !important;
+}
+
+/* =========================================================
+   المنتجات
+   ========================================================= */
+
+.product-name {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+/* =========================================================
+   بطاقات الزيت الفرعية
+   ========================================================= */
+
+.oil-sales-body {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.75fr)
+    minmax(0, 1.25fr);
+
+  gap: 15px;
+}
+
+.oil-sub-card {
+  padding: 14px;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.wide-oil-card {
+  grid-column: 1 / -1;
+}
+
+.oil-sub-header {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+.oil-sub-header > span {
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(221, 171, 57, 0.12);
+
+  font-size: 20px;
+}
+
+.oil-sub-header strong {
+  display: block;
+
+  color: #f3f5f7;
+
+  font-size: 14px;
+}
+
+.oil-sub-header small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   الجدول الصغير
+   ========================================================= */
+
+.compact-table input {
+  width: 135px;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .sales-dashboard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .oil-sales-body {
+    grid-template-columns: 1fr;
+  }
+
+  .wide-oil-card {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  #salesMarketing.sales-dashboard {
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .sales-dashboard-header {
+    align-items: flex-start;
+  }
+
+  .sales-status {
+    display: none;
+  }
+
+  .sales-title-wrap h2 {
+    font-size: 20px;
+  }
+
+  .sales-product-header {
+    padding: 11px;
+  }
+
+  .sales-product-tag {
+    display: none;
+  }
+
+  .sales-modern-table {
+    min-width: 560px;
+  }
+
+  .sales-modern-table input {
+    width: 110px;
+  }
+}
+
+/* ============================================================
+   POWER STATION DASHBOARD
+   محطات الطاقة والنفط الأسود
+   ============================================================ */
+
+.power-dashboard-section {
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(32, 145, 112, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(0, 150, 220, 0.08),
+      transparent 28%
+    ),
+    #272e37;
+
+  border-radius: 22px;
+  padding: 22px;
+  margin-top: 20px;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.power-dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 22px 26px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #143f34, #176149 48%, #183d38);
+
+  border: 1px solid rgba(82, 203, 165, 0.25);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+
+  margin-bottom: 18px;
+}
+
+.power-header-icon {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 32px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.12);
+}
+
+.power-header-title {
+  flex: 1;
+}
+
+.power-header-title h2 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.power-header-title span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #9fd9c6;
+
+  font-size: 12px;
+
+  direction: ltr;
+}
+
+.power-header-status {
+  padding: 9px 15px;
+
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  color: #d7f5e9;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.power-status-dot {
+  display: inline-block;
+
+  width: 8px;
+  height: 8px;
+
+  margin-left: 7px;
+
+  border-radius: 50%;
+
+  background: #46d58c;
+
+  box-shadow: 0 0 10px rgba(70, 213, 140, 0.8);
+}
+
+/* ============================================================
+   MAIN PANEL
+   ============================================================ */
+
+.power-main-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  background: #2b333d;
+}
+
+.power-panel-summary {
+  list-style: none;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 17px 22px;
+
+  background: linear-gradient(90deg, #143f35, #1d7255);
+
+  color: white;
+}
+
+.power-panel-summary::-webkit-details-marker {
+  display: none;
+}
+
+.power-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.power-summary-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: rgba(0, 0, 0, 0.18);
+
+  font-size: 23px;
+}
+
+.power-summary-left strong {
+  display: block;
+
+  font-size: 17px;
+}
+
+.power-summary-left small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a9d8c7;
+
+  font-size: 10px;
+
+  direction: ltr;
+}
+
+.power-summary-badge {
+  padding: 8px 13px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.oil-badge {
+  color: #f5d58b;
+}
+
+.power-panel-content {
+  padding: 20px;
+}
+
+/* ============================================================
+   SECTION HEADINGS
+   ============================================================ */
+
+.power-section-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 7px 0 15px;
+}
+
+.heading-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #173f35;
+
+  border: 1px solid rgba(72, 197, 158, 0.18);
+
+  font-size: 20px;
+}
+
+.power-section-heading h3 {
+  margin: 0;
+
+  color: #f2f5f7;
+
+  font-size: 17px;
+}
+
+.power-section-heading span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #8d9aa8;
+
+  font-size: 10px;
+
+  direction: ltr;
+}
+
+/* ============================================================
+   BLACK OIL KPI
+   ============================================================ */
+
+.oil-kpi-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 13px;
+
+  margin-bottom: 28px;
+}
+
+.oil-kpi-card {
+  position: relative;
+
+  min-height: 125px;
+
+  padding: 16px;
+
+  border-radius: 17px;
+
+  background: linear-gradient(145deg, #323b46, #29313a);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.oil-kpi-card:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(224, 169, 57, 0.45);
+}
+
+.oil-kpi-card::after {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 4px;
+
+  background: #d09a32;
+}
+
+.oil-kpi-top {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.oil-kpi-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(0, 0, 0, 0.2);
+
+  font-size: 18px;
+}
+
+.oil-kpi-label {
+  color: #eef2f4;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.oil-kpi-label small {
+  display: block;
+
+  color: #8793a0;
+
+  font-size: 9px;
+
+  margin-top: 3px;
+
+  direction: ltr;
+}
+
+.oil-kpi-value {
+  margin-top: 14px;
+}
+
+.oil-kpi-value input,
+.oil-grand-total input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: none;
+
+  border-radius: 10px;
+
+  padding: 10px 12px;
+
+  text-align: center;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  background: #edf3f8;
+
+  color: #172e50;
+
+  outline: none;
+}
+
+.oil-kpi-unit {
+  position: absolute;
+
+  bottom: 13px;
+  left: 16px;
+
+  color: #a1aab4;
+
+  font-size: 10px;
+}
+
+.oil-total-card {
+  background: linear-gradient(145deg, #303a40, #20272c);
+}
+
+.oil-total-card::after {
+  background: #35b88b;
+}
+
+.total-value input {
+  color: #126a4e;
+}
+
+/* ============================================================
+   GRAND TOTAL
+   ============================================================ */
+
+.oil-grand-total {
+  grid-column: 1 / -1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 17px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(110deg, #111b20, #1b352e);
+
+  border: 1px solid rgba(65, 193, 147, 0.25);
+}
+
+.grand-total-icon {
+  width: 47px;
+  height: 47px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: rgba(211, 156, 48, 0.13);
+
+  font-size: 23px;
+}
+
+.grand-total-text {
+  flex: 1;
+}
+
+.grand-total-text span {
+  display: block;
+
+  color: #f5f6f7;
+
+  font-weight: 800;
+
+  font-size: 14px;
+}
+
+.grand-total-text small {
+  color: #8d9ba4;
+
+  font-size: 9px;
+
+  direction: ltr;
+}
+
+.oil-grand-total input {
+  width: 220px;
+}
+
+.oil-grand-total b {
+  color: #d5ae57;
+
+  font-size: 11px;
+}
+
+/* ============================================================
+   EQUIPMENT
+   ============================================================ */
+
+.equipment-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.equipment-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 15px;
+
+  border-radius: 16px;
+
+  background: #303945;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.equipment-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: rgba(229, 116, 37, 0.12);
+
+  font-size: 21px;
+}
+
+.turbine-icon {
+  background: rgba(38, 159, 211, 0.12);
+}
+
+.equipment-info {
+  flex: 1;
+}
+
+.equipment-info strong {
+  display: block;
+
+  color: #f1f4f6;
+
+  font-size: 13px;
+}
+
+.equipment-info span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #7f8c98;
+
+  font-size: 9px;
+
+  direction: ltr;
+}
+
+.equipment-card input {
+  width: 75px;
+
+  padding: 9px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #edf3f8;
+
+  color: #17355b;
+
+  font-weight: 800;
+
+  text-align: center;
+}
+
+/* ============================================================
+   ELECTRICAL LOAD
+   ============================================================ */
+
+.load-dashboard {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 14px;
+
+  margin-bottom: 25px;
+}
+
+.load-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  border-radius: 17px;
+
+  background: #303945;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.load-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  font-size: 23px;
+
+  background: rgba(39, 155, 213, 0.12);
+}
+
+.load-content {
+  flex: 1;
+}
+
+.load-content span {
+  display: block;
+
+  color: #f1f4f6;
+
+  font-size: 13px;
+
+  font-weight: 800;
+}
+
+.load-content small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #84919d;
+
+  font-size: 9px;
+
+  direction: ltr;
+}
+
+.load-value {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+.load-value input {
+  width: 100px;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #edf3f8;
+
+  color: #193b67;
+
+  font-weight: 800;
+
+  text-align: center;
+}
+
+.load-value b {
+  color: #7d8b97;
+
+  font-size: 10px;
+}
+
+/* ============================================================
+   NOTES
+   ============================================================ */
+
+.power-notes-card {
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: #2f3843;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  margin-bottom: 28px;
+}
+
+.power-notes-header,
+.boiler-card-title,
+.compressors-header,
+.external-station-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.notes-icon,
+.boiler-card-title > span,
+.compressors-header > span,
+.external-station-icon {
+  width: 43px;
+  height: 43px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(37, 168, 211, 0.11);
+
+  font-size: 20px;
+}
+
+.power-notes-header strong,
+.boiler-card-title strong,
+.compressors-header strong,
+.external-station-header strong {
+  display: block;
+
+  color: #f0f3f5;
+
+  font-size: 14px;
+}
+
+.power-notes-header span,
+.boiler-card-title small,
+.compressors-header small,
+.external-station-header span {
+  display: block;
+
+  color: #84919d;
+
+  font-size: 9px;
+
+  margin-top: 3px;
+
+  direction: ltr;
+}
+
+.power-notes-card textarea,
+.boiler-notes-card textarea,
+.boiler-maintenance-card textarea {
+  width: 100%;
+
+  min-height: 125px;
+
+  margin-top: 14px;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: #363f4b;
+
+  border: 1px solid #4b5867;
+
+  color: #f2f5f7;
+
+  outline: none;
+}
+
+.power-notes-card textarea:focus,
+.boiler-notes-card textarea:focus,
+.boiler-maintenance-card textarea:focus {
+  border-color: #2ba980;
+
+  box-shadow: 0 0 0 3px rgba(43, 169, 128, 0.08);
+}
+
+.power-upload-row,
+.boiler-upload-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 13px;
+}
+
+.power-upload-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 9px 16px;
+
+  border-radius: 9px;
+
+  background: #2259bd;
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 11px;
+}
+
+.power-file-link {
+  color: #62bff0;
+
+  font-size: 11px;
+
+  text-decoration: none;
+}
+
+/* ============================================================
+   CONSUMPTION
+   ============================================================ */
+
+.consumption-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+}
+
+.consumption-item {
+  position: relative;
+
+  padding: 15px;
+
+  border-radius: 14px;
+
+  background: #303944;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.consumption-item span {
+  display: block;
+
+  min-height: 32px;
+
+  color: #dce2e6;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+.consumption-item input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin-top: 9px;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #edf3f8;
+
+  color: #173a63;
+
+  font-weight: 800;
+
+  text-align: center;
+}
+
+.consumption-item b {
+  position: absolute;
+
+  left: 22px;
+  bottom: 24px;
+
+  color: #8a969f;
+
+  font-size: 9px;
+}
+
+.consumption-total {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 15px 18px;
+
+  margin-top: 12px;
+
+  margin-bottom: 25px;
+
+  border-radius: 15px;
+
+  background: linear-gradient(100deg, #123e32, #1d624c);
+}
+
+.consumption-total span {
+  flex: 1;
+
+  color: white;
+
+  font-weight: 800;
+
+  font-size: 13px;
+}
+
+.consumption-total span small {
+  display: block;
+
+  color: #9bcdbd;
+
+  font-size: 9px;
+
+  direction: ltr;
+}
+
+.consumption-total input {
+  width: 140px;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #edf3f8;
+
+  color: #143b68;
+
+  font-weight: 900;
+
+  text-align: center;
+}
+
+.consumption-total b {
+  color: #a9dfca;
+
+  font-size: 10px;
+}
+
+/* ============================================================
+   EXTERNAL STATIONS
+   ============================================================ */
+
+.external-station-card {
+  margin-top: 15px;
+
+  padding: 17px;
+
+  border-radius: 17px;
+
+  background: #303945;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sahara-card {
+  border-right: 4px solid #c39132;
+}
+
+.diwan-card {
+  border-right: 4px solid #508bb5;
+}
+
+.external-station-header {
+  margin-bottom: 16px;
+}
+
+.external-fields {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+}
+
+.external-fields > div {
+  position: relative;
+}
+
+.external-fields label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #9ba7b1;
+
+  font-size: 10px;
+}
+
+.external-fields input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #edf3f8;
+
+  color: #193c65;
+
+  text-align: center;
+
+  font-weight: 800;
+}
+
+.external-fields small {
+  position: absolute;
+
+  left: 10px;
+
+  bottom: 10px;
+
+  color: #8b98a4;
+
+  font-size: 8px;
+}
+
+/* ============================================================
+   BOILERS
+   ============================================================ */
+
+.boiler-dashboard {
+  display: grid;
+
+  grid-template-columns: 1fr 2fr;
+
+  gap: 14px;
+}
+
+.boiler-main-card,
+.compressors-card,
+.boiler-maintenance-card,
+.boiler-notes-card {
+  padding: 17px;
+
+  border-radius: 17px;
+
+  background: #303945;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.boiler-main-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+}
+
+.boiler-card-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: rgba(226, 110, 36, 0.13);
+
+  font-size: 24px;
+}
+
+.boiler-main-card > div:nth-child(2) {
+  flex: 1;
+}
+
+.boiler-main-card span {
+  display: block;
+
+  color: #f2f4f5;
+
+  font-weight: 800;
+
+  font-size: 12px;
+}
+
+.boiler-main-card small {
+  display: block;
+
+  color: #87939e;
+
+  margin-top: 3px;
+
+  font-size: 9px;
+
+  direction: ltr;
+}
+
+.boiler-main-card input {
+  width: 70px;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #edf3f8;
+
+  color: #173a62;
+
+  text-align: center;
+
+  font-weight: 900;
+}
+
+.compressors-card {
+  grid-column: 2;
+}
+
+.compressor-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 10px;
+
+  margin-top: 14px;
+}
+
+.compressor-item {
+  position: relative;
+
+  padding: 11px;
+
+  border-radius: 11px;
+
+  background: #28313a;
+}
+
+.compressor-item span {
+  display: block;
+
+  color: #b8c1c8;
+
+  font-size: 9px;
+
+  margin-bottom: 6px;
+
+  direction: ltr;
+}
+
+.compressor-item input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 8px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #edf3f8;
+
+  color: #17385e;
+
+  font-weight: 800;
+
+  text-align: center;
+}
+
+.compressor-item b {
+  position: absolute;
+
+  left: 17px;
+  bottom: 18px;
+
+  color: #87939d;
+
+  font-size: 8px;
+}
+
+.boiler-maintenance-card,
+.boiler-notes-card {
+  grid-column: span 1;
+}
+
+.boiler-notes-card {
+  border-right: 4px solid #28a9d3;
+}
+
+.boiler-maintenance-card {
+  border-right: 4px solid #d28d32;
+}
+
+/* ============================================================
+   APPROVAL
+   ============================================================ */
+
+.power-approval-area {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 20px;
+
+  padding: 18px 20px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(110deg, #18232a, #173d32);
+
+  border: 1px solid rgba(60, 187, 142, 0.25);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+}
+
+.approval-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.approval-icon {
+  width: 43px;
+  height: 43px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(57, 196, 143, 0.12);
+
+  font-size: 21px;
+}
+
+.approval-info strong {
+  display: block;
+
+  color: #eef5f2;
+
+  font-size: 13px;
+}
+
+.approval-info small {
+  display: block;
+
+  color: #83958e;
+
+  margin-top: 4px;
+
+  font-size: 9px;
+}
+
+.power-approve-btn {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 12px 24px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  background: linear-gradient(135deg, #35935d, #2ca66f);
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 7px 18px rgba(35, 143, 92, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.power-approve-btn span {
+  font-size: 16px;
+}
+
+.power-approve-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 25px rgba(35, 143, 92, 0.38);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  .oil-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .equipment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .consumption-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .boiler-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .compressors-card {
+    grid-column: auto;
+  }
+
+  .boiler-maintenance-card,
+  .boiler-notes-card {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .power-dashboard-section {
+    padding: 10px;
+  }
+
+  .power-dashboard-header {
+    flex-wrap: wrap;
+  }
+
+  .power-header-status {
+    width: 100%;
+
+    text-align: center;
+  }
+
+  .oil-kpi-grid,
+  .load-dashboard,
+  .consumption-grid,
+  .external-fields,
+  .compressor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .oil-grand-total {
+    flex-wrap: wrap;
+  }
+
+  .oil-grand-total input {
+    width: 100%;
+  }
+
+  .power-approval-area {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .power-approve-btn {
+    justify-content: center;
+  }
+}
+
+/* =========================================================
+   اعتماد قسم محطات الطاقة والنفط الأسود
+   ========================================================= */
+
+.power-approval-area {
+  margin: 28px 0 8px;
+  padding: 22px 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+
+  direction: rtl;
+
+  background: linear-gradient(
+    135deg,
+    rgba(9, 48, 42, 0.96),
+    rgba(14, 39, 42, 0.96)
+  );
+
+  border: 1px solid rgba(48, 190, 140, 0.35);
+  border-radius: 24px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* خط زخرفي */
+.power-approval-area::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 5px;
+
+  background: linear-gradient(to bottom, #42d392, #168f69);
+
+  border-radius: 0 24px 24px 0;
+}
+
+/* معلومات الاعتماد */
+
+.approval-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  flex: 1;
+}
+
+/* أيقونة الاعتماد */
+
+.approval-icon {
+  width: 58px;
+  height: 58px;
+
+  min-width: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+
+  background: rgba(66, 211, 146, 0.14);
+
+  border: 1px solid rgba(66, 211, 146, 0.25);
+
+  border-radius: 16px;
+
+  box-shadow: inset 0 0 15px rgba(66, 211, 146, 0.08);
+}
+
+/* عنوان الاعتماد */
+
+.approval-info strong {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  margin-bottom: 7px;
+}
+
+/* النص التوضيحي */
+
+.approval-info small {
+  display: block;
+
+  color: rgba(220, 235, 230, 0.62);
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   زر الاعتماد
+   ========================================================= */
+
+.power-approve-btn {
+  border: none;
+
+  min-width: 190px;
+  min-height: 54px;
+
+  padding: 0 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  border-radius: 15px;
+
+  background: linear-gradient(135deg, #43c982, #238f5e);
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 7px 20px rgba(35, 143, 94, 0.3);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.power-approve-btn span {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+/* Hover */
+
+.power-approve-btn:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+
+  box-shadow: 0 10px 28px rgba(35, 143, 94, 0.4);
+}
+
+/* الضغط */
+
+.power-approve-btn:active {
+  transform: translateY(0);
+
+  box-shadow: 0 4px 12px rgba(35, 143, 94, 0.25);
+}
+
+/* =========================================================
+   الهاتف
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .power-approval-area {
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 18px;
+  }
+
+  .approval-info {
+    width: 100%;
+  }
+
+  .power-approve-btn {
+    width: 100%;
+  }
+}
+/* =========================================================
+   حقول الإدخال - قسم محطات الطاقة والنفط الأسود
+   ========================================================= */
+
+#powerstation input:not([type="file"]),
+#powerstation select {
+  width: 1750px;
+  min-width: 130px;
+
+  height: 48px;
+
+  padding: 0 16px;
+
+  box-sizing: border-box;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(170, 190, 210, 0.35);
+
+  background: #eef4fa;
+
+  color: #17365d;
+
+  font-family: inherit;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  text-align: center;
+
+  outline: none;
+
+  transition:
+    width 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* عند الضغط داخل الحقل */
+
+#powerstation input:not([type="file"]):focus,
+#powerstation select:focus {
+  border-color: #35bd83;
+
+  box-shadow: 0 0 0 3px rgba(53, 189, 131, 0.16);
+
+  transform: translateY(-1px);
+}
+
+/* الحقول readonly - الإجماليات */
+
+#powerstation input[readonly] {
+  width: 90%;
+
+  background: #eaf2f9;
+
+  color: #17365d;
+
+  font-size: 17px;
+
+  font-weight: 900;
+
+  border-color: rgba(66, 211, 146, 0.35);
+}
+
+/* =========================================================
+   حقول الجداول
+   ========================================================= */
+
+#powerstation .wide-table input,
+#powerstation table input {
+  width: 160px;
+  min-width: 120px;
+
+  height: 48px;
+}
+
+/* الإجماليات */
+
+#powerstation .wide-table input[readonly],
+#powerstation table input[readonly] {
+  width: calc(100% - 30px);
+
+  min-width: 0;
+}
+
+/* =========================================================
+   Textarea
+   ========================================================= */
+
+#powerstation textarea {
+  width: 100%;
+
+  min-height: 110px;
+
+  box-sizing: border-box;
+
+  padding: 15px 18px;
+
+  border-radius: 14px;
+
+  resize: vertical;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  outline: none;
+}
+
+/* الملاحظات الكبيرة */
+
+#powerstation textarea:focus {
+  border-color: #35bd83;
+
+  box-shadow: 0 0 0 3px rgba(53, 189, 131, 0.12);
+}
+/* =========================================================
+   تحسين خلايا البيانات
+   ========================================================= */
+
+#powerstation table td {
+  padding: 12px 16px;
+
+  vertical-align: middle;
+}
+
+/* خلايا القيم */
+
+#powerstation table td:last-child {
+  text-align: center;
+}
+
+/* حقول الإدخال داخل الخلايا */
+
+#powerstation table td input {
+  display: inline-flex;
+
+  margin: 0 auto;
+}
+
+#powerstation #blackoil_union_total_stock {
+  width: calc(100% - 30px);
+
+  height: 52px;
+
+  font-size: 18px;
+
+  font-weight: 900;
+
+  border-radius: 13px;
+}
+
+#powerstation #blackoil_union_power_stock,
+#powerstation #blackoil_union_boiler_stock,
+#powerstation #blackoil_extraction_stock,
+#powerstation #blackoil_sahara_stock,
+#powerstation #blackoil_diwan_stock {
+  width: 150px;
+  min-width: 120px;
+
+  height: 50px;
+
+  font-size: 17px;
+}
+#powerstation #blackoil_total_stock {
+  width: 65%;
+  max-width: 800px;
+  height: 50px;
+}
+
+#powerstation #blackoil_total_stock,
+#powerstation #union_total_use {
+  width: 60% !important;
+  max-width: 750px;
+  height: 50px;
+}
