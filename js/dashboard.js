@@ -2009,5 +2009,187 @@ function updatePackagingStockVisual(type) {
   bar.style.width = percentage + "%";
 }
 
+/* =====================================================
+   تحديث Dashboard المواد الخام - المطحنة
+===================================================== */
+
+function updateFlourRawDashboard() {
+  /* =========================
+       استهلاك الحنطة
+    ========================= */
+
+  const australian =
+    parseFloat(document.getElementById("aus_wheat_use")?.value) || 0;
+
+  const iraqi =
+    parseFloat(document.getElementById("iraq_wheat_use")?.value) || 0;
+
+  const russian =
+    parseFloat(document.getElementById("rus_wheat_use")?.value) || 0;
+
+  const total = australian + iraqi + russian;
+
+  const totalElement = document.getElementById("flour_wheat_consumption_total");
+
+  if (totalElement) {
+    totalElement.textContent = total.toFixed(2);
+  }
+
+  /* =========================
+       أرصدة المواد الخام
+    ========================= */
+
+  updateFlourStockCard("auseti", "aus_stock_fill", "aus_stock_status");
+
+  updateFlourStockCard("ruseti", "rus_stock_fill", "rus_stock_status");
+}
+
+/* =====================================================
+   تحديث بطاقة المخزون
+===================================================== */
+
+function updateFlourStockCard(inputId, fillId, statusId) {
+  const input = document.getElementById(inputId);
+
+  const fill = document.getElementById(fillId);
+
+  const status = document.getElementById(statusId);
+
+  if (!input || !fill || !status) {
+    return;
+  }
+
+  const value = parseFloat(input.value) || 0;
+
+  /*
+       هنا نعتبر 10000 طن مستوى مرجعي
+       للمؤشر البصري فقط.
+
+       لا يغيّر القيمة الحقيقية
+       ولا يدخل في الحسابات.
+    */
+
+  const reference = 10000;
+
+  let percentage = (value / reference) * 100;
+
+  percentage = Math.max(0, Math.min(100, percentage));
+
+  fill.style.width = percentage + "%";
+
+  /* حالة المخزون */
+
+  if (value <= 0) {
+    status.textContent = "نفاد المخزون";
+
+    status.className = "stock-status stock-empty";
+  } else if (value < 1000) {
+    status.textContent = "مخزون منخفض";
+
+    status.className = "stock-status stock-low";
+  } else {
+    status.textContent = "متوفر";
+
+    status.className = "stock-status stock-good";
+  }
+}
+
+function toggleSeparationStation() {
+  const status = document.getElementById("separation_status")?.value;
+
+  const card = document.getElementById("separationStatusCard");
+
+  const statusText = document.getElementById("separationStatusText");
+
+  const statusIcon = document.getElementById("separationStatusIcon");
+
+  const modeDisplay = document.getElementById("stationModeDisplay");
+
+  if (!card || !statusText || !statusIcon || !modeDisplay) {
+    return;
+  }
+
+  /* إزالة الحالات السابقة */
+
+  card.classList.remove("running", "stopped");
+
+  /* =========================
+       بالـخدمة
+       ========================= */
+
+  if (status === "running") {
+    card.classList.add("running");
+
+    statusIcon.textContent = "⚙️";
+
+    statusText.textContent = "المحطة بالـخدمة";
+
+    modeDisplay.textContent = "بالـخدمة";
+
+    modeDisplay.style.color = "#62d989";
+
+    modeDisplay.style.borderColor = "rgba(72,190,105,0.45)";
+
+    modeDisplay.style.background = "rgba(40,130,70,0.15)";
+  } else if (status === "stopped") {
+
+  /* =========================
+       خارج الخدمة
+       ========================= */
+    card.classList.add("stopped");
+
+    statusIcon.textContent = "⛔";
+
+    statusText.textContent = "المحطة خارج الخدمة";
+
+    modeDisplay.textContent = "خارج الخدمة";
+
+    modeDisplay.style.color = "#ff7777";
+
+    modeDisplay.style.borderColor = "rgba(220,80,80,0.45)";
+
+    modeDisplay.style.background = "rgba(150,45,45,0.15)";
+  } else {
+
+  /* =========================
+       لم يتم الاختيار
+       ========================= */
+    statusIcon.textContent = "⚙️";
+
+    statusText.textContent = "لم يتم تحديد الحالة";
+
+    modeDisplay.textContent = "غير محدد";
+
+    modeDisplay.style.color = "#b7bec2";
+
+    modeDisplay.style.borderColor = "#586572";
+
+    modeDisplay.style.background = "#343d47";
+  }
+
+  /*
+   * مهم:
+   * نترك أي منطق قديم مرتبط بهذه الدالة
+   * يعمل أيضاً.
+   */
+
+  updateSeparationDashboard();
+}
+
+function updateSeparationDashboard() {
+  const acidOil = document.getElementById("separation_acid_oil")?.value;
+
+  /*
+   * هذه الدالة حالياً مخصصة لتحديث
+   * واجهة محطة الفصل.
+   *
+   * ويمكننا لاحقاً إضافة:
+   * - نسبة التشغيل
+   * - مقارنة الإنتاج
+   * - مؤشرات الأداء
+   * - تنبيهات
+   */
+}
+
 /* يبدأ فحص الحقول كل دقيقة */
 setInterval(refreshAllFieldStaleStyles, 60 * 1000);
