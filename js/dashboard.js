@@ -1594,5 +1594,420 @@ function scheduleFieldHistoryUpdate(fieldId, factory, value, email) {
   window.fieldHistoryTimers.set(key, timer);
 }
 
+function updateRefineryTotals() {
+  /* =====================================
+       منتجات خط التكرير 1
+    ===================================== */
+
+  const products = [
+    {
+      id: "refinery1_sunflower",
+      color: "#f5c542",
+      percentId: "refinery1PercentSunflower",
+    },
+
+    {
+      id: "refinery1_olein",
+      color: "#f28c28",
+      percentId: "refinery1PercentOlein",
+    },
+
+    {
+      id: "refinery1_ghee",
+      color: "#ffe08a",
+      percentId: "refinery1PercentGhee",
+    },
+
+    {
+      id: "refinery1_stearin",
+      color: "#aeb8c4",
+      percentId: "refinery1PercentStearin",
+    },
+
+    {
+      id: "refinery1_shortening",
+      color: "#d9b36c",
+      percentId: "refinery1PercentShortening",
+    },
+  ];
+
+  /* =====================================
+       قراءة الكميات
+    ===================================== */
+
+  const values = products.map((product) => {
+    const element = document.getElementById(product.id);
+
+    return {
+      ...product,
+
+      value: parseFloat(element?.value) || 0,
+    };
+  });
+
+  /* =====================================
+       مجموع خط 1
+    ===================================== */
+
+  const refinery1Total = values.reduce((sum, item) => sum + item.value, 0);
+
+  /* =====================================
+       تحديث مجموع خط 1
+    ===================================== */
+
+  const refinery1 = document.getElementById("refinery1");
+
+  if (refinery1) {
+    refinery1.value = refinery1Total.toFixed(2);
+  }
+
+  /* =====================================
+       حساب النسب
+    ===================================== */
+
+  let currentAngle = 0;
+
+  const gradientParts = [];
+
+  values.forEach((item) => {
+    let percentage = 0;
+
+    if (refinery1Total > 0) {
+      percentage = (item.value / refinery1Total) * 100;
+    }
+
+    /* تحديث النسبة بجانب الاسم */
+
+    const percentElement = document.getElementById(item.percentId);
+
+    if (percentElement) {
+      percentElement.textContent = percentage.toFixed(1) + "%";
+    }
+
+    /* =================================
+           بناء قطاع الحلقة
+        ================================= */
+
+    if (percentage > 0) {
+      const start = currentAngle;
+
+      const end = currentAngle + percentage * 3.6;
+
+      gradientParts.push(`${item.color} ${start}deg ${end}deg`);
+
+      currentAngle = end;
+    }
+  });
+
+  /* =====================================
+       تحديث الحلقة
+    ===================================== */
+
+  const ring = document.getElementById("refinery1Ring");
+
+  if (ring) {
+    if (refinery1Total > 0) {
+      ring.style.background = `conic-gradient(
+                    ${gradientParts.join(",")}
+                )`;
+    } else {
+      ring.style.background = "conic-gradient(#303640 0deg 360deg)";
+    }
+  }
+
+  /* =====================================
+       إجمالي خط 2
+    ===================================== */
+
+  const refinery2 =
+    parseFloat(document.getElementById("refinery2")?.value) || 0;
+
+  /* =====================================
+       إجمالي الخطين
+    ===================================== */
+
+  const grandTotal = refinery1Total + refinery2;
+
+  /* الحقل الأصلي */
+
+  const refineryTotal = document.getElementById("refinery_total");
+
+  if (refineryTotal) {
+    refineryTotal.value = grandTotal.toFixed(2);
+  }
+
+  /* الرقم الظاهر */
+
+  const grandTotalDisplay = document.getElementById(
+    "refineryGrandTotalDisplay",
+  );
+
+  if (grandTotalDisplay) {
+    grandTotalDisplay.textContent = grandTotal.toFixed(2);
+  }
+
+  /* =====================================
+       الرقم داخل الحلقة
+    ===================================== */
+
+  const ringTotal = document.getElementById("refinery1RingTotal");
+
+  if (ringTotal) {
+    ringTotal.textContent = refinery1Total.toFixed(2);
+  }
+
+  /* =====================================
+       تحديث Dashboard الحالي
+    ===================================== */
+
+  if (typeof updateDashboard === "function") {
+    updateDashboard();
+  }
+}
+
+function updateOilStockDashboard() {
+  const oils = [
+    {
+      input: "raw_sunflower_stock",
+      display: "sunflowerStockDisplay",
+      liquid: "sunflowerLiquid",
+    },
+
+    {
+      input: "raw_olein_stock",
+      display: "oleinStockDisplay",
+      liquid: "oleinLiquid",
+    },
+
+    {
+      input: "raw_palm_stock",
+      display: "palmStockDisplay",
+      liquid: "palmLiquid",
+    },
+
+    {
+      input: "raw_stearin_stock",
+      display: "stearinStockDisplay",
+      liquid: "stearinLiquid",
+    },
+  ];
+
+  oils.forEach((oil) => {
+    const input = document.getElementById(oil.input);
+
+    const display = document.getElementById(oil.display);
+
+    const liquid = document.getElementById(oil.liquid);
+
+    if (!input || !display || !liquid) {
+      return;
+    }
+
+    const value = parseFloat(input.value) || 0;
+
+    display.textContent = value.toLocaleString("en-US", {
+      maximumFractionDigits: 3,
+    });
+
+    /*
+     * المستوى البصري للخزان
+     *
+     * حاليًا:
+     * 0 طن = 0%
+     * 10000 طن أو أكثر = 100%
+     *
+     * يمكن تغيير 10000 لاحقًا
+     * حسب السعة الحقيقية للخزانات.
+     */
+
+    const MAX_STOCK = 10000;
+
+    let percentage = (value / MAX_STOCK) * 100;
+
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    liquid.style.height = percentage + "%";
+  });
+}
+
+function updateExtractionGauge(value) {
+  const gauge = document.querySelector(".extraction-gauge");
+
+  if (!gauge) return;
+
+  let percentage = parseFloat(value) || 0;
+
+  percentage = Math.max(0, Math.min(100, percentage));
+
+  const degree = percentage * 3.6;
+
+  gauge.style.background = `conic-gradient(
+            #37b878 0deg,
+            #37b878 ${degree}deg,
+            rgba(255,255,255,0.08) ${degree}deg,
+            rgba(255,255,255,0.08) 360deg
+        )`;
+}
+
+/* =========================================
+   Production Stop Dashboard
+========================================= */
+
+/* تحديث حالة بطاقة التوقف */
+
+function updateStopCard(element) {
+  const card = element.closest(".stop-card");
+
+  if (!card) return;
+
+  const durationInput = card.querySelector("input[data-save]");
+
+  const dot = card.querySelector(".stop-status-dot");
+
+  const statusText = card.querySelector(".stop-status-text");
+
+  const minutes = parseFloat(durationInput?.value) || 0;
+
+  /* إزالة الحالات القديمة */
+
+  card.classList.remove("stop-normal", "stop-warning", "stop-danger");
+
+  /* لا يوجد توقف */
+
+  if (minutes <= 0) {
+    if (dot) {
+      dot.style.background = "#6c757d";
+    }
+
+    if (statusText) {
+      statusText.textContent = "لا يوجد توقف";
+    }
+
+    return;
+  }
+
+  /* توقف طبيعي */
+
+  if (minutes < 30) {
+    card.classList.add("stop-normal");
+
+    if (dot) {
+      dot.style.background = "#49b86b";
+    }
+
+    if (statusText) {
+      statusText.textContent = "توقف قصير";
+    }
+  } else if (minutes < 120) {
+    /* توقف يحتاج انتباه */
+    card.classList.add("stop-warning");
+
+    if (dot) {
+      dot.style.background = "#e7b84b";
+    }
+
+    if (statusText) {
+      statusText.textContent = "يحتاج متابعة";
+    }
+  } else {
+    /* توقف طويل */
+    card.classList.add("stop-danger");
+
+    if (dot) {
+      dot.style.background = "#e45757";
+    }
+
+    if (statusText) {
+      statusText.textContent = "توقف طويل";
+    }
+  }
+}
+
+/* =========================================
+   أزرار أسباب التوقف
+========================================= */
+
+function setStopCause(textareaId, prefix) {
+  const textarea = document.getElementById(textareaId);
+
+  if (!textarea) return;
+
+  const current = textarea.value.trim();
+
+  /*
+       إذا كان الحقل فارغًا
+       نضع التصنيف مباشرة.
+    */
+
+  if (!current) {
+    textarea.value = prefix;
+  } else {
+    /*
+       إذا كان يحتوي نصًا،
+       لا نمسحه.
+    */
+    /*
+           إذا لم يكن التصنيف موجودًا
+           نضيفه في البداية.
+        */
+
+    if (!current.startsWith(prefix)) {
+      textarea.value = prefix + current;
+    }
+  }
+
+  textarea.focus();
+
+  /*
+       مهم جدًا:
+       حتى يتعرف نظام الحفظ الحالي
+       على أن قيمة الحقل تغيرت.
+    */
+
+  textarea.dispatchEvent(
+    new Event("input", {
+      bubbles: true,
+    }),
+  );
+}
+
+/* =========================================
+   تحديث مؤشر موقف التعبئة
+========================================= */
+
+function updatePackagingStockVisual(type) {
+  let input;
+  let bar;
+
+  if (type === "flour") {
+    input = document.getElementById("flour_packaging_stock");
+
+    bar = document.getElementById("flour_packaging_stock_bar");
+  } else if (type === "bran") {
+    input = document.getElementById("bran_packaging_stock");
+
+    bar = document.getElementById("bran_packaging_stock_bar");
+  }
+
+  if (!input || !bar) {
+    return;
+  }
+
+  const value = parseFloat(input.value) || 0;
+
+  /*
+       الحد المرجعي للمؤشر البصري.
+       يمكن تغييره لاحقًا حسب سعة المخزن الحقيقية.
+    */
+
+  const referenceStock = 1000;
+
+  let percentage = (value / referenceStock) * 100;
+
+  percentage = Math.max(0, Math.min(percentage, 100));
+
+  bar.style.width = percentage + "%";
+}
+
 /* يبدأ فحص الحقول كل دقيقة */
 setInterval(refreshAllFieldStaleStyles, 60 * 1000);

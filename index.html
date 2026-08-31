@@ -2606,223 +2606,638 @@ text-decoration:none;
 
             <details open>
 
-                <summary>أرصدة الزيوت الخام</summary>
+    <summary>أرصدة الزيوت الخام</summary>
 
-                <div class="details-content">
+    <div class="details-content">
 
-                    <table class="wide-table">
+        <div class="oil-stock-dashboard">
 
-                        <tr>
-                            <th>نوع الخام</th>
-                            <th>الوارد (طن)</th>
-                            <th>المستهلك (طن)</th>
-                            <th>الرصيد الحالي (طن)</th>
-                        </tr>
+            <!-- زيت عباد الشمس -->
+            <div class="oil-stock-card sunflower">
 
-                        <tr>
-                            <td>زيت عباد الشمس الخام</td>
+                <div class="oil-card-header">
+                    <span class="oil-icon">🛢️</span>
+                    <span>زيت عباد الشمس الخام</span>
+                </div>
 
-                            <td>
-                                <input id="raw_sunflower_in" data-save step="any">
-                            </td>
+                <div class="oil-tank-area">
 
-                            <td>
-                                <input id="raw_sunflower_used" data-save step="any">
-                            </td>
+                    <div class="oil-tank">
 
-                            <td>
-                                <input id="raw_sunflower_stock" data-save step="any">
-                            </td>
+                        <div class="oil-tank-liquid"
+                             id="sunflowerLiquid">
+                        </div>
 
-                        </tr>
+                        <div class="oil-tank-value">
+                            <span id="sunflowerStockDisplay">0</span>
+                            <small>طن</small>
+                        </div>
 
-                        <tr>
-                            <td>زيت الأولين الخام</td>
+                    </div>
 
-                            <td>
-                                <input id="raw_olein_in" data-save step="any">
-                            </td>
-
-                            <td>
-                                <input id="raw_olein_used" data-save step="any">
-                            </td>
-
-                            <td>
-                                <input id="raw_olein_stock" data-save step="any">
-                            </td>
-
-                        </tr>
-
-                        <tr>
-                            <td>زيت النخيل الخام</td>
-
-                            <td>
-                                <input id="raw_palm_in" data-save step="any">
-                            </td>
-
-                            <td>
-                                <input id="raw_palm_used" data-save step="any">
-                            </td>
-
-                            <td>
-                                <input id="raw_palm_stock" data-save step="any">   
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-    <td>زيت الستيارين الخام</td>
-
-    <td>
-        <input id="raw_stearin_in" data-save step="any">
-    </td>
-
-    <td>
-        <input id="raw_stearin_used" data-save step="any">
-    </td>
-
-    <td>
-        <input id="raw_stearin_stock" data-save step="any">
-    </td>
-
-</tr>
-
-                    </table>
+                    <div class="oil-tank-label">
+                        الرصيد الحالي
+                    </div>
 
                 </div>
 
-            </details>
+                <div class="oil-inputs">
 
+                    <div class="oil-input-box">
+                        <label>الوارد</label>
+
+                        <input
+                            id="raw_sunflower_in"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+
+                    <div class="oil-input-box">
+                        <label>المستهلك</label>
+
+                        <input
+                            id="raw_sunflower_used"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+
+                    <div class="oil-input-box stock-input">
+                        <label>الرصيد الحالي</label>
+
+                        <input
+                            id="raw_sunflower_stock"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- زيت الأولين -->
+            <div class="oil-stock-card olein">
+
+                <div class="oil-card-header">
+                    <span class="oil-icon">🛢️</span>
+                    <span>زيت الأولين الخام</span>
+                </div>
+
+                <div class="oil-tank-area">
+
+                    <div class="oil-tank">
+
+                        <div class="oil-tank-liquid"
+                             id="oleinLiquid">
+                        </div>
+
+                        <div class="oil-tank-value">
+                            <span id="oleinStockDisplay">0</span>
+                            <small>طن</small>
+                        </div>
+
+                    </div>
+
+                    <div class="oil-tank-label">
+                        الرصيد الحالي
+                    </div>
+
+                </div>
+
+                <div class="oil-inputs">
+
+                    <div class="oil-input-box">
+                        <label>الوارد</label>
+
+                        <input
+                            id="raw_olein_in"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+
+                    <div class="oil-input-box">
+                        <label>المستهلك</label>
+
+                        <input
+                            id="raw_olein_used"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+
+                    <div class="oil-input-box stock-input">
+                        <label>الرصيد الحالي</label>
+
+                        <input
+                            id="raw_olein_stock"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- زيت النخيل -->
+            <div class="oil-stock-card palm">
+
+                <div class="oil-card-header">
+                    <span class="oil-icon">🛢️</span>
+                    <span>زيت النخيل الخام</span>
+                </div>
+
+                <div class="oil-tank-area">
+
+                    <div class="oil-tank">
+
+                        <div class="oil-tank-liquid"
+                             id="palmLiquid">
+                        </div>
+
+                        <div class="oil-tank-value">
+                            <span id="palmStockDisplay">0</span>
+                            <small>طن</small>
+                        </div>
+
+                    </div>
+
+                    <div class="oil-tank-label">
+                        الرصيد الحالي
+                    </div>
+
+                </div>
+
+                <div class="oil-inputs">
+
+                    <div class="oil-input-box">
+                        <label>الوارد</label>
+
+                        <input
+                            id="raw_palm_in"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+
+                    <div class="oil-input-box">
+                        <label>المستهلك</label>
+
+                        <input
+                            id="raw_palm_used"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+
+                    <div class="oil-input-box stock-input">
+                        <label>الرصيد الحالي</label>
+
+                        <input
+                            id="raw_palm_stock"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- زيت الستيارين -->
+            <div class="oil-stock-card stearin">
+
+                <div class="oil-card-header">
+                    <span class="oil-icon">🛢️</span>
+                    <span>زيت الستيارين الخام</span>
+                </div>
+
+                <div class="oil-tank-area">
+
+                    <div class="oil-tank">
+
+                        <div class="oil-tank-liquid"
+                             id="stearinLiquid">
+                        </div>
+
+                        <div class="oil-tank-value">
+                            <span id="stearinStockDisplay">0</span>
+                            <small>طن</small>
+                        </div>
+
+                    </div>
+
+                    <div class="oil-tank-label">
+                        الرصيد الحالي
+                    </div>
+
+                </div>
+
+                <div class="oil-inputs">
+
+                    <div class="oil-input-box">
+                        <label>الوارد</label>
+
+                        <input
+                            id="raw_stearin_in"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+
+                    <div class="oil-input-box">
+                        <label>المستهلك</label>
+
+                        <input
+                            id="raw_stearin_used"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+
+                    <div class="oil-input-box stock-input">
+                        <label>الرصيد الحالي</label>
+
+                        <input
+                            id="raw_stearin_stock"
+                            data-save
+                            step="any"
+                            oninput="updateOilStockDashboard();">
+
+                        <span>طن</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</details>
             <!-- انتاج خطي التكرير -->
 
             <details open>
 
                 <summary>إنتاج خطوط التكرير</summary>
 
-                <div class="details-content">
+               <div class="details-content">
 
-                    <table>
+    <!-- =========================
+         خط التكرير 1
+    ========================== -->
 
-                        <tr>
+    <div class="refinery-line-card">
 
-    <th>الخط</th>
-    <th>نوع الزيت</th>
-    <th>الإنتاج اليومي (طن)</th>
+        <div class="refinery-line-header">
+            <div>
+                <span class="refinery-line-number">01</span>
+                <div>
+                    <h3>خط التكرير 1</h3>
+                </div>
+            </div>
+        </div>
 
-</tr>
 
-                        <tr>
+        <div class="refinery-line-body">
 
-    <td>خط التكرير 1</td>
 
-    <td>
+            <!-- =========================
+                 حقول الإنتاج
+            ========================== -->
 
-        <select id="refinery1_type" data-save>
+            <div class="refinery-inputs">
 
-            <option value="">اختر النوع</option>
+                <div class="refinery-product-row">
 
-            <option>زيت عباد الشمس</option>
+                    <span class="oil-color sunflower"></span>
 
-            <option>زيت الأولين</option>
+                    <span class="oil-name">
+                        زيت عباد الشمس
+                    </span>
 
-            <option>السمنة</option>
+                    <input
+                        id="refinery1_sunflower"
+                        data-save
+                        step="any"
+                        oninput="updateRefineryTotals();">
 
-            <option>زيت الستيارين</option>
+                    <span class="oil-unit">طن</span>
 
-            <option>الشورتنينغ</option>
+                </div>
 
-        </select>
 
-    </td>
+                <div class="refinery-product-row">
 
-    <td>
+                    <span class="oil-color olein"></span>
 
-        <input
-            id="refinery1"
-            data-save
-            step="any"
-            oninput="updateDashboard();">
+                    <span class="oil-name">
+                        زيت الأولين
+                    </span>
 
-    </td>
+                    <input
+                        id="refinery1_olein"
+                        data-save
+                        step="any"
+                        oninput="updateRefineryTotals();">
 
-</tr>
+                    <span class="oil-unit">طن</span>
 
-                       <tr>
+                </div>
 
-    <td>خط التكرير 2</td>
 
-    <td>
+                <div class="refinery-product-row">
 
-        <select id="refinery2_type" data-save>
+                    <span class="oil-color ghee"></span>
 
-            <option value="">اختر النوع</option>
+                    <span class="oil-name">
+                        السمنة
+                    </span>
 
-            <option>زيت عباد الشمس</option>
+                    <input
+                        id="refinery1_ghee"
+                        data-save
+                        step="any"
+                        oninput="updateRefineryTotals();">
 
-            <option>زيت الأولين</option>
+                    <span class="oil-unit">طن</span>
 
-            <option>السمنة</option>
+                </div>
 
-            <option>زيت الستيارين</option>
 
-            <option>الشورتنينغ</option>
+                <div class="refinery-product-row">
 
-        </select>
+                    <span class="oil-color stearin"></span>
 
-    </td>
+                    <span class="oil-name">
+                        زيت الستيارين
+                    </span>
 
-    <td>
+                    <input
+                        id="refinery1_stearin"
+                        data-save
+                        step="any"
+                        oninput="updateRefineryTotals();">
 
-        <input
-            id="refinery2"
-            data-save
-            step="any"
-            oninput="updateDashboard();">
+                    <span class="oil-unit">طن</span>
 
-    </td>
+                </div>
 
-</tr>
-                        <tr>
 
-    <td colspan="2">
+                <div class="refinery-product-row">
 
-        <b>المجموع</b>
+                    <span class="oil-color shortening"></span>
 
-    </td>
+                    <span class="oil-name">
+                        الشورتنينغ
+                    </span>
 
-    <td>
+                    <input
+                        id="refinery1_shortening"
+                        data-save
+                        step="any"
+                        oninput="updateRefineryTotals();">
+
+                    <span class="oil-unit">طن</span>
+
+                </div>
+
+
+                <!-- المجموع -->
+
+                <div class="refinery-total-row">
+
+                    <span>
+                        إجمالي خط التكرير 1
+                    </span>
+
+                    <input
+                        id="refinery1"
+                        readonly>
+
+                    <span>طن</span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 الحلقة ثلاثية الأبعاد
+            ========================== -->
+
+            <div class="refinery-ring-area">
+
+                <div
+                    id="refinery1Ring"
+                    class="refinery-ring">
+
+                    <div class="refinery-ring-inner">
+
+                        <span class="ring-total-label">
+                            الإجمالي
+                        </span>
+
+                        <strong id="refinery1RingTotal">
+                            0.00
+                        </strong>
+
+                        <span class="ring-total-unit">
+                            طن
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- مفتاح الألوان -->
+
+                <div class="refinery-legend">
+
+                    <div class="legend-item">
+                        <span class="legend-dot sunflower"></span>
+                        <span>عباد الشمس</span>
+                        <b id="refinery1PercentSunflower">0%</b>
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-dot olein"></span>
+                        <span>الأولين</span>
+                        <b id="refinery1PercentOlein">0%</b>
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-dot ghee"></span>
+                        <span>السمنة</span>
+                        <b id="refinery1PercentGhee">0%</b>
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-dot stearin"></span>
+                        <span>الستيارين</span>
+                        <b id="refinery1PercentStearin">0%</b>
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-dot shortening"></span>
+                        <span>الشورتنينغ</span>
+                        <b id="refinery1PercentShortening">0%</b>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         خط التكرير 2
+    ========================== -->
+
+    <div class="refinery-line-card refinery-line-two">
+
+        <div class="refinery-line-header">
+
+            <div>
+
+                <span class="refinery-line-number">
+                    02
+                </span>
+
+                <div>
+
+                    <h3>خط التكرير 2</h3>
+
+                    <small>
+                        مخصص لزيت عباد الشمس
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="refinery-line-body single-product">
+
+            <div class="refinery-product-row">
+
+                <span class="oil-color sunflower"></span>
+
+                <span class="oil-name">
+                    زيت عباد الشمس
+                </span>
+
+                <input
+                    id="refinery2"
+                    data-save
+                    step="any"
+                    oninput="updateRefineryTotals();">
+
+                <span class="oil-unit">
+                    طن
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         إجمالي الخطين
+    ========================== -->
+
+    <div class="refinery-grand-total">
+
+        <span>
+            إجمالي إنتاج خطوط التكرير
+        </span>
+
+        <strong id="refineryGrandTotalDisplay">
+            0.00
+        </strong>
+
+        <span>طن</span>
 
         <input
             id="refinery_total"
             readonly
-            step="any">
+            style="display:none;">
 
-    </td>
+    </div>
 
-</tr>
 
-                    </table>
+    <!-- =========================
+         الملاحظات
+    ========================== -->
 
-                    <br>
+    <br>
 
-                    <table>
+    <table>
 
-                        <tr>
-                            <th>ملاحظات بناية التكرير</th>
-                        </tr>
+        <tr>
+            <th>ملاحظات بناية التكرير</th>
+        </tr>
 
-                        <tr>
-                            <td>
+        <tr>
+            <td>
 
-                                <textarea id="oil_refinery_status" class="station-status" data-save step="any" rows="2">
-</textarea>
+                <textarea
+                    id="oil_refinery_status"
+                    class="station-status"
+                    data-save
+                    rows="2"></textarea>
 
-                            </td>
-                        </tr>
+            </td>
+        </tr>
 
-                    </table>
-                </div>
+    </table>
+
+</div>
 
             </details>
 
@@ -3714,520 +4129,1440 @@ text-decoration:none;
             </details>
 
             <!-- الإنتاج -->
-            <details open>
+<details open>
 
-                <summary>إنتاج المطحنة</summary>
+    <summary>إنتاج المطحنة</summary>
 
-<div class="details-content">
+    <div class="details-content">
 
-    <table id="millTable" class="wide-table">
+        <div class="mill-dashboard">
 
-        <tr>
-            <th>الخط</th>
-            <th>الحنطة المطحونة (طن)</th>
-            <th> F1 (طن) </th>
-            <th> F3 (طن) </th>
-            <th>W.Bran (طن)</th>
-            <th> المجموع (طن) </th>
-        </tr>
+            <!-- =========================
+                 الخط A
+            ========================== -->
+
+            <div class="mill-line-card">
+
+                <div class="mill-line-header">
+
+                    <div class="mill-line-name">
+                        خط A
+                    </div>
+
+                    <div class="mill-line-total">
+                        <span>إجمالي الإنتاج</span>
+
+                        <strong id="millCardTotal1">
+                            0.00
+                        </strong>
+
+                        <small>طن</small>
+                    </div>
+
+                </div>
 
 
-        <!-- A -->
+                <!-- مدخل الخط -->
 
-        <tr>
-            <td>A</td>
+                <div class="mill-input-section">
 
-            <td>
+                    <div class="mill-input-label">
+                        الحنطة المطحونة
+                    </div>
+
+                    <input
+                        id="line1_ground_wheat"
+                        data-save
+                        step="any"
+                        oninput="calcMillTotals()"
+                    >
+
+                    <span>طن</span>
+
+                </div>
+
+
+                <!-- المخرجات -->
+
+                <div class="mill-output-grid">
+
+                    <div class="mill-output flour-f1">
+
+                        <label>F1</label>
+
+                        <input
+                            id="line1_f1"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-f3">
+
+                        <label>F3</label>
+
+                        <input
+                            id="line1_f3"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-bran">
+
+                        <label>W.Bran</label>
+
+                        <input
+                            id="line1_bran"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- الإجمالي الحقيقي المستخدم بالنظام -->
+
                 <input
-                    id="line1_ground_wheat"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line1_f1"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line1_f3"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line1_bran"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input id="line1_total" readonly>
-            </td>
-        </tr>
-
-
-        <!-- B -->
-
-        <tr>
-            <td>B</td>
-
-            <td>
-                <input
-                    id="line2_ground_wheat"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line2_f1"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line2_f3"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line2_bran"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input id="line2_total" readonly>
-            </td>
-        </tr>
-
-
-        <!-- C -->
-
-        <tr>
-            <td>C</td>
-
-            <td>
-                <input
-                    id="line3_ground_wheat"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line3_f1"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line3_f3"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line3_bran"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input id="line3_total" readonly>
-            </td>
-        </tr>
-
-
-        <!-- D -->
-
-        <tr>
-            <td>D</td>
-
-            <td>
-                <input
-                    id="line4_ground_wheat"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line4_f1"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line4_f3"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line4_bran"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input id="line4_total" readonly>
-            </td>
-        </tr>
-
-
-        <!-- E -->
-
-        <tr>
-            <td>E</td>
-
-            <td>
-                <input
-                    id="line5_ground_wheat"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line5_f1"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line5_f3"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line5_bran"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input id="line5_total" readonly>
-            </td>
-        </tr>
-
-
-        <!-- F -->
-
-        <tr>
-            <td>F</td>
-
-            <td>
-                <input
-                    id="line6_ground_wheat"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line6_f1"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line6_f3"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input
-                    id="line6_bran"
-                    data-save
-                    step="any"
-                    onkeyup="calcMillTotals()"
-                >
-            </td>
-
-            <td>
-                <input id="line6_total" readonly>
-            </td>
-        </tr>
-
-
-        <!-- المجموع الكلي -->
-
-        <tr>
-
-            <td>
-                <strong>المجموع الكلي</strong>
-            </td>
-
-            <td>
-                <input
-                    id="flour_total_ground_wheat"
+                    id="line1_total"
                     readonly
-                    step="any"
+                    class="mill-hidden-total"
                 >
-            </td>
 
-            <td>
+            </div>
+
+
+
+            <!-- =========================
+                 الخط B
+            ========================== -->
+
+            <div class="mill-line-card">
+
+                <div class="mill-line-header">
+
+                    <div class="mill-line-name">
+                        خط B
+                    </div>
+
+                    <div class="mill-line-total">
+
+                        <span>إجمالي الإنتاج</span>
+
+                        <strong id="millCardTotal2">
+                            0.00
+                        </strong>
+
+                        <small>طن</small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mill-input-section">
+
+                    <div class="mill-input-label">
+                        الحنطة المطحونة
+                    </div>
+
+                    <input
+                        id="line2_ground_wheat"
+                        data-save
+                        step="any"
+                        oninput="calcMillTotals()"
+                    >
+
+                    <span>طن</span>
+
+                </div>
+
+
+                <div class="mill-output-grid">
+
+                    <div class="mill-output flour-f1">
+
+                        <label>F1</label>
+
+                        <input
+                            id="line2_f1"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-f3">
+
+                        <label>F3</label>
+
+                        <input
+                            id="line2_f3"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-bran">
+
+                        <label>W.Bran</label>
+
+                        <input
+                            id="line2_bran"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+                </div>
+
+
                 <input
-                    id="flour_total_f1"
+                    id="line2_total"
                     readonly
-                    step="any"
+                    class="mill-hidden-total"
                 >
-            </td>
 
-            <td>
+            </div>
+
+
+
+            <!-- =========================
+                 الخط C
+            ========================== -->
+
+            <div class="mill-line-card">
+
+                <div class="mill-line-header">
+
+                    <div class="mill-line-name">
+                        خط C
+                    </div>
+
+                    <div class="mill-line-total">
+
+                        <span>إجمالي الإنتاج</span>
+
+                        <strong id="millCardTotal3">
+                            0.00
+                        </strong>
+
+                        <small>طن</small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mill-input-section">
+
+                    <div class="mill-input-label">
+                        الحنطة المطحونة
+                    </div>
+
+                    <input
+                        id="line3_ground_wheat"
+                        data-save
+                        step="any"
+                        oninput="calcMillTotals()"
+                    >
+
+                    <span>طن</span>
+
+                </div>
+
+
+                <div class="mill-output-grid">
+
+                    <div class="mill-output flour-f1">
+
+                        <label>F1</label>
+
+                        <input
+                            id="line3_f1"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-f3">
+
+                        <label>F3</label>
+
+                        <input
+                            id="line3_f3"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-bran">
+
+                        <label>W.Bran</label>
+
+                        <input
+                            id="line3_bran"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+                </div>
+
+
                 <input
-                    id="flour_total_f3"
+                    id="line3_total"
                     readonly
-                    step="any"
+                    class="mill-hidden-total"
                 >
-            </td>
 
-            <td>
+            </div>
+
+
+
+            <!-- =========================
+                 الخط D
+            ========================== -->
+
+            <div class="mill-line-card">
+
+                <div class="mill-line-header">
+
+                    <div class="mill-line-name">
+                        خط D
+                    </div>
+
+                    <div class="mill-line-total">
+
+                        <span>إجمالي الإنتاج</span>
+
+                        <strong id="millCardTotal4">
+                            0.00
+                        </strong>
+
+                        <small>طن</small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mill-input-section">
+
+                    <div class="mill-input-label">
+                        الحنطة المطحونة
+                    </div>
+
+                    <input
+                        id="line4_ground_wheat"
+                        data-save
+                        step="any"
+                        oninput="calcMillTotals()"
+                    >
+
+                    <span>طن</span>
+
+                </div>
+
+
+                <div class="mill-output-grid">
+
+                    <div class="mill-output flour-f1">
+
+                        <label>F1</label>
+
+                        <input
+                            id="line4_f1"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-f3">
+
+                        <label>F3</label>
+
+                        <input
+                            id="line4_f3"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-bran">
+
+                        <label>W.Bran</label>
+
+                        <input
+                            id="line4_bran"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+                </div>
+
+
                 <input
-                    id="flour_total_wbran"
+                    id="line4_total"
                     readonly
-                    step="any"
+                    class="mill-hidden-total"
                 >
-            </td>
 
-            <td>
+            </div>
+
+
+
+            <!-- =========================
+                 الخط E
+            ========================== -->
+
+            <div class="mill-line-card">
+
+                <div class="mill-line-header">
+
+                    <div class="mill-line-name">
+                        خط E
+                    </div>
+
+                    <div class="mill-line-total">
+
+                        <span>إجمالي الإنتاج</span>
+
+                        <strong id="millCardTotal5">
+                            0.00
+                        </strong>
+
+                        <small>طن</small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mill-input-section">
+
+                    <div class="mill-input-label">
+                        الحنطة المطحونة
+                    </div>
+
+                    <input
+                        id="line5_ground_wheat"
+                        data-save
+                        step="any"
+                        oninput="calcMillTotals()"
+                    >
+
+                    <span>طن</span>
+
+                </div>
+
+
+                <div class="mill-output-grid">
+
+                    <div class="mill-output flour-f1">
+
+                        <label>F1</label>
+
+                        <input
+                            id="line5_f1"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-f3">
+
+                        <label>F3</label>
+
+                        <input
+                            id="line5_f3"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-bran">
+
+                        <label>W.Bran</label>
+
+                        <input
+                            id="line5_bran"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+                </div>
+
+
                 <input
-                    id="flour_grand_total"
+                    id="line5_total"
                     readonly
-                    step="any"
+                    class="mill-hidden-total"
                 >
-            </td>
 
-        </tr>
+            </div>
 
-    </table>
 
-</div>
-            </details>
+
+            <!-- =========================
+                 الخط F
+            ========================== -->
+
+            <div class="mill-line-card">
+
+                <div class="mill-line-header">
+
+                    <div class="mill-line-name">
+                        خط F
+                    </div>
+
+                    <div class="mill-line-total">
+
+                        <span>إجمالي الإنتاج</span>
+
+                        <strong id="millCardTotal6">
+                            0.00
+                        </strong>
+
+                        <small>طن</small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mill-input-section">
+
+                    <div class="mill-input-label">
+                        الحنطة المطحونة
+                    </div>
+
+                    <input
+                        id="line6_ground_wheat"
+                        data-save
+                        step="any"
+                        oninput="calcMillTotals()"
+                    >
+
+                    <span>طن</span>
+
+                </div>
+
+
+                <div class="mill-output-grid">
+
+                    <div class="mill-output flour-f1">
+
+                        <label>F1</label>
+
+                        <input
+                            id="line6_f1"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-f3">
+
+                        <label>F3</label>
+
+                        <input
+                            id="line6_f3"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+
+                    <div class="mill-output flour-bran">
+
+                        <label>W.Bran</label>
+
+                        <input
+                            id="line6_bran"
+                            data-save
+                            step="any"
+                            oninput="calcMillTotals()"
+                        >
+
+                        <span>طن</span>
+
+                    </div>
+
+                </div>
+
+
+                <input
+                    id="line6_total"
+                    readonly
+                    class="mill-hidden-total"
+                >
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             إجمالي المطحنة
+        ========================== -->
+
+        <div class="mill-grand-dashboard">
+
+            <div class="mill-grand-title">
+                🏭 إجمالي إنتاج المطحنة
+            </div>
+
+
+            <div class="mill-grand-items">
+
+                <div>
+                    <span>الحنطة المطحونة</span>
+
+                    <strong>
+                        <input
+                            id="flour_total_ground_wheat"
+                            readonly
+                            step="any"
+                        >
+                    </strong>
+
+                    <small>طن</small>
+                </div>
+
+
+                <div>
+                    <span>F1</span>
+
+                    <strong>
+                        <input
+                            id="flour_total_f1"
+                            readonly
+                            step="any"
+                        >
+                    </strong>
+
+                    <small>طن</small>
+                </div>
+
+
+                <div>
+                    <span>F3</span>
+
+                    <strong>
+                        <input
+                            id="flour_total_f3"
+                            readonly
+                            step="any"
+                        >
+                    </strong>
+
+                    <small>طن</small>
+                </div>
+
+
+                <div>
+                    <span>W.Bran</span>
+
+                    <strong>
+                        <input
+                            id="flour_total_wbran"
+                            readonly
+                            step="any"
+                        >
+                    </strong>
+
+                    <small>طن</small>
+                </div>
+
+
+                <div class="mill-grand-main">
+
+                    <span>الإنتاج الكلي</span>
+
+                    <strong>
+                        <input
+                            id="flour_grand_total"
+                            readonly
+                            step="any"
+                        >
+                    </strong>
+
+                    <small>طن</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</details>
 
             <!-- كفاءة الاستخراج -->
 
-            <details open>
+          <details open>
 
-                <summary>كفاءة الاستخراج</summary>
+    <summary>كفاءة الاستخراج</summary>
 
-                <div class="details-content">
+    <div class="details-content">
 
-                    <table>
+        <div class="extraction-efficiency-card">
 
-                        <tr>
+            <div class="extraction-efficiency-header">
+                <span class="extraction-icon">⚙️</span>
+                <span>كفاءة الاستخراج</span>
+            </div>
 
-                            <th>نسبة كفاءة الاستخراج %</th>
+            <div class="extraction-efficiency-body">
 
-                        </tr>
+                <div class="extraction-gauge">
 
-                        <tr>
+                    <div class="extraction-gauge-inner">
 
-                            <td>
+                       <input
+    id="extraction_eff"
+    data-save
+    type="number"
+    step="any"
+    placeholder="0.00"
+    oninput="updateExtractionGauge(this.value); checkExtractionEfficiency(this)"
+    onchange="updateExtractionGauge(this.value); checkExtractionEfficiency(this)"
+>
 
-                                <input id="extraction_eff" data-save onkeyup="checkExtractionEfficiency(this)"
-                                    onchange="checkExtractionEfficiency(this)" step="any">
+                        <span class="extraction-percent">%</span>
 
-                            </td>
-
-                        </tr>
-
-                    </table>
-
-                    <p style="margin-top:10px;color:#666;">
-
-                    </p>
+                    </div>
 
                 </div>
 
-            </details>
+                <div class="extraction-efficiency-info">
 
+                    <div class="efficiency-label">
+                        نسبة كفاءة الاستخراج
+                    </div>
+
+                    <div class="efficiency-description">
+                        مؤشر الأداء اليومي لعملية استخراج الطحين
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</details>
             <!-- توقفات الخطوط -->
 
-            <details open>
+           <details open>
 
-                <summary>توقفات الخطوط الإنتاجية</summary>
+    <summary>توقفات الخطوط الإنتاجية</summary>
 
-                <div class="details-content">
+    <div class="details-content">
 
-                    <table>
+        <div class="stops-dashboard">
 
-                        <tr>
+            <!-- =========================
+                 الخط A
+            ========================== -->
 
-                            <th>الخط</th>
-                            <th style="width:18%;">مدة التوقف</th>
+            <div class="stop-card" data-line="A">
 
-                            <th style="width:45%;">سبب التوقف</th>
+                <div class="stop-card-header">
 
-                        </tr>
+                    <div class="stop-line-name">
+                        <span class="stop-line-icon">⚙️</span>
+                        <span>الخط A</span>
+                    </div>
 
-                        <tr>
-
-                            <td>A
-                            </td>
-                            <td><input id="astoptime" data-save step="any"></td>
-                            <td style="width:45%;">
-                                <textarea id="astopcause" data-save rows="2" style="
-width:100%;
-min-height:55px;
-resize:vertical;
-font-size:18px;
-box-sizing:border-box;
-">
-</textarea>
-                            </td>
-                        </tr>
-
-                        <tr>
-
-                            <td>B</td>
-                            <td><input id="bstoptime" data-save step="any"></td>
-                            <td style="width:45%;">
-                                <textarea id="bstopcause" data-save rows="2" style="
-width:100%;
-min-height:55px;
-resize:vertical;
-font-size:18px;
-box-sizing:border-box;
-">
-</textarea>
-                            </td>
-                        </tr>
-
-                        <tr>
-
-                            <td>C</td>
-                            <td><input id="cstoptime" data-save step="any"></td>
-                            <td style="width:45%;">
-                                <textarea id="cstopcause" data-save rows="2" style="
-width:100%;
-min-height:55px;
-resize:vertical;
-font-size:18px;
-box-sizing:border-box;
-">
-</textarea>
-                            </td>
-                        </tr>
-
-                        <tr>
-
-                            <td>D</td>
-                            <td><input id="dstoptime" data-save step="any"></td>
-                            <td style="width:45%;">
-                                <textarea id="dstopcause" data-save rows="2" style="
-width:100%;
-min-height:55px;
-resize:vertical;
-font-size:18px;
-box-sizing:border-box;
-">
-</textarea>
-                            </td>
-                        </tr>
-
-                        <tr>
-
-                            <td>E</td>
-                            <td><input id="estoptime" data-save step="any"></td>
-                            <td style="width:45%;">
-                                <textarea id="estopcause" data-save rows="2" style="
-width:100%;
-min-height:55px;
-resize:vertical;
-font-size:18px;
-box-sizing:border-box;
-">
-</textarea>
-                            </td>
-                        </tr>
-
-                        <tr>
-
-                            <td>F</td>
-                            <td><input id="fstoptime" data-save step="any"></td>
-                            <td style="width:45%;">
-                                <textarea id="fstopcause" data-save rows="2" style="
-width:100%;
-min-height:55px;
-resize:vertical;
-font-size:18px;
-box-sizing:border-box;
-">
-</textarea>
-                            </td>
-                        </tr>
-
-                    </table>
+                    <div class="stop-status">
+                        <span class="stop-status-dot"></span>
+                        <span class="stop-status-text">
+                            حالة التوقف
+                        </span>
+                    </div>
 
                 </div>
 
-            </details>
 
+                <div class="stop-card-body">
+
+                    <!-- مدة التوقف -->
+
+                    <div class="stop-duration-box">
+
+                        <label>
+                            ⏱️ مدة التوقف
+                        </label>
+
+                        <div class="stop-input-wrap">
+
+                            <input
+                                id="astoptime"
+                                data-save
+                                step="any"
+                                oninput="updateStopCard(this)"
+                            >
+
+                            <span>دقيقة</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- سبب التوقف -->
+
+                    <div class="stop-cause-box">
+
+                        <label>
+                            🔧 نوع التوقف
+                        </label>
+
+                        <div class="cause-chips">
+
+                            <button type="button"
+                                onclick="setStopCause('astopcause','عطل ميكانيكي: ')">
+                                ⚙️ ميكانيكي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('astopcause','عطل كهربائي: ')">
+                                ⚡ كهربائي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('astopcause','مشكلة تشغيلية: ')">
+                                🏭 تشغيل
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('astopcause','نقص مواد خام: ')">
+                                📦 مواد خام
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('astopcause','تنظيف / صيانة دورية: ')">
+                                🧹 تنظيف
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('astopcause','أخرى: ')">
+                                ••• أخرى
+                            </button>
+
+                        </div>
+
+
+                        <label>
+                            📝 شرح سبب التوقف
+                        </label>
+
+                        <textarea
+                            id="astopcause"
+                            data-save
+                            rows="3"
+                            placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+                            oninput="updateStopCard(this)"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 الخط B
+            ========================== -->
+
+            <div class="stop-card" data-line="B">
+
+                <div class="stop-card-header">
+
+                    <div class="stop-line-name">
+                        <span class="stop-line-icon">⚙️</span>
+                        <span>الخط B</span>
+                    </div>
+
+                    <div class="stop-status">
+                        <span class="stop-status-dot"></span>
+                        <span class="stop-status-text">
+                            حالة التوقف
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="stop-card-body">
+
+                    <div class="stop-duration-box">
+
+                        <label>⏱️ مدة التوقف</label>
+
+                        <div class="stop-input-wrap">
+
+                            <input
+                                id="bstoptime"
+                                data-save
+                                step="any"
+                                oninput="updateStopCard(this)"
+                            >
+
+                            <span>دقيقة</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stop-cause-box">
+
+                        <label>🔧 نوع التوقف</label>
+
+                        <div class="cause-chips">
+
+                            <button type="button"
+                                onclick="setStopCause('bstopcause','عطل ميكانيكي: ')">
+                                ⚙️ ميكانيكي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('bstopcause','عطل كهربائي: ')">
+                                ⚡ كهربائي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('bstopcause','مشكلة تشغيلية: ')">
+                                🏭 تشغيل
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('bstopcause','نقص مواد خام: ')">
+                                📦 مواد خام
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('bstopcause','تنظيف / صيانة دورية: ')">
+                                🧹 تنظيف
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('bstopcause','أخرى: ')">
+                                ••• أخرى
+                            </button>
+
+                        </div>
+
+                        <label>📝 شرح سبب التوقف</label>
+
+                        <textarea
+                            id="bstopcause"
+                            data-save
+                            rows="3"
+                            placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+                            oninput="updateStopCard(this)"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 الخط C
+            ========================== -->
+
+            <div class="stop-card" data-line="C">
+
+                <div class="stop-card-header">
+
+                    <div class="stop-line-name">
+                        <span class="stop-line-icon">⚙️</span>
+                        <span>الخط C</span>
+                    </div>
+
+                    <div class="stop-status">
+                        <span class="stop-status-dot"></span>
+                        <span class="stop-status-text">
+                            حالة التوقف
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="stop-card-body">
+
+                    <div class="stop-duration-box">
+
+                        <label>⏱️ مدة التوقف</label>
+
+                        <div class="stop-input-wrap">
+
+                            <input
+                                id="cstoptime"
+                                data-save
+                                step="any"
+                                oninput="updateStopCard(this)"
+                            >
+
+                            <span>دقيقة</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stop-cause-box">
+
+                        <label>🔧 نوع التوقف</label>
+
+                        <div class="cause-chips">
+
+                            <button type="button"
+                                onclick="setStopCause('cstopcause','عطل ميكانيكي: ')">
+                                ⚙️ ميكانيكي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('cstopcause','عطل كهربائي: ')">
+                                ⚡ كهربائي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('cstopcause','مشكلة تشغيلية: ')">
+                                🏭 تشغيل
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('cstopcause','نقص مواد خام: ')">
+                                📦 مواد خام
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('cstopcause','تنظيف / صيانة دورية: ')">
+                                🧹 تنظيف
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('cstopcause','أخرى: ')">
+                                ••• أخرى
+                            </button>
+
+                        </div>
+
+                        <label>📝 شرح سبب التوقف</label>
+
+                        <textarea
+                            id="cstopcause"
+                            data-save
+                            rows="3"
+                            placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+                            oninput="updateStopCard(this)"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 الخط D
+            ========================== -->
+
+            <div class="stop-card" data-line="D">
+
+                <div class="stop-card-header">
+
+                    <div class="stop-line-name">
+                        <span class="stop-line-icon">⚙️</span>
+                        <span>الخط D</span>
+                    </div>
+
+                    <div class="stop-status">
+                        <span class="stop-status-dot"></span>
+                        <span class="stop-status-text">
+                            حالة التوقف
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="stop-card-body">
+
+                    <div class="stop-duration-box">
+
+                        <label>⏱️ مدة التوقف</label>
+
+                        <div class="stop-input-wrap">
+
+                            <input
+                                id="dstoptime"
+                                data-save
+                                step="any"
+                                oninput="updateStopCard(this)"
+                            >
+
+                            <span>دقيقة</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stop-cause-box">
+
+                        <label>🔧 نوع التوقف</label>
+
+                        <div class="cause-chips">
+
+                            <button type="button"
+                                onclick="setStopCause('dstopcause','عطل ميكانيكي: ')">
+                                ⚙️ ميكانيكي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('dstopcause','عطل كهربائي: ')">
+                                ⚡ كهربائي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('dstopcause','مشكلة تشغيلية: ')">
+                                🏭 تشغيل
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('dstopcause','نقص مواد خام: ')">
+                                📦 مواد خام
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('dstopcause','تنظيف / صيانة دورية: ')">
+                                🧹 تنظيف
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('dstopcause','أخرى: ')">
+                                ••• أخرى
+                            </button>
+
+                        </div>
+
+                        <label>📝 شرح سبب التوقف</label>
+
+                        <textarea
+                            id="dstopcause"
+                            data-save
+                            rows="3"
+                            placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+                            oninput="updateStopCard(this)"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 الخط E
+            ========================== -->
+
+            <div class="stop-card" data-line="E">
+
+                <div class="stop-card-header">
+
+                    <div class="stop-line-name">
+                        <span class="stop-line-icon">⚙️</span>
+                        <span>الخط E</span>
+                    </div>
+
+                    <div class="stop-status">
+                        <span class="stop-status-dot"></span>
+                        <span class="stop-status-text">
+                            حالة التوقف
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="stop-card-body">
+
+                    <div class="stop-duration-box">
+
+                        <label>⏱️ مدة التوقف</label>
+
+                        <div class="stop-input-wrap">
+
+                            <input
+                                id="estoptime"
+                                data-save
+                                step="any"
+                                oninput="updateStopCard(this)"
+                            >
+
+                            <span>دقيقة</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stop-cause-box">
+
+                        <label>🔧 نوع التوقف</label>
+
+                        <div class="cause-chips">
+
+                            <button type="button"
+                                onclick="setStopCause('estopcause','عطل ميكانيكي: ')">
+                                ⚙️ ميكانيكي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('estopcause','عطل كهربائي: ')">
+                                ⚡ كهربائي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('estopcause','مشكلة تشغيلية: ')">
+                                🏭 تشغيل
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('estopcause','نقص مواد خام: ')">
+                                📦 مواد خام
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('estopcause','تنظيف / صيانة دورية: ')">
+                                🧹 تنظيف
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('estopcause','أخرى: ')">
+                                ••• أخرى
+                            </button>
+
+                        </div>
+
+                        <label>📝 شرح سبب التوقف</label>
+
+                        <textarea
+                            id="estopcause"
+                            data-save
+                            rows="3"
+                            placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+                            oninput="updateStopCard(this)"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 الخط F
+            ========================== -->
+
+            <div class="stop-card" data-line="F">
+
+                <div class="stop-card-header">
+
+                    <div class="stop-line-name">
+                        <span class="stop-line-icon">⚙️</span>
+                        <span>الخط F</span>
+                    </div>
+
+                    <div class="stop-status">
+                        <span class="stop-status-dot"></span>
+                        <span class="stop-status-text">
+                            حالة التوقف
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="stop-card-body">
+
+                    <div class="stop-duration-box">
+
+                        <label>⏱️ مدة التوقف</label>
+
+                        <div class="stop-input-wrap">
+
+                            <input
+                                id="fstoptime"
+                                data-save
+                                step="any"
+                                oninput="updateStopCard(this)"
+                            >
+
+                            <span>دقيقة</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stop-cause-box">
+
+                        <label>🔧 نوع التوقف</label>
+
+                        <div class="cause-chips">
+
+                            <button type="button"
+                                onclick="setStopCause('fstopcause','عطل ميكانيكي: ')">
+                                ⚙️ ميكانيكي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('fstopcause','عطل كهربائي: ')">
+                                ⚡ كهربائي
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('fstopcause','مشكلة تشغيلية: ')">
+                                🏭 تشغيل
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('fstopcause','نقص مواد خام: ')">
+                                📦 مواد خام
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('fstopcause','تنظيف / صيانة دورية: ')">
+                                🧹 تنظيف
+                            </button>
+
+                            <button type="button"
+                                onclick="setStopCause('fstopcause','أخرى: ')">
+                                ••• أخرى
+                            </button>
+
+                        </div>
+
+                        <label>📝 شرح سبب التوقف</label>
+
+                        <textarea
+                            id="fstopcause"
+                            data-save
+                            rows="3"
+                            placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+                            oninput="updateStopCard(this)"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</details>
             <!-- موقف قسم التعبئة -->
 
 <details open>
@@ -4236,82 +5571,158 @@ box-sizing:border-box;
 
     <div class="details-content">
 
-        <table class="wide-table">
+        <!-- =========================
+             بطاقات موقف التعبئة
+        ========================== -->
 
-            <tr>
-                <th>المنتج</th>
-                <th>الكمية (طن)</th>
-            </tr>
+        <div class="packaging-stock-dashboard">
 
 
-            <tr>
+            <!-- =========================
+                 بطاقة الطحين
+            ========================== -->
 
-                <td>الطحين</td>
+            <div class="packaging-stock-card flour-stock-card">
 
-                <td>
+                <div class="packaging-stock-icon">
+                    🌾
+                </div>
+
+                <div class="packaging-stock-info">
+
+                    <div class="packaging-stock-title">
+                        الطحين
+                    </div>
+
+                    <div class="packaging-stock-label">
+                        الرصيد الحالي
+                    </div>
+
+                </div>
+
+
+                <div class="packaging-stock-value">
+
                     <input
                         id="flour_packaging_stock"
                         data-save
                         step="any"
+                        oninput="updatePackagingStockVisual('flour')"
                     >
-                </td>
 
-            </tr>
+                    <span>طن</span>
+
+                </div>
 
 
-            <tr>
+                <!-- المؤشر البصري -->
 
-                <td>النخالة</td>
+                <div class="packaging-stock-bar">
 
-                <td>
+                    <div
+                        id="flour_packaging_stock_bar"
+                        class="packaging-stock-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 بطاقة النخالة
+            ========================== -->
+
+            <div class="packaging-stock-card bran-stock-card">
+
+                <div class="packaging-stock-icon">
+                    🌿
+                </div>
+
+                <div class="packaging-stock-info">
+
+                    <div class="packaging-stock-title">
+                        النخالة
+                    </div>
+
+                    <div class="packaging-stock-label">
+                        الرصيد الحالي
+                    </div>
+
+                </div>
+
+
+                <div class="packaging-stock-value">
+
                     <input
                         id="bran_packaging_stock"
                         data-save
                         step="any"
+                        oninput="updatePackagingStockVisual('bran')"
                     >
-                </td>
 
-            </tr>
+                    <span>طن</span>
 
-        </table>
-
-
-        <br>
+                </div>
 
 
-        <!-- المرفقات -->
+                <!-- المؤشر البصري -->
 
-        <label
-            for="flour_packaging_notes_image"
-            class="uploadImageBtn"
-        >
-            📎 إرفاق ملف أو صورة
-        </label>
+                <div class="packaging-stock-bar">
 
-        <input
-            type="file"
-            multiple
-            accept="image/*,application/pdf"
-            id="flour_packaging_notes_image"
-            data-factory="flour"
-            data-field="flour_packaging_notes"
-            onchange="uploadNoteImage(this)"
-            style="display:none;"
-        >
+                    <div
+                        id="bran_packaging_stock_bar"
+                        class="packaging-stock-fill"
+                    ></div>
 
-        <br>
+                </div>
 
-        <a
-            id="flour_packaging_notes_link"
-            target="_blank"
-            style="
-                display:none;
-                font-size:13px;
-                text-decoration:none;
-            "
-        >
-            👁 عرض الملف
-        </a>
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             المرفقات
+        ========================== -->
+
+        <div class="packaging-notes">
+
+            <label
+                for="flour_packaging_notes_image"
+                class="uploadImageBtn"
+            >
+                📎 إرفاق ملف أو صورة
+            </label>
+
+            <input
+                type="file"
+                multiple
+                accept="image/*,application/pdf"
+                id="flour_packaging_notes_image"
+                data-factory="flour"
+                data-field="flour_packaging_notes"
+                onchange="uploadNoteImage(this)"
+                style="display:none;"
+            >
+
+            <br>
+
+            <a
+                id="flour_packaging_notes_link"
+                target="_blank"
+                style="
+                    display:none;
+                    font-size:13px;
+                    text-decoration:none;
+                "
+            >
+                👁 عرض الملف
+            </a>
+
+        </div>
 
     </div>
 
@@ -4319,117 +5730,236 @@ box-sizing:border-box;
 
             <!-- الجودة والسلامة -->
 
-            <details open>
+           <!-- =========================================
+     الجودة والسلامة
+========================================= -->
 
-                <summary>الجودة والسلامة</summary>
+<details open>
 
-                <div class="details-content">
+    <summary>الجودة والسلامة</summary>
 
-                    <table>
+    <div class="details-content">
 
-                        <tr>
-                            <th>ملاحظات قسم الجودة</th>
-                        </tr>
 
-                        <tr>
-                            <td>
+        <div class="quality-safety-dashboard">
 
-                                <textarea id="flour_quality_notes" data-save step="any">
-</textarea>
 
-                                <br><br>
+            <!-- =========================
+                 بطاقة الجودة
+            ========================== -->
 
-                                <label for="flour_quality_notes_image" class="uploadImageBtn">
+            <div class="quality-safety-card quality-card">
 
-                                    📎 إرفاق ملف
+                <div class="quality-card-header">
 
-                                </label>
+                    <div class="quality-card-icon">
+                        🧪
+                    </div>
 
-                                <input type="file" multiple accept="image/*,application/pdf"
-                                    id="flour_quality_notes_image" data-factory="flour" data-field="flour_quality_notes"
-                                    onchange="uploadNoteImage(this)" style="display:none;">
+                    <div>
 
-                                <br>
+                        <div class="quality-card-title">
+                            قسم الجودة
+                        </div>
 
-                                <a id="flour_quality_notes_link" target="_blank" style="
-display:none;
-font-size:13px;
-text-decoration:none;
-">
+                        <div class="quality-card-subtitle">
+                            ملاحظات ومتابعة الجودة
+                        </div>
 
-                                    👁 عرض الملف
-
-                                </a>
-                            </td>
-                        </tr>
-
-                    </table>
-
-                    <br>
-
-                    <table>
-
-                        <tr>
-                            <th>ملاحظات قسم السلامة</th>
-                        </tr>
-
-                        <tr>
-                            <td>
-
-                                <textarea id="flour_safety_notes" data-save step="any">
-</textarea>
-
-                                <br><br>
-
-                                <label for="flour_safety_notes_image" class="uploadImageBtn">
-
-                                    📎 إرفاق ملف
-
-                                </label>
-
-                                <input type="file" multiple accept="image/*,application/pdf"
-                                    id="flour_safety_notes_image" data-factory="flour" data-field="flour_safety_notes"
-                                    onchange="uploadNoteImage(this)" style="display:none;">
-
-                                <br>
-
-                                <a id="flour_safety_notes_link" target="_blank" style="
-display:none;
-font-size:13px;
-text-decoration:none;
-">
-
-                                    👁 عرض الملف
-
-                                </a>
-                            </td>
-                        </tr>
-
-                    </table>
+                    </div>
 
                 </div>
 
-            </details>
 
-            <!-- الملاحظات -->
+                <div class="quality-card-body">
 
-            <details open>
-
-                <summary>الملاحظات العامة</summary>
-
-                <div class="details-content">
-
-                    <textarea class="notes" id="flour_notes" data-save step="any"></textarea>
+                    <textarea
+                        id="flour_quality_notes"
+                        data-save
+                        step="any"
+                        placeholder="اكتب ملاحظات قسم الجودة هنا..."
+                    ></textarea>
 
                 </div>
 
-            </details>
 
-            <button id="approveFlourBtn" onclick="approveSection('flour')">
+                <div class="quality-card-footer">
 
-                ✅ اعتماد قسم الطحين
+                    <label
+                        for="flour_quality_notes_image"
+                        class="dashboard-upload-btn"
+                    >
+                        📎 إرفاق ملف أو صورة
+                    </label>
 
-            </button>
+                    <input
+                        type="file"
+                        multiple
+                        accept="image/*,application/pdf"
+                        id="flour_quality_notes_image"
+                        data-factory="flour"
+                        data-field="flour_quality_notes"
+                        onchange="uploadNoteImage(this)"
+                        style="display:none;"
+                    >
+
+                    <a
+                        id="flour_quality_notes_link"
+                        target="_blank"
+                        class="dashboard-file-link"
+                        style="display:none;"
+                    >
+                        👁 عرض الملف
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 بطاقة السلامة
+            ========================== -->
+
+            <div class="quality-safety-card safety-card">
+
+                <div class="quality-card-header">
+
+                    <div class="quality-card-icon">
+                        🛡️
+                    </div>
+
+                    <div>
+
+                        <div class="quality-card-title">
+                            قسم السلامة
+                        </div>
+
+                        <div class="quality-card-subtitle">
+                            ملاحظات السلامة والصحة المهنية
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quality-card-body">
+
+                    <textarea
+                        id="flour_safety_notes"
+                        data-save
+                        step="any"
+                        placeholder="اكتب ملاحظات قسم السلامة هنا..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="quality-card-footer">
+
+                    <label
+                        for="flour_safety_notes_image"
+                        class="dashboard-upload-btn"
+                    >
+                        📎 إرفاق ملف أو صورة
+                    </label>
+
+                    <input
+                        type="file"
+                        multiple
+                        accept="image/*,application/pdf"
+                        id="flour_safety_notes_image"
+                        data-factory="flour"
+                        data-field="flour_safety_notes"
+                        onchange="uploadNoteImage(this)"
+                        style="display:none;"
+                    >
+
+                    <a
+                        id="flour_safety_notes_link"
+                        target="_blank"
+                        class="dashboard-file-link"
+                        style="display:none;"
+                    >
+                        👁 عرض الملف
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</details>
+
+
+
+<!-- =========================================
+     الملاحظات العامة
+========================================= -->
+
+<details open>
+
+    <summary>الملاحظات العامة</summary>
+
+    <div class="details-content">
+
+        <div class="general-notes-dashboard">
+
+            <div class="general-notes-header">
+
+                <div class="general-notes-icon">
+                    📝
+                </div>
+
+                <div>
+
+                    <div class="general-notes-title">
+                        الملاحظات العامة
+                    </div>
+
+                    <div class="general-notes-subtitle">
+                        ملاحظات إضافية تخص تقرير اليوم
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <textarea
+                class="notes"
+                id="flour_notes"
+                data-save
+                step="any"
+                placeholder="اكتب أي ملاحظات عامة أو معلومات إضافية هنا..."
+            ></textarea>
+
+        </div>
+
+    </div>
+
+</details>
+
+
+
+<!-- =========================================
+     اعتماد قسم الطحين
+========================================= -->
+
+<button
+    id="approveFlourBtn"
+    onclick="approveSection('flour')"
+>
+
+    ✅ اعتماد قسم الطحين
+
+</button>
 
         </section>
         <!-- ===================================== -->
@@ -4985,84 +6515,570 @@ text-decoration:none;
 
             <!-- استهلاك المواد -->
 
-            <details open>
+           <details open>
 
-                <summary>استهلاك المواد الخام</summary>
+    <summary>استهلاك المواد الخام</summary>
 
-                <div class="details-content">
+    <div class="details-content">
 
-<table id="feedRawConsumptionTable">
+        <div class="feed-consumption-dashboard">
 
-                        <tr>
-                            <th>المادة</th>
-                            <th>الكمية (طن)</th>
-                        </tr>
+            <!-- =========================
+                 الرأس / الإجمالي
+            ========================== -->
 
-                        <tr>
-                            <td>العلف المرتجع</td>
-                            <td><input id="rework" data-save step="any"></td>
-                        </tr>
+            <div class="feed-consumption-header">
 
-                        <tr>
-                            <td>المولاس</td>
-                            <td><input id="molasses" data-save step="any"></td>
-                        </tr>
+                <div class="feed-consumption-title">
 
-                        <tr>
-                            <td>الذرة</td>
-                            <td><input id="corn" data-save step="any"></td>
-                        </tr>
+                    <span class="feed-consumption-icon">🌾</span>
 
-                        <tr>
-                            <td>الفورمالين</td>
-                            <td><input id="formaldyhade" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>كسبة الصويا</td>
-                            <td><input id="soya" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>الحنطة</td>
-                            <td><input id="wheat" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>حجر الكلس الخشن</td>
-                            <td><input id="coarselime" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>حجر الكلس الناعم</td>
-                            <td><input id="finelime" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>زيت الصويا</td>
-                            <td><input id="soyaoil" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>الزيت المخلوط</td>
-                            <td><input id="mixedoil" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>زيت الاولين</td>
-                            <td><input id="oilenoil" data-save step="any"></td>
-                        </tr>
-
-                        <tr>
-                            <td>الطحين</td>
-                            <td><input id="feed_flour" data-save step="any"></td>
-                        </tr>
-
-                    </table>
+                    <div>
+                        <h3>استهلاك المواد الخام</h3>
+                        <span>الاستهلاك اليومي للمواد الداخلة في إنتاج الأعلاف</span>
+                    </div>
 
                 </div>
 
-            </details>
+                <div class="feed-total-card">
+
+                    <span>إجمالي الاستهلاك</span>
+
+                    <strong id="feedRawTotal">
+                        0
+                    </strong>
+
+                    <small>طن</small>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 الحلقة الرئيسية
+            ========================== -->
+
+            <div class="feed-consumption-overview">
+
+                <div class="feed-consumption-wheel-area">
+
+                    <div
+                        id="feedConsumptionWheel"
+                        class="feed-consumption-wheel"
+                    >
+
+                        <div class="feed-wheel-center">
+
+                            <strong id="feedWheelTotal">
+                                0
+                            </strong>
+
+                            <span>طن</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- مفتاح المجموعات -->
+
+                <div class="feed-consumption-legend">
+
+                    <div class="feed-legend-item">
+
+                        <span
+                            class="feed-legend-dot"
+                            style="--legend-color:#d6a73c;">
+                        </span>
+
+                        <div>
+                            <b>الحبوب</b>
+                            <small id="feedGroupGrains">
+                                0 طن · 0%
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-legend-item">
+
+                        <span
+                            class="feed-legend-dot"
+                            style="--legend-color:#8b6f47;">
+                        </span>
+
+                        <div>
+                            <b>البروتينات والمرتجعات</b>
+                            <small id="feedGroupProtein">
+                                0 طن · 0%
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-legend-item">
+
+                        <span
+                            class="feed-legend-dot"
+                            style="--legend-color:#4b9b83;">
+                        </span>
+
+                        <div>
+                            <b>الزيوت والدهون</b>
+                            <small id="feedGroupOils">
+                                0 طن · 0%
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-legend-item">
+
+                        <span
+                            class="feed-legend-dot"
+                            style="--legend-color:#718096;">
+                        </span>
+
+                        <div>
+                            <b>الإضافات والمعادن</b>
+                            <small id="feedGroupAdditives">
+                                0 طن · 0%
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 الحبوب
+            ========================== -->
+
+            <div class="feed-material-group">
+
+                <div class="feed-material-group-title">
+
+                    <span class="feed-group-indicator grains"></span>
+
+                    <div>
+                        <h4>الحبوب</h4>
+                        <span>المواد الأساسية في تركيبة العلف</span>
+                    </div>
+
+                    <strong id="feedGroupGrainsTotal">
+                        0 طن
+                    </strong>
+
+                </div>
+
+
+                <div class="feed-material-grid">
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🌽 الذرة
+                        </div>
+
+                        <input
+                            id="corn"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentCorn">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarCorn"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🌾 الحنطة
+                        </div>
+
+                        <input
+                            id="wheat"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentWheat">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarWheat"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🌾 الطحين
+                        </div>
+
+                        <input
+                            id="feed_flour"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentFeedFlour">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarFeedFlour"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 البروتينات والمرتجعات
+            ========================== -->
+
+            <div class="feed-material-group">
+
+                <div class="feed-material-group-title">
+
+                    <span class="feed-group-indicator protein"></span>
+
+                    <div>
+                        <h4>البروتينات والمرتجعات</h4>
+                        <span>المواد البروتينية والعلف المرتجع</span>
+                    </div>
+
+                    <strong id="feedGroupProteinTotal">
+                        0 طن
+                    </strong>
+
+                </div>
+
+
+                <div class="feed-material-grid">
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            ♻️ العلف المرتجع
+                        </div>
+
+                        <input
+                            id="rework"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentRework">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarRework"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🫘 كسبة الصويا
+                        </div>
+
+                        <input
+                            id="soya"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentSoya">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarSoya"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 الزيوت والدهون
+            ========================== -->
+
+            <div class="feed-material-group">
+
+                <div class="feed-material-group-title">
+
+                    <span class="feed-group-indicator oils"></span>
+
+                    <div>
+                        <h4>الزيوت والدهون</h4>
+                        <span>الزيوت الداخلة في تركيبة الأعلاف</span>
+                    </div>
+
+                    <strong id="feedGroupOilsTotal">
+                        0 طن
+                    </strong>
+
+                </div>
+
+
+                <div class="feed-material-grid">
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🛢️ زيت الصويا
+                        </div>
+
+                        <input
+                            id="soyaoil"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentSoyaOil">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarSoyaOil"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🛢️ الزيت المخلوط
+                        </div>
+
+                        <input
+                            id="mixedoil"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentMixedOil">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarMixedOil"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🛢️ زيت الأولين
+                        </div>
+
+                        <input
+                            id="oilenoil"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentOleInOil">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarOleInOil"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 الإضافات والمعادن
+            ========================== -->
+
+            <div class="feed-material-group">
+
+                <div class="feed-material-group-title">
+
+                    <span class="feed-group-indicator additives"></span>
+
+                    <div>
+                        <h4>الإضافات والمعادن</h4>
+                        <span>المواد المساعدة والإضافات المعدنية</span>
+                    </div>
+
+                    <strong id="feedGroupAdditivesTotal">
+                        0 طن
+                    </strong>
+
+                </div>
+
+
+                <div class="feed-material-grid">
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🟤 المولاس
+                        </div>
+
+                        <input
+                            id="molasses"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentMolasses">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarMolasses"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            ⚗️ الفورمالين
+                        </div>
+
+                        <input
+                            id="formaldyhade"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentFormaldyhade">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarFormaldyhade"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🪨 حجر الكلس الخشن
+                        </div>
+
+                        <input
+                            id="coarselime"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentCoarseLime">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarCoarseLime"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feed-material-card">
+
+                        <div class="feed-material-name">
+                            🪨 حجر الكلس الناعم
+                        </div>
+
+                        <input
+                            id="finelime"
+                            data-save
+                            step="any"
+                            inputmode="decimal"
+                        >
+
+                        <div class="feed-material-meta">
+                            <span id="feedPercentFineLime">0%</span>
+                            <span>من الإجمالي</span>
+                        </div>
+
+                        <div class="feed-material-bar">
+                            <span id="feedBarFineLime"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</details>
 
             <!-- الجودة والسلامة -->
 
@@ -5989,6 +8005,7 @@ function updateFlourStockTotal() {
                 updateSunStockTotal();
                 updateOleinStockTotal();
 updatePalmStockTotal();
+updateOilStockDashboard();
 
                 // لوحة التحكم
                 updateDashboard();
@@ -7942,7 +9959,7 @@ if (oldGrid) {
 
             }
 
-            async function loadDailyReport() {
+           async function loadDailyReport() {
 
     const {
         data: { user }
@@ -8006,6 +10023,15 @@ if (oldGrid) {
             break;
 
     }
+
+
+    /* =========================
+       تحديث مؤشرات موقف التعبئة
+    ========================= */
+
+    updatePackagingStockVisual("flour");
+
+    updatePackagingStockVisual("bran");
 
 }
 
@@ -8841,6 +10867,465 @@ if (btn) {
 
                 }
             }
+
+            /* =========================================================
+   FEED RAW MATERIALS DASHBOARD
+   ========================================================= */
+
+function updateFeedRawConsumptionDashboard() {
+
+    const materials = {
+
+        rework: {
+            group: "protein",
+            percent: "feedPercentRework",
+            bar: "feedBarRework"
+        },
+
+        molasses: {
+            group: "additives",
+            percent: "feedPercentMolasses",
+            bar: "feedBarMolasses"
+        },
+
+        corn: {
+            group: "grains",
+            percent: "feedPercentCorn",
+            bar: "feedBarCorn"
+        },
+
+        formaldyhade: {
+            group: "additives",
+            percent: "feedPercentFormaldyhade",
+            bar: "feedBarFormaldyhade"
+        },
+
+        soya: {
+            group: "protein",
+            percent: "feedPercentSoya",
+            bar: "feedBarSoya"
+        },
+
+        wheat: {
+            group: "grains",
+            percent: "feedPercentWheat",
+            bar: "feedBarWheat"
+        },
+
+        coarselime: {
+            group: "additives",
+            percent: "feedPercentCoarseLime",
+            bar: "feedBarCoarseLime"
+        },
+
+        finelime: {
+            group: "additives",
+            percent: "feedPercentFineLime",
+            bar: "feedBarFineLime"
+        },
+
+        soyaoil: {
+            group: "oils",
+            percent: "feedPercentSoyaOil",
+            bar: "feedBarSoyaOil"
+        },
+
+        mixedoil: {
+            group: "oils",
+            percent: "feedPercentMixedOil",
+            bar: "feedBarMixedOil"
+        },
+
+        oilenoil: {
+            group: "oils",
+            percent: "feedPercentOleInOil",
+            bar: "feedBarOleInOil"
+        },
+
+        feed_flour: {
+            group: "grains",
+            percent: "feedPercentFeedFlour",
+            bar: "feedBarFeedFlour"
+        }
+
+    };
+
+
+    const values = {};
+
+    let total = 0;
+
+
+    /* =========================
+       قراءة القيم
+    ========================== */
+
+    Object.keys(materials).forEach(id => {
+
+        const element =
+            document.getElementById(id);
+
+        let value = 0;
+
+        if (element) {
+
+            value =
+                parseFloat(
+                    String(
+                        element.value || ""
+                    ).replace(",", ".")
+                ) || 0;
+
+        }
+
+        if (value < 0) {
+            value = 0;
+        }
+
+        values[id] = value;
+
+        total += value;
+
+    });
+
+
+    /* =========================
+       مجموع المجموعات
+    ========================== */
+
+    const groups = {
+
+        grains: 0,
+
+        protein: 0,
+
+        oils: 0,
+
+        additives: 0
+
+    };
+
+
+    Object.keys(values).forEach(id => {
+
+        const group =
+            materials[id].group;
+
+        groups[group] +=
+            values[id];
+
+    });
+
+
+    /* =========================
+       تحديث الإجمالي
+    ========================== */
+
+    const totalText =
+        total.toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 3
+            }
+        );
+
+
+    const totalElement =
+        document.getElementById(
+            "feedRawTotal"
+        );
+
+    const wheelTotal =
+        document.getElementById(
+            "feedWheelTotal"
+        );
+
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            totalText;
+
+    }
+
+
+    if (wheelTotal) {
+
+        wheelTotal.textContent =
+            totalText;
+
+    }
+
+
+    /* =========================
+       نسب المجموعات
+    ========================== */
+
+    function groupPercent(value) {
+
+        if (!total) {
+            return 0;
+        }
+
+        return (
+            value / total
+        ) * 100;
+
+    }
+
+
+    const grainsPercent =
+        groupPercent(groups.grains);
+
+    const proteinPercent =
+        groupPercent(groups.protein);
+
+    const oilsPercent =
+        groupPercent(groups.oils);
+
+    const additivesPercent =
+        groupPercent(groups.additives);
+
+
+    /* =========================
+       تحديث الحلقة
+    ========================== */
+
+    const wheel =
+        document.getElementById(
+            "feedConsumptionWheel"
+        );
+
+
+    if (wheel) {
+
+        wheel.style.setProperty(
+            "--grains",
+            grainsPercent + "%"
+        );
+
+        wheel.style.setProperty(
+            "--protein",
+            proteinPercent + "%"
+        );
+
+        wheel.style.setProperty(
+            "--oils",
+            oilsPercent + "%"
+        );
+
+        wheel.style.setProperty(
+            "--additives",
+            additivesPercent + "%"
+        );
+
+    }
+
+
+    /* =========================
+       تحديث معلومات المجموعات
+    ========================== */
+
+    function updateGroup(
+        value,
+        percent,
+        textId,
+        totalId
+    ) {
+
+        const text =
+            document.getElementById(
+                textId
+            );
+
+        const groupTotal =
+            document.getElementById(
+                totalId
+            );
+
+
+        const formattedValue =
+            value.toLocaleString(
+                "en-US",
+                {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 3
+                }
+            );
+
+
+        const formattedPercent =
+            percent.toFixed(1);
+
+
+        if (text) {
+
+            text.textContent =
+                `${formattedValue} طن · ${formattedPercent}%`;
+
+        }
+
+
+        if (groupTotal) {
+
+            groupTotal.textContent =
+                `${formattedValue} طن`;
+
+        }
+
+    }
+
+
+    updateGroup(
+        groups.grains,
+        grainsPercent,
+        "feedGroupGrains",
+        "feedGroupGrainsTotal"
+    );
+
+
+    updateGroup(
+        groups.protein,
+        proteinPercent,
+        "feedGroupProtein",
+        "feedGroupProteinTotal"
+    );
+
+
+    updateGroup(
+        groups.oils,
+        oilsPercent,
+        "feedGroupOils",
+        "feedGroupOilsTotal"
+    );
+
+
+    updateGroup(
+        groups.additives,
+        additivesPercent,
+        "feedGroupAdditives",
+        "feedGroupAdditivesTotal"
+    );
+
+
+    /* =========================
+       تحديث بطاقات المواد
+    ========================== */
+
+    Object.keys(materials).forEach(id => {
+
+        const value =
+            values[id];
+
+        const percentage =
+            total > 0
+                ? (value / total) * 100
+                : 0;
+
+
+        const percentElement =
+            document.getElementById(
+                materials[id].percent
+            );
+
+
+        const barElement =
+            document.getElementById(
+                materials[id].bar
+            );
+
+
+        if (percentElement) {
+
+            percentElement.textContent =
+                percentage.toFixed(1) + "%";
+
+        }
+
+
+        if (barElement) {
+
+            barElement.style.width =
+                Math.min(
+                    percentage,
+                    100
+                ) + "%";
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   تشغيل الحساب أثناء الكتابة
+   ========================================================= */
+
+function initFeedRawConsumptionDashboard() {
+
+    const ids = [
+
+        "rework",
+        "molasses",
+        "corn",
+        "formaldyhade",
+        "soya",
+        "wheat",
+        "coarselime",
+        "finelime",
+        "soyaoil",
+        "mixedoil",
+        "oilenoil",
+        "feed_flour"
+
+    ];
+
+
+    ids.forEach(id => {
+
+        const element =
+            document.getElementById(id);
+
+
+        if (!element) {
+            return;
+        }
+
+
+        element.addEventListener(
+            "input",
+            updateFeedRawConsumptionDashboard
+        );
+
+    });
+
+
+    updateFeedRawConsumptionDashboard();
+
+}
+
+
+/* =========================================================
+   تشغيل بعد تحميل الصفحة
+   ========================================================= */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initFeedRawConsumptionDashboard
+    );
+
+} else {
+
+    initFeedRawConsumptionDashboard();
+
+}
 
         </script>
 

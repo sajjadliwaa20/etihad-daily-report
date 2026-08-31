@@ -2326,3 +2326,3151 @@ body.dark-mode details summary {
   color: #721c24 !important;
   box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.12);
 }
+
+.refinery-line-title {
+  margin: 18px 0 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--card-bg, rgba(255, 255, 255, 0.05));
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.refinery-production-table td:first-child {
+  font-weight: 600;
+}
+
+.refinery-production-table input {
+  min-width: 110px;
+}
+
+.refinery-grand-total {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  margin-top: 18px;
+  padding: 15px;
+
+  border-radius: 12px;
+
+  font-weight: 700;
+
+  background: rgba(0, 150, 110, 0.08);
+
+  border: 1px solid rgba(0, 150, 110, 0.25);
+}
+
+.refinery-grand-total input {
+  width: 120px;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  text-align: center;
+}
+
+/* =====================================================
+   REFINERY DASHBOARD
+===================================================== */
+
+.refinery-line-card {
+  margin: 18px 0;
+
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.025)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.refinery-line-header {
+  margin-bottom: 20px;
+}
+
+.refinery-line-header > div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.refinery-line-header h3 {
+  margin: 0;
+
+  font-size: 18px;
+}
+
+.refinery-line-header small {
+  opacity: 0.6;
+
+  font-size: 12px;
+}
+
+.refinery-line-number {
+  width: 42px;
+
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(40, 167, 69, 0.16);
+
+  color: #58d477;
+
+  font-weight: 800;
+}
+
+/* =====================================================
+   جسم البطاقة
+===================================================== */
+
+.refinery-line-body {
+  display: grid;
+
+  grid-template-columns:
+    minmax(320px, 1fr)
+    minmax(280px, 360px);
+
+  gap: 35px;
+
+  align-items: center;
+}
+
+/* =====================================================
+   الحقول
+===================================================== */
+
+.refinery-inputs {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 9px;
+}
+
+.refinery-product-row {
+  display: grid;
+
+  grid-template-columns:
+    14px
+    minmax(130px, 1fr)
+    120px
+    35px;
+
+  align-items: center;
+
+  gap: 10px;
+
+  min-height: 48px;
+
+  padding: 5px 8px;
+
+  border-radius: 10px;
+
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.refinery-product-row:hover {
+  background: rgba(255, 255, 255, 0.045);
+
+  transform: translateX(-2px);
+}
+
+.oil-name {
+  font-weight: 600;
+}
+
+.oil-unit {
+  opacity: 0.55;
+
+  font-size: 12px;
+}
+
+.refinery-product-row input {
+  width: 100%;
+
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  text-align: center;
+}
+
+/* =====================================================
+   ألوان المنتجات
+===================================================== */
+
+.oil-color,
+.legend-dot {
+  display: inline-block;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.oil-color {
+  width: 12px;
+
+  height: 12px;
+}
+
+.legend-dot {
+  width: 9px;
+
+  height: 9px;
+}
+
+.sunflower {
+  background: #f5c542;
+
+  box-shadow: 0 0 8px rgba(245, 197, 66, 0.45);
+}
+
+.olein {
+  background: #f28c28;
+
+  box-shadow: 0 0 8px rgba(242, 140, 40, 0.45);
+}
+
+.ghee {
+  background: #ffe08a;
+
+  box-shadow: 0 0 8px rgba(255, 224, 138, 0.45);
+}
+
+.stearin {
+  background: #aeb8c4;
+
+  box-shadow: 0 0 8px rgba(174, 184, 196, 0.45);
+}
+
+.shortening {
+  background: #d9b36c;
+
+  box-shadow: 0 0 8px rgba(217, 179, 108, 0.45);
+}
+
+/* =====================================================
+   مجموع خط 1
+===================================================== */
+
+.refinery-total-row {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    120px
+    35px;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 8px;
+
+  padding-top: 14px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  font-weight: 700;
+}
+
+.refinery-total-row input {
+  text-align: center;
+
+  font-weight: 800;
+}
+
+/* =====================================================
+   الحلقة
+===================================================== */
+
+.refinery-ring-area {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 18px;
+}
+
+/* الحلقة الخارجية */
+
+.refinery-ring {
+  position: relative;
+
+  width: 245px;
+
+  height: 245px;
+
+  border-radius: 50%;
+
+  background: conic-gradient(#303640 0deg 360deg);
+
+  transform: perspective(700px) rotateX(8deg);
+
+  box-shadow:
+    0 18px 25px rgba(0, 0, 0, 0.35),
+    inset 0 4px 8px rgba(255, 255, 255, 0.22),
+    inset 0 -8px 14px rgba(0, 0, 0, 0.45);
+
+  transition: background 0.45s ease;
+}
+
+/* طبقة العمق السفلية */
+
+.refinery-ring::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 50%;
+
+  transform: translateY(9px);
+
+  background: inherit;
+
+  z-index: -1;
+
+  filter: brightness(0.55);
+
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* اللمعة */
+
+.refinery-ring::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 4px;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18),
+    transparent 35%,
+    transparent 70%,
+    rgba(0, 0, 0, 0.12)
+  );
+}
+
+/* =====================================================
+   مركز الحلقة
+===================================================== */
+
+.refinery-ring-inner {
+  position: absolute;
+
+  inset: 51px;
+
+  z-index: 5;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: radial-gradient(circle at 35% 30%, #3b424d, #20252c 70%);
+
+  box-shadow:
+    inset 0 5px 12px rgba(0, 0, 0, 0.45),
+    0 3px 10px rgba(0, 0, 0, 0.35);
+
+  text-align: center;
+}
+
+.ring-total-label {
+  font-size: 12px;
+
+  opacity: 0.6;
+}
+
+.refinery-ring-inner strong {
+  margin: 4px 0;
+
+  font-size: 27px;
+
+  line-height: 1;
+}
+
+.ring-total-unit {
+  font-size: 11px;
+
+  opacity: 0.55;
+}
+
+/* =====================================================
+   مفتاح الألوان
+===================================================== */
+
+.refinery-legend {
+  width: 100%;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  gap: 7px 14px;
+}
+
+.legend-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+.legend-item b {
+  opacity: 0.65;
+
+  font-size: 10px;
+}
+
+/* =====================================================
+   خط 2
+===================================================== */
+
+.refinery-line-two .refinery-line-body {
+  grid-template-columns: 1fr;
+}
+
+.single-product {
+  display: block;
+}
+
+/* =====================================================
+   الإجمالي العام
+===================================================== */
+
+.refinery-grand-total {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 20px;
+
+  padding: 17px;
+
+  border-radius: 15px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(40, 167, 69, 0.14),
+    rgba(40, 167, 69, 0.04)
+  );
+
+  border: 1px solid rgba(40, 167, 69, 0.25);
+
+  font-weight: 700;
+}
+
+.refinery-grand-total strong {
+  font-size: 22px;
+}
+
+/* =====================================================
+   الهاتف
+===================================================== */
+
+@media (max-width: 700px) {
+  .refinery-line-body {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+  }
+
+  .refinery-ring {
+    width: 215px;
+
+    height: 215px;
+  }
+
+  .refinery-ring-inner {
+    inset: 45px;
+  }
+
+  .refinery-product-row {
+    grid-template-columns:
+      12px
+      minmax(100px, 1fr)
+      95px
+      25px;
+
+    gap: 6px;
+  }
+
+  .refinery-product-row input {
+    min-width: 0;
+  }
+}
+
+/* =========================================================
+   FEED RAW MATERIALS - DASHBOARD
+   ========================================================= */
+
+.feed-consumption-dashboard {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.feed-consumption-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  margin-bottom: 22px;
+  padding: 20px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(20, 90, 70, 0.96),
+    rgba(28, 116, 83, 0.88)
+  );
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+  color: white;
+}
+
+.feed-consumption-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.feed-consumption-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.15);
+
+  font-size: 27px;
+
+  backdrop-filter: blur(5px);
+}
+
+.feed-consumption-title h3 {
+  margin: 0 0 5px;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.feed-consumption-title span {
+  font-size: 13px;
+  opacity: 0.82;
+}
+
+/* =========================
+   TOTAL CARD
+========================= */
+
+.feed-total-card {
+  min-width: 145px;
+
+  padding: 12px 18px;
+
+  text-align: center;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.13);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  backdrop-filter: blur(6px);
+}
+
+.feed-total-card span {
+  display: block;
+
+  font-size: 12px;
+
+  opacity: 0.85;
+}
+
+.feed-total-card strong {
+  display: inline-block;
+
+  margin-top: 3px;
+
+  font-size: 28px;
+  line-height: 1;
+}
+
+.feed-total-card small {
+  font-size: 12px;
+  margin-right: 3px;
+}
+
+/* =========================
+   OVERVIEW
+========================= */
+
+.feed-consumption-overview {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 45px;
+
+  padding: 25px;
+
+  margin-bottom: 25px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(120, 140, 150, 0.15);
+}
+
+/* =========================
+   3D WHEEL
+========================= */
+
+.feed-consumption-wheel-area {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  min-width: 260px;
+}
+
+.feed-consumption-wheel {
+  --grains: 25%;
+  --protein: 25%;
+  --oils: 25%;
+  --additives: 25%;
+
+  width: 245px;
+  height: 245px;
+
+  position: relative;
+
+  border-radius: 50%;
+
+  background: conic-gradient(
+    #d6a73c 0 var(--grains),
+    #8b6f47 var(--grains) calc(var(--grains) + var(--protein)),
+    #4b9b83 calc(var(--grains) + var(--protein))
+      calc(var(--grains) + var(--protein) + var(--oils)),
+    #718096 calc(var(--grains) + var(--protein) + var(--oils)) 100%
+  );
+
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.25),
+    inset 0 3px 8px rgba(255, 255, 255, 0.28);
+
+  transform: perspective(500px) rotateX(8deg);
+
+  transition:
+    background 0.6s ease,
+    transform 0.3s ease;
+}
+
+.feed-consumption-wheel::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 14px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 255, 255, 0.18),
+      transparent 35%
+    ),
+    #182b2a;
+
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.55);
+
+  z-index: 1;
+}
+
+.feed-consumption-wheel::after {
+  content: "";
+
+  position: absolute;
+
+  left: 12%;
+
+  right: 12%;
+
+  bottom: -12px;
+
+  height: 20px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.22);
+
+  filter: blur(8px);
+
+  z-index: -1;
+}
+
+.feed-wheel-center {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  color: white;
+
+  text-align: center;
+}
+
+.feed-wheel-center strong {
+  font-size: 31px;
+
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+.feed-wheel-center span {
+  margin-top: 6px;
+
+  font-size: 13px;
+
+  opacity: 0.7;
+}
+
+/* =========================
+   LEGEND
+========================= */
+
+.feed-consumption-legend {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+
+  gap: 14px;
+
+  max-width: 500px;
+
+  width: 100%;
+}
+
+.feed-legend-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 13px;
+
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  border: 1px solid rgba(120, 140, 150, 0.13);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.feed-legend-item:hover {
+  transform: translateY(-2px);
+
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.feed-legend-dot {
+  flex-shrink: 0;
+
+  width: 12px;
+  height: 12px;
+
+  border-radius: 50%;
+
+  background: var(--legend-color);
+
+  box-shadow: 0 0 10px var(--legend-color);
+}
+
+.feed-legend-item b {
+  display: block;
+
+  font-size: 13px;
+}
+
+.feed-legend-item small {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  opacity: 0.65;
+}
+
+/* =========================
+   GROUP
+========================= */
+
+.feed-material-group {
+  margin-bottom: 22px;
+
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  border: 1px solid rgba(120, 140, 150, 0.12);
+}
+
+.feed-material-group-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 15px;
+}
+
+.feed-material-group-title > div {
+  flex: 1;
+}
+
+.feed-material-group-title h4 {
+  margin: 0;
+
+  font-size: 16px;
+}
+
+.feed-material-group-title span:not(.feed-group-indicator) {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  opacity: 0.55;
+}
+
+.feed-material-group-title strong {
+  font-size: 15px;
+
+  white-space: nowrap;
+}
+
+.feed-group-indicator {
+  width: 5px;
+
+  height: 38px;
+
+  border-radius: 10px;
+}
+
+.feed-group-indicator.grains {
+  background: #d6a73c;
+}
+
+.feed-group-indicator.protein {
+  background: #8b6f47;
+}
+
+.feed-group-indicator.oils {
+  background: #4b9b83;
+}
+
+.feed-group-indicator.additives {
+  background: #718096;
+}
+
+/* =========================
+   MATERIAL GRID
+========================= */
+
+.feed-material-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+
+  gap: 15px;
+}
+
+/* =========================
+   MATERIAL CARD
+========================= */
+
+.feed-material-card {
+  position: relative;
+
+  padding: 15px;
+
+  border-radius: 15px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.065),
+    rgba(255, 255, 255, 0.025)
+  );
+
+  border: 1px solid rgba(120, 140, 150, 0.13);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.feed-material-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.feed-material-name {
+  margin-bottom: 10px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.feed-material-card input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  min-height: 43px;
+
+  padding: 8px 12px;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: #18315f;
+
+  border: 1px solid rgba(150, 160, 170, 0.35);
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.feed-material-card input:focus {
+  border-color: #3b8d6e;
+
+  box-shadow: 0 0 0 3px rgba(59, 141, 110, 0.15);
+}
+
+.feed-material-meta {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-top: 9px;
+
+  font-size: 10px;
+
+  opacity: 0.55;
+}
+
+.feed-material-meta span:first-child {
+  font-size: 12px;
+
+  font-weight: 700;
+
+  opacity: 1;
+}
+
+/* =========================
+   BAR
+========================= */
+
+.feed-material-bar {
+  width: 100%;
+
+  height: 5px;
+
+  margin-top: 8px;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  background: rgba(120, 140, 150, 0.15);
+}
+
+.feed-material-bar span {
+  display: block;
+
+  width: 0%;
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: linear-gradient(90deg, #317d62, #65b18c);
+
+  transition: width 0.45s ease;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .feed-consumption-header {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    padding: 16px;
+  }
+
+  .feed-total-card {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+  .feed-consumption-overview {
+    flex-direction: column;
+
+    gap: 25px;
+
+    padding: 18px;
+  }
+
+  .feed-consumption-wheel-area {
+    min-width: 0;
+  }
+
+  .feed-consumption-wheel {
+    width: 210px;
+    height: 210px;
+  }
+
+  .feed-consumption-legend {
+    grid-template-columns: 1fr;
+
+    max-width: none;
+  }
+
+  .feed-material-group {
+    padding: 13px;
+  }
+
+  .feed-material-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .feed-material-card {
+    padding: 12px;
+  }
+
+  .feed-material-name {
+    font-size: 13px;
+  }
+
+  .feed-material-card input {
+    min-height: 42px;
+
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 430px) {
+  .feed-material-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feed-consumption-wheel {
+    width: 190px;
+    height: 190px;
+  }
+
+  .feed-wheel-center strong {
+    font-size: 26px;
+  }
+
+  .feed-consumption-title h3 {
+    font-size: 18px;
+  }
+}
+
+/* =====================================================
+   OIL STOCK DASHBOARD
+===================================================== */
+
+.oil-stock-dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 10px;
+}
+
+/* =========================
+   البطاقة
+========================= */
+
+.oil-stock-card {
+  position: relative;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.055),
+    rgba(255, 255, 255, 0.015)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 22px;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.oil-stock-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================
+   عنوان البطاقة
+========================= */
+
+.oil-card-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  margin-bottom: 18px;
+
+  color: #ffffff;
+}
+
+.oil-icon {
+  font-size: 25px;
+}
+
+/* =========================
+   منطقة الخزان
+========================= */
+
+.oil-tank-area {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+/* =========================
+   الخزان
+========================= */
+
+.oil-tank {
+  position: relative;
+
+  width: 180px;
+
+  height: 125px;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.025)
+  );
+
+  border: 2px solid rgba(255, 255, 255, 0.2);
+
+  box-shadow:
+    inset 0 0 20px rgba(0, 0, 0, 0.25),
+    0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================
+   السائل داخل الخزان
+========================= */
+
+.oil-tank-liquid {
+  position: absolute;
+
+  bottom: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 0%;
+
+  transition: height 0.6s ease;
+
+  opacity: 0.88;
+}
+
+/* =========================
+   قيمة الرصيد
+========================= */
+
+.oil-tank-value {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-direction: column;
+
+  color: #ffffff;
+
+  font-size: 28px;
+
+  font-weight: 900;
+
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+
+  z-index: 2;
+}
+
+.oil-tank-value small {
+  font-size: 13px;
+
+  font-weight: 600;
+
+  opacity: 0.9;
+}
+
+.oil-tank-label {
+  margin-top: 8px;
+
+  font-size: 13px;
+
+  opacity: 0.65;
+}
+
+/* =====================================================
+   ألوان الزيوت
+===================================================== */
+
+/* عباد الشمس */
+
+.sunflower .oil-tank-liquid {
+  background: linear-gradient(180deg, #f8d94e, #d9a900);
+}
+
+/* الأولين */
+
+.olein .oil-tank-liquid {
+  background: linear-gradient(180deg, #e7c95b, #b89119);
+}
+
+/* النخيل */
+
+.palm .oil-tank-liquid {
+  background: linear-gradient(180deg, #e58b2c, #a95008);
+}
+
+/* الستيارين */
+
+.stearin .oil-tank-liquid {
+  background: linear-gradient(180deg, #d8e0df, #899594);
+}
+
+/* =========================
+   حقول الإدخال
+========================= */
+
+.oil-inputs {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 10px;
+}
+
+.oil-input-box {
+  position: relative;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  border-radius: 13px;
+
+  padding: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.oil-input-box label {
+  display: block;
+
+  text-align: center;
+
+  font-size: 12px;
+
+  margin-bottom: 7px;
+
+  opacity: 0.7;
+}
+
+.oil-input-box input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  font-size: 17px;
+
+  font-weight: 800;
+
+  padding: 9px 5px;
+
+  border-radius: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: #eef4fa;
+
+  color: #193b70;
+
+  outline: none;
+}
+
+.oil-input-box input:focus {
+  border-color: #4da3ff;
+
+  box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.15);
+}
+
+.oil-input-box span {
+  display: block;
+
+  text-align: center;
+
+  font-size: 10px;
+
+  opacity: 0.55;
+
+  margin-top: 4px;
+}
+
+/* الرصيد يكون أوضح */
+
+.stock-input {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* =====================================================
+   الهاتف
+===================================================== */
+
+@media (max-width: 700px) {
+  .oil-stock-dashboard {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .oil-stock-card {
+    padding: 15px;
+
+    border-radius: 18px;
+  }
+
+  .oil-card-header {
+    font-size: 17px;
+  }
+
+  .oil-tank {
+    width: 155px;
+
+    height: 110px;
+  }
+
+  .oil-tank-value {
+    font-size: 23px;
+  }
+
+  .oil-inputs {
+    gap: 7px;
+  }
+
+  .oil-input-box {
+    padding: 7px 5px;
+  }
+
+  .oil-input-box input {
+    font-size: 15px;
+
+    padding: 8px 3px;
+  }
+}
+
+/* =====================================================
+   MILL DASHBOARD
+===================================================== */
+
+.mill-dashboard {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+
+  margin-top: 12px;
+}
+
+/* =========================
+   بطاقة الخط
+========================= */
+
+.mill-line-card {
+  position: relative;
+
+  padding: 18px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.055),
+    rgba(255, 255, 255, 0.015)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.mill-line-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================
+   رأس البطاقة
+========================= */
+
+.mill-line-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 15px;
+}
+
+.mill-line-name {
+  font-size: 24px;
+
+  font-weight: 900;
+
+  min-width: 65px;
+
+  text-align: center;
+
+  padding: 10px 15px;
+
+  border-radius: 14px;
+
+  background: rgba(42, 122, 82, 0.22);
+
+  border: 1px solid rgba(76, 190, 126, 0.25);
+}
+
+.mill-line-total {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 7px;
+
+  flex-wrap: wrap;
+
+  justify-content: flex-end;
+}
+
+.mill-line-total span {
+  font-size: 12px;
+
+  opacity: 0.65;
+}
+
+.mill-line-total strong {
+  font-size: 25px;
+
+  font-weight: 900;
+
+  color: #ffffff;
+}
+
+.mill-line-total small {
+  font-size: 11px;
+
+  opacity: 0.55;
+}
+
+/* =========================
+   مدخل الحنطة
+========================= */
+
+.mill-input-section {
+  position: relative;
+
+  padding: 14px;
+
+  margin-bottom: 13px;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  text-align: center;
+}
+
+.mill-input-label {
+  font-size: 13px;
+
+  font-weight: 700;
+
+  margin-bottom: 8px;
+
+  opacity: 0.72;
+}
+
+.mill-input-section input {
+  width: 70%;
+
+  box-sizing: border-box;
+
+  padding: 11px;
+
+  border-radius: 11px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: #eef4fa;
+
+  color: #193b70;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  text-align: center;
+
+  outline: none;
+}
+
+.mill-input-section > span {
+  margin-right: 5px;
+
+  font-size: 11px;
+
+  opacity: 0.55;
+}
+
+/* =========================
+   المخرجات
+========================= */
+
+.mill-output-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 9px;
+}
+
+.mill-output {
+  padding: 10px 7px;
+
+  border-radius: 13px;
+
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.mill-output label {
+  display: block;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  margin-bottom: 7px;
+}
+
+.mill-output input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 9px 4px;
+
+  border-radius: 9px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: #eef4fa;
+
+  color: #193b70;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  text-align: center;
+
+  outline: none;
+}
+
+.mill-output span {
+  display: block;
+
+  font-size: 9px;
+
+  opacity: 0.45;
+
+  margin-top: 3px;
+}
+
+/* =========================
+   تمييز أنواع المنتجات
+========================= */
+
+.flour-f1 {
+  border-top: 3px solid #f1d45a;
+}
+
+.flour-f3 {
+  border-top: 3px solid #d8a04b;
+}
+
+.flour-bran {
+  border-top: 3px solid #9b7045;
+}
+
+/* =========================
+   الحقل الأصلي للإجمالي
+   يبقى موجودًا للنظام
+========================= */
+
+.mill-hidden-total {
+  position: absolute;
+
+  width: 1px;
+
+  height: 1px;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+/* =====================================================
+   إجمالي المطحنة
+===================================================== */
+
+.mill-grand-dashboard {
+  margin-top: 22px;
+
+  padding: 20px;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(39, 122, 81, 0.25),
+    rgba(255, 255, 255, 0.025)
+  );
+
+  border: 1px solid rgba(77, 190, 125, 0.22);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.mill-grand-title {
+  text-align: center;
+
+  font-size: 20px;
+
+  font-weight: 900;
+
+  margin-bottom: 18px;
+}
+
+.mill-grand-items {
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 12px;
+}
+
+.mill-grand-items > div {
+  text-align: center;
+
+  padding: 12px 8px;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.mill-grand-items span {
+  display: block;
+
+  font-size: 12px;
+
+  opacity: 0.65;
+
+  margin-bottom: 7px;
+}
+
+.mill-grand-items input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  background: #eef4fa;
+
+  color: #193b70;
+
+  border: none;
+
+  border-radius: 9px;
+
+  padding: 9px 3px;
+
+  text-align: center;
+
+  font-size: 17px;
+
+  font-weight: 900;
+}
+
+.mill-grand-items small {
+  display: block;
+
+  font-size: 9px;
+
+  opacity: 0.45;
+
+  margin-top: 3px;
+}
+
+/* الإنتاج الكلي */
+
+.mill-grand-main {
+  background: rgba(39, 122, 81, 0.22) !important;
+
+  border: 1px solid rgba(77, 190, 125, 0.25) !important;
+}
+
+.mill-grand-main input {
+  font-size: 21px;
+}
+
+/* =====================================================
+   الهاتف
+===================================================== */
+
+@media (max-width: 700px) {
+  .mill-dashboard {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .mill-line-card {
+    padding: 14px;
+
+    border-radius: 17px;
+  }
+
+  .mill-line-name {
+    font-size: 20px;
+
+    padding: 8px 12px;
+  }
+
+  .mill-line-total strong {
+    font-size: 21px;
+  }
+
+  .mill-input-section input {
+    width: 75%;
+  }
+
+  .mill-output-grid {
+    gap: 6px;
+  }
+
+  .mill-output {
+    padding: 8px 4px;
+  }
+
+  .mill-output input {
+    font-size: 14px;
+
+    padding: 8px 2px;
+  }
+
+  .mill-grand-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mill-grand-main {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================
+   بطاقة كفاءة الاستخراج
+========================================= */
+
+.extraction-efficiency-card {
+  width: 100%;
+
+  background: linear-gradient(
+    145deg,
+    rgba(40, 75, 70, 0.95),
+    rgba(42, 48, 58, 0.98)
+  );
+
+  border: 1px solid rgba(80, 190, 150, 0.35);
+
+  border-radius: 24px;
+
+  padding: 28px 32px;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================================
+   العنوان
+========================================= */
+
+.extraction-efficiency-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  font-size: 22px;
+
+  font-weight: 800;
+
+  color: #ffffff;
+
+  margin-bottom: 25px;
+}
+
+.extraction-icon {
+  font-size: 24px;
+}
+
+/* =========================================
+   المحتوى
+========================================= */
+
+.extraction-efficiency-body {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 45px;
+
+  min-height: 180px;
+}
+
+/* =========================================
+   الحلقة الخارجية
+========================================= */
+
+.extraction-gauge {
+  width: 150px;
+
+  height: 150px;
+
+  border-radius: 50%;
+
+  padding: 8px;
+
+  box-sizing: border-box;
+
+  background: conic-gradient(
+    #37b878 0deg,
+    #37b878 0deg,
+    rgba(255, 255, 255, 0.08) 0deg,
+    rgba(255, 255, 255, 0.08) 360deg
+  );
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-shadow: 0 0 25px rgba(55, 184, 120, 0.18);
+}
+
+/* =========================================
+   مركز الحلقة
+========================================= */
+
+.extraction-gauge-inner {
+  width: 100%;
+
+  height: 100%;
+
+  border-radius: 50%;
+
+  background: linear-gradient(145deg, #303844, #252b34);
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================
+   حقل الرقم
+========================================= */
+
+.extraction-gauge-inner input {
+  width: 100px;
+
+  height: 48px;
+
+  border: none;
+
+  outline: none;
+
+  border-radius: 12px;
+
+  background: #edf3f9;
+
+  color: #183f78;
+
+  text-align: center;
+
+  font-size: 25px;
+
+  font-weight: 800;
+
+  box-sizing: border-box;
+
+  padding: 4px 8px;
+}
+
+/* إزالة الأسهم */
+
+.extraction-gauge-inner input::-webkit-inner-spin-button,
+.extraction-gauge-inner input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+
+  margin: 0;
+}
+
+.extraction-gauge-inner input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* =========================================
+   علامة %
+========================================= */
+
+.extraction-percent {
+  margin-top: 5px;
+
+  color: #aeb7c2;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+/* =========================================
+   النص الجانبي
+========================================= */
+
+.extraction-efficiency-info {
+  text-align: right;
+
+  max-width: 320px;
+}
+
+.efficiency-label {
+  font-size: 25px;
+
+  font-weight: 800;
+
+  color: #ffffff;
+
+  margin-bottom: 12px;
+}
+
+.efficiency-description {
+  color: #aeb7c2;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+/* =========================================
+   الشاشات الصغيرة
+========================================= */
+
+@media (max-width: 700px) {
+  .extraction-efficiency-body {
+    flex-direction: column;
+
+    gap: 20px;
+  }
+
+  .extraction-efficiency-info {
+    text-align: center;
+  }
+}
+
+/* =========================================
+   DASHBOARD - PRODUCTION LINE STOPS
+========================================= */
+
+.stops-dashboard {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-top: 10px;
+}
+
+.stop-card {
+  background: linear-gradient(
+    145deg,
+    rgba(55, 64, 76, 0.98),
+    rgba(39, 46, 57, 0.98)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.stop-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+
+  border-color: rgba(70, 170, 105, 0.45);
+}
+
+/* رأس البطاقة */
+
+.stop-card-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 15px 18px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(25, 95, 67, 0.85),
+    rgba(37, 125, 73, 0.85)
+  );
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stop-line-name {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  font-size: 20px;
+
+  font-weight: 700;
+
+  color: #fff;
+}
+
+.stop-line-icon {
+  font-size: 21px;
+}
+
+/* حالة التوقف */
+
+.stop-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  font-size: 13px;
+
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.stop-status-dot {
+  width: 9px;
+
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #6c757d;
+
+  box-shadow: 0 0 0 4px rgba(108, 117, 125, 0.12);
+}
+
+/* جسم البطاقة */
+
+.stop-card-body {
+  padding: 18px;
+
+  display: grid;
+
+  grid-template-columns: 170px minmax(0, 1fr);
+
+  gap: 18px;
+}
+
+/* مدة التوقف */
+
+.stop-duration-box {
+  background: rgba(255, 255, 255, 0.045);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 15px;
+
+  padding: 15px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.stop-duration-box label,
+.stop-cause-box label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.stop-input-wrap {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.stop-input-wrap input {
+  width: 100%;
+
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  padding: 12px 8px;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  background: #3c4551;
+
+  color: #fff;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  text-align: center;
+
+  outline: none;
+}
+
+.stop-input-wrap input:focus {
+  border-color: #55b978;
+
+  box-shadow: 0 0 0 3px rgba(85, 185, 120, 0.14);
+}
+
+.stop-input-wrap span {
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+/* أسباب التوقف */
+
+.stop-cause-box {
+  min-width: 0;
+}
+
+.cause-chips {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-bottom: 13px;
+}
+
+.cause-chips button {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  background: rgba(255, 255, 255, 0.055);
+
+  color: rgba(255, 255, 255, 0.82);
+
+  border-radius: 9px;
+
+  padding: 7px 10px;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: all 0.15s ease;
+}
+
+.cause-chips button:hover {
+  background: rgba(55, 155, 90, 0.28);
+
+  border-color: rgba(85, 185, 120, 0.55);
+
+  color: #fff;
+}
+
+.cause-chips button:active {
+  transform: scale(0.96);
+}
+
+/* مربع الشرح */
+
+.stop-cause-box textarea {
+  width: 100%;
+
+  min-height: 82px;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
+  padding: 11px 13px;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: #3c4551;
+
+  color: #fff;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+
+  outline: none;
+}
+
+.stop-cause-box textarea::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.stop-cause-box textarea:focus {
+  border-color: #55b978;
+
+  box-shadow: 0 0 0 3px rgba(85, 185, 120, 0.12);
+}
+
+/* =========================================
+   حالات مدة التوقف
+========================================= */
+
+.stop-card.stop-normal .stop-status-dot {
+  background: #49b86b;
+}
+
+.stop-card.stop-warning .stop-status-dot {
+  background: #e7b84b;
+}
+
+.stop-card.stop-danger .stop-status-dot {
+  background: #e45757;
+}
+
+/* البطاقة عند وجود توقف */
+
+.stop-card.stop-warning {
+  border-color: rgba(231, 184, 75, 0.35);
+}
+
+.stop-card.stop-danger {
+  border-color: rgba(228, 87, 87, 0.45);
+}
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 900px) {
+  .stops-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .stop-card-body {
+    grid-template-columns: 1fr;
+  }
+
+  .stop-duration-box {
+    min-height: auto;
+  }
+}
+
+/* =========================================
+   موقف قسم التعبئة - Dashboard
+========================================= */
+
+.packaging-stock-dashboard {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 22px;
+
+  margin-top: 10px;
+
+  direction: rtl;
+}
+
+/* =========================================
+   البطاقة
+========================================= */
+
+.packaging-stock-card {
+  position: relative;
+
+  min-height: 190px;
+
+  padding: 24px 28px;
+
+  border-radius: 24px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.055),
+    rgba(255, 255, 255, 0.018)
+  );
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  overflow: hidden;
+
+  display: grid;
+
+  grid-template-columns: 75px 1fr auto;
+
+  grid-template-rows: auto auto 14px;
+
+  column-gap: 20px;
+
+  align-items: center;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* تأثير عند المرور */
+
+.packaging-stock-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================
+   توهج خلفي
+========================================= */
+
+.packaging-stock-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 170px;
+
+  height: 170px;
+
+  border-radius: 50%;
+
+  left: -70px;
+
+  bottom: -90px;
+
+  opacity: 0.18;
+
+  filter: blur(20px);
+
+  pointer-events: none;
+}
+
+/* =========================================
+   لون بطاقة الطحين
+========================================= */
+
+.flour-stock-card {
+  border-color: rgba(218, 180, 75, 0.3);
+}
+
+.flour-stock-card::before {
+  background: #d9b44a;
+}
+
+/* =========================================
+   لون بطاقة النخالة
+========================================= */
+
+.bran-stock-card {
+  border-color: rgba(137, 164, 91, 0.3);
+}
+
+.bran-stock-card::before {
+  background: #7fa05b;
+}
+
+/* =========================================
+   الأيقونة
+========================================= */
+
+.packaging-stock-icon {
+  width: 68px;
+
+  height: 68px;
+
+  border-radius: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 36px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================
+   معلومات المنتج
+========================================= */
+
+.packaging-stock-info {
+  min-width: 0;
+}
+
+.packaging-stock-title {
+  font-size: 23px;
+
+  font-weight: 700;
+
+  color: #ffffff;
+
+  margin-bottom: 6px;
+}
+
+.packaging-stock-label {
+  font-size: 14px;
+
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* =========================================
+   قيمة المخزون
+========================================= */
+
+.packaging-stock-value {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+}
+
+.packaging-stock-value input {
+  width: 150px;
+
+  min-width: 150px;
+
+  height: 62px;
+
+  box-sizing: border-box;
+
+  border-radius: 17px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: #edf3fa;
+
+  color: #173b70;
+
+  text-align: center;
+
+  font-size: 25px;
+
+  font-weight: 700;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+/* عند الكتابة */
+
+.packaging-stock-value input:focus {
+  border-color: rgba(255, 255, 255, 0.45);
+
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+.packaging-stock-value span {
+  font-size: 13px;
+
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* =========================================
+   شريط مستوى المخزون
+========================================= */
+
+.packaging-stock-bar {
+  grid-column: 1 / -1;
+
+  width: 100%;
+
+  height: 10px;
+
+  margin-top: 12px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  overflow: hidden;
+}
+
+/* الجزء الممتلئ */
+
+.packaging-stock-fill {
+  height: 100%;
+
+  width: 0%;
+
+  border-radius: inherit;
+
+  transition: width 0.5s ease;
+}
+
+/* لون الطحين */
+
+.flour-stock-card .packaging-stock-fill {
+  background: linear-gradient(90deg, #a98225, #e5c45d);
+}
+
+/* لون النخالة */
+
+.bran-stock-card .packaging-stock-fill {
+  background: linear-gradient(90deg, #55783c, #9ab96b);
+}
+
+/* =========================================
+   المرفقات
+========================================= */
+
+.packaging-notes {
+  margin-top: 22px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* =========================================
+   الهاتف
+========================================= */
+
+@media (max-width: 800px) {
+  .packaging-stock-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .packaging-stock-card {
+    grid-template-columns: 60px 1fr;
+
+    grid-template-rows: auto auto auto;
+
+    padding: 20px;
+  }
+
+  .packaging-stock-value {
+    grid-column: 1 / -1;
+
+    margin-top: 15px;
+  }
+
+  .packaging-stock-bar {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================
+   الجودة والسلامة - Dashboard
+========================================= */
+
+.quality-safety-dashboard {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 22px;
+
+  margin-top: 10px;
+
+  direction: rtl;
+}
+
+/* =========================================
+   البطاقات
+========================================= */
+
+.quality-safety-card {
+  position: relative;
+
+  min-height: 310px;
+
+  padding: 24px;
+
+  border-radius: 24px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.055),
+    rgba(255, 255, 255, 0.018)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.quality-safety-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================
+   خط علوي لكل بطاقة
+========================================= */
+
+.quality-card {
+  border-top: 3px solid #4d9b68;
+}
+
+.safety-card {
+  border-top: 3px solid #5d8fc9;
+}
+
+/* =========================================
+   الرأس
+========================================= */
+
+.quality-card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+.quality-card-icon {
+  width: 58px;
+
+  height: 58px;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 30px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.quality-card-title {
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: #ffffff;
+}
+
+.quality-card-subtitle {
+  margin-top: 4px;
+
+  font-size: 13px;
+
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* =========================================
+   مساحة الملاحظة
+========================================= */
+
+.quality-card-body {
+  width: 100%;
+}
+
+.quality-card-body textarea {
+  width: 100%;
+
+  min-height: 150px;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
+  padding: 16px;
+
+  border-radius: 17px;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  background: rgba(255, 255, 255, 0.045);
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  line-height: 1.7;
+
+  outline: none;
+
+  font-family: inherit;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.quality-card-body textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.quality-card-body textarea:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================
+   أزرار المرفقات
+========================================= */
+
+.quality-card-footer {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 16px;
+
+  flex-wrap: wrap;
+}
+
+.dashboard-upload-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 9px 17px;
+
+  border-radius: 10px;
+
+  background: rgba(40, 92, 190, 0.9);
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.dashboard-upload-btn:hover {
+  transform: translateY(-1px);
+
+  filter: brightness(1.12);
+}
+
+.dashboard-file-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 8px 13px;
+
+  border-radius: 9px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  color: rgba(255, 255, 255, 0.75);
+
+  font-size: 13px;
+
+  text-decoration: none;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================
+   الملاحظات العامة
+========================================= */
+
+.general-notes-dashboard {
+  position: relative;
+
+  padding: 25px;
+
+  border-radius: 24px;
+
+  margin-top: 10px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.055),
+    rgba(255, 255, 255, 0.018)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+/* الرأس */
+
+.general-notes-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 18px;
+}
+
+.general-notes-icon {
+  width: 52px;
+
+  height: 52px;
+
+  border-radius: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 27px;
+
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.general-notes-title {
+  font-size: 21px;
+
+  font-weight: 700;
+
+  color: #ffffff;
+}
+
+.general-notes-subtitle {
+  margin-top: 4px;
+
+  font-size: 13px;
+
+  color: rgba(255, 255, 255, 0.48);
+}
+
+/* مربع الملاحظات */
+
+.general-notes-dashboard textarea {
+  width: 100%;
+
+  min-height: 130px;
+
+  box-sizing: border-box;
+
+  resize: vertical;
+
+  padding: 17px;
+
+  border-radius: 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: rgba(255, 255, 255, 0.045);
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 17px;
+
+  line-height: 1.7;
+
+  outline: none;
+}
+
+.general-notes-dashboard textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.general-notes-dashboard textarea:focus {
+  border-color: rgba(255, 255, 255, 0.28);
+
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================
+   الهاتف
+========================================= */
+
+@media (max-width: 800px) {
+  .quality-safety-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .quality-safety-card {
+    padding: 19px;
+  }
+
+  .quality-card-title {
+    font-size: 19px;
+  }
+}
