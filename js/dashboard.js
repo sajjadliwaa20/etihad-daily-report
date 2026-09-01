@@ -1,4 +1,5 @@
 window.testDashboard = true;
+document.addEventListener("DOMContentLoaded", updateSugarTankCards);
 
 async function showCurrentUser() {
   const {
@@ -507,6 +508,52 @@ async function goToHomeByRole() {
   window.location.hash = "home";
 }
 
+/* =========================================================
+   🍬 صلاحيات Dashboard مصنع السكر
+   ========================================================= */
+
+function applySugarDashboardPermissions(role) {
+  console.log("🍬 SUGAR DASHBOARD PERMISSIONS:", role);
+
+  /* -----------------------------------------------------
+       البيانات التفصيلية
+       تظهر لحساب السكر فقط
+       ----------------------------------------------------- */
+
+  document.querySelectorAll('[data-sugar-only="true"]').forEach((el) => {
+    if (role === "sugar") {
+      el.style.display = "";
+    } else {
+      el.style.display = "none";
+    }
+  });
+
+  /* -----------------------------------------------------
+       زر اعتماد تقرير السكر
+       يظهر لحساب السكر فقط
+       ----------------------------------------------------- */
+
+  const sugarApproveArea = document.querySelector(".sugar-approval-area");
+
+  if (sugarApproveArea) {
+    if (role === "sugar") {
+      sugarApproveArea.style.display = "flex";
+    } else {
+      sugarApproveArea.style.display = "none";
+    }
+  }
+
+  /* -----------------------------------------------------
+       حماية إضافية لزر الاعتماد نفسه
+       ----------------------------------------------------- */
+
+  const sugarApproveBtn = document.getElementById("SugarBtn");
+
+  if (sugarApproveBtn) {
+    sugarApproveBtn.style.display = role === "sugar" ? "inline-flex" : "none";
+  }
+}
+
 async function applyPermissions() {
   console.log("applyPermissions started");
 
@@ -541,6 +588,12 @@ async function applyPermissions() {
 
   window.currentUserRole = role;
   window.currentUserSubsection = subsection;
+
+  /* =========================================================
+   🍬 تطبيق صلاحيات Dashboard السكر
+   ========================================================= */
+
+  applySugarDashboardPermissions(role);
 
   console.log("ROLE =", role);
   console.log("SUBSECTION =", subsection);
@@ -666,6 +719,8 @@ async function applyPermissions() {
     document.querySelectorAll(".section").forEach((section) => {
       section.style.display = "block";
     });
+
+    applySugarDashboardPermissions(role);
 
     window.location.hash = "home";
 
@@ -2132,8 +2187,7 @@ function toggleSeparationStation() {
 
     modeDisplay.style.background = "rgba(40,130,70,0.15)";
   } else if (status === "stopped") {
-
-  /* =========================
+    /* =========================
        خارج الخدمة
        ========================= */
     card.classList.add("stopped");
@@ -2150,8 +2204,7 @@ function toggleSeparationStation() {
 
     modeDisplay.style.background = "rgba(150,45,45,0.15)";
   } else {
-
-  /* =========================
+    /* =========================
        لم يتم الاختيار
        ========================= */
     statusIcon.textContent = "⚙️";
@@ -2189,6 +2242,614 @@ function updateSeparationDashboard() {
    * - مؤشرات الأداء
    * - تنبيهات
    */
+}
+
+function updateSugarTankCards() {
+  document.querySelectorAll(".sugar-tank-card").forEach((card) => {
+    const valueId = card.dataset.valueId;
+
+    const min = parseFloat(card.dataset.min) || 0;
+
+    const max = parseFloat(card.dataset.max) || 100;
+
+    const valueElement = document.getElementById(valueId);
+
+    if (!valueElement) return;
+
+    let value = parseFloat(valueElement.value ?? valueElement.textContent);
+
+    if (isNaN(value)) value = 0;
+
+    let percentage = ((value - min) / (max - min)) * 100;
+
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    const fill = card.querySelector(".tank-fill");
+
+    const status = card.querySelector(".tank-status");
+
+    const minElement = card.querySelector(".tank-min");
+
+    const maxElement = card.querySelector(".tank-max");
+
+    /* مستوى التعبئة */
+
+    fill.style.width = percentage + "%";
+
+    /* عرض MIN / MAX */
+
+    if (minElement) minElement.textContent = min;
+
+    if (maxElement) maxElement.textContent = max;
+
+    /* الحالة */
+
+    if (value < min) {
+      status.textContent = "LOW";
+
+      card.classList.add("tank-low");
+      card.classList.remove("tank-high");
+    } else if (value > max) {
+      status.textContent = "OVER MAX";
+
+      card.classList.add("tank-high");
+      card.classList.remove("tank-low");
+    } else {
+      status.textContent = "NORMAL";
+
+      card.classList.remove("tank-low", "tank-high");
+    }
+  });
+}
+document.addEventListener("input", function (e) {
+  if (e.target.matches("[data-save], input, textarea")) {
+    updateSugarTankCards();
+  }
+});
+
+function updateNovasepColor(input) {
+  const sourceField = document.getElementById("novasep_color");
+
+  if (!sourceField || input.disabled) {
+    return;
+  }
+
+  sourceField.value = input.value;
+
+  /* حفظ القيمة */
+
+  if (typeof saveSalesField === "function") {
+    saveSalesField("novasep_color", "sugar");
+  }
+
+  /* حفظ عام إذا كان مستخدمًا في النظام */
+
+  sourceField.dispatchEvent(
+    new Event("change", {
+      bubbles: true,
+    }),
+  );
+}
+
+function updateNovasepDashboard() {
+  const colorInput = document.getElementById("novasep_color");
+
+  const statusInput = document.getElementById("novasep_status");
+
+  const qualityCircle = document.getElementById("novasepQualityCircle");
+
+  const statusCircle = document.getElementById("novasepStatusCircle");
+
+  const statusText = document.getElementById("novasepStatusText");
+
+  if (!colorInput || !statusInput) return;
+
+  const color = colorInput.value.trim();
+
+  const status = statusInput.value;
+
+  // =================================================
+  // 🔴 خارج الخدمة
+  // =================================================
+
+  if (status === "out_of_service") {
+    // منع إدخال اللون
+    colorInput.readOnly = true;
+
+    // تغيير مظهر حقل اللون
+    colorInput.classList.add("novasep-disabled");
+
+    // البطاقة - ICUMSA
+    if (qualityCircle) {
+      qualityCircle.innerHTML = `
+                <span style="font-size:16px;">
+                    OFF
+                </span>
+            `;
+
+      qualityCircle.classList.add("station-off");
+    }
+
+    // البطاقة - الحالة
+    if (statusCircle) {
+      statusCircle.innerHTML = "🔴";
+
+      statusCircle.classList.add("station-off");
+    }
+
+    if (statusText) {
+      statusText.textContent = "خارج الخدمة";
+    }
+  }
+
+  // =================================================
+  // 🟡 صيانة
+  // =================================================
+  else if (status === "maintenance") {
+    // أثناء الصيانة لا نسمح بإدخال اللون
+    colorInput.readOnly = true;
+
+    colorInput.classList.add("novasep-disabled");
+
+    // البطاقة - ICUMSA
+    if (qualityCircle) {
+      qualityCircle.innerHTML = `
+                <span style="font-size:16px;">
+                    N/A
+                </span>
+            `;
+
+      qualityCircle.classList.add("station-off");
+    }
+
+    // البطاقة - الحالة
+    if (statusCircle) {
+      statusCircle.innerHTML = "🟡";
+
+      statusCircle.classList.remove("station-off");
+    }
+
+    if (statusText) {
+      statusText.textContent = "صيانة";
+    }
+  }
+
+  // =================================================
+  // 🟢 تعمل
+  // =================================================
+  else if (status === "running") {
+    // السماح بإدخال اللون
+    colorInput.readOnly = false;
+
+    colorInput.classList.remove("novasep-disabled");
+
+    // عرض اللون
+    if (qualityCircle) {
+      qualityCircle.innerHTML = color || "0";
+
+      qualityCircle.classList.remove("station-off");
+    }
+
+    // الحالة
+    if (statusCircle) {
+      statusCircle.innerHTML = "🟢";
+
+      statusCircle.classList.remove("station-off");
+    }
+
+    if (statusText) {
+      statusText.textContent = "تعمل";
+    }
+  }
+
+  // =================================================
+  // ⚪ لم يتم اختيار الحالة
+  // =================================================
+  else {
+    colorInput.readOnly = true;
+
+    colorInput.classList.add("novasep-disabled");
+
+    if (qualityCircle) {
+      qualityCircle.innerHTML = "—";
+
+      qualityCircle.classList.remove("station-off");
+    }
+
+    if (statusCircle) {
+      statusCircle.innerHTML = "⚪";
+
+      statusCircle.classList.remove("station-off");
+    }
+
+    if (statusText) {
+      statusText.textContent = "غير محددة";
+    }
+  }
+}
+
+/* =========================================================
+   🍲 COOKER DASHBOARD
+   ========================================================= */
+
+function updateCookerDashboard() {
+  /* =====================================================
+       قراءة القيم من بطاقات / حقول التقرير
+       ===================================================== */
+
+  const brix = parseFloat(document.getElementById("cooker_brix")?.value) || 0;
+
+  const molassesQty =
+    parseFloat(document.getElementById("molasses_qty")?.value) || 0;
+
+  const molassesBrix =
+    parseFloat(document.getElementById("molasses_brix")?.value) || 0;
+
+  const molassesPurity =
+    parseFloat(document.getElementById("molasses_purity")?.value) || 0;
+
+  /* =====================================================
+       تحديث الأرقام
+       ===================================================== */
+
+  const dashBrix = document.getElementById("dashCookerBrix");
+
+  const dashQty = document.getElementById("dashMolassesQty");
+
+  const dashMolassesBrix = document.getElementById("dashMolassesBrix");
+
+  const dashPurity = document.getElementById("dashMolassesPurity");
+
+  if (dashBrix) dashBrix.textContent = brix.toFixed(1);
+
+  if (dashQty) dashQty.textContent = molassesQty.toFixed(1);
+
+  if (dashMolassesBrix) dashMolassesBrix.textContent = molassesBrix.toFixed(1);
+
+  if (dashPurity) dashPurity.textContent = molassesPurity.toFixed(1);
+
+  /* =====================================================
+       تحديث الـ Donut
+       ===================================================== */
+
+  updateCookerDonut(0, brix);
+
+  updateCookerDonut(1, molassesBrix);
+
+  updateCookerDonut(2, molassesPurity);
+
+  /* =====================================================
+       تحديث خزان المولاس
+       MIN = 15
+       MAX = 60
+       ===================================================== */
+
+  updateMolassesLevel(molassesQty);
+}
+
+/* =========================================================
+   DONUT UPDATE
+   ========================================================= */
+
+function updateCookerDonut(index, value) {
+  const donuts = document.querySelectorAll(".cooker-donut");
+
+  const donut = donuts[index];
+
+  if (!donut) return;
+
+  const progress = donut.querySelector(".donut-progress");
+
+  if (!progress) return;
+
+  /* منع القيم من تجاوز 0 - 100 */
+
+  let percentage = Math.max(0, Math.min(100, Number(value) || 0));
+
+  /*
+       محيط الدائرة:
+       2 × π × 48 = 301.59
+    */
+
+  const circumference = 301.59;
+
+  const offset = circumference - (percentage / 100) * circumference;
+
+  progress.style.strokeDashoffset = offset;
+
+  /* اللون */
+
+  const color = donut.dataset.color || "#38d9a9";
+
+  progress.style.stroke = color;
+
+  progress.style.filter = `drop-shadow(0 0 6px ${color}55)`;
+}
+
+/* =========================================================
+   🍯 MOLASSES TANK
+   MIN = 15 TON
+   MAX = 60 TON
+   ========================================================= */
+
+function updateMolassesLevel(value) {
+  const fill = document.getElementById("molassesTankFill");
+
+  if (!fill) return;
+
+  const MIN = 15;
+
+  const MAX = 60;
+
+  const qty = Number(value) || 0;
+
+  let percentage = ((qty - MIN) / (MAX - MIN)) * 100;
+
+  percentage = Math.max(0, Math.min(100, percentage));
+
+  fill.style.height = percentage + "%";
+}
+
+/* =================================================
+   🌡️ تحديث بطاقة محطة التجفيف
+   ================================================= */
+
+function updateDryerDashboard() {
+  /* =========================================
+       قراءة الحقول الأصلية
+       ========================================= */
+
+  const temp = parseFloat(document.getElementById("dryer_temp")?.value) || 0;
+
+  const ph = parseFloat(document.getElementById("dryer_ph")?.value) || 0;
+
+  const color = parseFloat(document.getElementById("dryer_color")?.value) || 0;
+
+  const dust = parseFloat(document.getElementById("dryer_dust")?.value) || 0;
+
+  const qty = parseFloat(document.getElementById("dryer_qty")?.value) || 0;
+
+  /* =========================================
+       عرض القيم
+       ========================================= */
+
+  const tempDisplay = document.getElementById("dashDryerTemp2");
+
+  const phDisplay = document.getElementById("dashDryerPH2");
+
+  const colorDisplay = document.getElementById("dashDryerColor");
+
+  const dustDisplay = document.getElementById("dashDryerDust");
+
+  const qtyDisplay = document.getElementById("dashDryerQty");
+
+  if (tempDisplay) tempDisplay.textContent = temp;
+
+  if (phDisplay) phDisplay.textContent = ph;
+
+  if (colorDisplay) colorDisplay.textContent = color;
+
+  if (dustDisplay) dustDisplay.textContent = dust;
+
+  if (qtyDisplay) qtyDisplay.textContent = qty.toFixed(2) + " طن";
+
+  /* =========================================
+       تحديث الـ Donut Charts
+       ========================================= */
+
+  const donuts = document.querySelectorAll(".dryer-donut");
+
+  donuts.forEach((donut) => {
+    const source = donut.dataset.source;
+
+    const min = parseFloat(donut.dataset.min) || 0;
+
+    const max = parseFloat(donut.dataset.max) || 100;
+
+    const value = parseFloat(document.getElementById(source)?.value) || 0;
+
+    const progress = donut.querySelector(".dryer-donut-progress");
+
+    if (!progress) return;
+
+    /* ===============================
+           حساب النسبة
+           =============================== */
+
+    let percentage = ((value - min) / (max - min)) * 100;
+
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    /* ===============================
+           محيط الدائرة
+           =============================== */
+
+    const circumference = 2 * Math.PI * 48;
+
+    const offset = circumference - (percentage / 100) * circumference;
+
+    progress.style.strokeDasharray = circumference;
+
+    progress.style.strokeDashoffset = offset;
+
+    /* ===============================
+           لون الحلقة
+           =============================== */
+
+    progress.style.stroke = donut.dataset.color || "#38d9a9";
+
+    /* ===============================
+           حفظ القيمة
+           =============================== */
+
+    donut.dataset.value = value;
+  });
+
+  /* =========================================
+       كمية السكر المجفف
+       Range = 0 → 6000 طن
+       ========================================= */
+
+  const maxProduction = 6000;
+
+  let productionPercentage = (qty / maxProduction) * 100;
+
+  productionPercentage = Math.max(0, Math.min(100, productionPercentage));
+
+  const productionFill = document.getElementById("dryerProductionFill");
+
+  if (productionFill) {
+    productionFill.style.width = productionPercentage + "%";
+  }
+
+  /* =========================================
+       تحديث 0 / 6000 TON
+       ========================================= */
+
+  const productionHeader = document.querySelector(
+    ".dryer-production-header > span",
+  );
+
+  if (productionHeader) {
+    productionHeader.textContent = qty.toFixed(2) + " / 6000 TON";
+  }
+}
+
+function updateLimeDashboard() {
+  const limeField = document.getElementById("carb_lime");
+
+  const limeValue = parseFloat(limeField?.value) || 0;
+
+  /* =========================================
+       قيمة البطاقة
+       ========================================= */
+
+  const dashboardValue = document.getElementById("dashLimeStock");
+
+  if (dashboardValue) {
+    dashboardValue.textContent = limeValue.toFixed(2);
+  }
+
+  /* =========================================
+       مستوى الخزان
+       ========================================= */
+
+  const fill = document.getElementById("limeTankFill");
+
+  if (fill) {
+    /*
+           عدّل MAX حسب السعة الفعلية للخزان
+        */
+
+    const maxLime = 100;
+
+    let percentage = (limeValue / maxLime) * 100;
+
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    fill.style.width = percentage + "%";
+  }
+}
+
+function updateCarbLimeDashboard() {
+  const source = document.getElementById("carb_lime");
+
+  const dashboard = document.getElementById("dashCarbLime");
+
+  if (!source || !dashboard) return;
+
+  const value = parseFloat(source.value) || 0;
+
+  dashboard.textContent = value.toFixed(2);
+}
+
+/* =========================================================
+   🔄 REFRESH ALL DASHBOARDS
+   تشغيل جميع مؤشرات الداشبورد بعد تحميل البيانات
+   ========================================================= */
+
+function refreshAllDashboards() {
+  try {
+    if (typeof updateSugarCommandCenter === "function") {
+      updateSugarCommandCenter();
+    }
+  } catch (e) {
+    console.error("Sugar Command Center:", e);
+  }
+
+  try {
+    if (typeof updateSugarTankCards === "function") {
+      updateSugarTankCards();
+    }
+  } catch (e) {
+    console.error("Sugar Tank Cards:", e);
+  }
+
+  try {
+    if (typeof updateSugarTank === "function") {
+      updateSugarTank();
+    }
+  } catch (e) {
+    console.error("White Sugar Tank:", e);
+  }
+
+  try {
+    if (typeof updateNovasepDashboard === "function") {
+      updateNovasepDashboard();
+    }
+  } catch (e) {
+    console.error("Novasep Dashboard:", e);
+  }
+
+  try {
+    if (typeof updateCookerDashboard === "function") {
+      updateCookerDashboard();
+    }
+  } catch (e) {
+    console.error("Cooker Dashboard:", e);
+  }
+
+  try {
+    if (typeof updateDryerDashboard === "function") {
+      updateDryerDashboard();
+    }
+  } catch (e) {
+    console.error("Dryer Dashboard:", e);
+  }
+
+  try {
+    if (typeof updateLimeDashboard === "function") {
+      updateLimeDashboard();
+    }
+  } catch (e) {
+    console.error("Lime Dashboard:", e);
+  }
+
+  try {
+    if (typeof updateCarbLimeDashboard === "function") {
+      updateCarbLimeDashboard();
+    }
+  } catch (e) {
+    console.error("Carb Lime Dashboard:", e);
+  }
+
+  /* تحديث إجمالي البريكوت أولاً */
+  try {
+    if (typeof updatePKFBriquetteTotal === "function") {
+      updatePKFBriquetteTotal();
+    }
+  } catch (e) {
+    console.error("PKF Briquette:", e);
+  }
+
+  /* إعادة تحديث بطاقات السكر بعد الحسابات */
+  try {
+    if (typeof updateSugarTankCards === "function") {
+      updateSugarTankCards();
+    }
+  } catch (e) {
+    console.error("Sugar Tank Cards Final:", e);
+  }
 }
 
 /* يبدأ فحص الحقول كل دقيقة */

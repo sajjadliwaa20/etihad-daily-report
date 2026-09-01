@@ -12285,3 +12285,2568 @@ body.dark-mode details summary {
   max-width: 750px;
   height: 50px;
 }
+
+/* ============================================================
+   🍬 SUGAR REFINERY — COMMAND CENTER
+   ============================================================ */
+
+:root {
+  --sugar-white: #f5f7fa;
+  --sugar-gold: #d9aa41;
+  --sugar-gold-light: #f0cf73;
+  --sugar-deep: #0f4c3a;
+  --sugar-deep-2: #123d32;
+  --sugar-green: #1f6b54;
+  --sugar-dark: #27313a;
+  --sugar-card: #303b47;
+  --sugar-input: #edf4fa;
+  --sugar-red: #b94a48;
+  --sugar-blue: #3986c9;
+  --sugar-purple: #8067b7;
+  --sugar-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* ============================================================
+   MAIN SUGAR SECTION
+   ============================================================ */
+
+#sugar.sugar-command-center {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 15% 5%, rgba(217, 170, 65, 0.1), transparent 28%),
+    linear-gradient(145deg, #27313a, #202a32);
+  border: 1px solid rgba(217, 170, 65, 0.2);
+}
+
+/* لمعة ذهبية علوية */
+
+#sugar.sugar-command-center::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--sugar-gold),
+    transparent
+  );
+  opacity: 0.8;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.sugar-command-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 22px 26px;
+  margin-bottom: 22px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #0f4c3a, #145d48);
+
+  border: 1px solid rgba(217, 170, 65, 0.28);
+
+  box-shadow: var(--sugar-shadow);
+}
+
+.sugar-command-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sugar-command-logo {
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  font-size: 32px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(217, 170, 65, 0.3),
+    rgba(255, 255, 255, 0.08)
+  );
+
+  border: 1px solid rgba(217, 170, 65, 0.35);
+
+  box-shadow:
+    inset 0 0 15px rgba(255, 255, 255, 0.05),
+    0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.sugar-command-title strong {
+  display: block;
+  color: white;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.sugar-command-title span {
+  display: block;
+  margin-top: 4px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 13px;
+  letter-spacing: 0.4px;
+}
+
+.sugar-command-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 9px 15px;
+
+  border-radius: 30px;
+
+  background: rgba(0, 0, 0, 0.18);
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sugar-status-dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: #4ade80;
+
+  box-shadow:
+    0 0 0 5px rgba(74, 222, 128, 0.12),
+    0 0 14px rgba(74, 222, 128, 0.65);
+}
+
+/* ============================================================
+   KPI CARDS
+   ============================================================ */
+
+.sugar-kpi-grid {
+  display: grid;
+
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+
+  gap: 14px;
+
+  margin-bottom: 22px;
+}
+
+.sugar-kpi-card {
+  position: relative;
+
+  min-height: 125px;
+
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(145deg, #303b47, #28333d);
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.sugar-kpi-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+}
+
+.sugar-kpi-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 4px;
+  height: 100%;
+
+  background: var(--sugar-gold);
+}
+
+.sugar-kpi-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(217, 170, 65, 0.12);
+
+  font-size: 19px;
+
+  margin-bottom: 9px;
+}
+
+.sugar-kpi-label {
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 12px;
+}
+
+.sugar-kpi-value {
+  margin-top: 5px;
+
+  color: white;
+
+  font-size: 25px;
+
+  font-weight: 800;
+
+  direction: ltr;
+  text-align: right;
+}
+
+.sugar-kpi-unit {
+  color: var(--sugar-gold-light);
+
+  font-size: 11px;
+
+  margin-right: 4px;
+}
+
+/* ============================================================
+   PROCESS FLOW
+   ============================================================ */
+
+.sugar-process-card {
+  padding: 20px;
+
+  margin-bottom: 22px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(145deg, #172f29, #142822);
+
+  border: 1px solid rgba(217, 170, 65, 0.18);
+}
+
+.sugar-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.sugar-section-heading strong {
+  color: white;
+  font-size: 17px;
+}
+
+.sugar-section-heading span {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+}
+
+.sugar-process-flow {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  overflow-x: auto;
+
+  padding: 5px 2px 10px;
+}
+
+.sugar-process-node {
+  flex: 1;
+
+  min-width: 100px;
+
+  text-align: center;
+
+  padding: 12px 8px;
+
+  border-radius: 15px;
+
+  background: #27363d;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  position: relative;
+}
+
+.sugar-process-node .icon {
+  display: block;
+
+  font-size: 22px;
+
+  margin-bottom: 6px;
+}
+
+.sugar-process-node strong {
+  display: block;
+
+  color: white;
+
+  font-size: 12px;
+}
+
+.sugar-process-node small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.48);
+
+  font-size: 9px;
+}
+
+.sugar-process-arrow {
+  color: var(--sugar-gold);
+
+  font-size: 18px;
+
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   DASHBOARD PANELS
+   ============================================================ */
+
+.sugar-dashboard-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 22px;
+}
+
+.sugar-panel {
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background: linear-gradient(145deg, #303b47, #28333d);
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
+}
+
+.sugar-panel.full {
+  grid-column: 1 / -1;
+}
+
+.sugar-panel-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 17px 20px;
+
+  background: linear-gradient(135deg, #145d48, #104635);
+
+  border-bottom: 1px solid rgba(217, 170, 65, 0.18);
+}
+
+.sugar-panel-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+}
+
+.sugar-panel-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(217, 170, 65, 0.13);
+
+  font-size: 19px;
+}
+
+.sugar-panel-title strong {
+  color: white;
+
+  display: block;
+
+  font-size: 15px;
+}
+
+.sugar-panel-title small {
+  display: block;
+
+  color: rgba(255, 255, 255, 0.48);
+
+  margin-top: 2px;
+
+  font-size: 10px;
+}
+
+.sugar-panel-body {
+  padding: 18px;
+}
+
+/* ============================================================
+   INVENTORY CARD
+   ============================================================ */
+
+.sugar-inventory-card {
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 1fr)
+    minmax(220px, 1.5fr);
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+.sugar-inventory-main {
+  text-align: center;
+}
+
+.sugar-inventory-number {
+  font-size: 34px;
+
+  font-weight: 900;
+
+  color: white;
+
+  direction: ltr;
+}
+
+.sugar-inventory-number span {
+  font-size: 12px;
+
+  color: var(--sugar-gold-light);
+
+  margin-right: 5px;
+}
+
+.sugar-progress {
+  height: 12px;
+
+  margin-top: 14px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  overflow: hidden;
+}
+
+.sugar-progress-fill {
+  height: 100%;
+
+  width: 0%;
+
+  border-radius: inherit;
+
+  background: linear-gradient(90deg, #b98525, #f0cf73);
+
+  transition: width 0.4s ease;
+}
+
+.sugar-inventory-stats {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 8px;
+}
+
+.sugar-stat {
+  padding: 12px 8px;
+
+  border-radius: 13px;
+
+  text-align: center;
+
+  background: rgba(0, 0, 0, 0.12);
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sugar-stat span {
+  display: block;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 10px;
+}
+
+.sugar-stat strong {
+  display: block;
+
+  margin-top: 5px;
+
+  color: white;
+
+  font-size: 16px;
+}
+
+/* ============================================================
+   STATION STATUS
+   ============================================================ */
+
+.sugar-station-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+}
+
+.sugar-station {
+  padding: 15px;
+
+  border-radius: 15px;
+
+  background: #27333d;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sugar-station-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.sugar-station-name {
+  color: white;
+
+  font-weight: 700;
+
+  font-size: 13px;
+}
+
+.sugar-station-state {
+  padding: 4px 8px;
+
+  border-radius: 20px;
+
+  background: rgba(74, 222, 128, 0.12);
+
+  color: #86efac;
+
+  font-size: 9px;
+}
+
+.sugar-station-value {
+  margin-top: 12px;
+
+  color: var(--sugar-gold-light);
+
+  font-size: 23px;
+
+  font-weight: 800;
+}
+
+/* ============================================================
+   QUALITY INDICATORS
+   ============================================================ */
+
+.sugar-quality-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+}
+
+.sugar-quality-item {
+  text-align: center;
+
+  padding: 16px 10px;
+
+  border-radius: 15px;
+
+  background: #27333d;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sugar-quality-circle {
+  width: 72px;
+  height: 72px;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: radial-gradient(circle, #27333d 58%, transparent 60%);
+
+  border: 5px solid var(--sugar-gold);
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 800;
+}
+
+.sugar-quality-item strong {
+  display: block;
+
+  margin-top: 9px;
+
+  color: white;
+
+  font-size: 12px;
+}
+
+.sugar-quality-item small {
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 9px;
+}
+
+/* ============================================================
+   PACKING MATRIX
+   ============================================================ */
+
+.sugar-packing-matrix {
+  display: grid;
+
+  grid-template-columns:
+    120px
+    repeat(5, 1fr);
+
+  gap: 5px;
+}
+
+.sugar-packing-cell {
+  padding: 12px 7px;
+
+  text-align: center;
+
+  border-radius: 8px;
+
+  background: #26313a;
+
+  color: white;
+
+  font-size: 11px;
+}
+
+.sugar-packing-cell.header {
+  background: #124f3c;
+
+  color: var(--sugar-gold-light);
+
+  font-weight: 800;
+}
+
+.sugar-packing-cell.shift {
+  color: white;
+
+  font-weight: 700;
+}
+
+.sugar-packing-cell input {
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+  margin: 0 !important;
+}
+
+/* ============================================================
+   QUALITY + SAFETY
+   ============================================================ */
+
+.sugar-qc-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 15px;
+}
+
+.sugar-qc-card {
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: #28343d;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.sugar-qc-card.quality {
+  border-right: 4px solid #39b7d6;
+}
+
+.sugar-qc-card.safety {
+  border-right: 4px solid #e0a83a;
+}
+
+.sugar-qc-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: white;
+
+  font-weight: 800;
+
+  margin-bottom: 12px;
+}
+
+.sugar-qc-title span {
+  font-size: 21px;
+}
+
+.sugar-qc-card textarea {
+  min-height: 115px;
+
+  width: 100%;
+}
+
+/* ============================================================
+   LEGACY DETAILS
+   ============================================================ */
+
+.sugar-legacy-details {
+  margin-top: 18px;
+}
+
+.sugar-legacy-details > summary {
+  background: linear-gradient(135deg, #17644d, #11513e) !important;
+
+  border: 1px solid rgba(217, 170, 65, 0.18) !important;
+
+  color: white !important;
+}
+
+/* ============================================================
+   APPROVAL
+   ============================================================ */
+
+.sugar-approval-area {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 22px;
+
+  padding: 20px 24px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #0d3028, #123e32);
+
+  border: 1px solid rgba(217, 170, 65, 0.3);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.sugar-approval-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+.sugar-approval-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: rgba(74, 222, 128, 0.13);
+
+  font-size: 25px;
+}
+
+.sugar-approval-info strong {
+  display: block;
+
+  color: white;
+
+  font-size: 16px;
+}
+
+.sugar-approval-info small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 10px;
+}
+
+.sugar-approve-btn {
+  min-width: 190px;
+
+  padding: 13px 22px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background: linear-gradient(135deg, #3b9d61, #2d814d);
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 7px 18px rgba(45, 129, 77, 0.28);
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.sugar-approve-btn:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1000px) {
+  .sugar-kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sugar-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sugar-panel.full {
+    grid-column: auto;
+  }
+
+  .sugar-station-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  #sugar.sugar-command-center {
+    padding: 12px;
+  }
+
+  .sugar-command-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sugar-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sugar-process-flow {
+    overflow-x: auto;
+  }
+
+  .sugar-inventory-card {
+    grid-template-columns: 1fr;
+  }
+
+  .sugar-station-grid,
+  .sugar-quality-grid,
+  .sugar-qc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sugar-approval-area {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sugar-approve-btn {
+    width: 100%;
+  }
+}
+
+/* =====================================================
+   SUGAR TANK DASHBOARD CARDS
+   ===================================================== */
+
+.sugar-tank-card {
+  position: relative;
+  min-height: 190px;
+
+  padding: 22px;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(48, 61, 74, 0.98),
+    rgba(31, 42, 53, 0.98)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  overflow: hidden;
+
+  direction: rtl;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.sugar-tank-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* -----------------------------------------
+   HEADER
+   ----------------------------------------- */
+
+.tank-card-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.tank-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.tank-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  font-size: 24px;
+}
+
+.tank-title strong {
+  display: block;
+
+  font-size: 16px;
+
+  color: #ffffff;
+
+  margin-bottom: 3px;
+}
+
+.tank-title small {
+  display: block;
+
+  color: #9da9b5;
+
+  font-size: 11px;
+
+  direction: ltr;
+
+  text-align: right;
+}
+
+.tank-unit {
+  font-size: 13px;
+
+  color: #e0b72f;
+
+  font-weight: 700;
+}
+
+/* -----------------------------------------
+   TANK BODY
+   ----------------------------------------- */
+
+.tank-body {
+  position: relative;
+
+  height: 70px;
+
+  border-radius: 15px;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    rgba(10, 20, 27, 0.85),
+    rgba(18, 29, 36, 0.95)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* -----------------------------------------
+   LEVEL / FILL
+   ----------------------------------------- */
+
+.tank-fill {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  height: 100%;
+
+  width: 0%;
+
+  border-radius: 14px;
+
+  background: linear-gradient(90deg, #d9a928, #f0c94a, #e8b52f);
+
+  box-shadow: 0 0 20px rgba(224, 183, 47, 0.25);
+
+  transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* لمعان بسيط على مستوى الخزان */
+
+.tank-fill::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 2px;
+
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* -----------------------------------------
+   CURRENT VALUE
+   ----------------------------------------- */
+
+.tank-value {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 6px;
+
+  z-index: 2;
+
+  color: #ffffff;
+
+  font-size: 25px;
+
+  font-weight: 800;
+
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+.tank-value small {
+  font-size: 12px;
+
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* -----------------------------------------
+   MIN / MAX
+   ----------------------------------------- */
+
+.tank-scale {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 10px;
+
+  color: #8996a3;
+
+  font-size: 10px;
+}
+
+.tank-scale span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+}
+
+.tank-scale b {
+  color: #d7dde3;
+
+  font-size: 11px;
+}
+
+/* -----------------------------------------
+   STATUS
+   ----------------------------------------- */
+
+.tank-status {
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  background: rgba(74, 222, 128, 0.1);
+
+  color: #62e69a;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   🍬 SUGAR — HORIZONTAL TANK KPI CARDS
+   ========================================================= */
+
+.sugar-tank-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin: 18px 0 24px;
+}
+
+/* =========================================================
+   TANK CARD
+   ========================================================= */
+
+.sugar-tank-card {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 18px;
+
+  border-radius: 22px;
+
+  background: linear-gradient(145deg, #303b47, #202932);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* خط ذهبي جانبي */
+
+.sugar-tank-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 4px;
+  height: 100%;
+
+  background: #d9a62e;
+
+  opacity: 0.9;
+}
+
+/* Hover */
+
+.sugar-tank-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.tank-card-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+}
+
+.tank-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 0;
+}
+
+.tank-title > div {
+  min-width: 0;
+}
+
+.tank-title strong {
+  display: block;
+
+  color: #f4f6f8;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.tank-title small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 9px;
+
+  letter-spacing: 0.5px;
+}
+
+.tank-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  font-size: 22px;
+}
+
+.tank-unit {
+  color: #d9a62e;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   HORIZONTAL TANK
+   ========================================================= */
+
+.tank-body {
+  position: relative;
+
+  height: 92px;
+
+  border-radius: 17px;
+
+  overflow: hidden;
+
+  background: linear-gradient(180deg, #111920, #18232a);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    inset 0 5px 12px rgba(0, 0, 0, 0.4),
+    inset 0 -2px 5px rgba(255, 255, 255, 0.02);
+}
+
+/* =========================================================
+   FILL
+   ========================================================= */
+
+.tank-fill {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  height: 100%;
+
+  width: 0%;
+
+  border-radius: 15px;
+
+  background: linear-gradient(90deg, #b98716, #e4b83b, #f1cf69);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 18px rgba(218, 169, 40, 0.18);
+
+  transition:
+    width 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    background 0.3s ease;
+}
+
+/* لمعان داخل الخزان */
+
+.tank-fill::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    transparent 40%
+  );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   VALUE
+   ========================================================= */
+
+.tank-value {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 6px;
+
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+.tank-current-value {
+  color: #ffffff;
+
+  font-size: 29px;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.tank-value small {
+  color: rgba(255, 255, 255, 0.7);
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   MIN / STATUS / MAX
+   ========================================================= */
+
+.tank-scale {
+  display: grid;
+
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 11px;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 9px;
+}
+
+.tank-scale > span:first-child {
+  text-align: right;
+}
+
+.tank-scale > span:last-child {
+  text-align: left;
+}
+
+.tank-scale b {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #e8edf2;
+
+  font-size: 10px;
+}
+
+.tank-status {
+  padding: 4px 9px;
+
+  border-radius: 20px;
+
+  background: rgba(52, 211, 153, 0.12);
+
+  border: 1px solid rgba(52, 211, 153, 0.25);
+
+  color: #6ee7b7;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.5px;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   LOW
+   ========================================================= */
+
+.sugar-tank-card.tank-low .tank-fill {
+  background: linear-gradient(90deg, #8d2828, #c94a4a);
+
+  box-shadow: 0 0 18px rgba(220, 70, 70, 0.18);
+}
+
+.sugar-tank-card.tank-low .tank-status {
+  color: #ff8c8c;
+
+  background: rgba(220, 70, 70, 0.12);
+
+  border-color: rgba(220, 70, 70, 0.25);
+}
+
+/* =========================================================
+   HIGH
+   ========================================================= */
+
+.sugar-tank-card.tank-high .tank-fill {
+  background: linear-gradient(90deg, #b57b17, #e0aa2d);
+}
+
+.sugar-tank-card.tank-high .tank-status {
+  color: #ffd166;
+
+  background: rgba(217, 166, 46, 0.12);
+
+  border-color: rgba(217, 166, 46, 0.25);
+}
+
+/* =========================================================
+   QUALITY CARD
+   ========================================================= */
+
+.sugar-tank-card.quality-tank .tank-fill {
+  background: linear-gradient(90deg, #2b7fc4, #55b8e8);
+}
+
+.sugar-tank-card.quality-tank::after {
+  background: #55b8e8;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .sugar-tank-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .sugar-tank-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .sugar-tank-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =================================================
+   NOVASEP DASHBOARD
+   ================================================= */
+
+.novasep-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  width: 100%;
+}
+
+/* ===============================
+   Boxes
+   =============================== */
+
+.novasep-status-box,
+.novasep-color-box {
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 18px;
+
+  padding: 22px;
+
+  min-height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  transition: 0.25s ease;
+}
+
+.novasep-status-box:hover,
+.novasep-color-box:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* ===============================
+   Labels
+   =============================== */
+
+.novasep-box-label {
+  font-size: 15px;
+
+  font-weight: 700;
+
+  opacity: 0.75;
+
+  margin-bottom: 12px;
+}
+
+/* ===============================
+   Status
+   =============================== */
+
+.novasep-status-value {
+  font-size: 25px;
+
+  font-weight: 800;
+
+  margin-bottom: 5px;
+}
+
+.novasep-status-box small,
+.novasep-color-box small {
+  opacity: 0.45;
+
+  font-size: 11px;
+
+  letter-spacing: 0.5px;
+}
+
+/* ===============================
+   Color input
+   =============================== */
+
+.novasep-color-input-wrap {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+#dashNovasepColor {
+  width: 150px;
+
+  height: 55px;
+
+  border-radius: 14px;
+
+  border: 2px solid rgba(255, 255, 255, 0.15);
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: #172033;
+
+  font-size: 27px;
+
+  font-weight: 800;
+
+  text-align: center;
+
+  outline: none;
+
+  transition: 0.25s ease;
+}
+
+#dashNovasepColor:focus {
+  border-color: #36d1dc;
+
+  box-shadow: 0 0 0 4px rgba(54, 209, 220, 0.12);
+}
+
+.novasep-color-input-wrap span {
+  font-size: 13px;
+
+  font-weight: 700;
+
+  opacity: 0.65;
+}
+
+/* ===============================
+   Disabled
+   =============================== */
+
+#dashNovasepColor:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.45;
+
+  background: rgba(100, 100, 100, 0.25);
+
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ===============================
+   Mobile
+   =============================== */
+
+@media (max-width: 700px) {
+  .novasep-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.novasep-out-of-service {
+  opacity: 0.65;
+
+  text-decoration: line-through;
+}
+
+/* ==========================================
+   NOVASEP DASHBOARD
+   ========================================== */
+
+.novasep-dashboard-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+
+  gap: 25px;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.novasep-dashboard-item {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  gap: 8px;
+}
+
+.novasep-dashboard-item strong {
+  font-size: 16px;
+}
+
+.novasep-dashboard-item small {
+  opacity: 0.7;
+
+  font-size: 12px;
+}
+
+/* حالة خارج الخدمة */
+
+.sugar-quality-circle.station-off {
+  opacity: 0.55;
+
+  filter: grayscale(1);
+
+  border-color: #777 !important;
+}
+
+#novasep_color.novasep-disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+
+  background: rgba(120, 120, 120, 0.12);
+}
+
+#novasep_color:not(.novasep-disabled) {
+  opacity: 1;
+
+  cursor: text;
+}
+
+#novasepStatusCircle {
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+#novasepQualityCircle {
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* =========================================================
+   🍲 COOKER PERFORMANCE DASHBOARD
+   ========================================================= */
+
+.cooker-dashboard-card {
+  overflow: hidden;
+}
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.cooker-performance-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  align-items: stretch;
+}
+
+/* =========================================================
+   DONUT CARD
+   ========================================================= */
+
+.cooker-donut-card {
+  min-height: 220px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.045),
+    rgba(255, 255, 255, 0.015)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.cooker-donut-card:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* =========================================================
+   DONUT
+   ========================================================= */
+
+.cooker-donut {
+  width: 135px;
+
+  height: 150px;
+
+  position: relative;
+
+  margin-bottom: 12px;
+}
+
+.cooker-donut svg {
+  width: 100%;
+
+  height: 100%;
+
+  transform: rotate(-90deg);
+
+  overflow: visible;
+}
+
+/* الدائرة الخلفية */
+
+.cooker-donut .donut-bg {
+  fill: none;
+
+  stroke: rgba(255, 255, 255, 0.075);
+
+  stroke-width: 10;
+}
+
+/* الدائرة المتحركة */
+
+.cooker-donut .donut-progress {
+  fill: none;
+
+  stroke: #38d9a9;
+
+  stroke-width: 10;
+
+  stroke-linecap: round;
+
+  stroke-dasharray: 301.59;
+
+  stroke-dashoffset: 301.59;
+
+  transition:
+    stroke-dashoffset 0.7s ease,
+    stroke 0.3s ease;
+
+  filter: drop-shadow(0 0 6px rgba(56, 217, 169, 0.35));
+}
+
+/* =========================================================
+   DONUT CENTER
+   ========================================================= */
+
+.donut-value {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.donut-value strong {
+  font-size: 30px;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  color: #f5f7fa;
+}
+
+.donut-value small {
+  margin-top: 5px;
+
+  font-size: 12px;
+
+  color: #9da8b5;
+}
+
+/* =========================================================
+   DONUT TITLES
+   ========================================================= */
+
+.cooker-donut-card > strong {
+  font-size: 16px;
+
+  color: #f1f3f5;
+}
+
+.cooker-donut-card > small {
+  margin-top: 4px;
+
+  font-size: 10px;
+
+  letter-spacing: 0.8px;
+
+  color: #8995a3;
+}
+
+/* =========================================================
+   🍯 MOLASSES LEVEL CARD
+   ========================================================= */
+
+.cooker-level-card {
+  min-height: 220px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  padding: 18px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.045),
+    rgba(255, 255, 255, 0.015)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.cooker-level-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 14px;
+}
+
+.cooker-level-header strong {
+  display: block;
+
+  font-size: 16px;
+
+  color: #f1f3f5;
+}
+
+.cooker-level-header small {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: 10px;
+
+  color: #8995a3;
+
+  letter-spacing: 0.6px;
+}
+
+.cooker-level-header > span {
+  font-size: 10px;
+
+  font-weight: 700;
+
+  color: #e5b84b;
+
+  padding: 5px 8px;
+
+  border-radius: 8px;
+
+  background: rgba(229, 184, 75, 0.1);
+}
+
+/* =========================================================
+   TANK
+   ========================================================= */
+
+.cooker-level-tank {
+  position: relative;
+
+  flex: 1;
+
+  min-height: 125px;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: rgba(255, 255, 255, 0.035);
+}
+
+/* خطوط المستوى */
+
+.cooker-level-tank::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px
+  );
+
+  background-size: 100% 25%;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+/* =========================================================
+   LEVEL FILL
+   ========================================================= */
+
+.cooker-level-fill {
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 0;
+
+  height: 0%;
+
+  border-radius: 10px 10px 0 0;
+
+  background: linear-gradient(to top, #8b5e24, #c99538, #e5b84b);
+
+  transition: height 0.8s ease;
+
+  box-shadow: 0 -4px 18px rgba(229, 184, 75, 0.2);
+}
+
+/* لمعان بسيط على مستوى المولاس */
+
+.cooker-level-fill::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  top: 0;
+
+  height: 2px;
+
+  background: rgba(255, 255, 255, 0.45);
+
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================================
+   VALUE INSIDE TANK
+   ========================================================= */
+
+.cooker-level-value {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 3;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.cooker-level-value strong {
+  font-size: 27px;
+
+  font-weight: 800;
+
+  color: #ffffff;
+
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.cooker-level-value small {
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* =========================================================
+   SCALE
+   ========================================================= */
+
+.cooker-level-scale {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 8px;
+
+  font-size: 10px;
+
+  color: #8e99a6;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .cooker-performance-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .cooker-performance-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =================================================
+   🌡️ DRYER DONUT HORIZONTAL SCROLL
+   ================================================= */
+
+.dryer-donut-scroll {
+  width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 4px 2px 14px;
+
+  scroll-behavior: smooth;
+
+  /*
+       إخفاء Scrollbar التقليدي
+    */
+  scrollbar-width: thin;
+}
+
+/* Chrome / Edge / Safari */
+
+.dryer-donut-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dryer-donut-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+
+  border-radius: 999px;
+}
+
+.dryer-donut-scroll::-webkit-scrollbar-thumb {
+  background: rgba(229, 184, 75, 0.65);
+
+  border-radius: 999px;
+}
+
+.dryer-donut-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(229, 184, 75, 0.9);
+}
+
+/* =================================================
+   DONUT GRID
+   ================================================= */
+
+.dryer-donut-grid {
+  display: flex;
+
+  flex-wrap: nowrap;
+
+  gap: 18px;
+
+  width: max-content;
+}
+
+/* =================================================
+   كل بطاقة لها عرض ثابت
+   ================================================= */
+
+.dryer-donut-card {
+  flex: 0 0 190px;
+
+  width: 190px;
+
+  min-width: 190px;
+
+  box-sizing: border-box;
+}
+
+/* =================================================
+   DONUT CARD
+   ================================================= */
+
+.dryer-donut-card {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 18px 10px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 18px;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.dryer-donut-card:hover {
+  transform: translateY(-3px);
+
+  background: rgba(255, 255, 255, 0.055);
+}
+
+/* =================================================
+   DONUT
+   ================================================= */
+
+.dryer-donut {
+  position: relative;
+
+  width: 110px;
+
+  height: 125px;
+
+  margin-bottom: 12px;
+}
+
+.dryer-donut svg {
+  width: 100%;
+
+  height: 100%;
+
+  transform: rotate(-90deg);
+}
+
+.dryer-donut-bg {
+  fill: none;
+
+  stroke: rgba(255, 255, 255, 0.08);
+
+  stroke-width: 9;
+}
+
+.dryer-donut-progress {
+  fill: none;
+
+  stroke-width: 9;
+
+  stroke-linecap: round;
+
+  stroke-dasharray: 301.59;
+
+  stroke-dashoffset: 301.59;
+
+  transition:
+    stroke-dashoffset 0.7s ease,
+    stroke 0.3s ease;
+}
+
+/* =================================================
+   DONUT VALUE
+   ================================================= */
+
+.dryer-donut-value {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-direction: column;
+}
+
+.dryer-donut-value strong {
+  font-size: 20px;
+
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+.dryer-donut-value small {
+  margin-top: 5px;
+
+  font-size: 11px;
+
+  opacity: 0.65;
+}
+
+.dryer-donut-card > strong {
+  font-size: 15px;
+
+  margin-bottom: 3px;
+}
+
+.dryer-donut-card > small {
+  font-size: 10px;
+
+  opacity: 0.5;
+
+  letter-spacing: 0.5px;
+}
+
+/* =================================================
+   🍬 DRIED SUGAR PRODUCTION
+   ================================================= */
+
+.dryer-production-card {
+  margin-top: 22px;
+
+  padding: 18px 20px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 18px;
+}
+
+/* =================================================
+   HEADER
+   ================================================= */
+
+.dryer-production-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 13px;
+}
+
+.dryer-production-header > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.dryer-production-header strong {
+  font-size: 15px;
+}
+
+.dryer-production-header small {
+  font-size: 10px;
+
+  opacity: 0.55;
+
+  letter-spacing: 0.5px;
+}
+
+.dryer-production-header > span {
+  font-size: 12px;
+
+  opacity: 0.65;
+}
+
+/* =================================================
+   PROGRESS BAR
+   ================================================= */
+
+.dryer-production-track {
+  width: 100%;
+
+  height: 18px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.dryer-production-fill {
+  height: 100%;
+
+  width: 0%;
+
+  border-radius: 999px;
+
+  background: linear-gradient(90deg, #38d9a9, #e5b84b);
+
+  box-shadow: 0 0 14px rgba(56, 217, 169, 0.25);
+
+  transition: width 0.7s ease;
+}
+
+/* =================================================
+   FOOTER
+   ================================================= */
+
+.dryer-production-footer {
+  display: grid;
+
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  margin-top: 10px;
+
+  font-size: 11px;
+
+  opacity: 0.65;
+}
+
+.dryer-production-footer span:first-child {
+  text-align: left;
+}
+
+.dryer-production-footer span:last-child {
+  text-align: right;
+}
+
+.dryer-production-footer strong {
+  font-size: 16px;
+
+  color: #ffffff;
+
+  opacity: 1;
+}
+
+.dryer-production-footer b {
+  margin-left: 3px;
+}

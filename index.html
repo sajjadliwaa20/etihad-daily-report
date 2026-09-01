@@ -384,7 +384,8 @@
                   </td>
 
                   <td>
-                    <input id="stock_1kg" data-save step="any" />
+                    <input id="stock_1kg" data-save step="any"  oninput="updateSugarStockTotal()"
+                    />
                   </td>
                 </tr>
 
@@ -405,7 +406,8 @@
                   </td>
 
                   <td>
-                    <input id="stock_10kg" data-save step="any" />
+                    <input id="stock_10kg" data-save step="any"  oninput="updateSugarStockTotal()"
+                    />
                   </td>
                 </tr>
 
@@ -426,7 +428,8 @@
                   </td>
 
                   <td>
-                    <input id="stock_25kg" data-save step="any" />
+                    <input id="stock_25kg" data-save step="any"  oninput="updateSugarStockTotal()"
+                    />
                   </td>
                 </tr>
 
@@ -447,7 +450,8 @@
                   </td>
 
                   <td>
-                    <input id="stock_50kg" data-save step="any" />
+                    <input id="stock_50kg" data-save step="any"  oninput="updateSugarStockTotal()"
+                    />
                   </td>
                 </tr>
 
@@ -468,7 +472,8 @@
                   </td>
 
                   <td>
-                    <input id="stock_1t" data-save step="any" />
+                    <input id="stock_1t" data-save step="any"  oninput="updateSugarStockTotal()"
+                    />
                   </td>
                 </tr>
 
@@ -2404,632 +2409,2776 @@
       <!-- مصنع السكر -->
       <!-- ===================================== -->
 
-      <section id="sugar" class="section">
-        <h2 style="color: #1f3c88">🏭 مصنع السكر</h2>
+      <!-- =========================================================
+     🍬 SUGAR REFINERY — COMMAND CENTER
+     ========================================================= -->
 
-        <!-- الخام -->
+<section id="sugar" class="section sugar-command-center">
 
-        <details open>
-          <summary>موقف الخام</summary>
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
 
-          <div class="details-content">
-            <table class="wide-table">
-              <tr>
-                <th>الكمية الواردة (طن)</th>
-                <th>الرصيد الحالي (طن)</th>
-                <th>المستهلك (طن)</th>
-              </tr>
+    <div class="sugar-command-header">
 
-              <tr>
-                <td>
-                  <input id="sugar_raw_received" data-save step="any" />
-                </td>
+        <div class="sugar-command-brand">
 
-                <td>
-                  <input id="sugar_raw_stock" data-save step="any" />
-                </td>
+            <div class="sugar-command-logo">
+                🍬
+            </div>
 
-                <td>
-                  <input id="sugar_raw_used" data-save step="any" />
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
+            <div class="sugar-command-title">
 
-        <!-- الاذابة -->
+                <strong>
+                    مصنع السكر
+                </strong>
 
-        <details open>
-          <summary>محطة الإذابة</summary>
+                <span>
+                    SUGAR REFINERY • DAILY OPERATIONS COMMAND CENTER
+                </span>
 
-          <div class="table-scroll">
-            <table class="wide-table">
-              <tr>
-                <th>لون الخام (ICUMSA)</th>
-                <th>الجريان (م³/ساعة)</th>
-                <th>البريكس (%)</th>
-                <th>مجموع المذاب (طن)</th>
-              </tr>
+            </div>
 
-              <tr>
-                <td>
-                  <input id="diss_color" data-save step="any" />
-                </td>
-
-                <td>
-                  <input id="diss_flow" data-save step="any" />
-                </td>
-
-                <td>
-                  <input id="diss_brix" data-save step="any" />
-                </td>
-
-                <td>
-                  <input id="diss_total" data-save step="any" />
-                </td>
-              </tr>
-            </table>
-
-            <br />
-
-            <table class="wide-table">
-              <tr>
-                <th>الإذابة القديمة</th>
-                <th>الإذابة الجديدة</th>
-                <th>حالة المحطة</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <textarea id="old_dissolution" data-save rows="2"></textarea>
-                </td>
-
-                <td>
-                  <textarea id="new_dissolution" data-save rows="2"></textarea>
-                </td>
-
-                <td>
-                  <textarea
-                    id="diss_status"
-                    data-save
-                    rows="2"
-                    style="width: 100%; resize: vertical; font-size: 15px"
-                  ></textarea>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
-
-        <!-- الكربنة -->
-
-        <details open>
-          <summary>محطة الكربنة</summary>
-
-          <div class="details-content">
-            <table>
-              <tr>
-                <th>رصيد اللايم (طن)</th>
-                <th>حالة المحطة</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <input id="carb_lime" data-save step="any" />
-                </td>
-
-                <td>
-                  <textarea
-                    id="carb_status"
-                    data-save
-                    rows="2"
-                    style="width: 100%; resize: vertical; font-size: 15px"
-                  ></textarea>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
-        <!-- PKF -->
-
-        <details open>
-          <summary>محطة PKF</summary>
-
-          <div class="details-content">
-            <h4>فلاتر 250</h4>
-
-            <table class="wide-table">
-              <tr>
-                <th>معدل حجم الدورة (م³)</th>
-                <th>معدل زمن الدورة (ساعة)</th>
-                <th>استهلاك البريكوت (طن)</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <input id="pkf250_volume" data-save step="any" />
-                </td>
-
-                <td>
-                  <input id="pkf250_time" data-save step="any" />
-                </td>
-
-                <td>
-                  <input id="pkf250_briquette" data-save step="any" />
-                </td>
-              </tr>
-            </table>
-
-            <br />
-
-            <h4>فلاتر 500</h4>
-
-            <table class="wide-table">
-              <tr>
-                <th>معدل حجم الدورة (م³)</th>
-                <th>معدل زمن الدورة (ساعة)</th>
-                <th>استهلاك البريكوت (طن)</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <input id="pkf500_volume" data-save step="any" />
-                </td>
-
-                <td>
-                  <input id="pkf500_time" data-save step="any" />
-                </td>
-
-                <td>
-                  <input id="pkf500_briquette" data-save step="any" />
-                </td>
-              </tr>
-            </table>
-            <br />
-
-            <table>
-              <tr>
-                <th>حالة المحطة</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <textarea
-                    id="pkf_status"
-                    data-save
-                    rows="2"
-                    style="width: 100%; resize: vertical; font-size: 15px"
-                  ></textarea>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
-
-        <!-- NOVASEP -->
-
-        <details open>
-          <summary>محطة NOVASEP</summary>
-
-          <div class="details-content">
-            <table>
-              <tr>
-                <th>اللون الخارج (ICUMSA)</th>
-                <th>حالة المحطة</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <input id="novasep_color" data-save step="any" />
-                </td>
-
-                <td>
-                  <textarea
-                    id="novasep_status"
-                    data-save
-                    rows="2"
-                    style="width: 100%; resize: vertical; font-size: 15px"
-                  ></textarea>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
-
-        <!-- الطباخات -->
-
-        <details open>
-          <summary>محطة الطباخات</summary>
-
-          <div class="details-content">
-            <table>
-              <tr>
-                <th colspan="2">بريكس العصير الداخل</th>
-              </tr>
-
-              <tr>
-                <td>البريكس (%)</td>
-                <td>
-                  <input id="cooker_in_brix" data-save step="any" />
-                </td>
-              </tr>
-            </table>
-
-            <br />
-
-            <table>
-              <tr>
-                <th colspan="2">المولاس المنتج</th>
-              </tr>
-
-              <tr>
-                <td>كمية المولاس (طن)</td>
-                <td>
-                  <input id="molasses_qty" data-save step="any" />
-                </td>
-              </tr>
-
-              <tr>
-                <td>بريكس المولاس (%)</td>
-                <td>
-                  <input id="molasses_brix" data-save step="any" />
-                </td>
-              </tr>
-
-              <tr>
-                <td>نقاوة المولاس (%)</td>
-                <td>
-                  <input id="molasses_purity" data-save step="any" />
-                </td>
-              </tr>
-            </table>
-
-            <br />
-
-            <table>
-              <tr>
-                <th>حالة المحطة</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <textarea
-                    id="cooker_status"
-                    data-save
-                    rows="2"
-                    style="width: 100%; resize: vertical; font-size: 15px"
-                  ></textarea>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
-
-        <!-- التجفيف -->
-
-        <details open>
-          <summary>محطة التجفيف</summary>
-
-          <div class="table-scroll">
-            <table class="wide-table">
-              <tr>
-                <th>حرارة السكر</th>
-                <th>PH</th>
-                <th>لون المنتج</th>
-                <th>الكمية المجففة (طن)</th>
-                <th>CV</th>
-                <th>MA</th>
-                <th>DUST</th>
-                <th>Oversize</th>
-              </tr>
-
-              <tr>
-                <td><input id="dryer_temp" data-save step="any" /></td>
-
-                <td><input id="dryer_ph" data-save step="any" /></td>
-
-                <td><input id="dryer_color" data-save step="any" /></td>
-
-                <td><input id="dryer_qty" data-save step="any" /></td>
-
-                <td><input id="dryer_cv" data-save step="any" /></td>
-
-                <td><input id="dryer_ma" data-save step="any" /></td>
-
-                <td><input id="dryer_dust" data-save step="any" /></td>
-
-                <td><input id="dryer_oversize" data-save step="any" /></td>
-              </tr>
-            </table>
-
-            <br />
-
-            <table>
-              <tr>
-                <th>حالة المحطة</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <textarea
-                    id="dryer_status"
-                    data-save
-                    rows="2"
-                    style="width: 100%; resize: vertical; font-size: 15px"
-                  ></textarea>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
-
-        <!-- التعبئة -->
-
-        <details open>
-          <summary>قسم التعبئة</summary>
-
-          <div class="table-scroll">
-            <h4>تشغيل خطوط التعبئة</h4>
-
-            <table class="wide-table">
-              <tr>
-                <th rowspan="2">الشفت</th>
-
-                <th colspan="2">1 طن</th>
-                <th colspan="2">50 كغم</th>
-                <th colspan="2">25 كغم</th>
-                <th colspan="2">10 كغم</th>
-                <th colspan="2">1 كغم</th>
-              </tr>
-
-              <tr>
-                <th>عدد المكائن</th>
-                <th>الإنتاج</th>
-
-                <th>عدد المكائن</th>
-                <th>الإنتاج</th>
-
-                <th>عدد المكائن</th>
-                <th>الإنتاج</th>
-
-                <th>عدد المكائن</th>
-                <th>الإنتاج</th>
-
-                <th>عدد المكائن</th>
-                <th>الإنتاج</th>
-              </tr>
-
-              <tr>
-                <td>صباحي</td>
-
-                <td><input id="pack_1t_morning" data-save step="any" /></td>
-                <td>
-                  <input id="pack_1t_prod_morning" data-save step="any" />
-                </td>
-
-                <td><input id="pack_50_morning" data-save step="any" /></td>
-                <td>
-                  <input id="pack_50_prod_morning" data-save step="any" />
-                </td>
-
-                <td><input id="pack_25_morning" data-save step="any" /></td>
-                <td>
-                  <input id="pack_25_prod_morning" data-save step="any" />
-                </td>
-
-                <td><input id="pack_10_morning" data-save step="any" /></td>
-                <td>
-                  <input id="pack_10_prod_morning" data-save step="any" />
-                </td>
-
-                <td><input id="pack_1_morning" data-save step="any" /></td>
-                <td><input id="pack_1_prod_morning" data-save step="any" /></td>
-              </tr>
-
-              <tr>
-                <td>مسائي</td>
-
-                <td><input id="pack_1t_evening" data-save step="any" /></td>
-                <td>
-                  <input id="pack_1t_prod_evening" data-save step="any" />
-                </td>
-
-                <td><input id="pack_50_evening" data-save step="any" /></td>
-                <td>
-                  <input id="pack_50_prod_evening" data-save step="any" />
-                </td>
-
-                <td><input id="pack_25_evening" data-save step="any" /></td>
-                <td>
-                  <input id="pack_25_prod_evening" data-save step="any" />
-                </td>
-
-                <td><input id="pack_10_evening" data-save step="any" /></td>
-                <td>
-                  <input id="pack_10_prod_evening" data-save step="any" />
-                </td>
-
-                <td><input id="pack_1_evening" data-save step="any" /></td>
-                <td><input id="pack_1_prod_evening" data-save step="any" /></td>
-              </tr>
-
-              <tr>
-                <td>ليلي</td>
-
-                <td><input id="pack_1t_night" data-save step="any" /></td>
-                <td><input id="pack_1t_prod_night" data-save step="any" /></td>
-
-                <td><input id="pack_50_night" data-save step="any" /></td>
-                <td><input id="pack_50_prod_night" data-save step="any" /></td>
-
-                <td><input id="pack_25_night" data-save step="any" /></td>
-                <td><input id="pack_25_prod_night" data-save step="any" /></td>
-
-                <td><input id="pack_10_night" data-save step="any" /></td>
-                <td><input id="pack_10_prod_night" data-save step="any" /></td>
-
-                <td><input id="pack_1_night" data-save step="any" /></td>
-                <td><input id="pack_1_prod_night" data-save step="any" /></td>
-              </tr>
-            </table>
-
-            <h3>ملاحظات التعبئة</h3>
-
-            <table>
-              <tr>
-                <th>الشفت</th>
-                <th>الملاحظات</th>
-              </tr>
-
-              <tr>
-                <td>صباحي</td>
-                <td>
-                  <input id="pack_note_morning" data-save step="any" />
-                </td>
-              </tr>
-
-              <tr>
-                <td>مسائي</td>
-                <td>
-                  <input id="pack_note_evening" data-save step="any" />
-                </td>
-              </tr>
-
-              <tr>
-                <td>ليلي</td>
-                <td>
-                  <input id="pack_note_night" data-save step="any" />
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
-
-        <!-- الجودة والسلامة -->
-
-        <details open>
-          <summary>الجودة والسلامة</summary>
-
-          <div class="details-content">
-            <table>
-              <tr>
-                <th>ملاحظات قسم الجودة</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <textarea
-                    id="sugar_quality_notes"
-                    data-save
-                    step="any"
-                  ></textarea>
-
-                  <br /><br />
-
-                  <label for="sugar_quality_notes_image" class="uploadImageBtn">
-                    📎 إرفاق ملف
-                  </label>
-
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*,application/pdf"
-                    id="sugar_quality_notes_image"
-                    data-factory="sugar"
-                    data-field="sugar_quality_notes"
-                    onchange="uploadNoteImage(this)"
-                    style="display: none"
-                  />
-
-                  <br />
-
-                  <a
-                    id="sugar_quality_notes_link"
-                    target="_blank"
-                    style="
-                      display: none;
-                      font-size: 13px;
-                      text-decoration: none;
-                    "
-                  >
-                    👁 عرض الملف
-                  </a>
-                </td>
-              </tr>
-            </table>
-
-            <br />
-
-            <table>
-              <tr>
-                <th>ملاحظات قسم السلامة</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <textarea
-                    id="sugar_safety_notes"
-                    data-save
-                    step="any"
-                  ></textarea>
-
-                  <br /><br />
-
-                  <label for="sugar_safety_notes_image" class="uploadImageBtn">
-                    📎 إرفاق ملف
-                  </label>
-
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*,application/pdf"
-                    id="sugar_safety_notes_image"
-                    data-factory="sugar"
-                    data-field="sugar_safety_notes"
-                    onchange="uploadNoteImage(this)"
-                    style="display: none"
-                  />
-
-                  <br />
-
-                  <a
-                    id="sugar_safety_notes_link"
-                    target="_blank"
-                    style="
-                      display: none;
-                      font-size: 13px;
-                      text-decoration: none;
-                    "
-                  >
-                    📄 عرض الملف
-                  </a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </details>
-
-        <!-- ملاحظات السكر -->
-
-        <details open>
-          <summary>ملاحظات مصنع السكر</summary>
-
-          <div class="details-content">
-            <textarea
-              class="notes"
-              id="sugar_notes"
-              data-save
-              step="any"
-            ></textarea>
-          </div>
-        </details>
-
-        <div style="margin-top: 15px">
-          <button id="SugarBtn" onclick="approveSection('sugar')">
-            ✅ اعتماد قسم السكر
-          </button>
         </div>
-      </section>
+
+        <div class="sugar-command-status">
+
+            <span class="sugar-status-dot"></span>
+
+            التشغيل اليومي
+
+        </div>
+
+    </div>
+
+
+ <!-- =====================================================
+     🍬 SUGAR KPI TANKS
+     ===================================================== -->
+
+<div class="sugar-tank-grid">
+
+    <!-- =================================================
+         1. الإنتاج الفعلي
+         المصدر: dryer_qty
+         ================================================= -->
+
+    <div class="sugar-tank-card"
+         data-min="3000"
+         data-max="5900"
+         data-source="dryer_qty"
+         data-type="normal">
+
+        <div class="tank-card-header">
+
+            <div class="tank-title">
+
+                <span class="tank-icon">🏭</span>
+
+                <div>
+                    <strong>الإنتاج الفعلي</strong>
+                    <small>ACTUAL PRODUCTION</small>
+                </div>
+
+            </div>
+
+            <span class="tank-unit">طن</span>
+
+        </div>
+
+
+        <div class="tank-body">
+
+            <div class="tank-fill"></div>
+
+            <div class="tank-value">
+
+                <strong class="tank-current-value">
+                    0
+                </strong>
+
+                <small>طن</small>
+
+            </div>
+
+        </div>
+
+
+        <div class="tank-scale">
+
+            <span>
+                MIN
+                <b class="tank-min">300</b>
+            </span>
+
+            <span class="tank-status">
+                NORMAL
+            </span>
+
+            <span>
+                MAX
+                <b class="tank-max">600</b>
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         2. رصيد السكر الأبيض
+         
+         ================================================= -->
+
+    <div class="sugar-tank-card"
+     data-min="200"
+     data-max="1500"
+     data-source="sugar_stock_total"
+     data-type="normal">
+
+        <div class="tank-card-header">
+
+            <div class="tank-title">
+
+                <span class="tank-icon">📦</span>
+
+                <div>
+                    <strong>رصيد السكر الأبيض</strong>
+                    <small>WHITE SUGAR STOCK</small>
+                </div>
+
+            </div>
+
+            <span class="tank-unit">طن</span>
+
+        </div>
+
+
+        <div class="tank-body">
+
+            <div class="tank-fill"></div>
+
+            <div class="tank-value">
+
+                <strong class="tank-current-value">
+                    0
+                </strong>
+
+                <small>طن</small>
+
+            </div>
+
+        </div>
+
+
+        <div class="tank-scale">
+
+            <span>
+                MIN
+                <b class="tank-min">200</b>
+            </span>
+
+            <span class="tank-status">
+                NORMAL
+            </span>
+
+            <span>
+                MAX
+                <b class="tank-max">1500</b>
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         3. رصيد السكر الخام
+         ================================================= -->
+
+    <div class="sugar-tank-card"
+         data-min="50000"
+         data-max="250000"
+         data-source="sugar_raw_stock"
+         data-type="normal">
+
+        <div class="tank-card-header">
+
+            <div class="tank-title">
+
+                <span class="tank-icon">🌾</span>
+
+                <div>
+                    <strong>رصيد الخام</strong>
+                    <small>RAW SUGAR STOCK</small>
+                </div>
+
+            </div>
+
+            <span class="tank-unit">طن</span>
+
+        </div>
+
+
+        <div class="tank-body">
+
+            <div class="tank-fill"></div>
+
+            <div class="tank-value">
+
+                <strong class="tank-current-value">
+                    0
+                </strong>
+
+                <small>طن</small>
+
+            </div>
+
+        </div>
+
+
+        <div class="tank-scale">
+
+            <span>
+                MIN
+                <b class="tank-min">50000</b>
+            </span>
+
+            <span class="tank-status">
+                NORMAL
+            </span>
+
+            <span>
+                MAX
+                <b class="tank-max">250000</b>
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         4. ICUMSA
+         ================================================= -->
+
+    <div class="sugar-tank-card quality-tank"
+         data-min="26"
+         data-max="36"
+         data-source="diss_color"
+         data-type="quality">
+
+        <div class="tank-card-header">
+
+            <div class="tank-title">
+
+                <span class="tank-icon">🧪</span>
+
+                <div>
+                    <strong>ICUMSA</strong>
+                    <small>PRODUCT COLOR</small>
+                </div>
+
+            </div>
+
+            <span class="tank-unit">ICUMSA</span>
+
+        </div>
+
+
+        <div class="tank-body">
+
+            <div class="tank-fill"></div>
+
+            <div class="tank-value">
+
+                <strong class="tank-current-value">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="tank-scale">
+
+            <span>
+                MIN
+                <b class="tank-min">26</b>
+            </span>
+
+            <span class="tank-status">
+                NORMAL
+            </span>
+
+            <span>
+                MAX
+                <b class="tank-max">36</b>
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         5. إنتاج المولاس
+         ================================================= -->
+
+    <div class="sugar-tank-card"
+         data-min="15"
+         data-max="65"
+         data-source="molasses_qty"
+         data-type="normal">
+
+        <div class="tank-card-header">
+
+            <div class="tank-title">
+
+                <span class="tank-icon">🟤</span>
+
+                <div>
+                    <strong>إنتاج المولاس</strong>
+                    <small>MOLASSES PRODUCTION</small>
+                </div>
+
+            </div>
+
+            <span class="tank-unit">طن</span>
+
+        </div>
+
+
+        <div class="tank-body">
+
+            <div class="tank-fill"></div>
+
+            <div class="tank-value">
+
+                <strong class="tank-current-value">
+                    0
+                </strong>
+
+                <small>طن</small>
+
+            </div>
+
+        </div>
+
+
+        <div class="tank-scale">
+
+            <span>
+                MIN
+                <b class="tank-min">15</b>
+            </span>
+
+            <span class="tank-status">
+                NORMAL
+            </span>
+
+            <span>
+                MAX
+                <b class="tank-max">65</b>
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- =====================================================
+         INVENTORY + MINI DASHBOARD
+         ===================================================== -->
+
+    <div class="sugar-dashboard-grid">
+
+
+        <!-- مخزون الخام -->
+
+        <div class="sugar-panel">
+
+            <div class="sugar-panel-header">
+
+                <div class="sugar-panel-title">
+
+                    <div class="sugar-panel-icon">
+                        🌾
+                    </div>
+
+                    <div>
+                        <strong>مخزون السكر الخام</strong>
+                        <small>RAW SUGAR INVENTORY</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="sugar-panel-body">
+
+                <div class="sugar-inventory-card">
+
+                    <div class="sugar-inventory-main">
+
+                        <div class="sugar-inventory-number">
+
+                            <span id="sugarInventoryMain">
+                                0
+                            </span>
+
+                            <span>
+                                طن
+                            </span>
+
+                        </div>
+
+                        <div class="sugar-progress">
+
+                            <div
+                                id="sugarInventoryProgress"
+                                class="sugar-progress-fill">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sugar-inventory-stats">
+
+                        <div class="sugar-stat">
+
+                            <span>
+                                الوارد اليوم
+                            </span>
+
+                            <strong id="sugarRawReceivedDash">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="sugar-stat">
+
+                            <span>
+                                المستهلك
+                            </span>
+
+                            <strong id="sugarRawUsedDash">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="sugar-stat">
+
+                            <span>
+                                الرصيد
+                            </span>
+
+                            <strong id="sugarRawStockDash">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MINI DASHBOARD -->
+
+        <div class="sugar-panel">
+
+            <div class="sugar-panel-header">
+
+                <div class="sugar-panel-title">
+
+                    <div class="sugar-panel-icon">
+                        📊
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            مؤشرات التشغيل
+                        </strong>
+
+                        <small>
+                            DAILY OPERATING INDICATORS
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="sugar-panel-body">
+
+                <div class="sugar-station-grid">
+
+                    <div class="sugar-station">
+
+                        <div class="sugar-station-top">
+
+                            <span class="sugar-station-name">
+                                بريكس الاذابة
+                            </span>
+
+                            <small class="sugar-station-state">
+                                ● ACTIVE
+                            </small>
+
+                        </div>
+
+                        <div class="sugar-station-value">
+                            <span id="dashDissBrix">0</span> %
+                        </div>
+
+                    </div>
+
+<!-- =================================================
+     رصيد اللايم
+     المصدر: carb_lime
+     ================================================= -->
+
+<div class="sugar-station">
+
+    <div class="sugar-station-top">
+
+        <span class="sugar-station-name">
+            رصيد اللايم
+        </span>
+
+        <small class="sugar-station-state">
+            LIQUID LEVEL
+        </small>
+
+    </div>
+
+    <div class="sugar-station-value">
+
+        <span id="dashCarbLime">
+            0
+        </span>
+
+        <small>
+            طن
+        </small>
+
+    </div>
+
+</div>
+
+
+                    <div class="sugar-station">
+
+                        <div class="sugar-station-top">
+
+                            <span class="sugar-station-name">
+                               حرارة المنتج
+                            </span>
+
+                            <small class="sugar-station-state">
+                                ● ACTIVE
+                            </small>
+
+                        </div>
+
+                        <div class="sugar-station-value">
+                            <span id="sugartempratureDash">
+                                0
+                            </span>
+                            درجة مئوية
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+PKF
+             ================================================= -->
+
+        <div class="sugar-panel">
+
+            <div class="sugar-panel-header">
+
+                <div class="sugar-panel-title">
+
+                    <div class="sugar-panel-icon">
+                        🔵
+                    </div>
+
+                    <div>
+
+                        <strong>
+محطة المرشحات
+                        </strong>
+
+                        <small>
+PKF 
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="sugar-panel-body">
+
+                <div class="sugar-station-grid">
+
+                    <div class="sugar-station">
+
+                        <div class="sugar-station-top">
+
+                            <span class="sugar-station-name">
+                                FILTER 250
+                            </span>
+
+                            <small class="sugar-station-state">
+                                RUNNING
+                            </small>
+
+                        </div>
+
+                        <div class="sugar-station-value">
+
+                            <span id="dashPkf250Volume">
+                                0
+                            </span>
+
+                            <small>
+                                متر مكعب
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                     <div class="sugar-station"
+                        >
+
+                        <div class="sugar-station-top">
+
+                            <span class="sugar-station-name">
+استهلاك البريكوت
+                            </span>
+
+                                 <small class="sugar-station-state">
+                                CALCULATING
+                            </small>
+
+                        </div>
+
+                        <div class="sugar-station-value">
+
+                            <span id="DASHPRECOATCONSUMPTION">
+                                0
+                            </span>
+
+                            <small>
+                                طن
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="sugar-station">
+
+                        <div class="sugar-station-top">
+
+                            <span class="sugar-station-name">
+                                FILTER 500
+                            </span>
+
+                            <small class="sugar-station-state">
+                                RUNNING
+                            </small>
+
+                        </div>
+
+                        <div class="sugar-station-value">
+
+                            <span id="dashPkf500Volume">
+                                0
+                            </span>
+
+                            <small>
+                                متر مكعب
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             NOVASEP
+             ================================================= -->
+
+  <!-- =================================================
+     NOVASEP
+     ================================================= -->
+
+<div class="sugar-panel novasep-dashboard-card">
+
+    <div class="sugar-panel-header">
+
+        <div class="sugar-panel-title">
+
+            <div class="sugar-panel-icon">
+                🧪
+            </div>
+
+            <div>
+
+                <strong>
+                    محطة النوفاسيب
+                </strong>
+
+                <small>
+                    NOVASEP STATION
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+ <div class="sugar-panel-body">
+
+    <div class="novasep-dashboard-grid">
+
+        <!-- =====================================
+             لون المنتج الخارج
+             ===================================== -->
+
+        <div class="novasep-dashboard-item">
+
+            <div
+                id="novasepQualityCircle"
+                class="sugar-quality-circle">
+
+                0
+
+            </div>
+
+            <strong>
+              اللون الخارج من المحطة
+            </strong>
+
+            <small>
+                Outlet Color
+            </small>
+
+        </div>
+
+
+        <!-- =====================================
+             حالة المحطة
+             ===================================== -->
+
+        <div class="novasep-dashboard-item">
+
+            <div
+                id="novasepStatusCircle"
+                class="sugar-quality-circle novasep-status-circle">
+
+                ●
+
+            </div>
+
+            <strong id="novasepStatusText">
+                غير محددة
+            </strong>
+
+            <small>
+                Station Status
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+   <!-- =================================================
+     🍲 محطة الطباخات
+     COOKER PERFORMANCE
+     ================================================= -->
+
+<div class="sugar-panel cooker-dashboard-card">
+
+    <div class="sugar-panel-header">
+
+        <div class="sugar-panel-title">
+
+            <div class="sugar-panel-icon">
+                🍲
+            </div>
+
+            <div>
+                <strong>
+                    محطة الطباخات
+                </strong>
+
+                <small>
+                    COOKER PERFORMANCE
+                </small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="sugar-panel-body">
+
+        <div class="cooker-performance-grid">
+
+
+            <!-- =================================================
+                 بريكس العصير
+                 ================================================= -->
+
+            <div class="cooker-donut-card">
+
+                <div class="cooker-donut"
+                     data-value="0"
+                     data-color="#38d9a9">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            class="donut-bg"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                        <circle
+                            class="donut-progress"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                    </svg>
+
+                    <div class="donut-value">
+
+                        <strong id="dashCookerBrix">
+                            0
+                        </strong>
+
+                        <small>
+                            %
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    بريكس العصير
+                </strong>
+
+                <small>
+                    JUICE BRIX
+                </small>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 المولاس المنتج
+                 ================================================= -->
+
+            <div class="cooker-level-card">
+
+                <div class="cooker-level-header">
+
+                    <div>
+
+                        <strong>
+                            المولاس المنتج
+                        </strong>
+
+                        <small>
+                            MOLASSES PRODUCTION
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="cooker-level-tank">
+
+                    <div
+                        id="molassesTankFill"
+                        class="cooker-level-fill">
+                    </div>
+
+                    <div class="cooker-level-value">
+
+                        <strong id="dashMolassesQty">
+                            0
+                        </strong>
+
+                        <small>
+                            طن
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 بريكس المولاس
+                 ================================================= -->
+
+            <div class="cooker-donut-card">
+
+                <div class="cooker-donut"
+                     data-value="0"
+                     data-color="#e5b84b">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            class="donut-bg"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                        <circle
+                            class="donut-progress"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                    </svg>
+
+                    <div class="donut-value">
+
+                        <strong id="dashMolassesBrix">
+                            0
+                        </strong>
+
+                        <small>
+                            %
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    بريكس المولاس
+                </strong>
+
+                <small>
+                    MOLASSES BRIX
+                </small>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 نقاوة المولاس
+                 ================================================= -->
+
+            <div class="cooker-donut-card">
+
+                <div class="cooker-donut"
+                     data-value="0"
+                     data-color="#a78bfa">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            class="donut-bg"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                        <circle
+                            class="donut-progress"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                    </svg>
+
+                    <div class="donut-value">
+
+                        <strong id="dashMolassesPurity">
+                            0
+                        </strong>
+
+                        <small>
+                            %
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    نقاوة المولاس
+                </strong>
+
+                <small>
+                    MOLASSES PURITY
+                </small>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+ <!-- =================================================
+     🌡️ محطة التجفيف
+     DRYER PERFORMANCE
+     ================================================= -->
+
+<div class="sugar-panel dryer-dashboard-card">
+
+    <div class="sugar-panel-header">
+
+        <div class="sugar-panel-title">
+
+            <div class="sugar-panel-icon">
+                🌡️
+            </div>
+
+            <div>
+                <strong>
+                    محطة التجفيف
+                </strong>
+
+                <small>
+                    DRYER PERFORMANCE
+                </small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="sugar-panel-body">
+
+        <!-- =================================================
+             المؤشرات الأربعة
+             ================================================= -->
+
+             <div class="dryer-donut-scroll">
+        <div class="dryer-donut-grid">
+
+
+            <!-- =========================
+                 حرارة السكر
+                 ========================= -->
+
+            <div class="dryer-donut-card">
+
+                <div class="dryer-donut"
+                     data-min="0"
+                     data-max="100"
+                     data-source="dryer_temp"
+                     data-color="#ff7043">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            class="dryer-donut-bg"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                        <circle
+                            class="dryer-donut-progress"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                    </svg>
+
+                    <div class="dryer-donut-value">
+
+                        <strong id="dashDryerTemp2">
+                            0
+                        </strong>
+
+                        <small>
+                            °C
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    حرارة السكر
+                </strong>
+
+                <small>
+                    TEMPERATURE
+                </small>
+
+            </div>
+
+
+
+            <!-- =========================
+                 PH
+                 ========================= -->
+
+            <div class="dryer-donut-card">
+
+                <div class="dryer-donut"
+                     data-min="0"
+                     data-max="14"
+                     data-source="dryer_ph"
+                     data-color="#38d9a9">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            class="dryer-donut-bg"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                        <circle
+                            class="dryer-donut-progress"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                    </svg>
+
+                    <div class="dryer-donut-value">
+
+                        <strong id="dashDryerPH2">
+                            0
+                        </strong>
+
+                        <small>
+                            PH
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    PH
+                </strong>
+
+                <small>
+                    ACIDITY INDEX
+                </small>
+
+            </div>
+
+
+
+            <!-- =========================
+                 لون المنتج
+                 ========================= -->
+
+            <div class="dryer-donut-card">
+
+                <div class="dryer-donut"
+                     data-min="0"
+                     data-max="100"
+                     data-source="dryer_color"
+                     data-color="#e5b84b">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            class="dryer-donut-bg"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                        <circle
+                            class="dryer-donut-progress"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                    </svg>
+
+                    <div class="dryer-donut-value">
+
+                        <strong id="dashDryerColor">
+                            0
+                        </strong>
+
+                        <small>
+                            ICUMSA
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    لون المنتج
+                </strong>
+
+                <small>
+                    PRODUCT COLOR
+                </small>
+
+            </div>
+
+
+
+            <!-- =========================
+                 DUST
+                 ========================= -->
+
+            <div class="dryer-donut-card">
+
+                <div class="dryer-donut"
+                     data-min="0"
+                     data-max="100"
+                     data-source="dryer_dust"
+                     data-color="#a78bfa">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            class="dryer-donut-bg"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                        <circle
+                            class="dryer-donut-progress"
+                            cx="60"
+                            cy="60"
+                            r="48">
+                        </circle>
+
+                    </svg>
+
+                    <div class="dryer-donut-value">
+
+                        <strong id="dashDryerDust">
+                            0
+                        </strong>
+
+                        <small>
+                            %
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    DUST
+                </strong>
+
+                <small>
+                    DUST CONTENT
+                </small>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+        <!-- =================================================
+             كمية السكر المجفف
+             ================================================= -->
+
+        <div class="dryer-production-card">
+
+            <div class="dryer-production-header">
+
+                <div>
+
+                    <strong>
+                        كمية السكر المجفف
+                    </strong>
+
+                    <small>
+                        DRIED SUGAR PRODUCTION
+                    </small>
+
+                </div>
+
+                <span>
+                    0 / 6000 TON
+                </span>
+
+            </div>
+
+
+            <div class="dryer-production-track">
+
+                <div
+                    id="dryerProductionFill"
+                    class="dryer-production-fill">
+                </div>
+
+            </div>
+
+
+            <div class="dryer-production-footer">
+
+            
+
+                <strong id="dashDryerQty">
+                    0 طن
+                </strong>
+
+          
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+        <!-- =================================================
+             PACKING
+             ================================================= -->
+
+        <div class="sugar-panel full">
+
+            <div class="sugar-panel-header">
+
+                <div class="sugar-panel-title">
+
+                    <div class="sugar-panel-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            PACKING PERFORMANCE
+                        </strong>
+
+                        <small>
+                            أداء خطوط التعبئة
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="sugar-panel-body">
+
+                <div class="sugar-packing-matrix">
+
+                    <div class="sugar-packing-cell header">
+                        الشفت
+                    </div>
+
+                    <div class="sugar-packing-cell header">
+                        1 طن
+                    </div>
+
+                    <div class="sugar-packing-cell header">
+                        50 كغم
+                    </div>
+
+                    <div class="sugar-packing-cell header">
+                        25 كغم
+                    </div>
+
+                    <div class="sugar-packing-cell header">
+                        10 كغم
+                    </div>
+
+                    <div class="sugar-packing-cell header">
+                        1 كغم
+                    </div>
+
+
+                    <!-- صباحي -->
+
+                    <div class="sugar-packing-cell shift">
+                        ☀️ صباحي
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack1Morning"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack50Morning"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack25Morning"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack10Morning"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack1KgMorning"
+                               readonly>
+                    </div>
+
+
+                    <!-- مسائي -->
+
+                    <div class="sugar-packing-cell shift">
+                        🌇 مسائي
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack1Evening"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack50Evening"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack25Evening"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack10Evening"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack1KgEvening"
+                               readonly>
+                    </div>
+
+
+                    <!-- ليلي -->
+
+                    <div class="sugar-packing-cell shift">
+                        🌙 ليلي
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack1Night"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack50Night"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack25Night"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack10Night"
+                               readonly>
+                    </div>
+
+                    <div class="sugar-packing-cell">
+                        <input id="dashPack1KgNight"
+                               readonly>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         QUALITY & SAFETY
+         ===================================================== -->
+
+    <div class="sugar-panel">
+
+        <div class="sugar-panel-header">
+
+            <div class="sugar-panel-title">
+
+                <div class="sugar-panel-icon">
+                    🛡️
+                </div>
+
+                <div>
+
+                    <strong>
+                        الجودة والسلامة
+                    </strong>
+
+                    <small>
+                        QUALITY & SAFETY
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="sugar-panel-body">
+
+            <div class="sugar-qc-grid">
+
+                <div class="sugar-qc-card quality">
+
+                    <div class="sugar-qc-title">
+
+                        <span>🔬</span>
+
+                        ملاحظات قسم الجودة
+
+                    </div>
+
+                    <textarea
+                        id="sugar_quality_notes"
+                        data-save
+                        placeholder="اكتب ملاحظات الجودة، نتائج الفحوصات، حالات عدم المطابقة أو أي ملاحظة تخص جودة السكر..."></textarea>
+
+
+                    <br><br>
+
+                    <label
+                        for="sugar_quality_notes_image"
+                        class="uploadImageBtn">
+
+                        📎 إرفاق ملف
+
+                    </label>
+
+                    <input
+                        type="file"
+                        multiple
+                        accept="image/*,application/pdf"
+                        id="sugar_quality_notes_image"
+                        data-factory="sugar"
+                        data-field="sugar_quality_notes"
+                        onchange="uploadNoteImage(this)"
+                        style="display:none;">
+
+                    <a
+                        id="sugar_quality_notes_link"
+                        target="_blank"
+                        style="display:none;">
+
+                        👁 عرض الملف
+
+                    </a>
+
+                </div>
+
+
+                <div class="sugar-qc-card safety">
+
+                    <div class="sugar-qc-title">
+
+                        <span>🦺</span>
+
+                        ملاحظات قسم السلامة
+
+                    </div>
+
+                    <textarea
+                        id="sugar_safety_notes"
+                        data-save
+                        placeholder="اكتب ملاحظات السلامة، المخاطر، الحوادث، إجراءات المعالجة والمتابعة..."></textarea>
+
+
+                    <br><br>
+
+                    <label
+                        for="sugar_safety_notes_image"
+                        class="uploadImageBtn">
+
+                        📎 إرفاق ملف
+
+                    </label>
+
+                    <input
+                        type="file"
+                        multiple
+                        accept="image/*,application/pdf"
+                        id="sugar_safety_notes_image"
+                        data-factory="sugar"
+                        data-field="sugar_safety_notes"
+                        onchange="uploadNoteImage(this)"
+                        style="display:none;">
+
+                    <a
+                        id="sugar_safety_notes_link"
+                        target="_blank"
+                        style="display:none;">
+
+                        👁 عرض الملف
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LEGACY DATA — البيانات الأصلية
+         ===================================================== -->
+
+    <details
+    class="sugar-legacy-details sugar-data-entry-area"
+    data-sugar-only="true"
+>
+
+        <summary>
+            ⚙️ البيانات التفصيلية للمصنع
+        </summary>
+
+        <div class="details-content">
+
+
+            <!-- =================================================
+                 الخام
+                 ================================================= -->
+
+            <details open>
+
+                <summary>
+                    🌾 موقف الخام
+                </summary>
+
+                <div class="details-content">
+
+                    <table class="wide-table">
+
+                        <tr>
+
+                            <th>
+                                الكمية الواردة (طن)
+                            </th>
+
+                            <th>
+                                الرصيد الحالي (طن)
+                            </th>
+
+                            <th>
+                                المستهلك (طن)
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <input
+                                    id="sugar_raw_received"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="sugar_raw_stock"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="sugar_raw_used"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </details>
+
+
+            <!-- =================================================
+                 الإذابة
+                 ================================================= -->
+
+            <details open>
+
+                <summary>
+                    💧 محطة الإذابة
+                </summary>
+
+                <div class="details-content">
+
+                    <table class="wide-table">
+
+                        <tr>
+
+                            <th>
+                                لون الخام (ICUMSA)
+                            </th>
+
+                            <th>
+                                الجريان (م³/ساعة)
+                            </th>
+
+                            <th>
+                                البريكس (%)
+                            </th>
+
+                            <th>
+                                مجموع المذاب (طن)
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <input
+                                    id="diss_color"
+                                    data-save
+                                    step="any" oninput="updateSugarTank()">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="diss_flow"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="diss_brix"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="diss_total"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+
+                    <br>
+
+
+                    <table class="wide-table">
+
+                        <tr>
+
+                            <th>
+                                الإذابة القديمة
+                            </th>
+
+                            <th>
+                                الإذابة الجديدة
+                            </th>
+
+                            <th>
+                                حالة المحطة
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <textarea
+                                    id="old_dissolution"
+                                    data-save
+                                    rows="2"></textarea>
+                            </td>
+
+                            <td>
+                                <textarea
+                                    id="new_dissolution"
+                                    data-save
+                                    rows="2"></textarea>
+                            </td>
+
+                            <td>
+                                <textarea
+                                    id="diss_status"
+                                    data-save
+                                    rows="2"></textarea>
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </details>
+
+
+            <!-- =================================================
+                 الكربنة
+                 ================================================= -->
+
+            <details open>
+
+                <summary>
+                    🌊 محطة الكربنة
+                </summary>
+
+                <div class="details-content">
+
+                    <table>
+
+                        <tr>
+
+                            <th>
+                                رصيد اللايم (طن)
+                            </th>
+
+                            <th>
+                                حالة المحطة
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+
+                               <input
+    id="carb_lime"
+    data-save
+    step="any"
+    oninput="updateCarbLimeDashboard()">
+
+                            </td>
+
+                            <td>
+
+                                <textarea
+                                    id="carb_status"
+                                    data-save
+                                    rows="2"></textarea>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </details>
+
+
+            <!-- =================================================
+                 PKF
+                 ================================================= -->
+
+            <details open>
+
+                <summary>
+                    🔵 محطة PKF
+                </summary>
+
+                <div class="details-content">
+
+                    <h4>
+                        FILTER 250
+                    </h4>
+
+                    <table class="wide-table">
+
+                        <tr>
+
+                            <th>
+                                حجم الدورة (م³)
+                            </th>
+
+                            <th>
+                                زمن الدورة (ساعة)
+                            </th>
+
+                            <th>
+                                استهلاك البريكوت (طن)
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <input
+                                    id="pkf250_volume"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pkf250_time"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pkf250_briquette"
+                                    data-save
+                                    step="any"
+                                        oninput="updatePKFBriquetteTotal()">
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+
+                    <br>
+
+
+                    <h4>
+                        FILTER 500
+                    </h4>
+
+                    <table class="wide-table">
+
+                        <tr>
+
+                            <th>
+                                حجم الدورة (م³)
+                            </th>
+
+                            <th>
+                                زمن الدورة (ساعة)
+                            </th>
+
+                            <th>
+                                استهلاك البريكوت (طن)
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <input
+                                    id="pkf500_volume"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pkf500_time"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pkf500_briquette"
+                                    data-save
+                                    step="any"
+                                    oninput="updatePKFBriquetteTotal()">
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <input
+    id="pkf_briquette_total"
+    type="hidden"
+    value="0">
+
+
+                    <br>
+
+                    <textarea
+                        id="pkf_status"
+                        data-save
+                        rows="2"
+                        placeholder="حالة محطة PKF..."></textarea>
+
+                </div>
+
+            </details>
+
+
+            <!-- =================================================
+                 NOVASEP
+                 ================================================= -->
+
+            <details open>
+
+    <summary>
+        🧪 محطة NOVASEP
+    </summary>
+
+    <div class="details-content">
+
+        <table>
+
+            <tr>
+
+                <th>
+                    اللون الخارج (ICUMSA)
+                </th>
+
+                <th>
+                    حالة المحطة
+                </th>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    <input
+                        id="novasep_color"
+                        data-save
+                        step="any"
+                        oninput="updateNovasepDashboard()">
+                </td>
+
+                <td>
+                    <select
+    id="novasep_status"
+    data-save
+    onchange="updateNovasepDashboard()"
+>
+    <option value="">اختر حالة المحطة</option>
+    <option value="running">🟢 تعمل</option>
+    <option value="maintenance">🟡 صيانة</option>
+    <option value="out_of_service">🔴 خارج الخدمة</option>
+</select>
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</details>
+
+
+            <!-- =================================================
+                 الطباخات
+                 ================================================= -->
+
+            <details open>
+
+                <summary>
+                    🍲 محطة الطباخات
+                </summary>
+
+                <div class="details-content">
+
+                    <table>
+
+                        <tr>
+
+                            <th>
+                                البيان
+                            </th>
+
+                            <th>
+                                القيمة
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                بريكس العصير الداخل
+                            </td>
+
+                            <td>
+                                <input
+                                    id="cooker_in_brix"
+                                    data-save
+                                    step="any" oninput="updateCookerDashboard()">
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                كمية المولاس
+                            </td>
+
+                            <td>
+                                <input
+                                    id="molasses_qty"
+                                    data-save
+                                    step="any" oninput="updateCookerDashboard()">
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                بريكس المولاس
+                            </td>
+
+                            <td>
+                                <input
+                                    id="molasses_brix"
+                                    data-save
+                                    step="any" oninput="updateCookerDashboard()">
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                نقاوة المولاس
+                            </td>
+
+                            <td>
+                                <input
+                                    id="molasses_purity"
+                                    data-save
+                                    step="any" oninput="updateCookerDashboard()">
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+
+                    <br>
+
+
+                    <textarea
+                        id="cooker_status"
+                        data-save
+                        rows="2"
+                        placeholder="حالة محطة الطباخات..."></textarea>
+
+                </div>
+
+            </details>
+
+
+            <!-- =================================================
+                 التجفيف
+                 ================================================= -->
+
+            <details open>
+
+                <summary>
+                    🌡️ محطة التجفيف
+                </summary>
+
+                <div class="details-content">
+
+                    <table class="wide-table">
+
+                        <tr>
+
+                            <th>
+                                حرارة السكر
+                            </th>
+
+                            <th>
+                                PH
+                            </th>
+
+                            <th>
+                                لون المنتج
+                            </th>
+
+                            <th>
+                                الكمية المجففة
+                            </th>
+
+                            <th>
+                                CV
+                            </th>
+
+                            <th>
+                                MA
+                            </th>
+
+                            <th>
+                                DUST
+                            </th>
+
+                            <th>
+                                Oversize
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <input
+                                    id="dryer_temp"
+                                    data-save
+                                    step="any" oninput="updateDryerDashboard()">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="dryer_ph"
+                                    data-save
+                                    step="any" oninput="updateDryerDashboard()">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="dryer_color"
+                                    data-save
+                                    step="any" oninput="updateDryerDashboard()">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="dryer_qty"
+                                    data-save
+                                    step="any" oninput="updateDryerDashboard()">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="dryer_cv"
+                                    data-save
+                                    step="any" oninput="updateDryerDashboard()">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="dryer_ma"
+                                    data-save
+                                    step="any" oninput="updateDryerDashboard()">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="dryer_dust"
+                                    data-save
+                                    step="any" oninput="updateDryerDashboard()">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="dryer_oversize"
+                                    data-save
+                                    step="any" oninput="updateDryerDashboard()">
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+
+                    <br>
+
+
+                    <textarea
+                        id="dryer_status"
+                        data-save
+                        rows="2"
+                        placeholder="حالة محطة التجفيف..."></textarea>
+
+                </div>
+
+            </details>
+
+
+            <!-- =================================================
+                 التعبئة
+                 ================================================= -->
+
+            <details open>
+
+                <summary>
+                    📦 قسم التعبئة
+                </summary>
+
+                <div class="details-content">
+
+                    <table class="wide-table">
+
+                        <tr>
+
+                            <th rowspan="2">
+                                الشفت
+                            </th>
+
+                            <th colspan="2">
+                                1 طن
+                            </th>
+
+                            <th colspan="2">
+                                50 كغم
+                            </th>
+
+                            <th colspan="2">
+                                25 كغم
+                            </th>
+
+                            <th colspan="2">
+                                10 كغم
+                            </th>
+
+                            <th colspan="2">
+                                1 كغم
+                            </th>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>عدد المكائن</th>
+                            <th>الإنتاج</th>
+
+                            <th>عدد المكائن</th>
+                            <th>الإنتاج</th>
+
+                            <th>عدد المكائن</th>
+                            <th>الإنتاج</th>
+
+                            <th>عدد المكائن</th>
+                            <th>الإنتاج</th>
+
+                            <th>عدد المكائن</th>
+                            <th>الإنتاج</th>
+
+                        </tr>
+
+
+                        <!-- صباحي -->
+
+                        <tr>
+
+                            <td>
+                                صباحي
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1t_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1t_prod_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_50_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_50_prod_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_25_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_25_prod_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_10_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_10_prod_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1_prod_morning"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                        </tr>
+
+
+                        <!-- مسائي -->
+
+                        <tr>
+
+                            <td>
+                                مسائي
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1t_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1t_prod_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_50_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_50_prod_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_25_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_25_prod_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_10_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_10_prod_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1_prod_evening"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                        </tr>
+
+
+                        <!-- ليلي -->
+
+                        <tr>
+
+                            <td>
+                                ليلي
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1t_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1t_prod_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_50_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_50_prod_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_25_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_25_prod_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_10_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_10_prod_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                            <td>
+                                <input
+                                    id="pack_1_prod_night"
+                                    data-save
+                                    step="any">
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </details>
+
+
+            <!-- =================================================
+                 الملاحظات العامة
+                 ================================================= -->
+
+            <details open>
+
+                <summary>
+                    📝 ملاحظات مصنع السكر
+                </summary>
+
+                <div class="details-content">
+
+                    <textarea
+                        class="notes"
+                        id="sugar_notes"
+                        data-save
+                        placeholder="اكتب الملاحظات العامة لمصنع السكر..."></textarea>
+
+                </div>
+
+            </details>
+
+        </div>
+
+    </details>
+
+<!-- =====================================================
+     🍬 اعتماد تقرير مصنع السكر
+     يظهر لحساب السكر فقط
+     ===================================================== -->
+
+<div
+    class="sugar-approval-area sugar-only-area"
+    data-sugar-only="true"
+>
+
+    <div class="sugar-approval-info">
+
+        <div class="sugar-approval-icon">
+            ✅
+        </div>
+
+        <div>
+
+            <strong>
+                اعتماد تقرير مصنع السكر
+            </strong>
+
+            <small>
+                تأكد من مراجعة بيانات الإنتاج والجودة والسلامة قبل اعتماد التقرير
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="SugarBtn"
+        class="sugar-approve-btn"
+        onclick="approveSection('sugar')"
+    >
+        ✓ اعتماد تقرير السكر
+    </button>
+
+</div>
+
+</section>
       <!-- ===================================== -->
       <!-- مصنع الزيت -->
       <!-- ===================================== -->
@@ -8348,6 +10497,51 @@
         saveSalesField("sugar_sales_total", "sugar");
       }
 
+  function updatePKFBriquetteTotal() {
+
+    const pkf250 =
+        parseFloat(
+            document.getElementById("pkf250_briquette")?.value
+        ) || 0;
+
+    const pkf500 =
+        parseFloat(
+            document.getElementById("pkf500_briquette")?.value
+        ) || 0;
+
+
+    // ===============================
+    // إجمالي استهلاك البريكوت
+    // ===============================
+
+    const total = pkf250 + pkf500;
+
+
+    // ===============================
+    // تحديث الحقل المخفي
+    // ===============================
+
+    const totalField =
+        document.getElementById("pkf_briquette_total");
+
+    if (totalField) {
+        totalField.value = total.toFixed(2);
+    }
+
+
+    // ===============================
+    // تحديث بطاقة الداشبورد
+    // ===============================
+
+    const dashboardValue =
+        document.getElementById("DASHPRECOATCONSUMPTION");
+
+    if (dashboardValue) {
+        dashboardValue.textContent = total.toFixed(2);
+    }
+
+}
+
       function updateSugarStockTotal() {
         let total = 0;
 
@@ -8362,34 +10556,61 @@
         total += parseFloat(document.getElementById("stock_1t")?.value) || 0;
 
         document.getElementById("sugar_stock_total").value = total.toFixed(2);
+
+          // تحديث بطاقة رصيد السكر الأبيض
+    updateSugarTank();
       }
+function recalculateAll() {
 
-      function recalculateAll() {
-        // الإنتاج
-        updateFeedTotals();
-        calcMillTotals();
+    // ===============================
+    // الإنتاج
+    // ===============================
+    updateFeedTotals();
+    calcMillTotals();
 
-        // المبيعات
-        updateSugarSalesTotal();
-        updateShorteningSalesTotal();
-        updateGEASalesTotal();
-        updateSugarStockTotal();
-        updateSunSalesTotal();
-        updateOleinSalesTotal();
-        updateFlourSalesTotal();
-        updateFeedSalesTotal();
-        updateFlourStockTotal();
-        updateSunStockTotal();
-        updateOleinStockTotal();
-        updatePalmStockTotal();
-        updateOilStockDashboard();
 
-        // لوحة التحكم
-        updateDashboard();
-        updatePowerStation();
+    // ===============================
+    // المبيعات والأرصدة
+    // ===============================
+    updateSugarSalesTotal();
+    updateShorteningSalesTotal();
+    updateGEASalesTotal();
 
-        updateBlackOilStockTotals();
-      }
+    updateSugarStockTotal();
+
+    updateSunSalesTotal();
+    updateOleinSalesTotal();
+    updateFlourSalesTotal();
+    updateFeedSalesTotal();
+
+    updateFlourStockTotal();
+    updateSunStockTotal();
+    updateOleinStockTotal();
+    updatePalmStockTotal();
+
+    updateOilStockDashboard();
+
+    updateNovasepDashboard();
+
+
+    // ===============================
+    // PKF
+    // ===============================
+    updatePKFBriquetteTotal();
+
+
+    // ===============================
+    // لوحة التحكم
+    // ===============================
+    updateDashboard();
+    updatePowerStation();
+
+
+    // ===============================
+    // النفط الأسود
+    // ===============================
+    updateBlackOilStockTotals();
+}
 
       function updateSunSalesTotal() {
         let total = 0;
@@ -8743,25 +10964,35 @@
       }
 
       function showAllSections() {
-        // هذا السلوك مخصص فقط للإدارة والتنفيذي
-        if (
-          window.currentUserRole !== "admin" &&
-          window.currentUserRole !== "executive"
-        ) {
-          return;
-        }
 
-        document.querySelectorAll(".section").forEach((section) => {
-          section.style.display = "block";
-        });
+    document.querySelectorAll(".section").forEach((section) => {
+        section.style.display = "block";
+    });
 
-        window.location.hash = "home";
 
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      }
+    /* =====================================================
+       🍬 حماية Dashboard السكر
+       ===================================================== */
+
+    if (
+        window.currentUserRole === "admin" ||
+        window.currentUserRole === "executive"
+    ) {
+
+        applySugarDashboardPermissions(
+            window.currentUserRole
+        );
+
+    }
+
+
+    window.location.hash = "home";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
+}
 
       function showAllMenus() {
         [
@@ -8808,6 +11039,7 @@
 
           editBtn.style.background = "#d97706";
         }
+        applySugarDashboardPermissions("executive");
       }
 
       async function approveSection(
@@ -9583,6 +11815,8 @@
           updatePalmStockTotal();
         }
 
+        
+
         /* إعادة حساب جميع القيم المشتقة */
 
         // تحميل روابط الصور الخاصة بالملاحظات
@@ -10294,6 +12528,15 @@
 
           await loadDailyReport();
 
+          /* =========================================================
+   🔄 تحديث جميع الداشبوردات بعد اكتمال تحميل التقرير
+   ========================================================= */
+
+if (typeof refreshAllDashboards === "function") {
+    refreshAllDashboards();
+}
+
+
           await startRealtime();
 
           const {
@@ -10863,6 +13106,10 @@
 
         scheduleFieldHistoryUpdate(fieldId, factory, value, user.email);
       }
+
+      
+
+      
     </script>
 
     <script src="js/pwa.js"></script>
@@ -10876,5 +13123,734 @@
     <script>
       bootApplication();
     </script>
+
+<script>
+
+/* ============================================================
+   🍬 SUGAR COMMAND CENTER
+   Dashboard Sync
+   ============================================================ */
+
+function sugarVal(id) {
+
+    const el = document.getElementById(id);
+
+    if (!el) return 0;
+
+    const value = parseFloat(el.value);
+
+    return Number.isFinite(value) ? value : 0;
+}
+
+
+function sugarText(id) {
+
+    const el = document.getElementById(id);
+
+    if (!el) return "";
+
+    return el.value || "";
+}
+
+
+function sugarSet(id, value) {
+
+    const el = document.getElementById(id);
+
+    if (!el) return;
+
+    el.textContent =
+        Number.isFinite(value)
+            ? value.toLocaleString("en-US", {
+                maximumFractionDigits: 2
+            })
+            : "0";
+}
+
+
+/* ============================================================
+   KPI
+   ============================================================ */
+
+function updateSugarCommandCenter() {
+
+    /* ---------------------------------------------------------
+       الإنتاج
+       --------------------------------------------------------- */
+
+    const production =
+        sugarVal("dryer_qty");
+
+    sugarSet(
+        "sugarKpiProduction",
+        production
+    );
+
+
+    /* ---------------------------------------------------------
+       رصيد الخام
+       --------------------------------------------------------- */
+
+    const rawStock =
+        sugarVal("sugar_raw_stock");
+
+    sugarSet(
+        "sugarKpiRaw",
+        rawStock
+    );
+
+
+    /* ---------------------------------------------------------
+       رصيد السكر الأبيض
+       --------------------------------------------------------- */
+
+    /*
+       إذا كان لديك حقل white_sugar_stock
+       سيتم استخدامه.
+
+       وإذا لم يكن موجودًا حاليًا،
+       يستخدم كمية التجفيف كقيمة مؤقتة.
+    */
+
+    const whiteStockElement =
+        document.getElementById("white_sugar_stock");
+
+    const whiteStock =
+        whiteStockElement
+            ? sugarVal("white_sugar_stock")
+            : production;
+
+    sugarSet(
+        "sugarKpiStock",
+        whiteStock
+    );
+
+
+    /* ---------------------------------------------------------
+       ICUMSA
+       --------------------------------------------------------- */
+
+    const icumsa =
+        sugarVal("novasep_color");
+
+    sugarSet(
+        "sugarKpiColor",
+        icumsa
+    );
+
+
+    /* ---------------------------------------------------------
+       Molasses
+       --------------------------------------------------------- */
+
+    const molasses =
+        sugarVal("molasses_qty");
+
+    sugarSet(
+        "sugarKpiMolasses",
+        molasses
+    );
+
+
+    /* =========================================================
+       RAW INVENTORY
+       ========================================================= */
+
+    sugarSet(
+        "sugarInventoryMain",
+        rawStock
+    );
+
+    sugarSet(
+        "sugarRawReceivedDash",
+        sugarVal("sugar_raw_received")
+    );
+
+    sugarSet(
+        "sugarRawUsedDash",
+        sugarVal("sugar_raw_used")
+    );
+
+    sugarSet(
+        "sugarRawStockDash",
+        rawStock
+    );
+
+
+    /* =========================================================
+       PROGRESS BAR
+       ========================================================= */
+
+    const received =
+        sugarVal("sugar_raw_received");
+
+    let percentage = 0;
+
+    if (received > 0) {
+
+        percentage =
+            (rawStock / received) * 100;
+
+    }
+
+    percentage =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                percentage
+            )
+        );
+
+    const progress =
+        document.getElementById(
+            "sugarInventoryProgress"
+        );
+
+    if (progress) {
+
+        progress.style.width =
+            percentage + "%";
+
+    }
+
+
+    /* =========================================================
+       DISSOLUTION
+       ========================================================= */
+
+    sugarSet(
+        "dashDissBrix",
+        sugarVal("diss_brix")
+    );
+
+
+    /* =========================================================
+       PKF
+       ========================================================= */
+
+    sugarSet(
+        "dashPkfCycle",
+        sugarVal("pkf500_time")
+    );
+
+    sugarSet(
+        "dashPkf250Volume",
+        sugarVal("pkf250_volume")
+    );
+
+    sugarSet(
+        "dashPkf500Volume",
+        sugarVal("pkf500_volume")
+    );
+
+
+    /* =========================================================
+       NOVASEP
+       ========================================================= */
+
+    sugarSet(
+        "novasepQualityCircle",
+        icumsa
+    );
+
+
+    /* =========================================================
+       COOKER
+       ========================================================= */
+
+    sugarSet(
+        "dashCookerBrix",
+        sugarVal("cooker_in_brix")
+    );
+
+    sugarSet(
+        "dashMolassesQty",
+        molasses
+    );
+
+    sugarSet(
+        "dashMolassesBrix",
+        sugarVal("molasses_brix")
+    );
+
+    sugarSet(
+        "dashMolassesPurity",
+        sugarVal("molasses_purity")
+    );
+
+    sugarSet(
+        "dashMolassesBrix",
+        sugarVal("molasses_brix")
+    );
+
+
+    /* =========================================================
+       DRYER
+       ========================================================= */
+
+    sugarSet(
+        "dashDryerTemp",
+        sugarVal("dryer_temp")
+    );
+
+    sugarSet(
+        "dashDryerPH",
+        sugarVal("dryer_ph")
+    );
+
+    sugarSet(
+        "dashDryerTemp2",
+        sugarVal("dryer_temp")
+    );
+
+    sugarSet(
+        "dashDryerPH2",
+        sugarVal("dryer_ph")
+    );
+
+    sugarSet(
+        "dashDryerCV",
+        sugarVal("dryer_cv")
+    );
+
+    sugarSet(
+        "dashDryerMA",
+        sugarVal("dryer_ma")
+    );
+
+    sugarSet(
+        "dashPurity",
+        sugarVal("molasses_purity")
+    );
+
+
+    /* =========================================================
+       PACKING MATRIX
+       ========================================================= */
+
+    sugarCopy(
+        "dashPack1Morning",
+        "pack_1t_prod_morning"
+    );
+
+    sugarCopy(
+        "dashPack50Morning",
+        "pack_50_prod_morning"
+    );
+
+    sugarCopy(
+        "dashPack25Morning",
+        "pack_25_prod_morning"
+    );
+
+    sugarCopy(
+        "dashPack10Morning",
+        "pack_10_prod_morning"
+    );
+
+    sugarCopy(
+        "dashPack1KgMorning",
+        "pack_1_prod_morning"
+    );
+
+
+    sugarCopy(
+        "dashPack1Evening",
+        "pack_1t_prod_evening"
+    );
+
+    sugarCopy(
+        "dashPack50Evening",
+        "pack_50_prod_evening"
+    );
+
+    sugarCopy(
+        "dashPack25Evening",
+        "pack_25_prod_evening"
+    );
+
+    sugarCopy(
+        "dashPack10Evening",
+        "pack_10_prod_evening"
+    );
+
+    sugarCopy(
+        "dashPack1KgEvening",
+        "pack_1_prod_evening"
+    );
+
+
+    sugarCopy(
+        "dashPack1Night",
+        "pack_1t_prod_night"
+    );
+
+    sugarCopy(
+        "dashPack50Night",
+        "pack_50_prod_night"
+    );
+
+    sugarCopy(
+        "dashPack25Night",
+        "pack_25_prod_night"
+    );
+
+    sugarCopy(
+        "dashPack10Night",
+        "pack_10_prod_night"
+    );
+
+    sugarCopy(
+        "dashPack1KgNight",
+        "pack_1_prod_night"
+    );
+
+}
+
+/* ============================================================
+   🍬 SUGAR TANK KPI SYSTEM
+   ============================================================ */
+
+function updateSugarTankCards() {
+
+    const cards =
+        document.querySelectorAll(
+            "#sugar .sugar-tank-card"
+        );
+
+    cards.forEach(card => {
+
+        const sourceId =
+            card.dataset.source;
+
+        const source =
+            document.getElementById(sourceId);
+
+        if (!source) return;
+
+
+        let value = 0;
+
+        /*
+         * المصدر عندنا غالباً input
+         */
+        if (
+            source.value !== undefined &&
+            source.value !== ""
+        ) {
+
+            value =
+                parseFloat(source.value) || 0;
+
+        }
+
+
+        const min =
+            parseFloat(card.dataset.min) || 0;
+
+        const max =
+            parseFloat(card.dataset.max) || 1;
+
+
+        /* =========================================
+           النسبة
+           ========================================= */
+
+        let percentage =
+            ((value - min) / (max - min)) * 100;
+
+
+        percentage =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    percentage
+                )
+            );
+
+
+        /* =========================================
+           تحديث التعبئة
+           ========================================= */
+
+        const fill =
+            card.querySelector(".tank-fill");
+
+        if (fill) {
+
+            /*
+             * RTL:
+             * التعبئة تبدأ من اليمين
+             */
+
+            fill.style.width =
+                percentage + "%";
+
+        }
+
+
+        /* =========================================
+           الرقم
+           ========================================= */
+
+        const valueElement =
+            card.querySelector(
+                ".tank-current-value"
+            );
+
+        if (valueElement) {
+
+            valueElement.textContent =
+                value.toLocaleString(
+                    "en-US",
+                    {
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        /* =========================================
+           MIN / MAX
+           ========================================= */
+
+        const minElement =
+            card.querySelector(".tank-min");
+
+        const maxElement =
+            card.querySelector(".tank-max");
+
+        if (minElement)
+            minElement.textContent = min;
+
+        if (maxElement)
+            maxElement.textContent = max;
+
+
+        /* =========================================
+           الحالة
+           ========================================= */
+
+        const status =
+            card.querySelector(".tank-status");
+
+
+        card.classList.remove(
+            "tank-low",
+            "tank-high"
+        );
+
+
+        if (value < min) {
+
+            if (status)
+                status.textContent = "LOW";
+
+            card.classList.add(
+                "tank-low"
+            );
+
+        }
+
+        else if (value > max) {
+
+            if (status)
+                status.textContent = "HIGH";
+
+            card.classList.add(
+                "tank-high"
+            );
+
+        }
+
+        else {
+
+            if (status)
+                status.textContent = "NORMAL";
+
+        }
+
+    });
+
+}
+
+function updateSugarTank() {
+
+    const card = document.querySelector(
+        '.sugar-tank-card[data-source="sugar_stock_total"]'
+    );
+
+    if (!card) return;
+
+    const source = document.getElementById(
+        card.dataset.source
+    );
+
+    if (!source) return;
+
+    const value = Number(source.value) || 0;
+
+    const min = Number(card.dataset.min) || 0;
+    const max = Number(card.dataset.max) || 100;
+
+    const fill = card.querySelector(".tank-fill");
+    const valueElement = card.querySelector(".tank-current-value");
+    const statusElement = card.querySelector(".tank-status");
+
+    // النسبة بين MIN و MAX
+    let percentage = ((value - min) / (max - min)) * 100;
+
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    // تحديث مستوى التعبئة
+    if (fill) {
+        fill.style.width = percentage + "%";
+    }
+
+    // تحديث الرقم
+    if (valueElement) {
+        valueElement.textContent = value.toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            }
+        );
+    }
+
+    // تحديث الحالة
+    if (statusElement) {
+
+        if (value < min) {
+
+            statusElement.textContent = "LOW";
+
+        } else if (value > max) {
+
+            statusElement.textContent = "OVER MAX";
+
+        } else {
+
+            statusElement.textContent = "NORMAL";
+        }
+    }
+
+    // تحديث أرقام MIN / MAX
+    const minElement = card.querySelector(".tank-min");
+    const maxElement = card.querySelector(".tank-max");
+
+    if (minElement) {
+        minElement.textContent = min;
+    }
+
+    if (maxElement) {
+        maxElement.textContent = max;
+    }
+}
+
+
+/* ============================================================
+   COPY VALUE TO DASHBOARD
+   ============================================================ */
+
+function sugarCopy(
+    dashboardId,
+    sourceId
+) {
+
+    const dashboard =
+        document.getElementById(
+            dashboardId
+        );
+
+    const source =
+        document.getElementById(
+            sourceId
+        );
+
+    if (!dashboard || !source) return;
+
+    dashboard.value =
+        source.value || "";
+}
+
+
+/* ============================================================
+   AUTO UPDATE
+   ============================================================ */
+document.addEventListener(
+    "input",
+    function (event) {
+
+        if (
+            event.target.closest(
+                "#sugar"
+            )
+        ) {
+
+            updateSugarCommandCenter();
+
+            updateSugarTankCards();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "change",
+    function (event) {
+
+        if (
+            event.target.closest(
+                "#sugar"
+            )
+        ) {
+
+            updateSugarCommandCenter();
+
+            updateSugarTankCards();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   INITIAL UPDATE
+   ============================================================ */
+
+setTimeout(
+    function () {
+
+        updateSugarCommandCenter();
+        updateSugarTankCards();
+
+    },
+    1500
+);
+
+
+setInterval(
+    function () {
+
+        updateSugarCommandCenter();
+        updateSugarTankCards();
+
+    },
+    2000
+);
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateSugarTank();
+});
+
+</script>
+
   </body>
 </html>
