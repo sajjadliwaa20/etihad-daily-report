@@ -10407,34 +10407,82 @@ window.fieldLastUpdatedAt = new Map();
       }
 
       function updateBlackOilStockTotals() {
-        const unionPower =
-          Number(document.getElementById("blackoil_union_power_stock").value) ||
-          0;
 
-        const unionRayyan =
-          Number(
-            document.getElementById("blackoil_union_boiler_stock").value,
-          ) || 0;
+    const unionPowerEl =
+        document.getElementById("blackoil_union_power_stock");
 
-        const extraction =
-          Number(document.getElementById("blackoil_extraction_stock").value) ||
-          0;
+    const unionRayyanEl =
+        document.getElementById("blackoil_union_boiler_stock");
 
-        const sahara =
-          Number(document.getElementById("blackoil_sahara_stock").value) || 0;
+    const extractionEl =
+        document.getElementById("blackoil_extraction_stock");
 
-        const diwan =
-          Number(document.getElementById("blackoil_diwan_stock").value) || 0;
+    const saharaEl =
+        document.getElementById("blackoil_sahara_stock");
 
-        // مجموع موقع الاتحاد
-        document.getElementById("blackoil_union_total_stock").value =
-          unionPower + unionRayyan + extraction;
+    const diwanEl =
+        document.getElementById("blackoil_diwan_stock");
 
-        // المجموع الكلي
-        document.getElementById("blackoil_total_stock").value =
-          unionPower + unionRayyan + extraction + sahara + diwan;
-      }
 
+    // إذا كانت حقول النفط الأسود غير موجودة في الصفحة
+    // لا تفعل شيئاً ولا تسبب خطأ
+    if (
+        !unionPowerEl ||
+        !unionRayyanEl ||
+        !extractionEl ||
+        !saharaEl ||
+        !diwanEl
+    ) {
+        return;
+    }
+
+
+    const unionPower =
+        Number(unionPowerEl.value) || 0;
+
+    const unionRayyan =
+        Number(unionRayyanEl.value) || 0;
+
+    const extraction =
+        Number(extractionEl.value) || 0;
+
+    const sahara =
+        Number(saharaEl.value) || 0;
+
+    const diwan =
+        Number(diwanEl.value) || 0;
+
+
+    // مجموع موقع الاتحاد
+    const unionTotalEl =
+        document.getElementById("blackoil_union_total_stock");
+
+    if (unionTotalEl) {
+
+        unionTotalEl.value =
+            unionPower +
+            unionRayyan +
+            extraction;
+
+    }
+
+
+    // المجموع الكلي
+    const totalStockEl =
+        document.getElementById("blackoil_total_stock");
+
+    if (totalStockEl) {
+
+        totalStockEl.value =
+            unionPower +
+            unionRayyan +
+            extraction +
+            sahara +
+            diwan;
+
+    }
+
+}
       function updateSunStockTotal() {
         let total = 0;
 
