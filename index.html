@@ -4784,7 +4784,7 @@ PKF
                         </tr>
 
                     </table>
-                    
+
                   </div>  
 
 
@@ -9717,16 +9717,12 @@ PKF
 
       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      /* =========================================================
-   🧠 حالة الحقول المحفوظة
-   يجب تهيئتها قبل تشغيل loadDailyReport / approveSection
+ /* =========================================================
+   FIELD STATE MEMORY
    ========================================================= */
 
-window.fieldLastSavedValues =
-    window.fieldLastSavedValues || new Map();
-
-window.fieldLastUpdatedAt =
-    window.fieldLastUpdatedAt || new Map();
+window.fieldLastSavedValues = new Map();
+window.fieldLastUpdatedAt = new Map();
 
       let adminEditMode = false;
 
@@ -11664,6 +11660,10 @@ function recalculateAll() {
         window.fieldLastUpdatedAt = new Map();
     }
 
+    if (!(window.fieldFactoryById instanceof Map)) {
+    window.fieldFactoryById = new Map();
+}
+
         console.count("loadFactorySection");
         console.log("Factory:", factory);
 
@@ -11801,6 +11801,20 @@ function recalculateAll() {
    دمج بيانات اليوم + القيم الموروثة
 ========================================= */
 
+console.log(
+    "FIELD MAP CHECK:",
+    {
+        saved:
+            window.fieldLastSavedValues,
+        updated:
+            window.fieldLastUpdatedAt,
+        savedIsMap:
+            window.fieldLastSavedValues instanceof Map,
+        updatedIsMap:
+            window.fieldLastUpdatedAt instanceof Map
+    }
+);
+
         const rowsToApply = [...currentRows, ...inheritedRows];
 
         rowsToApply.forEach((row) => {
@@ -11844,19 +11858,6 @@ function recalculateAll() {
           updatePalmSalesTotal();
           updatePalmStockTotal();
         }
-
-        recalculateAll();
-
-        toggleSeparationStation();
-
-        /* إعادة حساب مجاميع مصنع الزيت */
-        if (factory === "oil") {
-          updateOleinSalesTotal();
-          updateOleinStockTotal();
-          updatePalmSalesTotal();
-          updatePalmStockTotal();
-        }
-
         
 
         /* إعادة حساب جميع القيم المشتقة */
