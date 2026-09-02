@@ -680,10 +680,6 @@ button:active {
   border-radius: 20px;
 }
 
-.table-scroll {
-  position: relative;
-}
-
 .table-scroll::before {
   content: "↔";
 
@@ -838,18 +834,6 @@ input[type="number"] {
 }
 
 .dark-mode summary {
-  color: #ffffff !important;
-}
-
-.dark-mode h2 {
-  color: #ffffff !important;
-}
-
-.dark-mode h3 {
-  color: #ffffff !important;
-}
-
-.dark-mode h4 {
   color: #ffffff !important;
 }
 
@@ -9581,10 +9565,6 @@ body.dark-mode details summary {
   box-shadow: 0 5px 14px rgba(20, 65, 145, 0.28);
 }
 
-.feed-upload-btn:active {
-  transform: translateY(0);
-}
-
 /* رابط الملف */
 
 .feed-file-link {
@@ -9845,10 +9825,6 @@ body.dark-mode details summary {
     flex-basis: 42px;
 
     font-size: 21px;
-  }
-
-  .feed-qc-title strong {
-    font-size: 16px;
   }
 
   .feed-qc-body textarea {
@@ -14849,4 +14825,62 @@ body.dark-mode details summary {
 
 .dryer-production-footer b {
   margin-left: 3px;
+}
+
+/* =========================================================
+   📦 Packing Table - Horizontal Scroll
+   ========================================================= */
+
+.packing-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* مساحة بسيطة حتى لا يلتصق الجدول بالسكرول */
+  padding-bottom: 8px;
+
+  /* سلاسة الحركة على الهاتف */
+  -webkit-overflow-scrolling: touch;
+
+  /* يمنع تمدد الصفحة بسبب الجدول */
+  box-sizing: border-box;
+}
+
+/* المحافظة على عرض الجدول الحقيقي */
+
+.packing-table-scroll .wide-table {
+  min-width: 1050px;
+  width: max-content;
+  max-width: none;
+}
+
+/* =========================================================
+   شريط التمرير
+   ========================================================= */
+
+.packing-table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.packing-table-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+}
+
+.packing-table-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #38d9a9, #4dabf7);
+
+  border-radius: 20px;
+}
+
+.packing-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #20c997, #339af0);
+}
+
+/* Firefox */
+
+.packing-table-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #38d9a9 rgba(255, 255, 255, 0.06);
 }
