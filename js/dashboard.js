@@ -2244,63 +2244,6 @@ function updateSeparationDashboard() {
    */
 }
 
-function updateSugarTankCards() {
-  document.querySelectorAll(".sugar-tank-card").forEach((card) => {
-    const valueId = card.dataset.valueId;
-
-    const min = parseFloat(card.dataset.min) || 0;
-
-    const max = parseFloat(card.dataset.max) || 100;
-
-    const valueElement = document.getElementById(valueId);
-
-    if (!valueElement) return;
-
-    let value = parseFloat(valueElement.value ?? valueElement.textContent);
-
-    if (isNaN(value)) value = 0;
-
-    let percentage = ((value - min) / (max - min)) * 100;
-
-    percentage = Math.max(0, Math.min(100, percentage));
-
-    const fill = card.querySelector(".tank-fill");
-
-    const status = card.querySelector(".tank-status");
-
-    const minElement = card.querySelector(".tank-min");
-
-    const maxElement = card.querySelector(".tank-max");
-
-    /* مستوى التعبئة */
-
-    fill.style.width = percentage + "%";
-
-    /* عرض MIN / MAX */
-
-    if (minElement) minElement.textContent = min;
-
-    if (maxElement) maxElement.textContent = max;
-
-    /* الحالة */
-
-    if (value < min) {
-      status.textContent = "LOW";
-
-      card.classList.add("tank-low");
-      card.classList.remove("tank-high");
-    } else if (value > max) {
-      status.textContent = "OVER MAX";
-
-      card.classList.add("tank-high");
-      card.classList.remove("tank-low");
-    } else {
-      status.textContent = "NORMAL";
-
-      card.classList.remove("tank-low", "tank-high");
-    }
-  });
-}
 document.addEventListener("input", function (e) {
   if (e.target.matches("[data-save], input, textarea")) {
     updateSugarTankCards();
