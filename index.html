@@ -4683,6 +4683,7 @@ PKF
                 </summary>
 
                 <div class="details-content">
+                  <div class="DRYER-table-scroll">
 
                     <table class="wide-table">
 
@@ -4783,6 +4784,7 @@ PKF
                         </tr>
 
                     </table>
+                  </div>  
 
 
                     <br>
@@ -9713,6 +9715,17 @@ PKF
       const SUPABASE_KEY = "sb_publishable_q0VgF-S8RkmWdRUvA9pQMQ_nDrLa28F";
 
       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      /* =========================================================
+   🧠 حالة الحقول المحفوظة
+   يجب تهيئتها قبل تشغيل loadDailyReport / approveSection
+   ========================================================= */
+
+window.fieldLastSavedValues =
+    window.fieldLastSavedValues || new Map();
+
+window.fieldLastUpdatedAt =
+    window.fieldLastUpdatedAt || new Map();
 
       let adminEditMode = false;
 
