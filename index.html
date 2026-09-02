@@ -11650,6 +11650,19 @@ function recalculateAll() {
       }
 
       async function loadFactorySection(factory) {
+
+         /* =================================================
+       حماية ذاكرة حالة الحقول
+       ================================================= */
+
+    if (!(window.fieldLastSavedValues instanceof Map)) {
+        window.fieldLastSavedValues = new Map();
+    }
+
+    if (!(window.fieldLastUpdatedAt instanceof Map)) {
+        window.fieldLastUpdatedAt = new Map();
+    }
+    
         console.count("loadFactorySection");
         console.log("Factory:", factory);
 
