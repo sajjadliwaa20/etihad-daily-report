@@ -509,8 +509,34 @@ async function goToHomeByRole() {
 }
 
 /* =========================================================
-   🍬 صلاحيات Dashboard مصنع السكر
+   🛢️ صلاحيات اعتماد مصنع الزيت
+   يظهر لحساب الزيت فقط
    ========================================================= */
+
+function applyOilDashboardPermissions(role) {
+  console.log("🛢️ OIL APPROVAL PERMISSIONS:", role);
+
+  /* -----------------------------------------------------
+     زر اعتماد تقرير الزيت
+     يظهر لحساب الزيت فقط
+     ----------------------------------------------------- */
+
+  const oilApproveArea = document.querySelector(".oil-approval-area");
+
+  if (oilApproveArea) {
+    oilApproveArea.style.display = role === "oil" ? "flex" : "none";
+  }
+
+  /* -----------------------------------------------------
+     حماية إضافية لزر الاعتماد نفسه
+     ----------------------------------------------------- */
+
+  const oilApproveBtn = document.getElementById("OilBtn");
+
+  if (oilApproveBtn) {
+    oilApproveBtn.style.display = role === "oil" ? "inline-flex" : "none";
+  }
+}
 
 function applySugarDashboardPermissions(role) {
   console.log("🍬 SUGAR DASHBOARD PERMISSIONS:", role);
@@ -590,10 +616,16 @@ async function applyPermissions() {
   window.currentUserSubsection = subsection;
 
   /* =========================================================
-   🍬 تطبيق صلاحيات Dashboard السكر
-   ========================================================= */
+ 🍬 تطبيق صلاحيات Dashboard السكر
+ ========================================================= */
 
   applySugarDashboardPermissions(role);
+
+  /* =========================================================
+ 🛢️ تطبيق صلاحيات اعتماد مصنع الزيت
+ ========================================================= */
+
+  applyOilDashboardPermissions(role);
 
   console.log("ROLE =", role);
   console.log("SUBSECTION =", subsection);

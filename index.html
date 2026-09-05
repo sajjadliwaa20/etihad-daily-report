@@ -78,85 +78,286 @@
       </div>
     </div>
 
-    <div class="sidebar">
-      <h2>🏭 التقرير اليومي للمصانع</h2>
+   <!-- =========================================================
+     SIDEBAR — التقرير اليومي للمصانع
+========================================================= -->
 
-      <p style="margin-bottom: 20px">
-        إعداد التقرير<br />
-        <b>سجاد لواء</b>
-      </p>
+<div class="sidebar open">
 
-      <a
-        id="menu_home"
-        href="#home"
-        onclick="
-          goToHomeByRole();
-          toggleSidebar();
-          return false;
-        "
-      >
-        الرئيسية
-      </a>
+  <!-- رأس الشريط -->
 
-      <a
-        id="menu_sales_marketing"
-        href="#salesMarketing"
-        onclick="
-          showOnlySection('salesMarketing');
-          toggleSidebar();
-        "
-      >
-        📊 المبيعات والتسويق
-      </a>
+  <div class="sidebar-header">
 
-      <a
-        id="menu_power"
-        href="#powerstation"
-        onclick="showOnlySection('powerstation')"
-        >⚡ محطة الطاقة</a
-      >
-
-      <a id="menu_sugar" href="#sugar" onclick="showOnlySection('sugar')"
-        ><span> 🍚مصنع السكر</span></a
-      >
-
-      <a id="menu_oil" href="#oil" onclick="showOnlySection('oil')"
-        >🌻مصنع الزيت</a
-      >
-
-      <a id="menu_flour" href="#flour" onclick="showOnlySection('flour')"
-        >🍞مصنع الطحين</a
-      >
-
-      <a id="menu_feed" href="#feed" onclick="showOnlySection('feed')"
-        >🐓مصنع الأعلاف</a
-      >
-
-      <a
-        id="menu_waterfiltration"
-        href="#waterfiltration"
-        onclick="showOnlySection('waterfiltration')"
-        >💧محطات التصفية و المعالجة</a
-      >
-
-      <a id="menu_archive" href="#archive" onclick="toggleSidebar()"
-        >📚 الأرشيف</a
-      >
-
-      <div id="systemInfoCard" class="system-info-card">
-        <div class="system-info-title">🖥️ معلومات النظام</div>
-
-        <div class="system-info-row">
-          <span>الإصدار</span>
-          <strong id="systemVersion">--</strong>
-        </div>
-
-        <div class="system-info-row">
-          <span>آخر تحديث</span>
-          <strong id="systemUpdatedAt">--</strong>
-        </div>
-      </div>
+    <div class="sidebar-logo">
+      🏭
     </div>
+
+    <div class="sidebar-title">
+
+      <h2>التقرير اليومي</h2>
+
+      <h3>للمصانع</h3>
+
+      <div class="sidebar-subtitle">
+        إعداد التقرير
+      </div>
+
+      <strong>سجاد لواء</strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       حالة النظام
+  ====================================================== -->
+
+  <div class="sidebar-live-status">
+
+    <span class="sidebar-live-dot"></span>
+
+    <span>التشغيل اليومي</span>
+
+  </div>
+
+
+  <!-- =====================================================
+       القائمة الرئيسية
+  ====================================================== -->
+
+  <nav class="sidebar-menu">
+
+
+    <!-- الرئيسية -->
+
+    <a
+      id="menu_home"
+      class="sidebar-menu-item"
+      href="#home"
+      onclick="
+        goToHomeByRole();
+        toggleSidebar();
+        return false;
+      "
+    >
+
+      <span class="sidebar-menu-icon">⌂</span>
+
+      <span class="sidebar-menu-text">
+        الرئيسية
+      </span>
+
+    </a>
+
+
+    <!-- المبيعات -->
+
+    <a
+      id="menu_sales_marketing"
+      class="sidebar-menu-item"
+      href="#salesMarketing"
+      onclick="
+        showOnlySection('salesMarketing');
+        toggleSidebar();
+      "
+    >
+
+      <span class="sidebar-menu-icon">📊</span>
+
+      <span class="sidebar-menu-text">
+        المبيعات والتسويق
+      </span>
+
+    </a>
+
+
+    <!-- محطة الطاقة -->
+
+    <a
+      id="menu_power"
+      class="sidebar-menu-item"
+      href="#powerstation"
+      onclick="
+        showOnlySection('powerstation');
+        toggleSidebar();
+      "
+    >
+
+      <span class="sidebar-menu-icon">⚡</span>
+
+      <span class="sidebar-menu-text">
+        محطة الطاقة
+      </span>
+
+    </a>
+
+
+    <!-- مصنع السكر -->
+
+    <a
+      id="menu_sugar"
+      class="sidebar-menu-item"
+      href="#sugar"
+      onclick="
+        showOnlySection('sugar');
+        toggleSidebar();
+      "
+    >
+
+      <span class="sidebar-menu-icon">🍚</span>
+
+      <span class="sidebar-menu-text">
+        مصنع السكر
+      </span>
+
+    </a>
+
+
+    <!-- مصنع الزيت -->
+
+    <a
+      id="menu_oil"
+      class="sidebar-menu-item"
+      href="#oil"
+      onclick="
+        showOnlySection('oil');
+        toggleSidebar();
+      "
+    >
+
+      <span class="sidebar-menu-icon">🌻</span>
+
+      <span class="sidebar-menu-text">
+        مصنع الزيت
+      </span>
+
+    </a>
+
+
+    <!-- مصنع الطحين -->
+
+    <a
+      id="menu_flour"
+      class="sidebar-menu-item"
+      href="#flour"
+      onclick="
+        showOnlySection('flour');
+        toggleSidebar();
+      "
+    >
+
+      <span class="sidebar-menu-icon">🍞</span>
+
+      <span class="sidebar-menu-text">
+        مصنع الطحين
+      </span>
+
+    </a>
+
+
+    <!-- مصنع الأعلاف -->
+
+    <a
+      id="menu_feed"
+      class="sidebar-menu-item"
+      href="#feed"
+      onclick="
+        showOnlySection('feed');
+        toggleSidebar();
+      "
+    >
+
+      <span class="sidebar-menu-icon">🐓</span>
+
+      <span class="sidebar-menu-text">
+        مصنع الأعلاف
+      </span>
+
+    </a>
+
+
+    <!-- محطات التصفية -->
+
+    <a
+      id="menu_waterfiltration"
+      class="sidebar-menu-item"
+      href="#waterfiltration"
+      onclick="
+        showOnlySection('waterfiltration');
+        toggleSidebar();
+      "
+    >
+
+      <span class="sidebar-menu-icon">💧</span>
+
+      <span class="sidebar-menu-text">
+        محطات التصفية والمعالجة
+      </span>
+
+    </a>
+
+
+    <!-- الأرشيف -->
+
+    <a
+      id="menu_archive"
+      class="sidebar-menu-item"
+      href="#archive"
+      onclick="
+        toggleSidebar();
+      "
+    >
+
+      <span class="sidebar-menu-icon">📚</span>
+
+      <span class="sidebar-menu-text">
+        الأرشيف
+      </span>
+
+    </a>
+
+  </nav>
+
+
+  <!-- =====================================================
+       معلومات النظام
+  ====================================================== -->
+
+  <div
+    id="systemInfoCard"
+    class="system-info-card"
+  >
+
+    <div class="system-info-title">
+      🖥️ معلومات النظام
+    </div>
+
+
+    <div class="system-info-row">
+
+      <span>الإصدار</span>
+
+      <strong id="systemVersion">
+        --
+      </strong>
+
+    </div>
+
+
+    <div class="system-info-row">
+
+      <span>آخر تحديث</span>
+
+      <strong id="systemUpdatedAt">
+        --
+      </strong>
+
+    </div>
+
+  </div>
+
+</div>
     <div id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <div class="content">
@@ -12985,32 +13186,77 @@ function recalculateAll() {
       }
 
       function showOnlySection(sectionId) {
-        // هذا السلوك مخصص فقط للإدارة والتنفيذي
-        if (
-          window.currentUserRole !== "admin" &&
-          window.currentUserRole !== "executive"
-        ) {
-          return;
-        }
+  // هذا السلوك مخصص فقط للإدارة والتنفيذي
+  if (
+    window.currentUserRole !== "admin" &&
+    window.currentUserRole !== "executive"
+  ) {
+    return;
+  }
 
-        document.querySelectorAll(".section").forEach((section) => {
-          section.style.display = "none";
-        });
+  /* =========================================
+     إخفاء جميع الأقسام
+  ========================================= */
 
-        const target = document.getElementById(sectionId);
+  document.querySelectorAll(".section").forEach((section) => {
+    section.style.display = "none";
+  });
 
-        if (target) {
-          target.style.display = "block";
-        }
 
-        window.location.hash = sectionId;
+  /* =========================================
+     إظهار القسم المطلوب
+  ========================================= */
 
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      }
+  const target = document.getElementById(sectionId);
 
+  if (target) {
+    target.style.display = "block";
+  }
+
+
+  /* =========================================
+     تحديث الحالة النشطة للشريط الجانبي
+  ========================================= */
+
+  document
+    .querySelectorAll(".sidebar-menu-item")
+    .forEach((item) => {
+      item.classList.remove("active");
+    });
+
+
+ let activeMenu = document.getElementById(
+  "menu_" + sectionId
+);
+
+/* المبيعات والتسويق */
+if (sectionId === "salesMarketing") {
+  activeMenu = document.getElementById(
+    "menu_sales_marketing"
+  );
+}
+
+if (activeMenu) {
+  activeMenu.classList.add("active");
+}
+
+
+  /* =========================================
+     تحديث الرابط
+  ========================================= */
+
+  window.location.hash = sectionId;
+
+
+  /* =========================================
+     العودة إلى أعلى التقرير بسلاسة
+  ========================================= */
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
       function showAllSections() {
 
     document.querySelectorAll(".section").forEach((section) => {
@@ -14397,15 +14643,31 @@ if (factory === "oil") {
         daily_notes: "📅 ملاحظات اليوم",
       };
 
-      function toggleSidebar() {
-        const sidebar = document.querySelector(".sidebar");
+     function toggleSidebar() {
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("sidebarOverlay");
 
-        const overlay = document.getElementById("sidebarOverlay");
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
 
-        sidebar.classList.toggle("open");
+  document.body.classList.toggle(
+    "sidebar-closed",
+    !sidebar.classList.contains("open")
+  );
+}
 
-        overlay.classList.toggle("show");
-      }
+document.addEventListener("DOMContentLoaded", function () {
+
+  const sidebar = document.querySelector(".sidebar");
+
+  if (!sidebar) return;
+
+  document.body.classList.toggle(
+    "sidebar-closed",
+    !sidebar.classList.contains("open")
+  );
+
+});
 
       console.log("Dashboard loaded");
 
