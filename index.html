@@ -2405,21 +2405,31 @@
 
 </section>
 
-      <!-- ===================================== -->
-      <!-- مصنع السكر -->
-      <!-- ===================================== -->
-
-      <!-- =========================================================
-     🍬 SUGAR REFINERY — COMMAND CENTER
-     ========================================================= -->
+<!-- ===================================== -->
+<!-- مصنع السكر -->
+<!-- ===================================== -->
 
 <section id="sugar" class="section sugar-command-center">
 
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
+    <!-- =========================================================
+         🍬 SUGAR REFINERY — COMMAND CENTER
+         ========================================================= -->
 
-    <div class="sugar-command-header">
+    <div
+        class="sugar-command-header"
+        id="sugarDashboardHeader"
+        role="button"
+        tabindex="0"
+        aria-expanded="true"
+        aria-controls="sugarDashboardContent"
+        onclick="toggleSugarDashboard()"
+        onkeydown="
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleSugarDashboard();
+            }
+        "
+    >
 
         <div class="sugar-command-brand">
 
@@ -2441,357 +2451,401 @@
 
         </div>
 
+
         <div class="sugar-command-status">
 
             <span class="sugar-status-dot"></span>
 
             التشغيل اليومي
 
+            <span
+                class="sugar-command-chevron"
+                id="sugarDashboardChevron">
+                ▼
+            </span>
+
         </div>
 
     </div>
 
 
- <!-- =====================================================
-     🍬 SUGAR KPI TANKS
-     ===================================================== -->
+    <!-- =========================================================
+         🍬 كل بطاقات الداشبورد الخاصة بمصنع السكر
+         يجب أن تكون داخل هذه الحاوية
+         ========================================================= -->
 
-<div class="sugar-tank-grid">
+    <div
+        id="sugarDashboardContent"
+        class="sugar-command-content"
+    >
 
-    <!-- =================================================
-         1. الإنتاج الفعلي
-         المصدر: dryer_qty
-         ================================================= -->
+        <!-- =====================================================
+             🍬 SUGAR KPI TANKS
+             ===================================================== -->
 
-    <div class="sugar-tank-card"
-         data-min="3000"
-         data-max="5900"
-         data-source="dryer_qty"
-         data-type="normal">
+        <div class="sugar-tank-grid">
 
-        <div class="tank-card-header">
 
-            <div class="tank-title">
+            <!-- =================================================
+                 1. الإنتاج الفعلي
+                 ================================================= -->
 
-                <span class="tank-icon">🏭</span>
+            <div
+                class="sugar-tank-card"
+                data-min="3000"
+                data-max="5900"
+                data-source="dryer_qty"
+                data-type="normal"
+            >
 
-                <div>
-                    <strong>الإنتاج الفعلي</strong>
-                    <small>ACTUAL PRODUCTION</small>
+                <div class="tank-card-header">
+
+                    <div class="tank-title">
+
+                        <span class="tank-icon">🏭</span>
+
+                        <div>
+                            <strong>الإنتاج الفعلي</strong>
+                            <small>ACTUAL PRODUCTION</small>
+                        </div>
+
+                    </div>
+
+                    <span class="tank-unit">
+                        طن
+                    </span>
+
+                </div>
+
+
+                <div class="tank-body">
+
+                    <div class="tank-fill"></div>
+
+                    <div class="tank-value">
+
+                        <strong class="tank-current-value">
+                            0
+                        </strong>
+
+                        <small>
+                            طن
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tank-scale">
+
+                    <span>
+                        MIN
+                        <b class="tank-min">3000</b>
+                    </span>
+
+                    <span class="tank-status">
+                        NORMAL
+                    </span>
+
+                    <span>
+                        MAX
+                        <b class="tank-max">5900</b>
+                    </span>
+
                 </div>
 
             </div>
 
-            <span class="tank-unit">طن</span>
-
-        </div>
 
 
-        <div class="tank-body">
+            <!-- =================================================
+                 2. رصيد السكر الأبيض
+                 ================================================= -->
 
-            <div class="tank-fill"></div>
+            <div
+                class="sugar-tank-card"
+                data-min="200"
+                data-max="1500"
+                data-source="sugar_stock_total"
+                data-type="normal"
+            >
 
-            <div class="tank-value">
+                <div class="tank-card-header">
 
-                <strong class="tank-current-value">
-                    0
-                </strong>
+                    <div class="tank-title">
 
-                <small>طن</small>
+                        <span class="tank-icon">📦</span>
 
-            </div>
+                        <div>
+                            <strong>رصيد السكر الأبيض</strong>
+                            <small>WHITE SUGAR STOCK</small>
+                        </div>
 
-        </div>
+                    </div>
 
+                    <span class="tank-unit">
+                        طن
+                    </span>
 
-        <div class="tank-scale">
-
-            <span>
-                MIN
-                <b class="tank-min">300</b>
-            </span>
-
-            <span class="tank-status">
-                NORMAL
-            </span>
-
-            <span>
-                MAX
-                <b class="tank-max">600</b>
-            </span>
-
-        </div>
-
-    </div>
+                </div>
 
 
+                <div class="tank-body">
 
-    <!-- =================================================
-         2. رصيد السكر الأبيض
-         
-         ================================================= -->
+                    <div class="tank-fill"></div>
 
-    <div class="sugar-tank-card"
-     data-min="200"
-     data-max="1500"
-     data-source="sugar_stock_total"
-     data-type="normal">
+                    <div class="tank-value">
 
-        <div class="tank-card-header">
+                        <strong class="tank-current-value">
+                            0
+                        </strong>
 
-            <div class="tank-title">
+                        <small>
+                            طن
+                        </small>
 
-                <span class="tank-icon">📦</span>
+                    </div>
 
-                <div>
-                    <strong>رصيد السكر الأبيض</strong>
-                    <small>WHITE SUGAR STOCK</small>
+                </div>
+
+
+                <div class="tank-scale">
+
+                    <span>
+                        MIN
+                        <b class="tank-min">200</b>
+                    </span>
+
+                    <span class="tank-status">
+                        NORMAL
+                    </span>
+
+                    <span>
+                        MAX
+                        <b class="tank-max">1500</b>
+                    </span>
+
                 </div>
 
             </div>
 
-            <span class="tank-unit">طن</span>
-
-        </div>
 
 
-        <div class="tank-body">
+            <!-- =================================================
+                 3. رصيد السكر الخام
+                 ================================================= -->
 
-            <div class="tank-fill"></div>
+            <div
+                class="sugar-tank-card"
+                data-min="50000"
+                data-max="250000"
+                data-source="sugar_raw_stock"
+                data-type="normal"
+            >
 
-            <div class="tank-value">
+                <div class="tank-card-header">
 
-                <strong class="tank-current-value">
-                    0
-                </strong>
+                    <div class="tank-title">
 
-                <small>طن</small>
+                        <span class="tank-icon">🌾</span>
 
-            </div>
+                        <div>
+                            <strong>رصيد الخام</strong>
+                            <small>RAW SUGAR STOCK</small>
+                        </div>
 
-        </div>
+                    </div>
 
+                    <span class="tank-unit">
+                        طن
+                    </span>
 
-        <div class="tank-scale">
-
-            <span>
-                MIN
-                <b class="tank-min">200</b>
-            </span>
-
-            <span class="tank-status">
-                NORMAL
-            </span>
-
-            <span>
-                MAX
-                <b class="tank-max">1500</b>
-            </span>
-
-        </div>
-
-    </div>
+                </div>
 
 
+                <div class="tank-body">
 
-    <!-- =================================================
-         3. رصيد السكر الخام
-         ================================================= -->
+                    <div class="tank-fill"></div>
 
-    <div class="sugar-tank-card"
-         data-min="50000"
-         data-max="250000"
-         data-source="sugar_raw_stock"
-         data-type="normal">
+                    <div class="tank-value">
 
-        <div class="tank-card-header">
+                        <strong class="tank-current-value">
+                            0
+                        </strong>
 
-            <div class="tank-title">
+                        <small>
+                            طن
+                        </small>
 
-                <span class="tank-icon">🌾</span>
+                    </div>
 
-                <div>
-                    <strong>رصيد الخام</strong>
-                    <small>RAW SUGAR STOCK</small>
+                </div>
+
+
+                <div class="tank-scale">
+
+                    <span>
+                        MIN
+                        <b class="tank-min">50000</b>
+                    </span>
+
+                    <span class="tank-status">
+                        NORMAL
+                    </span>
+
+                    <span>
+                        MAX
+                        <b class="tank-max">250000</b>
+                    </span>
+
                 </div>
 
             </div>
 
-            <span class="tank-unit">طن</span>
-
-        </div>
 
 
-        <div class="tank-body">
+            <!-- =================================================
+                 4. ICUMSA
+                 ================================================= -->
 
-            <div class="tank-fill"></div>
+            <div
+                class="sugar-tank-card quality-tank"
+                data-min="500"
+                data-max="1000"
+                data-source="diss_color"
+                data-type="quality"
+            >
 
-            <div class="tank-value">
+                <div class="tank-card-header">
 
-                <strong class="tank-current-value">
-                    0
-                </strong>
+                    <div class="tank-title">
 
-                <small>طن</small>
+                        <span class="tank-icon">🧪</span>
 
-            </div>
+                        <div>
+                            <strong>ICUMSA</strong>
+                            <small>PRODUCT COLOR</small>
+                        </div>
 
-        </div>
+                    </div>
 
+                    <span class="tank-unit">
+                        ICUMSA
+                    </span>
 
-        <div class="tank-scale">
-
-            <span>
-                MIN
-                <b class="tank-min">50000</b>
-            </span>
-
-            <span class="tank-status">
-                NORMAL
-            </span>
-
-            <span>
-                MAX
-                <b class="tank-max">250000</b>
-            </span>
-
-        </div>
-
-    </div>
+                </div>
 
 
+                <div class="tank-body">
 
-    <!-- =================================================
-         4. ICUMSA
-         ================================================= -->
+                    <div class="tank-fill"></div>
 
-    <div class="sugar-tank-card quality-tank"
-         data-min="500"
-         data-max="1000"
-         data-source="diss_color"
-         data-type="quality">
+                    <div class="tank-value">
 
-        <div class="tank-card-header">
+                        <strong class="tank-current-value">
+                            0
+                        </strong>
 
-            <div class="tank-title">
+                    </div>
 
-                <span class="tank-icon">🧪</span>
+                </div>
 
-                <div>
-                    <strong>ICUMSA</strong>
-                    <small>PRODUCT COLOR</small>
+
+                <div class="tank-scale">
+
+                    <span>
+                        MIN
+                        <b class="tank-min">500</b>
+                    </span>
+
+                    <span class="tank-status">
+                        NORMAL
+                    </span>
+
+                    <span>
+                        MAX
+                        <b class="tank-max">1000</b>
+                    </span>
+
                 </div>
 
             </div>
 
-            <span class="tank-unit">ICUMSA</span>
-
-        </div>
 
 
-        <div class="tank-body">
+            <!-- =================================================
+                 5. إنتاج المولاس
+                 ================================================= -->
 
-            <div class="tank-fill"></div>
+            <div
+                class="sugar-tank-card"
+                data-min="15"
+                data-max="65"
+                data-source="molasses_qty"
+                data-type="normal"
+            >
 
-            <div class="tank-value">
+                <div class="tank-card-header">
 
-                <strong class="tank-current-value">
-                    0
-                </strong>
+                    <div class="tank-title">
 
-            </div>
+                        <span class="tank-icon">🟤</span>
 
-        </div>
+                        <div>
+                            <strong>إنتاج المولاس</strong>
+                            <small>MOLASSES PRODUCTION</small>
+                        </div>
 
+                    </div>
 
-        <div class="tank-scale">
+                    <span class="tank-unit">
+                        طن
+                    </span>
 
-            <span>
-                MIN
-                <b class="tank-min">500</b>
-            </span>
-
-            <span class="tank-status">
-                NORMAL
-            </span>
-
-            <span>
-                MAX
-                <b class="tank-max">1000</b>
-            </span>
-
-        </div>
-
-    </div>
+                </div>
 
 
+                <div class="tank-body">
 
-    <!-- =================================================
-         5. إنتاج المولاس
-         ================================================= -->
+                    <div class="tank-fill"></div>
 
-    <div class="sugar-tank-card"
-         data-min="15"
-         data-max="65"
-         data-source="molasses_qty"
-         data-type="normal">
+                    <div class="tank-value">
 
-        <div class="tank-card-header">
+                        <strong class="tank-current-value">
+                            0
+                        </strong>
 
-            <div class="tank-title">
+                        <small>
+                            طن
+                        </small>
 
-                <span class="tank-icon">🟤</span>
+                    </div>
 
-                <div>
-                    <strong>إنتاج المولاس</strong>
-                    <small>MOLASSES PRODUCTION</small>
+                </div>
+
+
+                <div class="tank-scale">
+
+                    <span>
+                        MIN
+                        <b class="tank-min">15</b>
+                    </span>
+
+                    <span class="tank-status">
+                        NORMAL
+                    </span>
+
+                    <span>
+                        MAX
+                        <b class="tank-max">65</b>
+                    </span>
+
                 </div>
 
             </div>
 
-            <span class="tank-unit">طن</span>
-
         </div>
-
-
-        <div class="tank-body">
-
-            <div class="tank-fill"></div>
-
-            <div class="tank-value">
-
-                <strong class="tank-current-value">
-                    0
-                </strong>
-
-                <small>طن</small>
-
-            </div>
-
-        </div>
-
-
-        <div class="tank-scale">
-
-            <span>
-                MIN
-                <b class="tank-min">15</b>
-            </span>
-
-            <span class="tank-status">
-                NORMAL
-            </span>
-
-            <span>
-                MAX
-                <b class="tank-max">65</b>
-            </span>
-
-        </div>
-
-    </div>
-
-</div>
 
     <!-- =====================================================
          INVENTORY + MINI DASHBOARD
@@ -4120,7 +4174,7 @@ PKF
 
     </div>
 
-
+</div>
     <!-- =====================================================
          LEGACY DATA — البيانات الأصلية
          ===================================================== -->
@@ -4683,9 +4737,11 @@ PKF
                 </summary>
 
                 <div class="details-content">
-                  <div class="DRYER-table-scroll">
+          
 
-                    <table class="wide-table">
+               <div class="dryer-table-scroll">
+
+    <table class="wide-table dryer-data-table">
 
                         <tr>
 
@@ -4783,11 +4839,9 @@ PKF
 
                         </tr>
 
-                    </table>
+                    </table> 
 
-                  </div>  
-
-
+               </div> 
                     <br>
 
 
@@ -5189,12 +5243,60 @@ PKF
       <!-- ===================================== -->
 
       <section id="oil" class="section">
-        <h2 style="color: #1f3c88">🛢️ مصنع تكرير الزيوت النباتية</h2>
+
+<div class="sugar-command-header oil-command-header">
+
+    <div class="sugar-command-brand">
+
+        <div class="sugar-command-logo">
+            🛢️
+        </div>
+
+        <div class="sugar-command-title">
+
+            <strong>
+                مصنع تكرير الزيوت النباتية
+            </strong>
+
+            <span>
+                VEGETABLE OIL REFINERY • DAILY OPERATIONS COMMAND CENTER
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="sugar-command-status">
+
+        <span class="sugar-status-dot"></span>
+
+        التشغيل اليومي
+
+    </div>
+
+</div>
 
         <!-- أرصدة الخام -->
 
-        <details open>
-          <summary>أرصدة الزيوت الخام</summary>
+       <details open class="oil-section-details">
+
+  <summary class="oil-section-summary">
+
+    <div class="oil-section-title">
+
+      <span class="oil-section-icon">🛢️</span>
+
+      <div>
+        <strong>أرصدة الزيوت الخام</strong>
+        <small>موقف المخزون والوارد والاستهلاك اليومي</small>
+      </div>
+
+    </div>
+
+    <span class="oil-section-arrow">⌄</span>
+
+  </summary>
 
           <div class="details-content">
             <div class="oil-stock-dashboard">
@@ -5218,6 +5320,7 @@ PKF
                   <div class="oil-tank-label">الرصيد الحالي</div>
                 </div>
 
+              <div class="oil-inputs-scroll">
                 <div class="oil-inputs">
                   <div class="oil-input-box">
                     <label>الوارد</label>
@@ -5259,6 +5362,7 @@ PKF
                   </div>
                 </div>
               </div>
+              </div>
 
               <!-- زيت الأولين -->
               <div class="oil-stock-card olein">
@@ -5280,7 +5384,8 @@ PKF
                   <div class="oil-tank-label">الرصيد الحالي</div>
                 </div>
 
-                <div class="oil-inputs">
+             <div class="oil-inputs-scroll">
+                 <div class="oil-inputs">
                   <div class="oil-input-box">
                     <label>الوارد</label>
 
@@ -5320,6 +5425,7 @@ PKF
                     <span>طن</span>
                   </div>
                 </div>
+              </div>  
               </div>
 
               <!-- زيت النخيل -->
@@ -5342,7 +5448,8 @@ PKF
                   <div class="oil-tank-label">الرصيد الحالي</div>
                 </div>
 
-                <div class="oil-inputs">
+          <div class="oil-inputs-scroll">
+                 <div class="oil-inputs">
                   <div class="oil-input-box">
                     <label>الوارد</label>
 
@@ -5382,6 +5489,7 @@ PKF
                     <span>طن</span>
                   </div>
                 </div>
+              </div>  
               </div>
 
               <!-- زيت الستيارين -->
@@ -5404,7 +5512,8 @@ PKF
                   <div class="oil-tank-label">الرصيد الحالي</div>
                 </div>
 
-                <div class="oil-inputs">
+                <div class="oil-inputs-scroll">
+                   <div class="oil-inputs">
                   <div class="oil-input-box">
                     <label>الوارد</label>
 
@@ -5444,14 +5553,35 @@ PKF
                     <span>طن</span>
                   </div>
                 </div>
+              </div>  
               </div>
             </div>
           </div>
         </details>
         <!-- انتاج خطي التكرير -->
 
-        <details open>
-          <summary>إنتاج خطوط التكرير</summary>
+
+
+       <details open class="oil-section-details">
+
+  <summary class="oil-section-summary">
+
+    <div class="oil-section-title">
+
+      <span class="oil-section-icon">⚙️</span>
+
+      <div>
+        <strong>إنتاج خطوط التكرير</strong>
+        <small>الإنتاج اليومي وأداء خطوط التكرير</small>
+      </div>
+
+    </div>
+
+    <span class="oil-section-arrow">⌄</span>
+
+  </summary>
+
+
 
           <div class="details-content">
             <!-- =========================
@@ -5612,103 +5742,337 @@ PKF
               </div>
             </div>
 
-            <!-- =========================
-         خط التكرير 2
+       <!-- =========================
+     خط التكرير 2 - لوحة الإنتاج
+========================== -->
+
+<div class="refinery-line-card refinery-line-two">
+
+  <div class="refinery-line-header">
+    <div>
+      <span class="refinery-line-number">02</span>
+
+      <div>
+        <h3>خط التكرير 2</h3>
+        <small>مخصص لزيت عباد الشمس</small>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="refinery2-dashboard">
+
+    <!-- =========================
+         القيمة الحالية
     ========================== -->
 
-            <div class="refinery-line-card refinery-line-two">
-              <div class="refinery-line-header">
-                <div>
-                  <span class="refinery-line-number"> 02 </span>
+    <div class="refinery2-current">
 
-                  <div>
-                    <h3>خط التكرير 2</h3>
+      <div class="refinery2-current-label">
+        الإنتاج الحالي
+      </div>
 
-                    <small> مخصص لزيت عباد الشمس </small>
-                  </div>
-                </div>
-              </div>
+      <div class="refinery2-current-value">
+        <strong id="refinery2Display">0.00</strong>
+        <span>طن</span>
+      </div>
 
-              <div class="refinery-line-body single-product">
-                <div class="refinery-product-row">
-                  <span class="oil-color sunflower"></span>
+    </div>
 
-                  <span class="oil-name"> زيت عباد الشمس </span>
 
-                  <input
-                    id="refinery2"
-                    data-save
-                    step="any"
-                    oninput="updateRefineryTotals()"
-                  />
-
-                  <span class="oil-unit"> طن </span>
-                </div>
-              </div>
-            </div>
-
-            <!-- =========================
-         إجمالي الخطين
+    <!-- =========================
+         شريط الإنتاج
     ========================== -->
 
-            <div class="refinery-grand-total">
-              <span> إجمالي إنتاج خطوط التكرير </span>
+    <div class="refinery2-progress-section">
 
-              <strong id="refineryGrandTotalDisplay"> 0.00 </strong>
+      <div class="refinery2-progress-top">
 
-              <span>طن</span>
+        <span>مستوى الإنتاج</span>
 
-              <input id="refinery_total" readonly style="display: none" />
-            </div>
+        <strong id="refinery2ProgressPercent">
+          0%
+        </strong>
 
-            <!-- =========================
-         الملاحظات
+      </div>
+
+
+      <div class="refinery2-progress">
+
+        <div
+          id="refinery2ProgressBar"
+          class="refinery2-progress-bar"
+        >
+          <span class="refinery2-progress-glow"></span>
+        </div>
+
+      </div>
+
+
+      <!-- تدريج الشريط -->
+
+      <div class="refinery2-scale">
+
+        <span>0</span>
+
+        <span>1500 طن</span>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         إدخال الإنتاج
     ========================== -->
+
+    <div class="refinery2-input-area">
+
+      <div class="refinery2-input-label">
+        <span class="oil-color sunflower"></span>
+
+        <span>إنتاج زيت عباد الشمس</span>
+      </div>
+
+
+      <div class="refinery2-input-wrapper">
+
+        <input
+          id="refinery2"
+          data-save
+          step="any"
+          oninput="updateRefineryTotals()"
+          placeholder="0.00"
+        />
+
+        <span>طن</span>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+         <!-- =================================================
+     إجمالي إنتاج خطوط التكرير
+================================================= -->
+
+<div class="refinery-grand-total refinery-grand-total-new">
+
+  <div class="grand-total-icon">
+    🏭
+  </div>
+
+  <div class="grand-total-info">
+
+    <span class="grand-total-label">
+      إجمالي إنتاج خطوط التكرير
+    </span>
+
+    <div class="grand-total-number">
+      <strong id="refineryGrandTotalDisplay">
+        0.00
+      </strong>
+
+      <span>طن</span>
+    </div>
+
+  </div>
+
+  <div class="grand-total-badge">
+    إنتاج اليوم
+  </div>
+
+  <input
+    id="refinery_total"
+    readonly
+    style="display:none"
+  />
+
+</div>
+
+<!-- =========================
+     مقارنة الإنتاج
+========================== -->
+
+<div class="refinery-comparison-card">
+
+  <div class="comparison-header">
+
+    <div class="comparison-title">
+
+      <div class="comparison-icon">
+        ↗
+      </div>
+
+      <div>
+        <strong>مقارنة إنتاج التكرير</strong>
+        <small>اليوم مقارنة بآخر 3 أيام</small>
+      </div>
+
+    </div>
+
+    <div
+      id="refineryComparisonIndicator"
+      class="comparison-indicator neutral"
+    >
+
+      <span id="refineryComparisonArrow">●</span>
+
+      <div>
+        <strong id="refineryComparisonPercent">0%</strong>
+        <small id="refineryComparisonText">
+          لا توجد مقارنة
+        </small>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ملخص اليوم -->
+  <div class="comparison-summary">
+
+    <div class="comparison-today">
+
+      <span>إنتاج اليوم</span>
+
+      <strong id="refineryComparisonToday">
+        0.00
+      </strong>
+
+      <small>طن</small>
+
+    </div>
+
+
+    <div class="comparison-average">
+
+      <span>متوسط آخر 3 أيام</span>
+
+      <strong id="refineryComparisonAverage">
+        0.00
+      </strong>
+
+      <small>طن</small>
+
+    </div>
+
+  </div>
+
+
+  <!-- المخطط -->
+  <div class="refinery-chart">
+
+    <div class="chart-y-axis">
+
+      <span id="chartMaxLabel">1500</span>
+      <span>1000</span>
+      <span>500</span>
+      <span>0</span>
+
+    </div>
+
+    <div class="chart-area">
+
+      <div class="chart-grid-line"></div>
+      <div class="chart-grid-line"></div>
+      <div class="chart-grid-line"></div>
+      <div class="chart-grid-line"></div>
+
+      <div
+        id="refineryComparisonBars"
+        class="comparison-bars"
+      ></div>
+
+    </div>
+
+  </div>
+
+</div>
 
             <br />
 
-            <table>
-              <tr>
-                <th>ملاحظات بناية التكرير</th>
-              </tr>
+           <!-- =================================================
+     ملاحظات بناية التكرير
+================================================= -->
 
-              <tr>
-                <td>
-                  <textarea
-                    id="oil_refinery_status"
-                    class="station-status"
-                    data-save
-                    rows="2"
-                  ></textarea>
-                </td>
-              </tr>
-            </table>
+<div class="refinery-notes-card">
+
+  <div class="refinery-notes-header">
+
+    <div class="refinery-notes-title">
+      <span>📝</span>
+
+      <div>
+        <strong>ملاحظات بناية التكرير</strong>
+
+        <small>
+          الأعطال، التوقفات، الملاحظات التشغيلية
+        </small>
+      </div>
+    </div>
+
+  </div>
+
+  <textarea
+    id="oil_refinery_status"
+    class="station-status refinery-notes-input"
+    data-save
+    rows="4"
+    placeholder="اكتب هنا ملاحظات التشغيل أو الأعطال أو أعمال الصيانة..."
+  ></textarea>
+
+</div>
+
           </div>
         </details>
 
-        <details open>
-          <summary>موقف محطة الفصل</summary>
-
-          <div class="details-content separation-dashboard">
-            <!-- =========================
-             حالة محطة الفصل
+    <!-- =========================
+      محطة الفصل
         ========================== -->
 
+      <details open class="oil-section-details">
+
+  <summary class="oil-section-summary">
+
+    <div class="oil-section-title">
+
+      <span class="oil-section-icon">🔄</span>
+
+      <div>
+        <strong>موقف محطة الفصل</strong>
+        <small>حالة التشغيل والإنتاج اليومي للمحطة</small>
+      </div>
+
+    </div>
+
+    <span class="oil-section-arrow">⌄</span>
+
+  </summary>
+
+
+          <div class="details-content separation-dashboard">
+        
             <div class="separation-status-card" id="separationStatusCard">
               <div class="separation-status-icon" id="separationStatusIcon">
                 ⚙️
               </div>
 
               <div class="separation-status-info">
-                <div class="separation-status-title">حالة محطة الفصل</div>
 
-                <div class="separation-status-value" id="separationStatusText">
-                  لم يتم تحديد الحالة
-                </div>
-              </div>
-
+  <div class="separation-status-title">
+    حالة محطة الفصل
+  </div>
+  <div
+    class="separation-status-value"
+    id="separationStatusText"
+  >
+    لم يتم تحديد الحالة
+  </div>
+</div>
               <!-- أبقينا الـ select موجوداً حتى لا يتأثر النظام الحالي -->
-
               <select
                 id="separation_status"
                 data-save
@@ -5803,565 +6167,2131 @@ PKF
           </div>
         </details>
 
-        <details open>
-          <summary>موقف خطوط التعبئة</summary>
+         <!-- =========================================================
+     موقف خطوط التعبئة
+========================================================= -->
 
-          <div class="details-content">
-            <table class="wide-table">
-              <tr>
-                <th>الـخـط</th>
+<details open class="packing-dashboard-details">
 
-                <th>صـبـاحـي</th>
+  <summary class="packing-dashboard-summary">
 
-                <th>مـسـائـي</th>
+    <div class="packing-summary-title">
 
-                <th>لـيـلـي</th>
-              </tr>
+      <span class="packing-summary-icon">📦</span>
 
-              <!-- كرونس 1 -->
+      <div>
+        <strong>موقف خطوط التعبئة</strong>
 
-              <tr>
-                <td>كرونس 1 (كارتون)</td>
+        <small>
+          الإنتاج التشغيلي حسب الخط والشفت
+        </small>
+      </div>
 
-                <td>
-                  <input id="krones1a" data-save step="any" />
-                </td>
+    </div>
 
-                <td>
-                  <input id="krones1b" data-save step="any" />
-                </td>
+    <span class="packing-summary-arrow">⌄</span>
 
-                <td>
-                  <input id="krones1c" data-save step="any" />
-                </td>
-              </tr>
+  </summary>
 
-              <!-- كرونس 2 -->
 
-              <tr>
-                <td>كرونس 2 (كارتون)</td>
+  <div class="details-content packing-dashboard">
 
-                <td>
-                  <input id="krones2a" data-save step="any" />
-                </td>
 
-                <td>
-                  <input id="krones2b" data-save step="any" />
-                </td>
+    <!-- =================================================
+         المؤشرات العامة
+    ================================================= -->
 
-                <td>
-                  <input id="krones2c" data-save step="any" />
-                </td>
-              </tr>
+    <div class="packing-overview-grid">
 
-              <!-- كرونس 3 -->
+      <div class="packing-overview-card">
 
-              <tr>
-                <td>كرونس 3 (كارتون)</td>
+        <span class="packing-overview-icon">⚙️</span>
 
-                <td>
-                  <input id="krones3a" data-save step="any" />
-                </td>
+        <div>
+          <small>الخطوط ذات الإنتاج</small>
 
-                <td>
-                  <input id="krones3b" data-save step="any" />
-                </td>
+          <strong id="packingActiveLines">
+            0
+          </strong>
 
-                <td>
-                  <input id="krones3c" data-save step="any" />
-                </td>
-              </tr>
+          <span>خط</span>
+        </div>
 
-              <!-- خط السمنة -->
+      </div>
 
-              <tr>
-                <td>خط السمنة (علبة)</td>
+      <div class="packing-overview-card">
 
-                <td>
-                  <input id="geaa" data-save step="any" />
-                </td>
+        <span class="packing-overview-icon">🏆</span>
 
-                <td>
-                  <input id="geab" data-save step="any" />
-                </td>
+        <div>
+          <small>أعلى خط إنتاجًا</small>
 
-                <td>
-                  <input id="geac" data-save step="any" />
-                </td>
-              </tr>
+          <strong id="packingTopLine">
+            —
+          </strong>
 
-              <!-- خط الرونو -->
+          <span id="packingTopLineValue">
+            0 وحدة
+          </span>
+        </div>
 
-              <tr>
-                <td>خط الرونو (كارتون)</td>
+      </div>
 
-                <!-- صباحي -->
+    </div>
 
-                <td>
-                  <div class="runo-production-cell">
-                    <input id="shorta" data-save step="any" />
 
-                    <select id="shorta_product" data-save>
-                      <option value="">المنتج</option>
-                      <option value="مارغرين">مارغرين</option>
-                      <option value="شورتنينغ">شورتنينغ</option>
-                      <option value="اولين">اولين</option>
-                    </select>
-                  </div>
-                </td>
+    <!-- =================================================
+         إجمالي شفتات كرونس فقط
+    ================================================= -->
 
-                <!-- مسائي -->
+    <div class="packing-shifts-card">
 
-                <td>
-                  <div class="runo-production-cell">
-                    <input id="shortb" data-save step="any" />
+      <div class="packing-shifts-header">
 
-                    <select id="shortb_product" data-save>
-                      <option value="">المنتج</option>
-                      <option value="مارغرين">مارغرين</option>
-                      <option value="شورتنينغ">شورتنينغ</option>
-                      <option value="اولين">اولين</option>
-                    </select>
-                  </div>
-                </td>
+        <div>
 
-                <!-- ليلي -->
+          <span class="packing-shifts-icon">📊</span>
 
-                <td>
-                  <div class="runo-production-cell">
-                    <input id="shortc" data-save step="any" />
+          <div>
+            <strong>إنتاج شفتات خطوط كرونس</strong>
 
-                    <select id="shortc_product" data-save>
-                      <option value="">المنتج</option>
-                      <option value="مارغرين">مارغرين</option>
-                      <option value="شورتنينغ">شورتنينغ</option>
-                      <option value="اولين">اولين</option>
-                    </select>
-                  </div>
-                </td>
-              </tr>
-            </table>
-
-            <br />
+            <small>
+              كرونس 1 + كرونس 2 + كرونس 3
+            </small>
           </div>
-        </details>
 
-        <!-- ========================================================= -->
-        <!--              تقرير مصنع اللدائن - التصميم الجديد          -->
-        <!-- ========================================================= -->
+        </div>
 
-        <details open>
-          <summary>🏭 تقرير مصنع اللدائن</summary>
+      </div>
 
-          <div class="details-content">
-            <!-- ================================================= -->
-            <!--              خطوط الإنتاج الرئيسية                -->
-            <!-- ================================================= -->
 
-            <div class="dashboard-section-title">
-              <span>🏭</span>
-              <span> خطوط الإنتاج الرئيسية </span>
-            </div>
+      <div class="packing-shifts-grid">
 
-            <div class="table-scroll">
-              <table class="wide-table plastic-main-table">
-                <tr>
-                  <th>الماكنة</th>
-                  <th>الإنتاج<br /><small>قطعة</small></th>
-                  <th>الكفاءة<br /><small>%</small></th>
-                  <th>Cycle Time<br /><small>ثانية</small></th>
-                  <th>نوع الرزن</th>
-                  <th>خلايا النقص</th>
-                  <th>الخلايا الثابتة</th>
-                  <th>التوقف<br /><small>دقيقة</small></th>
-                </tr>
 
-                <!-- الأمبولة 1 -->
+        <!-- صباحي -->
 
-                <tr>
-                  <td>
-                    <strong>الأمبولة 1</strong>
-                  </td>
+        <div class="packing-shift-card morning">
 
-                  <td>
-                    <input id="plastic_bottle1_qty" data-save step="any" />
-                  </td>
+          <span class="packing-shift-icon">☀️</span>
 
-                  <td>
-                    <input id="plastic_bottle1_eff" data-save step="any" />
-                  </td>
+          <div>
+            <small>الشفت الصباحي</small>
 
-                  <td>
-                    <input id="plastic_bottle1_cycle" data-save step="any" />
-                  </td>
+            <strong id="kronesMorningTotal">
+              0
+            </strong>
 
-                  <td>
-                    <input
-                      id="plastic_bottle1_resin"
-                      type="text"
-                      data-save
-                      placeholder="نوع الرزن"
-                    />
-                  </td>
-
-                  <td>
-                    <input id="plastic_bottle1_missing" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <input id="plastic_bottle1_stop" data-save step="any" />
-                  </td>
-                </tr>
-
-                <!-- الأمبولة 2 -->
-
-                <tr>
-                  <td>
-                    <strong>الأمبولة 2</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_bottle2_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_bottle2_eff" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_bottle2_cycle" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input
-                      id="plastic_bottle2_resin"
-                      type="text"
-                      data-save
-                      placeholder="نوع الرزن"
-                    />
-                  </td>
-
-                  <td>
-                    <input id="plastic_bottle2_missing" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <input id="plastic_bottle2_stop" data-save step="any" />
-                  </td>
-                </tr>
-
-                <!-- Spout 1 -->
-
-                <tr>
-                  <td>
-                    <strong>Spout 1</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_spout1_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_spout1_eff" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_spout1_cycle" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <input id="plastic_spout1_missing" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input
-                      id="plastic_spout1_fixed_missing"
-                      data-save
-                      step="any"
-                    />
-                  </td>
-
-                  <td>
-                    <input id="plastic_spout1_stop" data-save step="any" />
-                  </td>
-                </tr>
-
-                <!-- Spout 2 -->
-
-                <tr>
-                  <td>
-                    <strong>Spout 2</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_spout2_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_spout2_eff" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_spout2_cycle" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <input id="plastic_spout2_missing" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input
-                      id="plastic_spout2_fixed_missing"
-                      data-save
-                      step="any"
-                    />
-                  </td>
-
-                  <td>
-                    <input id="plastic_spout2_stop" data-save step="any" />
-                  </td>
-                </tr>
-
-                <!-- CAP -->
-
-                <tr>
-                  <td>
-                    <strong>CAP</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_cap_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_cap_eff" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_cap_cycle" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <input id="plastic_cap_missing" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <input id="plastic_cap_stop" data-save step="any" />
-                  </td>
-                </tr>
-              </table>
-            </div>
-
-            <br />
-
-            <!-- ================================================= -->
-            <!--          ماكينات التجميع والتشغيل                  -->
-            <!-- ================================================= -->
-
-            <div class="dashboard-section-title">
-              <span>⚙️</span>
-              <span>ماكينات التجميع والسداد المعدني و UST واللحام</span>
-            </div>
-
-            <div class="table-scroll">
-              <table class="wide-table plastic-machines-table">
-                <tr>
-                  <th>الماكنة</th>
-                  <th>الإنتاج</th>
-                  <th>الكفاءة<br />%</th>
-                  <th>نسبة التلف<br />%</th>
-                  <th>الحالة</th>
-                </tr>
-
-                <!-- التجميع 1 -->
-
-                <tr>
-                  <td>
-                    <strong>التجميع 1</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_assembly1_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_assembly1_eff" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_assembly1_scrap" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <textarea
-                      id="plastic_assembly1_status"
-                      data-save
-                      rows="2"
-                      placeholder="اكتب حالة الماكينة..."
-                    ></textarea>
-                  </td>
-                </tr>
-
-                <!-- التجميع 2 -->
-
-                <tr>
-                  <td>
-                    <strong>التجميع 2</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_assembly2_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_assembly2_eff" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_assembly2_scrap" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <textarea
-                      id="plastic_assembly2_status"
-                      data-save
-                      rows="2"
-                      placeholder="اكتب حالة الماكينة..."
-                    ></textarea>
-                  </td>
-                </tr>
-
-                <!-- السداد المعدني -->
-
-                <tr>
-                  <td>
-                    <strong>السداد المعدني</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_metalcap_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_metalcap_eff" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <select id="plastic_metalcap_status" data-save>
-                      <option value="">-- اختر الحالة --</option>
-
-                      <option value="يعمل">يعمل</option>
-
-                      <option value="متوقف">متوقف</option>
-                    </select>
-                  </td>
-                </tr>
-
-                <!-- UST -->
-
-                <tr>
-                  <td>
-                    <strong>ماكينة UST</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_ust_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_ust_eff" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <select id="plastic_ust_status" data-save>
-                      <option value="">-- اختر الحالة --</option>
-
-                      <option value="يعمل">يعمل</option>
-
-                      <option value="لا يعمل">لا يعمل</option>
-                    </select>
-                  </td>
-                </tr>
-
-                <!-- اللحام -->
-
-                <tr>
-                  <td>
-                    <strong>ماكينة اللحام</strong>
-                  </td>
-
-                  <td>
-                    <input id="plastic_welding_qty" data-save step="any" />
-                  </td>
-
-                  <td>
-                    <input id="plastic_welding_eff" data-save step="any" />
-                  </td>
-
-                  <td class="empty-data">—</td>
-
-                  <td>
-                    <select id="plastic_welding_status" data-save>
-                      <option value="">-- اختر الحالة --</option>
-
-                      <option value="يعمل">يعمل</option>
-
-                      <option value="لا يعمل">لا يعمل</option>
-                    </select>
-                  </td>
-                </tr>
-              </table>
-            </div>
-
-            <br /><br />
-
-            <!-- ================================================= -->
-            <!--              الملاحظات وأسباب التوقف               -->
-            <!-- ================================================= -->
-
-            <div class="dashboard-section-title">
-              <span>📝</span>
-              <span>الملاحظات وأسباب التوقف</span>
-            </div>
-
-            <div class="plastic-notes-card">
-              <div class="plastic-note-label">🏭 ملاحظات عامة للمصنع</div>
-
-              <textarea
-                id="plastic_factory_notes"
-                data-save
-                rows="6"
-                placeholder="اكتب هنا الملاحظات التشغيلية، أسباب التوقف، الأعطال، أعمال الصيانة أو أي ملاحظات تخص المصنع..."
-              ></textarea>
-            </div>
+            <span>كارتون</span>
           </div>
-        </details>
 
-        <!-- ========================================================= -->
-        <!--                    الجودة والسلامة                         -->
-        <!-- ========================================================= -->
+        </div>
 
-        <details open>
-          <summary>🛡️ الجودة والسلامة</summary>
+
+        <!-- مسائي -->
+
+        <div class="packing-shift-card evening">
+
+          <span class="packing-shift-icon">🌆</span>
+
+          <div>
+            <small>الشفت المسائي</small>
+
+            <strong id="kronesEveningTotal">
+              0
+            </strong>
+
+            <span>كارتون</span>
+          </div>
+
+        </div>
+
+
+        <!-- ليلي -->
+
+        <div class="packing-shift-card night">
+
+          <span class="packing-shift-icon">🌙</span>
+
+          <div>
+            <small>الشفت الليلي</small>
+
+            <strong id="kronesNightTotal">
+              0
+            </strong>
+
+            <span>كارتون</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         خطوط الإنتاج
+    ================================================= -->
+
+    <div class="packing-lines-grid">
+
+
+      <!-- =================================================
+           كرونس 1
+      ================================================= -->
+
+      <div class="packing-line-card">
+
+        <div class="packing-line-header">
+
+          <div class="packing-line-title">
+
+            <span class="packing-line-status" id="krones1Status"></span>
+
+            <div>
+              <strong>كرونس 1</strong>
+              <small>إنتاج الكارتون</small>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="packing-shift-inputs">
+
+          <div class="packing-input-group morning">
+
+            <label>☀️ صباحي</label>
+
+            <input
+              id="krones1a"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+
+          <div class="packing-input-group evening">
+
+            <label>🌆 مسائي</label>
+
+            <input
+              id="krones1b"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+
+          <div class="packing-input-group night">
+
+            <label>🌙 ليلي</label>
+
+            <input
+              id="krones1c"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+        </div>
+
+
+        <div class="packing-line-total">
+
+          <span>إجمالي الخط</span>
+
+          <strong id="krones1Total">
+            0
+          </strong>
+
+          <span>كارتون</span>
+
+        </div>
+
+
+        <div class="packing-target">
+
+          <div class="packing-target-header">
+
+            <span>الهدف اليومي</span>
+
+            <strong id="krones1TargetPercent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="packing-progress">
+
+            <div
+              id="krones1Progress"
+              class="packing-progress-bar"
+            ></div>
+
+          </div>
+
+          <small>
+            الهدف:
+            <b id="krones1TargetValue">54000</b>
+            كارتون
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           كرونس 2
+      ================================================= -->
+
+      <div class="packing-line-card">
+
+        <div class="packing-line-header">
+
+          <div class="packing-line-title">
+
+            <span class="packing-line-status" id="krones2Status"></span>
+
+            <div>
+              <strong>كرونس 2</strong>
+              <small>إنتاج الكارتون</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="packing-shift-inputs">
+
+          <div class="packing-input-group morning">
+
+            <label>☀️ صباحي</label>
+
+            <input
+              id="krones2a"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+
+          <div class="packing-input-group evening">
+
+            <label>🌆 مسائي</label>
+
+            <input
+              id="krones2b"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+
+          <div class="packing-input-group night">
+
+            <label>🌙 ليلي</label>
+
+            <input
+              id="krones2c"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+        </div>
+
+
+        <div class="packing-line-total">
+
+          <span>إجمالي الخط</span>
+
+          <strong id="krones2Total">
+            0
+          </strong>
+
+          <span>كارتون</span>
+
+        </div>
+
+
+        <div class="packing-target">
+
+          <div class="packing-target-header">
+
+            <span>الهدف اليومي</span>
+
+            <strong id="krones2TargetPercent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="packing-progress">
+
+            <div
+              id="krones2Progress"
+              class="packing-progress-bar"
+            ></div>
+
+          </div>
+
+          <small>
+            الهدف:
+            <b id="krones2TargetValue">54000</b>
+            كارتون
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           كرونس 3
+      ================================================= -->
+
+      <div class="packing-line-card">
+
+        <div class="packing-line-header">
+
+          <div class="packing-line-title">
+
+            <span class="packing-line-status" id="krones3Status"></span>
+
+            <div>
+              <strong>كرونس 3</strong>
+              <small>إنتاج الكارتون</small>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="packing-shift-inputs">
+
+          <div class="packing-input-group morning">
+
+            <label>☀️ صباحي</label>
+
+            <input
+              id="krones3a"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+
+          <div class="packing-input-group evening">
+
+            <label>🌆 مسائي</label>
+
+            <input
+              id="krones3b"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+
+          <div class="packing-input-group night">
+
+            <label>🌙 ليلي</label>
+
+            <input
+              id="krones3c"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+        </div>
+
+
+        <div class="packing-line-total">
+
+          <span>إجمالي الخط</span>
+
+          <strong id="krones3Total">
+            0
+          </strong>
+
+          <span>كارتون</span>
+
+        </div>
+
+
+        <div class="packing-target">
+
+          <div class="packing-target-header">
+
+            <span>الهدف اليومي</span>
+
+            <strong id="krones3TargetPercent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="packing-progress">
+
+            <div
+              id="krones3Progress"
+              class="packing-progress-bar"
+            ></div>
+
+          </div>
+
+          <small>
+            الهدف:
+            <b id="krones3TargetValue">54000</b>
+            كارتون
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           خط السمنة
+      ================================================= -->
+
+      <div class="packing-line-card">
+
+        <div class="packing-line-header">
+
+          <div class="packing-line-title">
+
+            <span class="packing-line-status" id="geaStatus"></span>
+
+            <div>
+              <strong>خط السمنة</strong>
+              <small>إنتاج العلب</small>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="packing-shift-inputs">
+
+          <div class="packing-input-group morning">
+
+            <label>☀️ صباحي</label>
+
+            <input
+              id="geaa"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+
+          <div class="packing-input-group evening">
+
+            <label>🌆 مسائي</label>
+
+            <input
+              id="geab"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+
+          <div class="packing-input-group night">
+
+            <label>🌙 ليلي</label>
+
+            <input
+              id="geac"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+          </div>
+
+        </div>
+
+
+        <div class="packing-line-total">
+
+          <span>إجمالي الخط</span>
+
+          <strong id="geaTotal">
+            0
+          </strong>
+
+          <span>علبة</span>
+
+        </div>
+
+
+        <div class="packing-target">
+
+          <div class="packing-target-header">
+
+            <span>الهدف اليومي</span>
+
+            <strong id="geaTargetPercent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="packing-progress">
+
+            <div
+              id="geaProgress"
+              class="packing-progress-bar"
+            ></div>
+
+          </div>
+
+          <small>
+            الهدف:
+            <b id="geaTargetValue">18000</b>
+            علبة
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           خط الرونو
+      ================================================= -->
+
+      <div class="packing-line-card runo-card">
+
+        <div class="packing-line-header">
+
+          <div class="packing-line-title">
+
+            <span class="packing-line-status" id="runoStatus"></span>
+
+            <div>
+              <strong>خط الرونو</strong>
+              <small>إنتاج الكارتون حسب المنتج</small>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="runo-shift-inputs">
+
+
+          <!-- صباحي -->
+
+          <div class="runo-shift">
+
+            <label>☀️ صباحي</label>
+
+            <input
+              id="shorta"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+            <select
+              id="shorta_product"
+              data-save
+              onchange="updatePackingDashboard()"
+            >
+
+              <option value="">المنتج</option>
+
+              <option value="مارغرين">
+                مارغرين
+              </option>
+
+              <option value="شورتنينغ">
+                شورتنينغ
+              </option>
+
+              <option value="اولين">
+                اولين
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- مسائي -->
+
+          <div class="runo-shift">
+
+            <label>🌆 مسائي</label>
+
+            <input
+              id="shortb"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+            <select
+              id="shortb_product"
+              data-save
+              onchange="updatePackingDashboard()"
+            >
+
+              <option value="">المنتج</option>
+
+              <option value="مارغرين">
+                مارغرين
+              </option>
+
+              <option value="شورتنينغ">
+                شورتنينغ
+              </option>
+
+              <option value="اولين">
+                اولين
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- ليلي -->
+
+          <div class="runo-shift">
+
+            <label>🌙 ليلي</label>
+
+            <input
+              id="shortc"
+              data-save
+              step="any"
+              oninput="updatePackingDashboard()"
+            />
+
+            <select
+              id="shortc_product"
+              data-save
+              onchange="updatePackingDashboard()"
+            >
+
+              <option value="">المنتج</option>
+
+              <option value="مارغرين">
+                مارغرين
+              </option>
+
+              <option value="شورتنينغ">
+                شورتنينغ
+              </option>
+
+              <option value="اولين">
+                اولين
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <div class="packing-line-total">
+
+          <span>إجمالي الخط</span>
+
+          <strong id="runoTotal">
+            0
+          </strong>
+
+          <span>كارتون</span>
+
+        </div>
+
+
+        <div class="packing-target">
+
+          <div class="packing-target-header">
+
+            <span>الهدف اليومي</span>
+
+            <strong id="runoTargetPercent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="packing-progress">
+
+            <div
+              id="runoProgress"
+              class="packing-progress-bar"
+            ></div>
+
+          </div>
+
+          <small>
+            الهدف:
+            <b id="runoTargetValue">7200</b>
+            كارتون
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  <!-- الإجمالي اليومي -->
+
+  <div class="krones-total-day">
+
+    <div>
+
+      <span class="krones-total-icon">🏭</span>
+
+      <div>
+        <span>إجمالي إنتاج كرونس اليوم</span>
+        <small>كرونس 1 + كرونس 2 + كرونس 3</small>
+      </div>
+
+    </div>
+
+    <strong id="kronesDailyTotal">0</strong>
+
+    <span>كارتون</span>
+
+  </div>
+
+<br />
+
+
+    <!-- =================================================
+         أداء آخر 3 أيام
+    ================================================= -->
+
+    <div class="packing-history-card">
+
+      <div class="packing-history-header">
+
+        <div>
+
+          <span>📈</span>
+
+          <div>
+            <strong>أداء خطوط التعبئة</strong>
+
+            <small>
+              مقارنة الإنتاج مع آخر 3 أيام
+            </small>
+          </div>
+
+        </div>
+
+        <div
+          id="packingComparisonIndicator"
+          class="packing-comparison-indicator neutral"
+        >
+
+          <strong id="packingComparisonPercent">
+            0%
+          </strong>
+
+          <small id="packingComparisonText">
+            لا توجد مقارنة
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="packing-comparison-summary">
+
+        <div>
+          <span>اليوم</span>
+          <strong id="packingComparisonToday">0</strong>
+        </div>
+
+        <div>
+          <span>متوسط آخر 3 أيام</span>
+          <strong id="packingComparisonAverage">0</strong>
+        </div>
+
+      </div>
+
+
+      <div
+        id="packingHistoryBars"
+        class="packing-history-bars"
+      ></div>
+
+    </div>
+
+  </div>
+
+</details>
+   <!-- =========================================================-->
+   <!--              تقرير مصنع اللدائن - التصميم الجديد      -->
+   <!-- =========================================================-->
+<details open class="plastic-section-details">
+
+  <summary class="dashboard-section-title plastic-production-title">
+
+    <span>🏭</span>
+
+    <div>
+      <strong>خطوط مصنع اللدائن</strong>
+      <small>مؤشرات الأداء والإنتاج اليومية</small>
+    </div>
+
+    <span class="plastic-section-arrow">⌄</span>
+
+  </summary>
+
+
+<!-- ================================================= -->
+<!--                 مؤشرات المصنع                     -->
+<!-- ================================================= -->
+
+<div class="plastic-kpi-grid">
+
+  <!-- إجمالي الإنتاج -->
+
+  <div class="plastic-kpi-card production-kpi">
+
+    <div class="plastic-kpi-icon">
+      📦
+    </div>
+
+    <div class="plastic-kpi-info">
+
+      <span>إجمالي الإنتاج</span>
+
+      <strong id="plasticTotalProduction">
+        0
+      </strong>
+
+      <small>قطعة</small>
+
+    </div>
+
+  </div>
+
+
+  <!-- متوسط الكفاءة -->
+
+  <div class="plastic-kpi-card efficiency-kpi">
+
+    <div class="plastic-kpi-icon">
+      ⚙️
+    </div>
+
+    <div class="plastic-kpi-info">
+
+      <span>متوسط الكفاءة</span>
+
+      <strong id="plasticAverageEfficiency">
+        0%
+      </strong>
+
+      <small>لجميع الخطوط</small>
+
+    </div>
+
+  </div>
+
+
+  <!-- التوقف -->
+
+  <div class="plastic-kpi-card downtime-kpi">
+    <div class="plastic-kpi-icon">
+      ⏱️
+    </div>
+    <div class="plastic-kpi-info">
+      <span>إجمالي التوقف</span>
+      <strong id="plasticTotalDowntime">
+        0
+      </strong>
+      <small>دقيقة</small>
+    </div>
+  </div>
+
+
+  <!-- أفضل خط -->
+
+  <div class="plastic-kpi-card best-line-kpi">
+    <div class="plastic-kpi-icon">
+      🏆
+    </div>
+    <div class="plastic-kpi-info">
+      <span>أفضل خط</span>
+      <strong id="plasticBestLine">
+        —
+      </strong>
+      <small id="plasticBestLineEfficiency">
+        لا توجد بيانات
+      </small>
+    </div>
+  </div>
+</div>
+<!-- ================================================= -->
+<!--              بطاقات خطوط الإنتاج                  -->
+<!-- ================================================= -->
+
+<div class="plastic-lines-overview">
+
+  <div class="plastic-overview-header">
+
+    <div>
+      <strong>أداء خطوط الإنتاج</strong>
+      <small>نظرة سريعة على أداء كل خط</small>
+    </div>
+
+    <span class="plastic-live-indicator">
+      <i></i>
+      بيانات التقرير الحالي
+    </span>
+
+  </div>
+
+
+  <div class="plastic-line-cards">
+
+
+    <!-- الأمبولة 1 -->
+
+    <div class="plastic-line-card">
+
+      <div class="plastic-line-card-top">
+
+        <span class="plastic-line-number">01</span>
+
+        <div>
+          <strong>الأمبولة 1</strong>
+          <small>خط إنتاج</small>
+        </div>
+
+        <div
+          class="plastic-efficiency-ring"
+          id="plasticBottle1Ring"
+        >
+          <span id="plasticBottle1RingValue">0%</span>
+        </div>
+
+      </div>
+
+      <div class="plastic-line-stat">
+
+        <span>الإنتاج</span>
+
+        <strong>
+          <span id="plasticBottle1CardQty">0</span>
+          <small>قطعة</small>
+        </strong>
+
+      </div>
+
+      <div class="plastic-line-bar">
+        <span id="plasticBottle1Bar"></span>
+      </div>
+
+      <div class="plastic-line-footer">
+
+        <span>
+          ⏱️
+          <b id="plasticBottle1StopCard">0</b>
+          دقيقة توقف
+        </span>
+
+        <span>
+          ⚠️
+          <b id="plasticBottle1MissingCard">0</b>
+          نقص
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- الأمبولة 2 -->
+
+    <div class="plastic-line-card">
+
+      <div class="plastic-line-card-top">
+
+        <span class="plastic-line-number">02</span>
+
+        <div>
+          <strong>الأمبولة 2</strong>
+          <small>خط إنتاج</small>
+        </div>
+
+        <div
+          class="plastic-efficiency-ring"
+          id="plasticBottle2Ring"
+        >
+          <span id="plasticBottle2RingValue">0%</span>
+        </div>
+
+      </div>
+
+      <div class="plastic-line-stat">
+
+        <span>الإنتاج</span>
+
+        <strong>
+          <span id="plasticBottle2CardQty">0</span>
+          <small>قطعة</small>
+        </strong>
+
+      </div>
+
+      <div class="plastic-line-bar">
+        <span id="plasticBottle2Bar"></span>
+      </div>
+
+      <div class="plastic-line-footer">
+
+        <span>
+          ⏱️
+          <b id="plasticBottle2StopCard">0</b>
+          دقيقة توقف
+        </span>
+
+        <span>
+          ⚠️
+          <b id="plasticBottle2MissingCard">0</b>
+          نقص
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Spout 1 -->
+
+    <div class="plastic-line-card">
+
+      <div class="plastic-line-card-top">
+
+        <span class="plastic-line-number">03</span>
+
+        <div>
+          <strong>Spout 1</strong>
+          <small>خط إنتاج</small>
+        </div>
+
+        <div
+          class="plastic-efficiency-ring"
+          id="plasticSpout1Ring"
+        >
+          <span id="plasticSpout1RingValue">0%</span>
+        </div>
+
+      </div>
+
+      <div class="plastic-line-stat">
+
+        <span>الإنتاج</span>
+
+        <strong>
+          <span id="plasticSpout1CardQty">0</span>
+          <small>قطعة</small>
+        </strong>
+
+      </div>
+
+      <div class="plastic-line-bar">
+        <span id="plasticSpout1Bar"></span>
+      </div>
+
+      <div class="plastic-line-footer">
+
+        <span>
+          ⏱️
+          <b id="plasticSpout1StopCard">0</b>
+          دقيقة توقف
+        </span>
+
+        <span>
+          ⚠️
+          <b id="plasticSpout1MissingCard">0</b>
+          نقص
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Spout 2 -->
+
+    <div class="plastic-line-card">
+
+      <div class="plastic-line-card-top">
+
+        <span class="plastic-line-number">04</span>
+
+        <div>
+          <strong>Spout 2</strong>
+          <small>خط إنتاج</small>
+        </div>
+
+        <div
+          class="plastic-efficiency-ring"
+          id="plasticSpout2Ring"
+        >
+          <span id="plasticSpout2RingValue">0%</span>
+        </div>
+
+      </div>
+
+      <div class="plastic-line-stat">
+
+        <span>الإنتاج</span>
+
+        <strong>
+          <span id="plasticSpout2CardQty">0</span>
+          <small>قطعة</small>
+        </strong>
+
+      </div>
+
+      <div class="plastic-line-bar">
+        <span id="plasticSpout2Bar"></span>
+      </div>
+
+      <div class="plastic-line-footer">
+
+        <span>
+          ⏱️
+          <b id="plasticSpout2StopCard">0</b>
+          دقيقة توقف
+        </span>
+
+        <span>
+          ⚠️
+          <b id="plasticSpout2MissingCard">0</b>
+          نقص
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- CAP -->
+
+    <div class="plastic-line-card">
+
+      <div class="plastic-line-card-top">
+
+        <span class="plastic-line-number">05</span>
+
+        <div>
+          <strong>CAP</strong>
+          <small>خط إنتاج</small>
+        </div>
+
+        <div
+          class="plastic-efficiency-ring"
+          id="plasticCapRing"
+        >
+          <span id="plasticCapRingValue">0%</span>
+        </div>
+
+      </div>
+
+      <div class="plastic-line-stat">
+
+        <span>الإنتاج</span>
+
+        <strong>
+          <span id="plasticCapCardQty">0</span>
+          <small>قطعة</small>
+        </strong>
+
+      </div>
+
+      <div class="plastic-line-bar">
+        <span id="plasticCapBar"></span>
+      </div>
+
+      <div class="plastic-line-footer">
+
+        <span>
+          ⏱️
+          <b id="plasticCapStopCard">0</b>
+          دقيقة توقف
+        </span>
+
+        <span>
+          ⚠️
+          <b id="plasticCapMissingCard">0</b>
+          نقص
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!--              الجدول التفصيلي                      -->
+<!-- ================================================= -->
+
+<details
+  id="plasticProductionDetails"
+  class="plastic-production-table-card oil-section-details"
+>
+
+  <summary class="plastic-table-header">
+
+    <div>
+
+      <span class="plastic-table-icon">
+        ☷
+      </span>
+
+      <div>
+        <strong>تفاصيل خطوط الإنتاج</strong>
+
+        <small>
+          أدخل بيانات الإنتاج والكفاءة والتوقف لكل خط
+        </small>
+      </div>
+
+    </div>
+
+    <!-- مؤشر الفتح والإغلاق -->
+
+    <span class="plastic-details-arrow">
+     ⌄
+    </span>
+
+  </summary>
+
+
+  <div class="table-scroll">
+
+    <table class="wide-table plastic-main-table">
+
+      <tr>
+
+        <th>الماكنة</th>
+
+        <th>
+          الإنتاج
+          <small>قطعة</small>
+        </th>
+
+        <th>
+          الكفاءة
+          <small>%</small>
+        </th>
+
+        <th>
+          Cycle Time
+          <small>ثانية</small>
+        </th>
+
+        <th>
+          خلايا النقص
+        </th>
+
+        <th>
+          الخلايا الثابتة
+        </th>
+
+        <th>
+          التوقف
+          <small>دقيقة</small>
+        </th>
+
+      </tr>
+
+
+      <!-- الأمبولة 1 -->
+
+      <tr>
+
+        <td>
+          <strong>الأمبولة 1</strong>
+        </td>
+
+        <td>
+          <input
+            id="plastic_bottle1_qty"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_bottle1_eff"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_bottle1_cycle"
+            data-save
+            step="any"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_bottle1_missing"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td class="empty-data">—</td>
+
+        <td>
+          <input
+            id="plastic_bottle1_stop"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+      </tr>
+
+
+      <!-- الأمبولة 2 -->
+
+      <tr>
+
+        <td>
+          <strong>الأمبولة 2</strong>
+        </td>
+
+        <td>
+          <input
+            id="plastic_bottle2_qty"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_bottle2_eff"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_bottle2_cycle"
+            data-save
+            step="any"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_bottle2_missing"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td class="empty-data">—</td>
+
+        <td>
+          <input
+            id="plastic_bottle2_stop"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+      </tr>
+
+
+      <!-- Spout 1 -->
+
+      <tr>
+
+        <td>
+          <strong>Spout 1</strong>
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout1_qty"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout1_eff"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout1_cycle"
+            data-save
+            step="any"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout1_missing"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout1_fixed_missing"
+            data-save
+            step="any"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout1_stop"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+      </tr>
+
+
+      <!-- Spout 2 -->
+
+      <tr>
+
+        <td>
+          <strong>Spout 2</strong>
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout2_qty"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout2_eff"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout2_cycle"
+            data-save
+            step="any"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout2_missing"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout2_fixed_missing"
+            data-save
+            step="any"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_spout2_stop"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+      </tr>
+
+
+      <!-- CAP -->
+
+      <tr>
+
+        <td>
+          <strong>CAP</strong>
+        </td>
+
+        <td>
+          <input
+            id="plastic_cap_qty"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_cap_eff"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_cap_cycle"
+            data-save
+            step="any"
+          />
+        </td>
+
+        <td>
+          <input
+            id="plastic_cap_missing"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+
+        <td class="empty-data">—</td>
+
+        <td>
+          <input
+            id="plastic_cap_stop"
+            data-save
+            step="any"
+            oninput="updatePlasticProductionDashboard()"
+          />
+        </td>
+      </tr>
+    </table>
+      </div> <!-- إغلاق table-scroll -->
+</details> <!-- إغلاق قسم خطوط مصنع اللدائن -->
+</details>
+<!-- ================================================= -->
+<!--       ماكينات التجميع والسداد المعدني           -->
+<!-- ================================================= -->
+
+<details open class="oil-section-details">
+
+  <summary class="oil-section-summary">
+
+    <div class="oil-section-title">
+
+      <span class="oil-section-icon">⚙️</span>
+
+      <div>
+        <strong>ماكينات التجميع والسداد المعدني</strong>
+        <small>مؤشرات الإنتاج والكفاءة وحالة الماكينات</small>
+      </div>
+
+    </div>
+
+    <span class="oil-section-arrow">⌄</span>
+
+  </summary>
+
+  <div class="details-content oil-machines-section-content">
+
+    <div class="oil-machines-dashboard">
+
+  <!-- =========================
+       التجميع 1
+  ========================== -->
+
+  <div class="oil-machine-card">
+
+    <div class="oil-machine-header">
+
+      <div class="oil-machine-title">
+        <span class="oil-machine-icon">⚙️</span>
+
+        <div>
+          <strong>التجميع 1</strong>
+          <small>ماكينة التجميع الأولى</small>
+        </div>
+      </div>
+
+      <span class="oil-machine-number">01</span>
+
+    </div>
+
+    <div class="oil-machine-metrics">
+
+      <div class="oil-machine-metric production">
+        <span>الإنتاج</span>
+
+        <div>
+          <input
+            id="plastic_assembly1_qty"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>طن</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric efficiency">
+        <span>الكفاءة</span>
+
+        <div>
+          <input
+            id="plastic_assembly1_eff"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>%</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric scrap">
+        <span>نسبة التلف</span>
+
+        <div>
+          <input
+            id="plastic_assembly1_scrap"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>%</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="oil-machine-status">
+      <span>حالة الماكينة</span>
+
+      <textarea
+        id="plastic_assembly1_status"
+        data-save
+        rows="2"
+        placeholder="اكتب حالة الماكينة..."
+      ></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       التجميع 2
+  ========================== -->
+
+  <div class="oil-machine-card">
+
+    <div class="oil-machine-header">
+
+      <div class="oil-machine-title">
+        <span class="oil-machine-icon">⚙️</span>
+
+        <div>
+          <strong>التجميع 2</strong>
+          <small>ماكينة التجميع الثانية</small>
+        </div>
+      </div>
+
+      <span class="oil-machine-number">02</span>
+
+    </div>
+
+    <div class="oil-machine-metrics">
+
+      <div class="oil-machine-metric production">
+        <span>الإنتاج</span>
+
+        <div>
+          <input
+            id="plastic_assembly2_qty"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>طن</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric efficiency">
+        <span>الكفاءة</span>
+
+        <div>
+          <input
+            id="plastic_assembly2_eff"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>%</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric scrap">
+        <span>نسبة التلف</span>
+
+        <div>
+          <input
+            id="plastic_assembly2_scrap"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>%</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="oil-machine-status">
+      <span>حالة الماكينة</span>
+
+      <textarea
+        id="plastic_assembly2_status"
+        data-save
+        rows="2"
+        placeholder="اكتب حالة الماكينة..."
+      ></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       السداد المعدني
+  ========================== -->
+
+  <div class="oil-machine-card">
+
+    <div class="oil-machine-header">
+
+      <div class="oil-machine-title">
+        <span class="oil-machine-icon">🔩</span>
+
+        <div>
+          <strong>السداد المعدني</strong>
+          <small>Metal Cap</small>
+        </div>
+      </div>
+
+      <span class="oil-machine-number">03</span>
+
+    </div>
+
+    <div class="oil-machine-metrics">
+
+      <div class="oil-machine-metric production">
+        <span>الإنتاج</span>
+
+        <div>
+          <input
+            id="plastic_metalcap_qty"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>طن</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric efficiency">
+        <span>الكفاءة</span>
+
+        <div>
+          <input
+            id="plastic_metalcap_eff"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>%</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric unavailable">
+        <span>نسبة التلف</span>
+        <strong>—</strong>
+      </div>
+
+    </div>
+
+    <div class="oil-machine-status">
+
+      <span>حالة الماكينة</span>
+
+      <select id="plastic_metalcap_status" data-save>
+
+        <option value="">-- اختر الحالة --</option>
+
+        <option value="يعمل">يعمل</option>
+
+        <option value="متوقف">متوقف</option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       UST
+  ========================== -->
+
+  <div class="oil-machine-card">
+
+    <div class="oil-machine-header">
+
+      <div class="oil-machine-title">
+        <span class="oil-machine-icon">🏭</span>
+
+        <div>
+          <strong>ماكينة UST</strong>
+          <small>UST Machine</small>
+        </div>
+      </div>
+
+      <span class="oil-machine-number">04</span>
+
+    </div>
+
+    <div class="oil-machine-metrics">
+
+      <div class="oil-machine-metric production">
+        <span>الإنتاج</span>
+
+        <div>
+          <input
+            id="plastic_ust_qty"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>طن</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric efficiency">
+        <span>الكفاءة</span>
+
+        <div>
+          <input
+            id="plastic_ust_eff"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>%</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric unavailable">
+        <span>نسبة التلف</span>
+        <strong>—</strong>
+      </div>
+
+    </div>
+
+    <div class="oil-machine-status">
+
+      <span>حالة الماكينة</span>
+
+      <select id="plastic_ust_status" data-save>
+
+        <option value="">-- اختر الحالة --</option>
+
+        <option value="يعمل">يعمل</option>
+
+        <option value="لا يعمل">لا يعمل</option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       اللحام
+  ========================== -->
+
+  <div class="oil-machine-card">
+
+    <div class="oil-machine-header">
+
+      <div class="oil-machine-title">
+        <span class="oil-machine-icon">🔥</span>
+
+        <div>
+          <strong>ماكينة اللحام</strong>
+          <small>Welding Machine</small>
+        </div>
+      </div>
+
+      <span class="oil-machine-number">05</span>
+
+    </div>
+
+    <div class="oil-machine-metrics">
+
+      <div class="oil-machine-metric production">
+        <span>الإنتاج</span>
+
+        <div>
+          <input
+            id="plastic_welding_qty"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>طن</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric efficiency">
+        <span>الكفاءة</span>
+
+        <div>
+          <input
+            id="plastic_welding_eff"
+            data-save
+            step="any"
+            placeholder="0"
+          />
+          <small>%</small>
+        </div>
+      </div>
+
+      <div class="oil-machine-metric unavailable">
+        <span>نسبة التلف</span>
+        <strong>—</strong>
+      </div>
+
+    </div>
+
+    <div class="oil-machine-status">
+
+      <span>حالة الماكينة</span>
+
+      <select id="plastic_welding_status" data-save>
+
+        <option value="">-- اختر الحالة --</option>
+
+        <option value="يعمل">يعمل</option>
+
+        <option value="لا يعمل">لا يعمل</option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+</div>
+
+  </div> <!-- details-content -->
+
+</details> <!-- ماكينات التجميع والسداد المعدني -->
+<!-- ========================================================= -->
+<!--                    الجودة والسلامة                        -->
+<!-- ========================================================= -->
+
+    <details open class="oil-section-details">
+
+  <summary class="oil-section-summary">
+
+    <div class="oil-section-title">
+
+      <span class="oil-section-icon">🛡️</span>
+
+      <div>
+        <strong>الجودة والسلامة</strong>
+        <small>ملاحظات قسم الجودة والسلامة والمتابعة التشغيلية</small>
+      </div>
+
+    </div>
+
+    <span class="oil-section-arrow">⌄</span>
+
+  </summary>
 
           <div class="details-content">
-            <!-- الجودة -->
 
             <div class="plastic-quality-card">
               <div class="plastic-quality-title">🔬 ملاحظات قسم الجودة</div>
@@ -6445,8 +8375,24 @@ PKF
         <!--                    الملاحظات العامة                        -->
         <!-- ========================================================= -->
 
-        <details open>
-          <summary>📝 ملاحظات مصنع الزيت</summary>
+    <details open class="oil-section-details">
+
+  <summary class="oil-section-summary">
+
+    <div class="oil-section-title">
+
+      <span class="oil-section-icon">📝</span>
+
+      <div>
+        <strong>ملاحظات مصنع الزيت</strong>
+        <small>الملاحظات العامة والتشغيلية للمصنع</small>
+      </div>
+
+    </div>
+
+    <span class="oil-section-arrow">⌄</span>
+
+  </summary>
 
           <div class="details-content">
             <textarea
@@ -6458,11 +8404,37 @@ PKF
           </div>
         </details>
 
-        <div style="margin-top: 15px">
-          <button id="approveOilBtn" onclick="approveSection('oil')">
-            ✅ اعتماد قسم الزيت
-          </button>
-        </div>
+        <!-- =========================================================
+     اعتماد تقرير الزيت
+========================================================= -->
+
+<div class="sugar-approval-area oil-approval-area">
+
+  <div class="approval-info">
+
+    <span class="approval-icon">✓</span>
+
+    <div>
+      <strong>اعتماد تقرير مصنع الزيت</strong>
+
+      <small>
+        تأكد من اكتمال جميع البيانات قبل الاعتماد
+      </small>
+    </div>
+
+  </div>
+
+
+  <button
+    id="OilBtn"
+    class="sugar-approve-btn"
+    onclick="approveSection('oil')"
+  >
+    ✓ اعتماد تقرير الزيت
+  </button>
+
+</div>
+
       </section>
       <!-- ===================================== -->
       <!-- مصنع الطحين -->
@@ -9884,6 +11856,8 @@ window.fieldLastUpdatedAt = new Map();
         let refinery2 =
           parseFloat(document.getElementById("refinery2")?.value) || 0;
 
+          updateRefinery2Visual(refinery2);
+
         let oilTotal = refinery1 + refinery2;
 
         document.getElementById("refinery_total").value = oilTotal.toFixed(2);
@@ -10649,6 +12623,7 @@ function recalculateAll() {
     updatePalmStockTotal();
 
     updateOilStockDashboard();
+    updateRefineryTotals();
 
     updateNovasepDashboard();
 
@@ -11896,16 +13871,36 @@ console.log(
         refreshAllFieldStaleStyles();
 
         /* الحسابات الموجودة أصلًا */
-        recalculateAll();
+     recalculateAll();
 
-        toggleSeparationStation();
+     if (factory === "plastic") {
+  updatePlasticProductionDashboard();
+}
 
-        if (factory === "oil") {
-          updateOleinSalesTotal();
-          updateOleinStockTotal();
-          updatePalmSalesTotal();
-          updatePalmStockTotal();
-        }
+toggleSeparationStation();
+
+if (factory === "oil") {
+
+  updateOleinSalesTotal();
+  updateOleinStockTotal();
+
+  updatePalmSalesTotal();
+  updatePalmStockTotal();
+  updateKronesProductionSummary();
+
+  /* =====================================
+     تحديث واجهة التكرير
+  ===================================== */
+
+  updateRefineryProductionVisuals();
+
+  /* =====================================
+     مقارنة إنتاج التكرير
+     اليوم + آخر 3 أيام
+  ===================================== */
+
+  await loadRefineryProductionComparison();
+}
         
 
         /* إعادة حساب جميع القيم المشتقة */
@@ -12088,6 +14083,8 @@ console.log(
           .single();
 
         if (!userInfo) return;
+
+        setPlasticProductionDetailsByRole(userInfo.role);
 
         switch (userInfo.role) {
           case "admin":
@@ -13934,6 +15931,136 @@ setInterval(
 
 document.addEventListener("DOMContentLoaded", function () {
     updateSugarTank();
+});
+
+/* =========================================================
+   SMOOTH DETAILS OPEN / CLOSE
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const detailsList = document.querySelectorAll(
+        "#oil .oil-section-details"
+    );
+
+    detailsList.forEach(details => {
+
+        const summary = details.querySelector(":scope > summary");
+        const content = details.querySelector(
+            ":scope > .details-content"
+        );
+
+        if (!summary || !content) return;
+
+        let isAnimating = false;
+
+        summary.addEventListener("click", event => {
+
+            event.preventDefault();
+
+            if (isAnimating) return;
+
+            isAnimating = true;
+
+            const isOpen = details.hasAttribute("open");
+
+            if (isOpen) {
+
+                /* =========================
+                   CLOSE
+                ========================= */
+
+                const startHeight = content.scrollHeight;
+
+                content.style.height = startHeight + "px";
+                content.style.overflow = "hidden";
+
+                requestAnimationFrame(() => {
+
+                    content.style.transition =
+                        "height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.25s ease";
+
+                    content.style.height = "0px";
+                    content.style.opacity = "0";
+                    content.style.paddingTop = "0";
+                    content.style.paddingBottom = "0";
+                });
+
+                content.addEventListener(
+                    "transitionend",
+                    function handler(e) {
+
+                        if (e.propertyName !== "height") return;
+
+                        details.removeAttribute("open");
+
+                        content.style.height = "";
+                        content.style.opacity = "";
+                        content.style.overflow = "";
+                        content.style.transition = "";
+                        content.style.paddingTop = "";
+                        content.style.paddingBottom = "";
+
+                        isAnimating = false;
+
+                        content.removeEventListener(
+                            "transitionend",
+                            handler
+                        );
+                    }
+                );
+
+            } else {
+
+                /* =========================
+                   OPEN
+                ========================= */
+
+                details.setAttribute("open", "");
+
+                content.style.height = "0px";
+                content.style.opacity = "0";
+                content.style.overflow = "hidden";
+                content.style.paddingTop = "0";
+                content.style.paddingBottom = "0";
+
+                requestAnimationFrame(() => {
+
+                    const targetHeight = content.scrollHeight;
+
+                    content.style.transition =
+                        "height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.25s ease";
+
+                    content.style.height =
+                        targetHeight + "px";
+
+                    content.style.opacity = "1";
+
+                    content.style.paddingTop = "14px";
+                    content.style.paddingBottom = "0";
+                });
+
+                content.addEventListener(
+                    "transitionend",
+                    function handler(e) {
+
+                        if (e.propertyName !== "height") return;
+
+                        content.style.height = "auto";
+                        content.style.overflow = "";
+                        content.style.transition = "";
+
+                        isAnimating = false;
+
+                        content.removeEventListener(
+                            "transitionend",
+                            handler
+                        );
+                    }
+                );
+            }
+        });
+    });
 });
 
 </script>

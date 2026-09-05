@@ -1372,24 +1372,6 @@ document.querySelectorAll("table.wide-table").forEach((table) => {
   table - scroll;
 });
 
-function toggleSeparationStation() {
-  const status = document.getElementById("separation_status")?.value;
-
-  const acidOil = document.getElementById("separation_acid_oil");
-
-  const notes = document.getElementById("separation_notes");
-
-  const disabled = status !== "running";
-
-  if (acidOil) {
-    acidOil.disabled = disabled;
-  }
-
-  if (notes) {
-    notes.disabled = disabled;
-  }
-}
-
 window.applyPermissions = applyPermissions;
 window.showCurrentUser = showCurrentUser;
 window.applyExecutiveMode = applyExecutiveMode;
@@ -1778,6 +1760,30 @@ function updateRefineryTotals() {
     parseFloat(document.getElementById("refinery2")?.value) || 0;
 
   /* =====================================
+   تحديث لوحة خط التكرير 2
+===================================== */
+
+  const refinery2Display = document.getElementById("refinery2Display");
+
+  const refinery2Progress = document.getElementById("refinery2Progress");
+
+  const refinery2Percent = document.getElementById("refinery2Percent");
+
+  const refinery2Percentage = Math.min((refinery2 / 1500) * 100, 100);
+
+  if (refinery2Display) {
+    refinery2Display.textContent = refinery2.toFixed(2);
+  }
+
+  if (refinery2Progress) {
+    refinery2Progress.style.width = refinery2Percentage + "%";
+  }
+
+  if (refinery2Percent) {
+    refinery2Percent.textContent = refinery2Percentage.toFixed(1) + "%";
+  }
+
+  /* =====================================
        إجمالي الخطين
     ===================================== */
 
@@ -1810,6 +1816,8 @@ function updateRefineryTotals() {
   if (ringTotal) {
     ringTotal.textContent = refinery1Total.toFixed(2);
   }
+
+  updateRefineryProductionVisuals();
 
   /* =====================================
        تحديث Dashboard الحالي
@@ -2153,12 +2161,30 @@ function toggleSeparationStation() {
   const status = document.getElementById("separation_status")?.value;
 
   const card = document.getElementById("separationStatusCard");
-
   const statusText = document.getElementById("separationStatusText");
-
   const statusIcon = document.getElementById("separationStatusIcon");
-
   const modeDisplay = document.getElementById("stationModeDisplay");
+
+  const acidOil = document.getElementById("separation_acid_oil");
+  const notes = document.getElementById("separation_notes");
+
+  /* =====================================
+     تعطيل / تفعيل حقول محطة الفصل
+  ===================================== */
+
+  const disabled = status !== "running";
+
+  if (acidOil) {
+    acidOil.disabled = disabled;
+  }
+
+  if (notes) {
+    notes.disabled = disabled;
+  }
+
+  /* =====================================
+     تحديث المظهر والحالة
+  ===================================== */
 
   if (!card || !statusText || !statusIcon || !modeDisplay) {
     return;
@@ -2168,9 +2194,9 @@ function toggleSeparationStation() {
 
   card.classList.remove("running", "stopped");
 
-  /* =========================
-       بالـخدمة
-       ========================= */
+  /* =====================================
+     المحطة بالـخدمة
+  ===================================== */
 
   if (status === "running") {
     card.classList.add("running");
@@ -2187,9 +2213,9 @@ function toggleSeparationStation() {
 
     modeDisplay.style.background = "rgba(40,130,70,0.15)";
   } else if (status === "stopped") {
-    /* =========================
-       خارج الخدمة
-       ========================= */
+    /* =====================================
+     المحطة خارج الخدمة
+  ===================================== */
     card.classList.add("stopped");
 
     statusIcon.textContent = "⛔";
@@ -2203,10 +2229,16 @@ function toggleSeparationStation() {
     modeDisplay.style.borderColor = "rgba(220,80,80,0.45)";
 
     modeDisplay.style.background = "rgba(150,45,45,0.15)";
+
+    /* تصفير إنتاج المحطة عند إيقافها */
+
+    if (acidOil) {
+      acidOil.value = "";
+    }
   } else {
-    /* =========================
-       لم يتم الاختيار
-       ========================= */
+    /* =====================================
+     لم يتم تحديد الحالة
+  ===================================== */
     statusIcon.textContent = "⚙️";
 
     statusText.textContent = "لم يتم تحديد الحالة";
@@ -2220,11 +2252,9 @@ function toggleSeparationStation() {
     modeDisplay.style.background = "#343d47";
   }
 
-  /*
-   * مهم:
-   * نترك أي منطق قديم مرتبط بهذه الدالة
-   * يعمل أيضاً.
-   */
+  /* =====================================
+     تحديث Dashboard
+  ===================================== */
 
   updateSeparationDashboard();
 }
@@ -2792,6 +2822,1004 @@ function refreshAllDashboards() {
     }
   } catch (e) {
     console.error("Sugar Tank Cards Final:", e);
+  }
+}
+
+function toggleSugarDashboard() {
+  const header = document.getElementById("sugarDashboardHeader");
+
+  const content = document.getElementById("sugarDashboardContent");
+
+  if (!header || !content) return;
+
+  const isCollapsed = content.classList.toggle("collapsed");
+
+  header.classList.toggle("collapsed", isCollapsed);
+
+  header.setAttribute("aria-expanded", String(!isCollapsed));
+}
+
+function initializeSugarDashboard() {
+  const header = document.getElementById("sugarDashboardHeader");
+
+  const content = document.getElementById("sugarDashboardContent");
+
+  if (!header || !content) return;
+
+  /* البداية مفتوحة */
+
+  content.classList.remove("collapsed");
+
+  header.classList.remove("collapsed");
+
+  header.setAttribute("aria-expanded", "true");
+}
+
+function updateRefineryProductionVisuals() {
+  /* =====================================
+     خط التكرير 2
+     الطاقة القصوى = 1500 طن
+  ===================================== */
+
+  const refinery2 =
+    parseFloat(document.getElementById("refinery2")?.value) || 0;
+
+  const maxCapacity = 1500;
+
+  const progress = Math.min(Math.max(refinery2 / maxCapacity, 0), 1) * 100;
+
+  const progressBar = document.getElementById("refinery2ProgressBar");
+
+  const progressPercent = document.getElementById("refinery2ProgressPercent");
+
+  if (progressBar) {
+    progressBar.style.width = progress + "%";
+  }
+
+  if (progressPercent) {
+    progressPercent.textContent = progress.toFixed(0) + "%";
+  }
+
+  /* حالة الإنتاج */
+
+  const status = document.getElementById("refinery2ProductionStatus");
+
+  const statusText = document.getElementById("refinery2ProductionStatusText");
+
+  if (statusText) {
+    if (refinery2 <= 0) {
+      statusText.textContent = "لا يوجد إنتاج";
+    } else if (refinery2 < 500) {
+      statusText.textContent = "إنتاج منخفض";
+    } else if (refinery2 < 1000) {
+      statusText.textContent = "إنتاج متوسط";
+    } else if (refinery2 < 1350) {
+      statusText.textContent = "إنتاج جيد";
+    } else if (refinery2 <= 1500) {
+      statusText.textContent = "إنتاج مرتفع";
+    } else {
+      statusText.textContent = "تجاوز الطاقة التصميمية";
+    }
+  }
+
+  /* =====================================
+     إجمالي الخطين
+  ===================================== */
+
+  const refinery1 =
+    parseFloat(document.getElementById("refinery1")?.value) || 0;
+
+  const grandTotal = refinery1 + refinery2;
+
+  const grandCapacity = 3000;
+
+  const grandProgress =
+    Math.min(Math.max(grandTotal / grandCapacity, 0), 1) * 100;
+
+  const grandBar = document.getElementById("refineryGrandTotalBar");
+
+  const grandStatus = document.getElementById("refineryGrandTotalStatus");
+
+  if (grandBar) {
+    grandBar.style.width = grandProgress + "%";
+  }
+
+  if (grandStatus) {
+    grandStatus.textContent =
+      grandProgress.toFixed(1) + "% من الطاقة الإجمالية";
+  }
+}
+
+async function loadRefineryProductionComparison() {
+  const dateElement = document.getElementById("reportDateKey");
+
+  if (!dateElement?.value) return;
+
+  const currentDate = dateElement.value;
+
+  const factory = "oil";
+
+  /* =====================================
+     الحقول التي تدخل في الإنتاج
+  ===================================== */
+
+  const productionFields = [
+    "refinery1_sunflower",
+    "refinery1_olein",
+    "refinery1_ghee",
+    "refinery1_stearin",
+    "refinery1_shortening",
+    "refinery2",
+  ];
+
+  /* =====================================
+     حساب التواريخ
+  ===================================== */
+
+  const dates = [];
+
+  const baseDate = new Date(currentDate + "T00:00:00");
+
+  for (let i = 3; i >= 0; i--) {
+    const date = new Date(baseDate);
+
+    date.setDate(baseDate.getDate() - i);
+
+    const dateString =
+      date.getFullYear() +
+      "-" +
+      String(date.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(date.getDate()).padStart(2, "0");
+
+    dates.push(dateString);
+  }
+
+  /* =====================================
+     جلب البيانات
+  ===================================== */
+
+  const { data, error } = await supabaseClient
+    .from("daily_reports")
+    .select("report_date,field_name,field_value")
+    .eq("factory", factory)
+    .in("report_date", dates)
+    .in("field_name", productionFields);
+
+  if (error) {
+    console.error("REFINERY COMPARISON ERROR:", error);
+
+    return;
+  }
+
+  /* =====================================
+     إنشاء مجموع لكل يوم
+  ===================================== */
+
+  const dailyTotals = {};
+
+  dates.forEach((date) => {
+    dailyTotals[date] = 0;
+  });
+
+  (data || []).forEach((row) => {
+    if (!dailyTotals.hasOwnProperty(row.report_date)) {
+      return;
+    }
+
+    const value = parseFloat(row.field_value) || 0;
+
+    dailyTotals[row.report_date] += value;
+  });
+
+  /* =====================================
+     بيانات اليوم
+  ===================================== */
+
+  const todayTotal = dailyTotals[currentDate] || 0;
+
+  /* =====================================
+     الأيام الثلاثة السابقة
+  ===================================== */
+
+  const previousDates = dates.filter((date) => date !== currentDate);
+
+  const previousValues = previousDates.map((date) => dailyTotals[date] || 0);
+
+  const average = previousValues.length
+    ? previousValues.reduce((sum, value) => sum + value, 0) /
+      previousValues.length
+    : 0;
+
+  /* =====================================
+     نسبة الفرق
+  ===================================== */
+
+  let differencePercent = 0;
+
+  if (average > 0) {
+    differencePercent = ((todayTotal - average) / average) * 100;
+  }
+
+  /* =====================================
+     تحديث الملخص
+  ===================================== */
+
+  const todayElement = document.getElementById("refineryComparisonToday");
+
+  const averageElement = document.getElementById("refineryComparisonAverage");
+
+  if (todayElement) {
+    todayElement.textContent = todayTotal.toFixed(2);
+  }
+
+  if (averageElement) {
+    averageElement.textContent = average.toFixed(2);
+  }
+
+  /* =====================================
+     مؤشر المقارنة
+  ===================================== */
+
+  const indicator = document.getElementById("refineryComparisonIndicator");
+
+  const arrow = document.getElementById("refineryComparisonArrow");
+
+  const percent = document.getElementById("refineryComparisonPercent");
+
+  const text = document.getElementById("refineryComparisonText");
+
+  if (indicator) {
+    indicator.classList.remove("positive", "negative", "neutral");
+
+    if (average <= 0) {
+      indicator.classList.add("neutral");
+
+      if (arrow) arrow.textContent = "●";
+
+      if (percent) percent.textContent = "—";
+
+      if (text) {
+        text.textContent = "لا توجد بيانات كافية";
+      }
+    } else if (todayTotal > average) {
+      indicator.classList.add("positive");
+
+      if (arrow) arrow.textContent = "↑";
+
+      if (percent) {
+        percent.textContent = "+" + differencePercent.toFixed(1) + "%";
+      }
+
+      if (text) {
+        text.textContent = "أعلى من متوسط آخر 3 أيام";
+      }
+    } else if (todayTotal < average) {
+      indicator.classList.add("negative");
+
+      if (arrow) arrow.textContent = "↓";
+
+      if (percent) {
+        percent.textContent = differencePercent.toFixed(1) + "%";
+      }
+
+      if (text) {
+        text.textContent = "أقل من متوسط آخر 3 أيام";
+      }
+    } else {
+      indicator.classList.add("neutral");
+
+      if (arrow) arrow.textContent = "→";
+
+      if (percent) percent.textContent = "0%";
+
+      if (text) {
+        text.textContent = "مطابق لمتوسط آخر 3 أيام";
+      }
+    }
+  }
+
+  /* =====================================
+     رسم الأعمدة
+  ===================================== */
+
+  renderRefineryComparisonChart(dates, dailyTotals, currentDate);
+}
+
+function renderRefineryComparisonChart(dates, dailyTotals, currentDate) {
+  const container = document.getElementById("refineryComparisonBars");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  /* =====================================
+     أعلى قيمة للمخطط
+  ===================================== */
+
+  const values = dates.map((date) => dailyTotals[date] || 0);
+
+  const maxValue = Math.max(1500, ...values);
+
+  const maxLabel = document.getElementById("chartMaxLabel");
+
+  if (maxLabel) {
+    maxLabel.textContent = Math.ceil(maxValue / 500) * 500;
+  }
+
+  const chartMax = Math.max(1500, Math.ceil(maxValue / 500) * 500);
+
+  /* =====================================
+     إنشاء الأعمدة
+  ===================================== */
+
+  dates.forEach((date) => {
+    const value = dailyTotals[date] || 0;
+
+    const column = document.createElement("div");
+
+    column.className = "comparison-bar-column";
+
+    if (date === currentDate) {
+      column.classList.add("today");
+    }
+
+    const valueLabel = document.createElement("div");
+
+    valueLabel.className = "comparison-bar-value";
+
+    valueLabel.textContent = value.toFixed(0);
+
+    const bar = document.createElement("div");
+
+    bar.className = "comparison-bar";
+
+    if (date === currentDate) {
+      bar.classList.add("today");
+    }
+
+    const height = value > 0 ? Math.max((value / chartMax) * 100, 2) : 2;
+
+    bar.style.height = height + "%";
+
+    const dateLabel = document.createElement("div");
+
+    dateLabel.className = "comparison-bar-date";
+
+    const d = new Date(date + "T00:00:00");
+
+    if (date === currentDate) {
+      dateLabel.textContent = "اليوم";
+    } else {
+      dateLabel.textContent =
+        String(d.getDate()).padStart(2, "0") +
+        "/" +
+        String(d.getMonth() + 1).padStart(2, "0");
+    }
+
+    column.appendChild(valueLabel);
+
+    column.appendChild(bar);
+
+    column.appendChild(dateLabel);
+
+    container.appendChild(column);
+  });
+}
+
+function updateRefinery2Visual(value) {
+  const MAX = 1500;
+
+  value = parseFloat(value) || 0;
+
+  /* =====================================
+       حساب النسبة
+    ===================================== */
+
+  const percentage = (value / MAX) * 100;
+
+  const visualPercentage = Math.min(Math.max(percentage, 0), 100);
+
+  /* =====================================
+       الرقم الحالي
+    ===================================== */
+
+  const display = document.getElementById("refinery2Display");
+
+  if (display) {
+    display.textContent = value.toFixed(2);
+  }
+
+  /* =====================================
+       النسبة
+    ===================================== */
+
+  const percent = document.getElementById("refinery2ProgressPercent");
+
+  if (percent) {
+    percent.textContent = percentage.toFixed(0) + "%";
+  }
+
+  /* =====================================
+       شريط الإنتاج
+    ===================================== */
+
+  const progress = document.getElementById("refinery2ProgressBar");
+
+  if (progress) {
+    progress.style.setProperty("width", visualPercentage + "%", "important");
+
+    progress.style.setProperty("display", "block", "important");
+  }
+}
+
+function updatePlasticProductionDashboard() {
+  const lines = [
+    {
+      name: "الأمبولة 1",
+      qty: "plastic_bottle1_qty",
+      eff: "plastic_bottle1_eff",
+      missing: "plastic_bottle1_missing",
+      stop: "plastic_bottle1_stop",
+
+      cardQty: "plasticBottle1CardQty",
+      ring: "plasticBottle1Ring",
+      ringValue: "plasticBottle1RingValue",
+      bar: "plasticBottle1Bar",
+      stopCard: "plasticBottle1StopCard",
+      missingCard: "plasticBottle1MissingCard",
+    },
+
+    {
+      name: "الأمبولة 2",
+      qty: "plastic_bottle2_qty",
+      eff: "plastic_bottle2_eff",
+      missing: "plastic_bottle2_missing",
+      stop: "plastic_bottle2_stop",
+
+      cardQty: "plasticBottle2CardQty",
+      ring: "plasticBottle2Ring",
+      ringValue: "plasticBottle2RingValue",
+      bar: "plasticBottle2Bar",
+      stopCard: "plasticBottle2StopCard",
+      missingCard: "plasticBottle2MissingCard",
+    },
+
+    {
+      name: "Spout 1",
+      qty: "plastic_spout1_qty",
+      eff: "plastic_spout1_eff",
+      missing: "plastic_spout1_missing",
+      stop: "plastic_spout1_stop",
+
+      cardQty: "plasticSpout1CardQty",
+      ring: "plasticSpout1Ring",
+      ringValue: "plasticSpout1RingValue",
+      bar: "plasticSpout1Bar",
+      stopCard: "plasticSpout1StopCard",
+      missingCard: "plasticSpout1MissingCard",
+    },
+
+    {
+      name: "Spout 2",
+      qty: "plastic_spout2_qty",
+      eff: "plastic_spout2_eff",
+      missing: "plastic_spout2_missing",
+      stop: "plastic_spout2_stop",
+
+      cardQty: "plasticSpout2CardQty",
+      ring: "plasticSpout2Ring",
+      ringValue: "plasticSpout2RingValue",
+      bar: "plasticSpout2Bar",
+      stopCard: "plasticSpout2StopCard",
+      missingCard: "plasticSpout2MissingCard",
+    },
+
+    {
+      name: "CAP",
+      qty: "plastic_cap_qty",
+      eff: "plastic_cap_eff",
+      missing: "plastic_cap_missing",
+      stop: "plastic_cap_stop",
+
+      cardQty: "plasticCapCardQty",
+      ring: "plasticCapRing",
+      ringValue: "plasticCapRingValue",
+      bar: "plasticCapBar",
+      stopCard: "plasticCapStopCard",
+      missingCard: "plasticCapMissingCard",
+    },
+  ];
+
+  let totalProduction = 0;
+
+  let totalEfficiency = 0;
+
+  let efficiencyCount = 0;
+
+  let totalDowntime = 0;
+
+  let bestLine = null;
+
+  lines.forEach((line) => {
+    const qty = parseFloat(document.getElementById(line.qty)?.value) || 0;
+
+    const eff = parseFloat(document.getElementById(line.eff)?.value) || 0;
+
+    const missing =
+      parseFloat(document.getElementById(line.missing)?.value) || 0;
+
+    const stop = parseFloat(document.getElementById(line.stop)?.value) || 0;
+
+    totalProduction += qty;
+
+    totalDowntime += stop;
+
+    if (eff > 0) {
+      totalEfficiency += eff;
+
+      efficiencyCount++;
+    }
+
+    if (!bestLine || eff > bestLine.eff) {
+      if (eff > 0) {
+        bestLine = {
+          name: line.name,
+          eff: eff,
+        };
+      }
+    }
+
+    /* =========================
+       بطاقة الخط
+    ========================= */
+
+    const cardQty = document.getElementById(line.cardQty);
+
+    if (cardQty) {
+      cardQty.textContent = formatPlasticNumber(qty);
+    }
+
+    const ring = document.getElementById(line.ring);
+
+    const ringValue = document.getElementById(line.ringValue);
+
+    const safeEff = Math.max(0, Math.min(eff, 100));
+
+    if (ring) {
+      ring.style.setProperty("--eff", safeEff + "%");
+    }
+
+    if (ringValue) {
+      ringValue.textContent = safeEff.toFixed(0) + "%";
+    }
+
+    const bar = document.getElementById(line.bar);
+
+    if (bar) {
+      bar.style.width = safeEff + "%";
+    }
+
+    const stopCard = document.getElementById(line.stopCard);
+
+    if (stopCard) {
+      stopCard.textContent = formatPlasticNumber(stop);
+    }
+
+    const missingCard = document.getElementById(line.missingCard);
+
+    if (missingCard) {
+      missingCard.textContent = formatPlasticNumber(missing);
+    }
+  });
+
+  /* =================================================
+     إجمالي الإنتاج
+  ================================================= */
+
+  const totalElement = document.getElementById("plasticTotalProduction");
+
+  if (totalElement) {
+    totalElement.textContent = formatPlasticNumber(totalProduction);
+  }
+
+  /* =================================================
+     متوسط الكفاءة
+  ================================================= */
+
+  const averageEfficiency =
+    efficiencyCount > 0 ? totalEfficiency / efficiencyCount : 0;
+
+  const averageElement = document.getElementById("plasticAverageEfficiency");
+
+  if (averageElement) {
+    averageElement.textContent = averageEfficiency.toFixed(1) + "%";
+  }
+
+  /* =================================================
+     إجمالي التوقف
+  ================================================= */
+
+  const downtimeElement = document.getElementById("plasticTotalDowntime");
+
+  if (downtimeElement) {
+    downtimeElement.textContent = formatPlasticNumber(totalDowntime);
+  }
+
+  /* =================================================
+     أفضل خط
+  ================================================= */
+
+  const bestLineElement = document.getElementById("plasticBestLine");
+
+  const bestLineEfficiency = document.getElementById(
+    "plasticBestLineEfficiency",
+  );
+
+  if (bestLine) {
+    if (bestLineElement) {
+      bestLineElement.textContent = bestLine.name;
+    }
+
+    if (bestLineEfficiency) {
+      bestLineEfficiency.textContent = "كفاءة " + bestLine.eff.toFixed(1) + "%";
+    }
+  } else {
+    if (bestLineElement) {
+      bestLineElement.textContent = "—";
+    }
+
+    if (bestLineEfficiency) {
+      bestLineEfficiency.textContent = "لا توجد بيانات";
+    }
+  }
+}
+
+/* =========================================================
+   تنسيق الأرقام
+   ========================================================= */
+
+function formatPlasticNumber(value) {
+  return Number(value || 0).toLocaleString("en-US", {
+    maximumFractionDigits: 0,
+  });
+}
+
+function setPlasticProductionDetailsByRole(role) {
+  const details = document.getElementById("plasticProductionDetails");
+
+  if (!details) return;
+
+  if (role === "admin" || role === "executive") {
+    details.open = false;
+    return;
+  }
+
+  if (role === "plastic") {
+    details.open = true;
+    return;
+  }
+
+  details.open = false;
+}
+
+/* =========================================================
+   أهداف خطوط التعبئة
+   عدّل هذه الأرقام لاحقًا حسب أهدافك الفعلية
+========================================================= */
+
+const packingTargets = {
+  krones1: 40000,
+
+  krones2: 40000,
+
+  krones3: 40000,
+
+  gea: 20000,
+
+  runo: 30000,
+};
+
+/* =========================================================
+   قراءة رقم بأمان
+========================================================= */
+
+function packingNumber(id) {
+  return parseFloat(document.getElementById(id)?.value) || 0;
+}
+
+/* =========================================================
+   تحديث لوحة التعبئة
+========================================================= */
+
+function updatePackingDashboard() {
+  /* =======================================================
+     كرونس
+  ======================================================= */
+
+  const krones1 =
+    packingNumber("krones1a") +
+    packingNumber("krones1b") +
+    packingNumber("krones1c");
+
+  const krones2 =
+    packingNumber("krones2a") +
+    packingNumber("krones2b") +
+    packingNumber("krones2c");
+
+  const krones3 =
+    packingNumber("krones3a") +
+    packingNumber("krones3b") +
+    packingNumber("krones3c");
+
+  /* =======================================================
+     السمنة
+  ======================================================= */
+
+  const gea =
+    packingNumber("geaa") + packingNumber("geab") + packingNumber("geac");
+
+  /* =======================================================
+     الرونو
+  ======================================================= */
+
+  const runo =
+    packingNumber("shorta") + packingNumber("shortb") + packingNumber("shortc");
+
+  /* =======================================================
+     إجمالي الخطوط
+  ======================================================= */
+
+  const grandTotal = krones1 + krones2 + krones3 + gea + runo;
+
+  /* =======================================================
+     تحديث إجماليات الخطوط
+  ======================================================= */
+
+  setPackingText("krones1Total", krones1);
+  setPackingText("krones2Total", krones2);
+  setPackingText("krones3Total", krones3);
+
+  setPackingText("geaTotal", gea);
+  setPackingText("runoTotal", runo);
+
+  /* =======================================================
+     الأهداف
+  ======================================================= */
+
+  updatePackingTarget("krones1", krones1);
+
+  updatePackingTarget("krones2", krones2);
+
+  updatePackingTarget("krones3", krones3);
+
+  updatePackingTarget("gea", gea);
+
+  updatePackingTarget("runo", runo);
+
+  /* =======================================================
+     إجمالي التعبئة
+  ======================================================= */
+
+  setPackingText("packingGrandTotal", grandTotal);
+
+  setPackingText("packingGrandTotalLarge", grandTotal);
+
+  updateKronesProductionSummary();
+
+  /* =======================================================
+     الخطوط ذات الإنتاج
+  ======================================================= */
+
+  const lines = [
+    {
+      name: "كرونس 1",
+      value: krones1,
+      status: "krones1Status",
+    },
+
+    {
+      name: "كرونس 2",
+      value: krones2,
+      status: "krones2Status",
+    },
+
+    {
+      name: "كرونس 3",
+      value: krones3,
+      status: "krones3Status",
+    },
+
+    {
+      name: "خط السمنة",
+      value: gea,
+      status: "geaStatus",
+    },
+
+    {
+      name: "خط الرونو",
+      value: runo,
+      status: "runoStatus",
+    },
+  ];
+
+  const activeLines = lines.filter((line) => line.value > 0).length;
+
+  setPackingText("packingActiveLines", activeLines);
+
+  /* =======================================================
+     أعلى خط
+  ======================================================= */
+
+  const topLine = [...lines].sort((a, b) => b.value - a.value)[0];
+
+  if (topLine && topLine.value > 0) {
+    setPackingText("packingTopLine", topLine.name);
+
+    setPackingText(
+      "packingTopLineValue",
+      formatPackingNumber(topLine.value) + " وحدة",
+    );
+  } else {
+    setPackingText("packingTopLine", "—");
+
+    setPackingText("packingTopLineValue", "0 وحدة");
+  }
+
+  /* =======================================================
+     إجمالي شفتات كرونس فقط
+  ======================================================= */
+
+  const morning =
+    packingNumber("krones1a") +
+    packingNumber("krones2a") +
+    packingNumber("krones3a");
+
+  const evening =
+    packingNumber("krones1b") +
+    packingNumber("krones2b") +
+    packingNumber("krones3b");
+
+  const night =
+    packingNumber("krones1c") +
+    packingNumber("krones2c") +
+    packingNumber("krones3c");
+
+  setPackingText("kronesMorningTotal", morning);
+
+  setPackingText("kronesEveningTotal", evening);
+
+  setPackingText("kronesNightTotal", night);
+
+  /* =======================================================
+     حفظ الإجمالي في الحقل الأصلي إن وجد
+  ======================================================= */
+
+  const packingTotalField = document.getElementById("packing_total");
+
+  if (packingTotalField) {
+    packingTotalField.value = grandTotal.toFixed(2);
+  }
+
+  /* =======================================================
+     تشغيل نظامك الحالي
+  ======================================================= */
+
+  if (typeof updateDashboard === "function") {
+    updateDashboard();
+  }
+}
+
+/* =========================================================
+   تحديث الهدف
+========================================================= */
+
+function updatePackingTarget(line, value) {
+  const target = packingTargets[line] || 0;
+
+  if (!target) return;
+
+  const percent = (value / target) * 100;
+
+  const displayPercent = Math.min(percent, 100);
+
+  setPackingText(line + "TargetPercent", percent.toFixed(1) + "%");
+
+  setPackingText(line + "TargetValue", formatPackingNumber(target));
+
+  const bar = document.getElementById(line + "Progress");
+
+  if (bar) {
+    bar.style.width = displayPercent + "%";
+  }
+
+  /* =======================================================
+     حالة الخط
+  ======================================================= */
+
+  const status = document.getElementById(
+    line === "gea"
+      ? "geaStatus"
+      : line === "runo"
+        ? "runoStatus"
+        : line + "Status",
+  );
+
+  if (!status) return;
+
+  if (value <= 0) {
+    status.style.background = "#666";
+
+    status.style.boxShadow = "0 0 0 4px rgba(255,255,255,.025)";
+  } else if (percent < 70) {
+    status.style.background = "#e5a93d";
+
+    status.style.boxShadow = "0 0 0 4px rgba(229,169,61,.10)";
+  } else {
+    status.style.background = "#62d989";
+
+    status.style.boxShadow = "0 0 0 4px rgba(98,217,137,.10)";
+  }
+}
+
+/* =========================================================
+   أدوات
+========================================================= */
+
+function setPackingText(id, value) {
+  const element = document.getElementById(id);
+
+  if (!element) return;
+
+  element.textContent = formatPackingNumber(value);
+}
+
+function formatPackingNumber(value) {
+  return Number(value || 0).toLocaleString("en-US", {
+    maximumFractionDigits: 2,
+  });
+}
+
+function updateKronesProductionSummary() {
+  const morning =
+    (parseFloat(document.getElementById("krones1a")?.value) || 0) +
+    (parseFloat(document.getElementById("krones2a")?.value) || 0) +
+    (parseFloat(document.getElementById("krones3a")?.value) || 0);
+
+  const evening =
+    (parseFloat(document.getElementById("krones1b")?.value) || 0) +
+    (parseFloat(document.getElementById("krones2b")?.value) || 0) +
+    (parseFloat(document.getElementById("krones3b")?.value) || 0);
+
+  const night =
+    (parseFloat(document.getElementById("krones1c")?.value) || 0) +
+    (parseFloat(document.getElementById("krones2c")?.value) || 0) +
+    (parseFloat(document.getElementById("krones3c")?.value) || 0);
+
+  const dailyTotal = morning + evening + night;
+
+  const morningElement = document.getElementById("kronesMorningTotal");
+
+  const eveningElement = document.getElementById("kronesEveningTotal");
+
+  const nightElement = document.getElementById("kronesNightTotal");
+
+  const dailyElement = document.getElementById("kronesDailyTotal");
+
+  if (morningElement) {
+    morningElement.textContent = morning.toLocaleString("en-US");
+  }
+
+  if (eveningElement) {
+    eveningElement.textContent = evening.toLocaleString("en-US");
+  }
+
+  if (nightElement) {
+    nightElement.textContent = night.toLocaleString("en-US");
+  }
+
+  if (dailyElement) {
+    dailyElement.textContent = dailyTotal.toLocaleString("en-US");
   }
 }
 
