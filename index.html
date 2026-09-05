@@ -14643,17 +14643,36 @@ if (factory === "oil") {
         daily_notes: "📅 ملاحظات اليوم",
       };
 
-     function toggleSidebar() {
+function toggleSidebar() {
   const sidebar = document.querySelector(".sidebar");
   const overlay = document.getElementById("sidebarOverlay");
 
-  sidebar.classList.toggle("open");
-  overlay.classList.toggle("show");
+  if (!sidebar) return;
 
-  document.body.classList.toggle(
-    "sidebar-closed",
-    !sidebar.classList.contains("open")
-  );
+  const isOpen = sidebar.classList.contains("open");
+
+  if (isOpen) {
+    // إغلاق
+    sidebar.classList.remove("open");
+
+    if (overlay) {
+      overlay.classList.remove("show");
+      overlay.style.pointerEvents = "none";
+      overlay.style.opacity = "0";
+      overlay.style.visibility = "hidden";
+    }
+
+  } else {
+    // فتح
+    sidebar.classList.add("open");
+
+    if (overlay) {
+      overlay.classList.add("show");
+      overlay.style.pointerEvents = "auto";
+      overlay.style.opacity = "1";
+      overlay.style.visibility = "visible";
+    }
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {

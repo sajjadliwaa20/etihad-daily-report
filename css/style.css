@@ -20391,3 +20391,129 @@ body.dark-mode details summary {
     max-width: 270px !important;
   }
 }
+
+/* =========================================================
+   📱 FINAL MOBILE SIDEBAR / OVERLAY FIX
+   ========================================================= */
+
+@media (max-width: 900px) {
+  /* =========================================
+     SIDEBAR
+     ========================================= */
+
+  .sidebar {
+    position: fixed !important;
+
+    top: 0 !important;
+    right: 0 !important;
+
+    width: min(280px, 78vw) !important;
+    max-width: 280px !important;
+
+    height: 100dvh !important;
+
+    box-sizing: border-box !important;
+
+    transform: translate3d(100%, 0, 0) !important;
+
+    transition: transform 260ms cubic-bezier(0.4, 0, 1, 1) !important;
+
+    z-index: 1001 !important;
+
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    will-change: transform;
+  }
+
+  .sidebar.open {
+    right: 0 !important;
+
+    transform: translate3d(0, 0, 0) !important;
+  }
+
+  /* =========================================
+     OVERLAY
+     ========================================= */
+
+  #sidebarOverlay {
+    position: fixed !important;
+
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100dvh !important;
+
+    background: rgba(0, 0, 0, 0.28) !important;
+
+    /* لا Blur إطلاقًا */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    opacity: 0 !important;
+    visibility: hidden !important;
+
+    /* أهم سطر في الإصلاح */
+    pointer-events: none !important;
+
+    z-index: 1000 !important;
+
+    transition:
+      opacity 180ms ease,
+      visibility 180ms ease !important;
+  }
+
+  #sidebarOverlay.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    pointer-events: auto !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* =========================================
+     زر القائمة
+     ========================================= */
+
+  #menuToggle {
+    position: fixed !important;
+
+    top: 15px !important;
+    right: 15px !important;
+
+    width: 46px !important;
+    height: 46px !important;
+
+    padding: 0 !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    z-index: 10000 !important;
+  }
+
+  /* =========================================
+     CONTENT
+     ========================================= */
+
+  .content {
+    margin-right: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* =========================================
+   هواتف صغيرة
+   ========================================= */
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: min(270px, 78vw) !important;
+    max-width: 270px !important;
+  }
+}
