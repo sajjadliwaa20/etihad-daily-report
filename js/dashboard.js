@@ -580,6 +580,120 @@ function applySugarDashboardPermissions(role) {
   }
 }
 
+function applyApprovalPermissions(role) {
+  /* =========================================
+     إخفاء جميع مناطق الاعتماد أولاً
+     ========================================= */
+
+  const powerApprovalArea = document.querySelector(".power-approval-area");
+
+  const flourApprovalArea = document.querySelector(".flour-approval-area");
+
+  const sugarApprovalArea = document.querySelector(".sugar-approval-area");
+
+  const oilApprovalArea = document.querySelector(".oil-approval-area");
+
+  if (powerApprovalArea) {
+    powerApprovalArea.style.display = "none";
+  }
+
+  if (flourApprovalArea) {
+    flourApprovalArea.style.display = "none";
+  }
+
+  if (sugarApprovalArea) {
+    sugarApprovalArea.style.display = "none";
+  }
+
+  if (oilApprovalArea) {
+    oilApprovalArea.style.display = "none";
+  }
+
+  /* =========================================
+     إخفاء أزرار الاعتماد نفسها
+     ========================================= */
+
+  const powerBtn = document.getElementById("approvePowerBtn");
+
+  const flourBtn = document.getElementById("approveFlourBtn");
+
+  const sugarBtn = document.getElementById("SugarBtn");
+
+  const oilBtn = document.getElementById("OilBtn");
+
+  if (powerBtn) {
+    powerBtn.style.display = "none";
+  }
+
+  if (flourBtn) {
+    flourBtn.style.display = "none";
+  }
+
+  if (sugarBtn) {
+    sugarBtn.style.display = "none";
+  }
+
+  if (oilBtn) {
+    oilBtn.style.display = "none";
+  }
+
+  /* =========================================
+     حساب الطاقة
+     ========================================= */
+
+  if (role === "power") {
+    if (powerApprovalArea) {
+      powerApprovalArea.style.display = "flex";
+    }
+
+    if (powerBtn) {
+      powerBtn.style.display = "inline-flex";
+    }
+  }
+
+  /* =========================================
+     حساب المطحنة
+     ========================================= */
+
+  if (role === "flour") {
+    if (flourApprovalArea) {
+      flourApprovalArea.style.display = "flex";
+    }
+
+    if (flourBtn) {
+      flourBtn.style.display = "inline-flex";
+    }
+  }
+
+  /* =========================================
+     حساب السكر
+     ========================================= */
+
+  if (role === "sugar") {
+    if (sugarApprovalArea) {
+      sugarApprovalArea.style.display = "flex";
+    }
+
+    if (sugarBtn) {
+      sugarBtn.style.display = "inline-flex";
+    }
+  }
+
+  /* =========================================
+     حساب الزيت
+     ========================================= */
+
+  if (role === "oil") {
+    if (oilApprovalArea) {
+      oilApprovalArea.style.display = "flex";
+    }
+
+    if (oilBtn) {
+      oilBtn.style.display = "inline-flex";
+    }
+  }
+}
+
 async function applyPermissions() {
   console.log("applyPermissions started");
 
@@ -667,6 +781,8 @@ async function applyPermissions() {
   buttons.forEach((btn) => {
     btn.style.display = "inline-block";
   });
+
+  applyApprovalPermissions(role);
 
   /* =========================================
    الحسابات الفرعية
@@ -1950,26 +2066,43 @@ function updateExtractionGauge(value) {
 
 /* تحديث حالة بطاقة التوقف */
 
+/* =========================================================
+   FLOUR — PRODUCTION STOP STATUS
+   ========================================================= */
+
 function updateStopCard(element) {
-  const card = element.closest(".stop-card");
+  if (!element) return;
+
+  /* يدعم بطاقات الطحين الجديدة */
+  const card =
+    element.closest(".flour-stop-card") || element.closest(".stop-card");
 
   if (!card) return;
 
-  const durationInput = card.querySelector("input[data-save]");
+  const durationInput =
+    card.querySelector('input[id$="stoptime"]') ||
+    card.querySelector(".flour-stop-duration input") ||
+    card.querySelector(".stop-duration-box input");
 
-  const dot = card.querySelector(".stop-status-dot");
+  const dot =
+    card.querySelector(".flour-stop-status-dot") ||
+    card.querySelector(".stop-status-dot");
 
-  const statusText = card.querySelector(".stop-status-text");
+  const statusText =
+    card.querySelector(".flour-stop-status-text") ||
+    card.querySelector(".stop-status-text");
 
-  const minutes = parseFloat(durationInput?.value) || 0;
+  const minutes = parseFloat(durationInput?.value);
 
-  /* إزالة الحالات القديمة */
-
+  /* إزالة الحالات السابقة */
   card.classList.remove("stop-normal", "stop-warning", "stop-danger");
 
-  /* لا يوجد توقف */
+  /* =====================================================
+       لا يوجد توقف
+       فقط عندما تكون القيمة 0 أو فارغة
+       ===================================================== */
 
-  if (minutes <= 0) {
+  if (!Number.isFinite(minutes) || minutes === 0) {
     if (dot) {
       dot.style.background = "#6c757d";
     }
@@ -1981,9 +2114,11 @@ function updateStopCard(element) {
     return;
   }
 
-  /* توقف طبيعي */
+  /* =====================================================
+       توقف مسجل
+       ===================================================== */
 
-  if (minutes < 30) {
+  if (minutes > 0 && minutes < 30) {
     card.classList.add("stop-normal");
 
     if (dot) {
@@ -1991,10 +2126,9 @@ function updateStopCard(element) {
     }
 
     if (statusText) {
-      statusText.textContent = "توقف قصير";
+      statusText.textContent = `توقف قصير • ${minutes} دقيقة`;
     }
-  } else if (minutes < 120) {
-    /* توقف يحتاج انتباه */
+  } else if (minutes >= 30 && minutes < 120) {
     card.classList.add("stop-warning");
 
     if (dot) {
@@ -2002,10 +2136,9 @@ function updateStopCard(element) {
     }
 
     if (statusText) {
-      statusText.textContent = "يحتاج متابعة";
+      statusText.textContent = `يحتاج متابعة • ${minutes} دقيقة`;
     }
-  } else {
-    /* توقف طويل */
+  } else if (minutes >= 120) {
     card.classList.add("stop-danger");
 
     if (dot) {
@@ -2013,7 +2146,7 @@ function updateStopCard(element) {
     }
 
     if (statusText) {
-      statusText.textContent = "توقف طويل";
+      statusText.textContent = `توقف طويل • ${minutes} دقيقة`;
     }
   }
 }
@@ -3853,6 +3986,1400 @@ function updateKronesProductionSummary() {
   if (dailyElement) {
     dailyElement.textContent = dailyTotal.toLocaleString("en-US");
   }
+}
+
+function toggleSalesDashboard() {
+  const content = document.getElementById("salesDashboardContent");
+
+  const header = document.querySelector(".sales-command-header");
+
+  const chevron = document.getElementById("salesDashboardChevron");
+
+  if (!content || !header) return;
+
+  const isCollapsed = content.classList.contains("collapsed");
+
+  if (isCollapsed) {
+    content.classList.remove("collapsed");
+
+    header.classList.remove("collapsed");
+
+    header.setAttribute("aria-expanded", "true");
+
+    if (chevron) {
+      chevron.textContent = "▼";
+    }
+  } else {
+    content.classList.add("collapsed");
+
+    header.classList.add("collapsed");
+
+    header.setAttribute("aria-expanded", "false");
+
+    if (chevron) {
+      chevron.textContent = "◀";
+    }
+  }
+}
+
+/* =========================================================
+   POWER DASHBOARD COLLAPSE
+   ========================================================= */
+
+function togglePowerDashboard() {
+  const content = document.getElementById("powerDashboardContent");
+
+  const header = document.querySelector(".power-command-header");
+
+  const chevron = document.getElementById("powerDashboardChevron");
+
+  if (!content || !header) return;
+
+  const collapsed = content.classList.contains("collapsed");
+
+  if (collapsed) {
+    content.classList.remove("collapsed");
+    header.classList.remove("collapsed");
+
+    header.setAttribute("aria-expanded", "true");
+
+    if (chevron) {
+      chevron.textContent = "▼";
+    }
+  } else {
+    content.classList.add("collapsed");
+    header.classList.add("collapsed");
+
+    header.setAttribute("aria-expanded", "false");
+
+    if (chevron) {
+      chevron.textContent = "◀";
+    }
+  }
+}
+
+/* =========================================================
+   BLACK OIL TOTAL VISUAL
+   ========================================================= */
+
+/* =========================================================
+   ELECTRICAL LOAD VISUAL
+   ========================================================= */
+
+function updateElectricalLoadVisual() {
+  const minField = document.getElementById("min_electrical_load");
+
+  const maxField = document.getElementById("max_electrical_load");
+
+  const range = document.getElementById("electricalLoadRange");
+
+  if (!minField || !maxField || !range) {
+    return;
+  }
+
+  const min = Number(minField.value) || 0;
+
+  const max = Number(maxField.value) || 0;
+
+  if (max <= 0) {
+    range.style.width = "0%";
+    return;
+  }
+
+  const ratio = Math.max(0, Math.min(min / max, 1));
+
+  range.style.width = `${ratio * 100}%`;
+}
+
+/* =========================================================
+   POWER DASHBOARD VISUAL REFRESH
+   ========================================================= */
+
+function refreshPowerDashboardVisuals() {
+  try {
+    updateBlackOilTotalVisual();
+  } catch (e) {
+    console.warn("Black oil visual update failed:", e);
+  }
+
+  try {
+    updateElectricalLoadVisual();
+  } catch (e) {
+    console.warn("Electrical load visual update failed:", e);
+  }
+}
+
+/* =========================================================
+   FLOUR MILL — COMMAND CENTER
+========================================================= */
+
+function toggleFlourDashboard() {
+  const content = document.getElementById("flourDashboardContent");
+  const header = document.querySelector(".flour-command-header");
+  const button = document.querySelector(".flour-command-toggle");
+
+  if (!content || !header) return;
+
+  const collapsed = content.classList.toggle("collapsed");
+
+  header.classList.toggle("collapsed", collapsed);
+
+  if (button) {
+    button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  }
+}
+
+function updateFlourDashboardKPIs() {
+  /* =========================================
+     استهلاك الحنطة اليومي
+     المصدر الحقيقي = الحقول الأصلية
+     ========================================= */
+
+  const australian =
+    Number(document.getElementById("aus_wheat_use")?.value) || 0;
+
+  const iraqi = Number(document.getElementById("iraq_wheat_use")?.value) || 0;
+
+  const russian = Number(document.getElementById("rus_wheat_use")?.value) || 0;
+
+  const wheatTotal = australian + iraqi + russian;
+
+  /* =========================================
+     تحديث الإجمالي الأصلي
+     ========================================= */
+
+  const originalTotal = document.getElementById(
+    "flour_wheat_consumption_total",
+  );
+
+  if (originalTotal) {
+    originalTotal.textContent = wheatTotal.toFixed(2);
+  }
+
+  /* =========================================
+     الإنتاج الكلي
+     ========================================= */
+
+  const production =
+    Number(document.getElementById("flour_grand_total")?.value) || 0;
+
+  /* =========================================
+     كفاءة الاستخراج
+     ========================================= */
+
+  const efficiency =
+    Number(document.getElementById("extraction_eff")?.value) || 0;
+
+  /* =========================================
+     إجمالي إنتاج التعبئة
+     = الطحين + النخالة
+     ========================================= */
+
+  const flourPackaging =
+    Number(document.getElementById("flour_packaging_stock")?.value) || 0;
+
+  const branPackaging =
+    Number(document.getElementById("bran_packaging_stock")?.value) || 0;
+
+  const totalPackaging = flourPackaging + branPackaging;
+
+  /* =========================================
+     تحديث بطاقات الـDashboard
+     ========================================= */
+
+  const wheatEl = document.getElementById("flourDashConsumption");
+
+  const productionEl = document.getElementById("flourDashProduction");
+
+  const efficiencyEl = document.getElementById("flourDashEfficiency");
+
+  const packagingEl = document.getElementById("flourDashStock");
+
+  if (wheatEl) {
+    wheatEl.textContent = wheatTotal.toFixed(2);
+  }
+
+  if (productionEl) {
+    productionEl.textContent = production.toFixed(2);
+  }
+
+  if (efficiencyEl) {
+    efficiencyEl.textContent = efficiency.toFixed(2);
+  }
+
+  if (packagingEl) {
+    packagingEl.textContent = totalPackaging.toFixed(2);
+  }
+}
+
+/* =========================
+   تحديث مزيج الإنتاج
+========================= */
+
+function updateFlourDashboardOutput() {
+  const f1 = Number(document.getElementById("flour_total_f1")?.value) || 0;
+
+  const f3 = Number(document.getElementById("flour_total_f3")?.value) || 0;
+
+  const bran = Number(document.getElementById("flour_total_wbran")?.value) || 0;
+
+  const total = f1 + f3 + bran;
+
+  const f1El = document.getElementById("flourDashF1");
+  const f3El = document.getElementById("flourDashF3");
+  const branEl = document.getElementById("flourDashBran");
+
+  if (f1El) f1El.textContent = `${f1.toFixed(2)} طن`;
+  if (f3El) f3El.textContent = `${f3.toFixed(2)} طن`;
+  if (branEl) branEl.textContent = `${bran.toFixed(2)} طن`;
+
+  const f1Bar = document.getElementById("flourDashF1Bar");
+  const f3Bar = document.getElementById("flourDashF3Bar");
+  const branBar = document.getElementById("flourDashBranBar");
+
+  if (f1Bar) {
+    f1Bar.style.width =
+      total > 0 ? `${Math.min((f1 / total) * 100, 100)}%` : "0%";
+  }
+
+  if (f3Bar) {
+    f3Bar.style.width =
+      total > 0 ? `${Math.min((f3 / total) * 100, 100)}%` : "0%";
+  }
+
+  if (branBar) {
+    branBar.style.width =
+      total > 0 ? `${Math.min((bran / total) * 100, 100)}%` : "0%";
+  }
+}
+
+/* =========================
+   تحديث أرصدة الحنطة
+========================= */
+
+function updateFlourDashboardStock() {
+  const aus = Number(document.getElementById("auseti")?.value) || 0;
+
+  const rus = Number(document.getElementById("ruseti")?.value) || 0;
+
+  const total = aus + rus;
+
+  const ausEl = document.getElementById("flourDashAusStock");
+
+  const rusEl = document.getElementById("flourDashRusStock");
+
+  if (ausEl) {
+    ausEl.textContent = `${aus.toFixed(2)} طن`;
+  }
+
+  if (rusEl) {
+    rusEl.textContent = `${rus.toFixed(2)} طن`;
+  }
+
+  const ausBar = document.getElementById("flourDashAusStockBar");
+
+  const rusBar = document.getElementById("flourDashRusStockBar");
+
+  if (ausBar) {
+    ausBar.style.width =
+      total > 0 ? `${Math.min((aus / total) * 100, 100)}%` : "0%";
+  }
+
+  if (rusBar) {
+    rusBar.style.width =
+      total > 0 ? `${Math.min((rus / total) * 100, 100)}%` : "0%";
+  }
+}
+
+/* =========================
+   تحديث لوحة المطحنة كاملة
+========================= */
+
+function refreshFlourDashboard() {
+  updateFlourDashboardKPIs();
+  updateFlourDashboardOutput();
+  updateFlourDashboardStock();
+}
+
+/* =========================
+   التهيئة
+========================= */
+
+function initializeFlourDashboard() {
+  const content = document.getElementById("flourDashboardContent");
+
+  const header = document.querySelector(".flour-command-header");
+
+  if (!content || !header) return;
+
+  /* Dashboard مفتوح افتراضيًا */
+  content.classList.remove("collapsed");
+  header.classList.remove("collapsed");
+
+  refreshFlourDashboard();
+}
+
+/* =========================================================
+   FLOUR — RAW MATERIAL CONSUMPTION DASHBOARD
+========================================================= */
+
+function updateFlourRawDashboard() {
+  const aus = Number(document.getElementById("aus_wheat_use")?.value) || 0;
+
+  const iraq = Number(document.getElementById("iraq_wheat_use")?.value) || 0;
+
+  const rus = Number(document.getElementById("rus_wheat_use")?.value) || 0;
+
+  const total = aus + iraq + rus;
+
+  /* =========================
+     الإجمالي الأصلي للنظام
+  ========================== */
+
+  const originalTotal = document.getElementById(
+    "flour_wheat_consumption_total",
+  );
+
+  if (originalTotal) {
+    /*
+      الحقل قد يكون input أو span
+    */
+
+    if ("value" in originalTotal) {
+      originalTotal.value = total.toFixed(2);
+    } else {
+      originalTotal.textContent = total.toFixed(2);
+    }
+  }
+
+  /* =========================
+     Dashboard total
+  ========================== */
+
+  const dashboardTotal = document.getElementById("flourRawDashboardTotal");
+
+  if (dashboardTotal) {
+    dashboardTotal.textContent = total.toFixed(2);
+  }
+
+  /* =========================
+     نسب الأنواع
+  ========================== */
+
+  const ausBar = document.getElementById("flourRawAusBar");
+
+  const iraqBar = document.getElementById("flourRawIraqBar");
+
+  const rusBar = document.getElementById("flourRawRusBar");
+
+  if (ausBar) {
+    ausBar.style.width =
+      total > 0 ? `${Math.min((aus / total) * 100, 100)}%` : "0%";
+  }
+
+  if (iraqBar) {
+    iraqBar.style.width =
+      total > 0 ? `${Math.min((iraq / total) * 100, 100)}%` : "0%";
+  }
+
+  if (rusBar) {
+    rusBar.style.width =
+      total > 0 ? `${Math.min((rus / total) * 100, 100)}%` : "0%";
+  }
+
+  /*
+    تحديث لوحة الـ Command Center
+  */
+
+  if (typeof refreshFlourDashboard === "function") {
+    refreshFlourDashboard();
+  }
+}
+
+/* =========================================================
+   FLOUR — RAW MATERIAL STOCK DASHBOARD
+========================================================= */
+
+function updateFlourStockDashboard() {
+  const aus = Number(document.getElementById("auseti")?.value) || 0;
+
+  const rus = Number(document.getElementById("ruseti")?.value) || 0;
+
+  const total = aus + rus;
+
+  /* =========================
+     إجمالي المخزون
+  ========================== */
+
+  const totalEl = document.getElementById("flourStockDashboardTotal");
+
+  if (totalEl) {
+    totalEl.textContent = total.toFixed(2);
+  }
+
+  /* =========================
+     نسب المخزون
+     
+     النسبة هنا مقارنة بين
+     المخزون الأسترالي والروسي
+     وليس سعة خزان افتراضية.
+  ========================== */
+
+  const ausPercent = total > 0 ? (aus / total) * 100 : 0;
+
+  const rusPercent = total > 0 ? (rus / total) * 100 : 0;
+
+  /* =========================
+     الأشرطة
+  ========================== */
+
+  const ausBar = document.getElementById("aus_stock_fill");
+
+  const rusBar = document.getElementById("rus_stock_fill");
+
+  if (ausBar) {
+    ausBar.style.width = `${Math.min(ausPercent, 100)}%`;
+  }
+
+  if (rusBar) {
+    rusBar.style.width = `${Math.min(rusPercent, 100)}%`;
+  }
+
+  /* =========================
+     النسب الرقمية
+  ========================== */
+
+  const ausPercentEl = document.getElementById("flourAusStockPercent");
+
+  const rusPercentEl = document.getElementById("flourRusStockPercent");
+
+  if (ausPercentEl) {
+    ausPercentEl.textContent = `${ausPercent.toFixed(0)}%`;
+  }
+
+  if (rusPercentEl) {
+    rusPercentEl.textContent = `${rusPercent.toFixed(0)}%`;
+  }
+
+  /* =========================
+     حالة المخزون
+  ========================== */
+
+  updateFlourStockStatus("aus_stock_status", aus);
+
+  updateFlourStockStatus("rus_stock_status", rus);
+
+  /* =========================
+     تحديث Dashboard الرئيسي
+  ========================== */
+
+  if (typeof refreshFlourDashboard === "function") {
+    refreshFlourDashboard();
+  }
+}
+
+/* =========================================================
+   حالة المخزون
+========================================================= */
+
+function updateFlourStockStatus(elementId, value) {
+  const el = document.getElementById(elementId);
+
+  if (!el) return;
+
+  if (value <= 0) {
+    el.textContent = "نفاد المخزون";
+
+    el.style.background = "rgba(220,53,69,.13)";
+
+    el.style.borderColor = "rgba(220,53,69,.20)";
+
+    el.style.color = "#ff8f9a";
+  } else {
+    el.textContent = "متوفر";
+
+    el.style.background = "rgba(75,190,125,.12)";
+
+    el.style.borderColor = "rgba(75,190,125,.15)";
+
+    el.style.color = "#8ee0b2";
+  }
+}
+
+/* =========================================================
+   FLOUR — AUTOMATIC EXTRACTION EFFICIENCY
+   ========================================================= */
+
+function updateFlourExtractionEfficiency() {
+  /* =========================
+       إجمالي F1
+       ========================= */
+
+  const f1 = Number(document.getElementById("flour_total_f1")?.value) || 0;
+
+  /* =========================
+       الحنطة المطحونة
+       ========================= */
+
+  const groundWheat =
+    Number(document.getElementById("flour_total_ground_wheat")?.value) || 0;
+
+  /* =========================
+       الحساب
+       F1 ÷ الحنطة المطحونة × 100
+       ========================= */
+
+  let efficiency = 0;
+
+  if (groundWheat > 0) {
+    efficiency = (f1 / groundWheat) * 100;
+  }
+
+  /* =========================
+       حماية
+       ========================= */
+
+  efficiency = Math.max(0, Math.min(efficiency, 100));
+
+  /* =========================
+       حفظ القيمة في الحقل الأصلي
+       ========================= */
+
+  const originalField = document.getElementById("extraction_eff");
+
+  if (originalField) {
+    originalField.value = efficiency.toFixed(2);
+  }
+
+  /* =========================
+       الرقم داخل الحلقة
+       ========================= */
+
+  const display = document.getElementById("extractionEfficiencyDisplay");
+
+  if (display) {
+    display.textContent = efficiency.toFixed(2);
+  }
+
+  /* =========================
+       تحريك الحلقة
+       ========================= */
+
+  const ring = document.getElementById("extractionRingProgress");
+
+  if (ring) {
+    const radius = 48;
+
+    const circumference = 2 * Math.PI * radius;
+
+    const offset = circumference - (efficiency / 100) * circumference;
+
+    ring.style.strokeDasharray = circumference;
+
+    ring.style.strokeDashoffset = offset;
+  }
+
+  /* =========================
+       تحديث Dashboard العلوي
+       ========================= */
+
+  const dashboardDisplay = document.getElementById(
+    "flourDashboardExtractionEfficiencyDisplay",
+  );
+
+  if (dashboardDisplay) {
+    dashboardDisplay.textContent = efficiency.toFixed(2);
+  }
+
+  const dashboardRing = document.getElementById(
+    "flourDashboardExtractionRingProgress",
+  );
+
+  if (dashboardRing) {
+    const radius = 48;
+
+    const circumference = 2 * Math.PI * radius;
+
+    const offset = circumference - (efficiency / 100) * circumference;
+
+    dashboardRing.style.strokeDasharray = circumference;
+
+    dashboardRing.style.strokeDashoffset = offset;
+  }
+}
+
+/* =========================================================
+   FLOUR — PRODUCTION STOP VISUAL STATUS
+   تحديث الحالة تلقائيًا عند التحميل أو التعديل
+========================================================= */
+
+function updateFlourStopVisualStatus() {
+  const stops = [
+    {
+      line: "A",
+      time: "astoptime",
+      cause: "astopcause",
+      status: "flourStopStatusA",
+    },
+    {
+      line: "B",
+      time: "bstoptime",
+      cause: "bstopcause",
+      status: "flourStopStatusB",
+    },
+    {
+      line: "C",
+      time: "cstoptime",
+      cause: "cstopcause",
+      status: "flourStopStatusC",
+    },
+    {
+      line: "D",
+      time: "dstoptime",
+      cause: "dstopcause",
+      status: "flourStopStatusD",
+    },
+    {
+      line: "E",
+      time: "estoptime",
+      cause: "estopcause",
+      status: "flourStopStatusE",
+    },
+    {
+      line: "F",
+      time: "fstoptime",
+      cause: "fstopcause",
+      status: "flourStopStatusF",
+    },
+  ];
+
+  stops.forEach((stop) => {
+    const timeEl = document.getElementById(stop.time);
+
+    const causeEl = document.getElementById(stop.cause);
+
+    const statusEl = document.getElementById(stop.status);
+
+    const card = document.querySelector(
+      `.flour-stop-card[data-line="${stop.line}"]`,
+    );
+
+    if (!card) return;
+
+    /*
+     * قراءة مدة التوقف الحالية
+     */
+
+    const minutes = parseFloat(timeEl?.value);
+
+    /*
+     * إزالة الحالات السابقة
+     */
+
+    card.classList.remove(
+      "stop-normal",
+      "stop-warning",
+      "stop-danger",
+      "has-stop",
+    );
+
+    /*
+     * ==========================================
+     * لا يوجد توقف
+     * فقط عندما تكون القيمة:
+     * فارغة أو 0
+     * ==========================================
+     */
+
+    if (!Number.isFinite(minutes) || minutes <= 0) {
+      if (statusEl) {
+        statusEl.textContent = "لا يوجد توقف";
+      }
+
+      return;
+    }
+
+    /*
+     * ==========================================
+     * توقف قصير
+     * أكثر من 0 وأقل من 30 دقيقة
+     * ==========================================
+     */
+
+    if (minutes > 0 && minutes < 30) {
+      card.classList.add("stop-normal", "has-stop");
+
+      if (statusEl) {
+        statusEl.textContent = `توقف قصير • ${minutes} دقيقة`;
+      }
+
+      return;
+    }
+
+    /*
+     * ==========================================
+     * توقف يحتاج متابعة
+     * 30 إلى أقل من 120 دقيقة
+     * ==========================================
+     */
+
+    if (minutes >= 30 && minutes < 120) {
+      card.classList.add("stop-warning", "has-stop");
+
+      if (statusEl) {
+        statusEl.textContent = `يحتاج متابعة • ${minutes} دقيقة`;
+      }
+
+      return;
+    }
+
+    /*
+     * ==========================================
+     * توقف طويل
+     * 120 دقيقة فأكثر
+     * ==========================================
+     */
+
+    if (minutes >= 120) {
+      card.classList.add("stop-danger", "has-stop");
+
+      if (statusEl) {
+        statusEl.textContent = `توقف طويل • ${minutes} دقيقة`;
+      }
+    }
+  });
+}
+
+function initializeFlourStopVisuals() {
+  const fields = [
+    "astoptime",
+    "astopcause",
+    "bstoptime",
+    "bstopcause",
+    "cstoptime",
+    "cstopcause",
+    "dstoptime",
+    "dstopcause",
+    "estoptime",
+    "estopcause",
+    "fstoptime",
+    "fstopcause",
+  ];
+
+  fields.forEach((id) => {
+    const field = document.getElementById(id);
+
+    if (!field) return;
+
+    field.addEventListener("input", updateFlourStopVisualStatus);
+
+    field.addEventListener("change", updateFlourStopVisualStatus);
+  });
+
+  updateFlourStopVisualStatus();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeFlourStopVisuals);
+} else {
+  initializeFlourStopVisuals();
+}
+
+/* =========================================================
+   FLOUR — PACKAGING STATUS
+========================================================= */
+
+function updateFlourPackagingStatus() {
+  const flour =
+    Number(document.getElementById("flour_packaging_stock")?.value) || 0;
+
+  const bran =
+    Number(document.getElementById("bran_packaging_stock")?.value) || 0;
+
+  const flourStatus = document.getElementById("flourPackagingStatus");
+
+  const branStatus = document.getElementById("branPackagingStatus");
+
+  updatePackagingStatusElement(flourStatus, flour);
+
+  updatePackagingStatusElement(branStatus, bran);
+}
+
+function updatePackagingStatusElement(element, value) {
+  if (!element) return;
+
+  if (value <= 0) {
+    element.textContent = "نفاد المخزون";
+
+    element.style.color = "#ff9188";
+  } else {
+    element.textContent = "متوفر";
+
+    element.style.color = "#8ee0b2";
+  }
+}
+const originalUpdatePackagingStockVisual = window.updatePackagingStockVisual;
+
+window.updatePackagingStockVisual = function (type) {
+  if (typeof originalUpdatePackagingStockVisual === "function") {
+    originalUpdatePackagingStockVisual(type);
+  }
+
+  updateFlourPackagingStatus();
+};
+
+/* =========================================================
+   FLOUR — PRODUCTION HISTORY
+   اليوم + آخر 3 أيام
+========================================================= */
+
+/* ---------------------------------------------------------
+   حساب التاريخ السابق
+--------------------------------------------------------- */
+
+function getFlourPreviousDate(dateString, daysAgo) {
+  const date = new Date(`${dateString}T00:00:00`);
+
+  date.setDate(date.getDate() - daysAgo);
+
+  return (
+    date.getFullYear() +
+    "-" +
+    String(date.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(date.getDate()).padStart(2, "0")
+  );
+}
+
+/* ---------------------------------------------------------
+   تنسيق التاريخ للعرض
+--------------------------------------------------------- */
+
+function formatFlourHistoryDate(dateString, index) {
+  if (index === 3) {
+    return "اليوم";
+  }
+
+  const date = new Date(`${dateString}T00:00:00`);
+
+  return (
+    String(date.getDate()).padStart(2, "0") +
+    "/" +
+    String(date.getMonth() + 1).padStart(2, "0")
+  );
+}
+
+/* =========================================================
+   FLOUR — PRODUCTION HISTORY
+   اليوم + آخر 3 أيام
+========================================================= */
+
+let flourProductionHistoryChart = null;
+
+/* ---------------------------------------------------------
+   الحصول على تاريخ سابق
+--------------------------------------------------------- */
+
+function getFlourPreviousDate(dateString, daysAgo) {
+  const date = new Date(dateString + "T00:00:00");
+
+  date.setDate(date.getDate() - daysAgo);
+
+  return (
+    date.getFullYear() +
+    "-" +
+    String(date.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(date.getDate()).padStart(2, "0")
+  );
+}
+
+/* ---------------------------------------------------------
+   قراءة إنتاج اليوم مباشرة من الشاشة
+   المصدر الحقيقي = flour_grand_total
+--------------------------------------------------------- */
+
+function getFlourProductionFromScreen() {
+  const totalEl = document.getElementById("flour_grand_total");
+
+  if (!totalEl) {
+    return 0;
+  }
+
+  const value = parseFloat(totalEl.value);
+
+  return Number.isFinite(value) ? value : 0;
+}
+
+/* ---------------------------------------------------------
+   حساب إنتاج يوم قديم من daily_reports
+--------------------------------------------------------- */
+
+function calculateFlourProductionFromRows(rows) {
+  let total = null;
+
+  let f1 = null;
+  let f3 = null;
+  let bran = null;
+
+  rows.forEach((row) => {
+    const value = parseFloat(row.field_value);
+
+    if (!Number.isFinite(value)) {
+      return;
+    }
+
+    if (row.field_name === "flour_grand_total") {
+      total = value;
+    }
+
+    if (row.field_name === "flour_total_f1") {
+      f1 = value;
+    }
+
+    if (row.field_name === "flour_total_f3") {
+      f3 = value;
+    }
+
+    if (row.field_name === "flour_total_wbran") {
+      bran = value;
+    }
+  });
+
+  /*
+       إذا كان grand total محفوظًا
+       نستخدمه مباشرة.
+    */
+
+  if (total !== null) {
+    return total;
+  }
+
+  /*
+       احتياطياً نحسبه من المنتجات.
+    */
+
+  return (f1 || 0) + (f3 || 0) + (bran || 0);
+}
+
+async function getFlourRowsForDate(date) {
+  const { data, error } = await supabaseClient
+    .from("daily_reports")
+    .select("report_date,field_name,field_value")
+    .eq("factory", "flour")
+    .eq("report_date", date)
+    .in("field_name", [
+      "flour_grand_total",
+      "flour_total_f1",
+      "flour_total_f3",
+      "flour_total_wbran",
+    ]);
+
+  if (error) {
+    console.error("FLOUR DATE LOAD ERROR:", error);
+
+    return [];
+  }
+
+  return data || [];
+}
+
+/* ---------------------------------------------------------
+   تحميل مقارنة إنتاج الطحين
+--------------------------------------------------------- */
+
+async function loadFlourProductionHistory() {
+  const dateElement = document.getElementById("reportDateKey");
+
+  if (!dateElement || !dateElement.value) {
+    return;
+  }
+
+  const selectedDate = dateElement.value;
+
+  const yesterday = getFlourPreviousDate(selectedDate, 1);
+
+  const beforeYesterday = getFlourPreviousDate(selectedDate, 2);
+
+  const threeDaysAgo = getFlourPreviousDate(selectedDate, 3);
+
+  /*
+   * ==========================================
+   * إنتاج اليوم
+   * المصدر الحقيقي = الحقل الأصلي في الشاشة
+   * ==========================================
+   */
+
+  let todayProduction = getFlourProductionFromScreen();
+
+  /*
+   * إذا كنا نستعرض تاريخًا قديمًا،
+   * نحتاج قيمة ذلك التاريخ من قاعدة البيانات.
+   */
+
+  const isToday = selectedDate === getTodayLocalDate();
+
+  /*
+   * ==========================================
+   * نعرض إنتاج اليوم مباشرة
+   * حتى لا ننتظر Supabase
+   * ==========================================
+   */
+
+  if (isToday) {
+    renderFlourProductionHistory(todayProduction, 0, 0, 0);
+  }
+
+  /*
+   * ==========================================
+   * تحميل الأيام الثلاثة السابقة فقط
+   * ==========================================
+   */
+
+  const previousDates = [yesterday, beforeYesterday, threeDaysAgo];
+
+  const { data, error } = await supabaseClient
+    .from("daily_reports")
+    .select("report_date,field_name,field_value")
+    .eq("factory", "flour")
+    .in("report_date", previousDates)
+    .in("field_name", [
+      "flour_grand_total",
+      "flour_total_f1",
+      "flour_total_f3",
+      "flour_total_wbran",
+    ]);
+
+  if (error) {
+    console.error("FLOUR PRODUCTION HISTORY ERROR:", error);
+
+    /*
+     * إنتاج اليوم يبقى ظاهرًا
+     * حتى لو فشل تحميل التاريخ
+     */
+
+    if (isToday) {
+      renderFlourProductionHistory(todayProduction, 0, 0, 0);
+    }
+
+    return;
+  }
+
+  const rows = data || [];
+
+  /*
+   * ==========================================
+   * فصل الأيام
+   * ==========================================
+   */
+
+  const yesterdayRows = rows.filter((row) => row.report_date === yesterday);
+
+  const beforeYesterdayRows = rows.filter(
+    (row) => row.report_date === beforeYesterday,
+  );
+
+  const threeDaysAgoRows = rows.filter(
+    (row) => row.report_date === threeDaysAgo,
+  );
+
+  /*
+   * ==========================================
+   * حساب الإنتاج التاريخي
+   * ==========================================
+   */
+
+  const yesterdayProduction = calculateFlourProductionFromRows(yesterdayRows);
+
+  const beforeYesterdayProduction =
+    calculateFlourProductionFromRows(beforeYesterdayRows);
+
+  const threeDaysAgoProduction =
+    calculateFlourProductionFromRows(threeDaysAgoRows);
+
+  /*
+   * ==========================================
+   * إذا كان التقرير الحالي هو اليوم
+   * نستخدم قيمة الشاشة لليوم.
+   * ==========================================
+   */
+
+  if (isToday) {
+    renderFlourProductionHistory(
+      todayProduction,
+      yesterdayProduction,
+      beforeYesterdayProduction,
+      threeDaysAgoProduction,
+    );
+
+    return;
+  }
+
+  /*
+   * ==========================================
+   * إذا كان التاريخ المختار قديمًا
+   * نقرأ إنتاج ذلك التاريخ من قاعدة البيانات.
+   * ==========================================
+   */
+
+  const todayRows = await getFlourRowsForDate(selectedDate);
+
+  const historicalTodayProduction = calculateFlourProductionFromRows(todayRows);
+
+  renderFlourProductionHistory(
+    historicalTodayProduction,
+    yesterdayProduction,
+    beforeYesterdayProduction,
+    threeDaysAgoProduction,
+  );
+}
+
+function renderFlourProductionHistory(
+  today,
+  yesterday,
+  beforeYesterday,
+  threeDaysAgo,
+) {
+  const canvas = document.getElementById("flourProductionHistoryChart");
+
+  if (!canvas) {
+    console.warn("flourProductionHistoryChart not found");
+    return;
+  }
+
+  /*
+       حماية من القيم غير الرقمية
+    */
+
+  today = Number.isFinite(Number(today)) ? Number(today) : 0;
+
+  yesterday = Number.isFinite(Number(yesterday)) ? Number(yesterday) : 0;
+
+  beforeYesterday = Number.isFinite(Number(beforeYesterday))
+    ? Number(beforeYesterday)
+    : 0;
+
+  threeDaysAgo = Number.isFinite(Number(threeDaysAgo))
+    ? Number(threeDaysAgo)
+    : 0;
+
+  /* =====================================================
+       تحديث بطاقات الملخص
+    ===================================================== */
+
+  const currentEl = document.getElementById("flourHistoryCurrentValue");
+
+  const averageEl = document.getElementById("flourHistoryAverage");
+
+  const changeEl = document.getElementById("flourHistoryChange");
+
+  const changePercentEl = document.getElementById("flourHistoryChangePercent");
+
+  if (currentEl) {
+    currentEl.textContent = today.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+
+  /*
+       المتوسط = الأيام الثلاثة السابقة
+    */
+
+  const previousDays = [threeDaysAgo, beforeYesterday, yesterday].filter(
+    (value) => Number.isFinite(value) && value > 0,
+  );
+
+  const average = previousDays.length
+    ? previousDays.reduce((sum, value) => sum + value, 0) / previousDays.length
+    : 0;
+
+  if (averageEl) {
+    averageEl.textContent = average
+      ? average.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      : "—";
+  }
+
+  /*
+       الفرق عن أمس
+    */
+
+  const difference = today - yesterday;
+
+  const percentage = yesterday > 0 ? (difference / yesterday) * 100 : null;
+
+  if (changeEl) {
+    if (yesterday > 0) {
+      changeEl.textContent =
+        (difference >= 0 ? "▲ " : "▼ ") +
+        Math.abs(difference).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+    } else {
+      changeEl.textContent = "—";
+    }
+  }
+
+  if (changePercentEl) {
+    if (percentage !== null) {
+      changePercentEl.textContent =
+        (percentage >= 0 ? "▲ " : "▼ ") +
+        Math.abs(percentage).toFixed(1) +
+        "% عن أمس";
+    } else {
+      changePercentEl.textContent = "لا توجد مقارنة";
+    }
+  }
+
+  /* =====================================================
+       الرسم
+    ===================================================== */
+
+  if (typeof Chart === "undefined") {
+    console.error("Chart.js غير محمل");
+
+    return;
+  }
+
+  if (flourProductionHistoryChart) {
+    flourProductionHistoryChart.destroy();
+
+    flourProductionHistoryChart = null;
+  }
+
+  const ctx = canvas.getContext("2d");
+
+  flourProductionHistoryChart = new Chart(ctx, {
+    type: "bar",
+
+    data: {
+      labels: ["قبل 3 أيام", "قبل أمس", "أمس", "اليوم"],
+
+      datasets: [
+        {
+          label: "الإنتاج الكلي",
+
+          data: [threeDaysAgo, beforeYesterday, yesterday, today],
+
+          backgroundColor: [
+            "rgba(160,170,178,.30)",
+            "rgba(160,170,178,.40)",
+            "rgba(160,170,178,.52)",
+            "rgba(55,184,120,.88)",
+          ],
+
+          borderColor: [
+            "rgba(160,170,178,.50)",
+            "rgba(160,170,178,.60)",
+            "rgba(160,170,178,.75)",
+            "rgba(55,184,120,1)",
+          ],
+
+          borderWidth: 1,
+
+          borderRadius: 10,
+
+          borderSkipped: false,
+
+          maxBarThickness: 75,
+        },
+      ],
+    },
+
+    options: {
+      responsive: true,
+
+      maintainAspectRatio: false,
+
+      animation: {
+        duration: 500,
+      },
+
+      plugins: {
+        legend: {
+          display: false,
+        },
+
+        tooltip: {
+          rtl: true,
+
+          textDirection: "rtl",
+
+          displayColors: false,
+
+          callbacks: {
+            label: function (context) {
+              return (
+                "الإنتاج: " +
+                Number(context.raw).toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }) +
+                " طن"
+              );
+            },
+          },
+        },
+      },
+
+      scales: {
+        x: {
+          grid: {
+            display: false,
+          },
+
+          ticks: {
+            color: "rgba(255,255,255,.65)",
+
+            font: {
+              size: 11,
+              weight: "600",
+            },
+          },
+        },
+
+        y: {
+          beginAtZero: true,
+
+          grid: {
+            color: "rgba(255,255,255,.07)",
+          },
+
+          ticks: {
+            color: "rgba(255,255,255,.45)",
+
+            callback: function (value) {
+              return Number(value).toLocaleString("en-US") + " طن";
+            },
+          },
+        },
+      },
+    },
+  });
+
+  /*
+       إجبار Chart.js على إعادة الحساب
+       بعد ظهور القسم.
+    */
+
+  setTimeout(() => {
+    if (flourProductionHistoryChart) {
+      flourProductionHistoryChart.resize();
+      flourProductionHistoryChart.update();
+    }
+  }, 100);
+}
+
+function refreshFlourProductionHistory() {
+  clearTimeout(window.flourProductionHistoryTimer);
+
+  window.flourProductionHistoryTimer = setTimeout(() => {
+    loadFlourProductionHistory();
+  }, 500);
 }
 
 /* يبدأ فحص الحقول كل دقيقة */

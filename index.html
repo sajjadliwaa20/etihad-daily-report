@@ -35,6 +35,9 @@
   </head>
 
   <body>
+
+        <div id="notification-container"></div>
+
     <div id="updatePopup" class="update-popup" style="display: none">
       <div class="update-box">
         <h2>🚀 يوجد تحديث جديد</h2>
@@ -479,49 +482,378 @@
         </details>
       </section>
 
-      <!-- المبيعات والارصدة-->
-
-    <!-- ========================================================= -->
+<!-- ========================================================= -->
 <!--                 قسم المبيعات والأرصدة                     -->
 <!-- ========================================================= -->
 
 <section id="salesMarketing" class="section sales-dashboard">
 
-  <!-- العنوان الرئيسي -->
-  <div class="sales-dashboard-header">
-    <div class="sales-title-wrap">
-      <div class="sales-main-icon">📊</div>
+  <div
+  class="sugar-command-header sales-command-header"
+  onclick="toggleSalesDashboard()"
+  role="button"
+  tabindex="0"
+  aria-expanded="true"
+>
+  <div class="sugar-command-brand">
 
-      <div>
-        <h2 class="sectionTitle">قسم المبيعات والأرصدة</h2>
-        <p>موقف المبيعات والأرصدة اليومية للمصانع والمنتجات</p>
+    <div class="sugar-command-logo">
+      📊
+    </div>
+
+    <div class="sugar-command-title">
+      <strong>قسم المبيعات والأرصدة</strong>
+      <span>
+        SALES & INVENTORY • DAILY OPERATIONS COMMAND CENTER
+      </span>
+    </div>
+
+  </div>
+
+  <div class="sugar-command-status">
+    <span class="sugar-status-dot"></span>
+    الموقف اليومي
+  </div>
+
+  <span
+    id="salesDashboardChevron"
+    class="sales-dashboard-chevron"
+  >
+    ▼
+  </span>
+
+</div>
+
+<div
+  id="salesDashboardContent"
+  class="sales-dashboard-collapse-content"
+>
+
+    <!-- =========================================================
+     📊 SALES EXECUTIVE DASHBOARD
+     ========================================================= -->
+
+<div class="sales-executive-dashboard">
+
+  <!-- =========================
+       KPI CARDS
+       ========================= -->
+
+  <div class="sales-kpi-grid">
+
+    <div class="sales-kpi-card sales-kpi-main">
+      <div class="sales-kpi-icon">📈</div>
+
+      <div class="sales-kpi-info">
+        <span>إجمالي مبيعات اليوم</span>
+        <strong id="salesDashboardTotal">0</strong>
+        <small>طن</small>
       </div>
     </div>
 
-    <div class="sales-status">
-      <span class="sales-status-dot"></span>
-      بيانات اليوم
+    <div class="sales-kpi-card">
+      <div class="sales-kpi-icon">🏆</div>
+
+      <div class="sales-kpi-info">
+        <span>أعلى مبيعات</span>
+        <strong id="salesDashboardTopProduct">—</strong>
+        <small id="salesDashboardTopValue">0 طن</small>
+      </div>
     </div>
   </div>
 
 
-  <!-- ========================================================= -->
-  <!--                    السكر المعبأ                            -->
-  <!-- ========================================================= -->
+  <!-- =========================
+       MAIN TREND CHART
+       ========================= -->
 
-  <details id="salesSection" open class="sales-main-section">
+  <div class="sales-trend-panel">
 
-    <summary class="sales-main-summary">
-      <div>
-        <span class="summary-icon">📈</span>
-        <span>موقف المبيعات والأرصدة</span>
+    <div class="sales-panel-header">
+
+      <div class="sales-panel-title">
+        <div class="sales-panel-icon">📈</div>
+
+        <div>
+          <strong>حركة المبيعات</strong>
+          <span>مقارنة أداء اليوم بالأيام السابقة</span>
+        </div>
       </div>
 
-      <span class="summary-arrow">▼</span>
-    </summary>
+
+      <div class="sales-period-switch">
+
+        <button
+          type="button"
+          class="sales-period-btn active"
+          data-period="3"
+          onclick="changeSalesChartPeriod(3)"
+        >
+          3 أيام
+        </button>
+
+        <button
+          type="button"
+          class="sales-period-btn"
+          data-period="7"
+          onclick="changeSalesChartPeriod(7)"
+        >
+          7 أيام
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="sales-chart-legend">
+
+  <span class="sales-legend-item">
+    <i class="sales-legend-color sales-legend-sugar"></i>
+    السكر
+  </span>
+
+  <span class="sales-legend-item">
+    <i class="sales-legend-color sales-legend-oil"></i>
+    الزيت
+  </span>
+
+  <span class="sales-legend-item">
+    <i class="sales-legend-color sales-legend-flour"></i>
+    الطحين
+  </span>
+
+  <span class="sales-legend-item">
+    <i class="sales-legend-color sales-legend-feed"></i>
+    الأعلاف
+  </span>
+
+</div>
 
 
-    <div class="sales-dashboard-content">
+    <div class="sales-chart-wrapper">
+
+      <div class="sales-chart-y-axis">
+        <span>100%</span>
+        <span>75%</span>
+        <span>50%</span>
+        <span>25%</span>
+        <span>0%</span>
+      </div>
+
+
+      <div
+        id="salesTrendChart"
+        class="sales-trend-chart"
+      >
+
+        <div class="sales-chart-grid">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+
+        <div
+          id="salesChartBars"
+          class="sales-chart-bars"
+        >
+          <!-- يتم بناؤها بواسطة JavaScript -->
+        </div>
+
+
+        <div
+          id="salesChartTooltip"
+          class="sales-chart-tooltip"
+        >
+          <strong id="salesTooltipDate">اليوم</strong>
+
+          <span>
+            المبيعات:
+            <b id="salesTooltipValue">0</b>
+            طن
+          </span>
+
+          <small id="salesTooltipChange">
+            —
+          </small>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="salesChartLabels"
+      class="sales-chart-labels"
+    >
+      <!-- أسماء الأيام -->
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       FACTORY SALES OVERVIEW
+       ========================= -->
+
+  <div class="sales-products-overview">
+
+    <div class="sales-overview-header">
+
+      <div>
+        <strong>أداء المنتجات</strong>
+        <span>مقارنة مبيعات المصانع والمنتجات</span>
+      </div>
+
+      <span class="sales-overview-badge">
+        اليوم
+      </span>
+
+    </div>
+
+
+    <div class="sales-overview-grid">
+
+
+      <!-- السكر -->
+
+      <div
+        class="sales-overview-card"
+        data-sales-group="sugar"
+      >
+
+        <div class="sales-overview-card-top">
+
+          <div class="sales-overview-product">
+            <div class="sales-overview-icon">⬜</div>
+
+            <div>
+              <strong>السكر</strong>
+              <span>السكر المعبأ</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sales-overview-value">
+          <strong id="salesSugarValue">0</strong>
+          <small>طن</small>
+        </div>
+
+        <div class="sales-overview-bar">
+          <span id="salesSugarBar"></span>
+        </div>
+
+      </div>
+
+
+
+      <!-- الزيت -->
+
+      <div
+        class="sales-overview-card"
+        data-sales-group="oil"
+      >
+
+        <div class="sales-overview-card-top">
+
+          <div class="sales-overview-product">
+            <div class="sales-overview-icon">🫒</div>
+
+            <div>
+              <strong>الزيت</strong>
+              <span>منتجات مصنع الزيت</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="sales-overview-value">
+          <strong id="salesOilValue">0</strong>
+          <small>طن</small>
+        </div>
+
+
+        <div class="sales-overview-bar">
+          <span id="salesOilBar"></span>
+        </div>
+      </div>
+
+
+
+      <!-- الطحين -->
+
+      <div
+        class="sales-overview-card"
+        data-sales-group="flour"
+      >
+
+        <div class="sales-overview-card-top">
+
+          <div class="sales-overview-product">
+            <div class="sales-overview-icon">🌾</div>
+
+            <div>
+              <strong>الطحين</strong>
+              <span>الطحين والنخالة</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="sales-overview-value">
+          <strong id="salesFlourValue">0</strong>
+          <small>طن</small>
+        </div>
+
+
+        <div class="sales-overview-bar">
+          <span id="salesFlourBar"></span>
+        </div>
+
+      </div>
+
+
+
+      <!-- الأعلاف -->
+
+      <div
+        class="sales-overview-card"
+        data-sales-group="feed"
+      >
+
+        <div class="sales-overview-card-top">
+
+          <div class="sales-overview-product">
+            <div class="sales-overview-icon">🐄</div>
+
+            <div>
+              <strong>الأعلاف</strong>
+              <span>الأعلاف والبريمكس</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="sales-overview-value">
+          <strong id="salesFeedValue">0</strong>
+          <small>طن</small>
+        </div>
+
+
+        <div class="sales-overview-bar">
+          <span id="salesFeedBar"></span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="sales-dashboard-content">
 
 
       <!-- ================= السكر ================= -->
@@ -535,7 +867,7 @@
           <div class="sales-product-title">
 
             <div class="sales-product-icon">
-              🍬
+              ⬜
             </div>
 
             <div>
@@ -1201,15 +1533,15 @@
                     </td>
 
                     <td>
-                      <input
-                        id="palm_14l_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmSalesTotal();
-                          saveSalesField('palm_14l_stock', 'oil');
-                        "
-                      />
+                   <input
+  id="palm_14l_stock"
+  data-save
+  step="any"
+  oninput="
+    updatePalmStockTotal();
+    saveSalesField('palm_14l_stock', 'oil');
+  "
+/>
                     </td>
                   </tr>
 
@@ -1711,13 +2043,9 @@
 
     </div>
 
-  </details>
-
+</div>
 </section>
-
-      <!-- موقف محطة الطاقة -->
-
- <!-- ========================================================= -->
+<!-- ========================================================= -->
 <!--              محطات الطاقة والنفط الأسود                   -->
 <!-- ========================================================= -->
 
@@ -1725,23 +2053,55 @@
 
   <!-- ======================= العنوان ======================= -->
 
-  <div class="power-dashboard-header">
+<div
+    class="sugar-command-header power-command-header"
+    onclick="togglePowerDashboard()"
+    role="button"
+    tabindex="0"
+    aria-expanded="true"
+>
 
-    <div class="power-header-icon">
-      ⚡
+    <div class="sugar-command-brand">
+
+        <div class="sugar-command-logo power-command-logo">
+            ⚡
+        </div>
+
+        <div class="sugar-command-title">
+
+            <strong>
+                محطات الطاقة والنفط الأسود
+            </strong>
+
+            <span>
+                POWER & FUEL • DAILY OPERATIONS COMMAND CENTER
+            </span>
+
+        </div>
+
     </div>
 
-    <div class="power-header-title">
-      <h2>محطات الطاقة والنفط الأسود</h2>
-      <span>Power Stations & Black Oil Management</span>
+    <div class="sugar-command-status">
+
+        <span class="sugar-status-dot"></span>
+
+        التشغيل اليومي
+
     </div>
 
-    <div class="power-header-status">
-      <span class="power-status-dot"></span>
-      التشغيل اليومي
-    </div>
+    <span
+        id="powerDashboardChevron"
+        class="power-dashboard-chevron"
+    >
+        ▼
+    </span>
 
-  </div>
+</div>
+
+<div
+    id="powerDashboardContent"
+    class="power-dashboard-collapse-content"
+>
 
 
   <!-- ======================================================= -->
@@ -1750,7 +2110,7 @@
 
   <details open class="power-main-panel blackoil-panel">
 
-    <summary class="power-panel-summary">
+    <summary class="power-panel-summary power-command-subheader">
 
       <div class="power-summary-left">
         <div class="power-summary-icon oil-icon">
@@ -1967,32 +2327,65 @@
 
         <!-- الإجمالي النهائي -->
 
-        <div class="oil-grand-total">
+   <div class="oil-grand-total">
 
-          <div class="grand-total-icon">
-            🛢️
-          </div>
+    <div class="grand-total-icon">
+        🛢️
+    </div>
 
-          <div class="grand-total-text">
-            <span>إجمالي رصيد النفط الأسود</span>
-            <small>Total Black Oil Stock</small>
-          </div>
+    <div class="grand-total-text">
 
-          <input
+        <span>
+            إجمالي رصيد النفط الأسود
+        </span>
+
+        <small>
+            TOTAL BLACK OIL STOCK
+        </small>
+
+    </div>
+
+    <div class="blackoil-total-number">
+
+        <input
             id="blackoil_total_stock"
             readonly
-          />
+        />
 
-          <b>م³</b>
+        <b>
+            م³
+        </b>
 
-        </div>
+    </div>
+
+</div>
 
       </div>
 
-
+    </details> 
       <!-- =================================================== -->
       <!--                 محطة الطاقة                          -->
       <!-- =================================================== -->
+<details open class="power-main-panel powerstation-panel">
+
+   <summary class="power-panel-summary power-command-subheader">
+
+      <div class="power-summary-left">
+        <div class="power-summary-icon oil-icon">
+          ⚙️
+        </div>
+
+        <div>
+          <strong>موقف محطات الطاقة</strong>
+          <small>Power Station Status</small>
+        </div>
+      </div>
+
+      <div class="power-summary-badge oil-badge">
+        🏙الاحمال والملاحظات التشغيلية 
+      </div>
+
+    </summary>
 
       <div class="power-section-heading energy-heading">
 
@@ -2011,7 +2404,7 @@
       <div class="equipment-grid">
 
 
-        <div class="equipment-card">
+        <div class="equipment-card power-equipment-card">
 
           <div class="equipment-icon">
             🔥
@@ -2031,7 +2424,7 @@
         </div>
 
 
-        <div class="equipment-card">
+        <div class="equipment-card power-equipment-card turbine20-card">
 
           <div class="equipment-icon turbine-icon">
             ⚙️
@@ -2051,7 +2444,7 @@
         </div>
 
 
-        <div class="equipment-card">
+        <div class="equipment-card power-equipment-card turbine10-card">
 
           <div class="equipment-icon turbine-icon">
             ⚙️
@@ -2072,60 +2465,139 @@
 
       </div>
 
+<!-- =================================================== -->
+<!--              الأحمال الكهربائية التفاعلية             -->
+<!-- =================================================== -->
 
-      <!-- =================================================== -->
-      <!--                 الأحمال الكهربائية                    -->
-      <!-- =================================================== -->
+<div class="power-load-history-card">
 
-      <div class="load-dashboard">
+    <!-- الرأس -->
+    <div class="power-load-history-header">
 
-        <div class="load-card max-load-card">
+        <div class="power-load-history-title">
 
-          <div class="load-icon">
-            📈
-          </div>
+            <div class="power-load-history-icon">
+                ⚡
+            </div>
 
-          <div class="load-content">
-            <span>أعلى حمل كهربائي</span>
-            <small>Maximum Electrical Load</small>
-          </div>
+            <div>
+                <strong>الحمل الكهربائي التشغيلي</strong>
+                <small>ELECTRICAL LOAD HISTORY</small>
+            </div>
 
-          <div class="load-value">
-            <input
-              id="max_electrical_load"
-              data-save
-              step="any"
-            />
-            <b>MW</b>
-          </div>
+        </div>
+
+        <div class="power-load-history-period">
+            آخر 4 أيام
+        </div>
+
+    </div>
+
+
+    <!-- المؤشرات الحالية -->
+    <div class="power-load-current-summary">
+
+        <!-- أعلى حمل -->
+        <div class="power-load-current-card">
+
+            <div class="power-load-current-label">
+                <span>▲</span>
+                أعلى حمل اليوم
+            </div>
+
+            <div class="power-load-current-number">
+                <input
+                    id="max_electrical_load"
+                    data-save
+                    step="any"
+                    oninput="updateElectricalLoadHistoryChart()"
+                />
+                <b>MW</b>
+            </div>
+
+            <small>MAXIMUM LOAD</small>
 
         </div>
 
 
-        <div class="load-card min-load-card">
+        <!-- نطاق التشغيل -->
+        <div class="power-load-range-summary">
 
-          <div class="load-icon">
-            📉
-          </div>
+            <span>نطاق التشغيل</span>
 
-          <div class="load-content">
-            <span>أقل حمل كهربائي</span>
-            <small>Minimum Electrical Load</small>
-          </div>
+            <div class="power-load-range-number">
+                <strong id="electricalLoadRangeValue">—</strong>
+                <small>MW</small>
+            </div>
 
-          <div class="load-value">
-            <input
-              id="min_electrical_load"
-              data-save
-              step="any"
-            />
-            <b>MW</b>
-          </div>
+            <small>DAILY RANGE</small>
 
         </div>
 
-      </div>
 
+        <!-- أقل حمل -->
+        <div class="power-load-current-card">
+
+            <div class="power-load-current-label">
+                <span>▼</span>
+                أقل حمل اليوم
+            </div>
+
+            <div class="power-load-current-number">
+                <input
+                    id="min_electrical_load"
+                    data-save
+                    step="any"
+                    oninput="updateElectricalLoadHistoryChart()"
+                />
+                <b>MW</b>
+            </div>
+
+            <small>MINIMUM LOAD</small>
+
+        </div>
+
+    </div>
+
+
+    <!-- الرسم -->
+    <div class="power-load-chart-wrapper">
+
+        <div class="power-load-chart-top">
+
+            <span>
+                نطاق الحمل الكهربائي
+            </span>
+
+            <div class="power-load-legend">
+
+                <span class="power-load-legend-item">
+                    <i class="legend-max"></i>
+                    أعلى حمل
+                </span>
+
+                <span class="power-load-legend-item">
+                    <i class="legend-min"></i>
+                    أقل حمل
+                </span>
+
+                <span class="power-load-legend-item">
+                    <i class="legend-range"></i>
+                    نطاق التشغيل
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="power-load-chart">
+            <canvas id="electricalLoadHistoryChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
 
       <!-- =================================================== -->
       <!--                   ملاحظات الطاقة                      -->
@@ -2233,6 +2705,7 @@
             id="union_power_use"
             data-save
             step="any"
+            oninput="updatePowerStation()"
           />
           <b>م³</b>
         </div>
@@ -2243,6 +2716,7 @@
             id="union_boiler_use"
             data-save
             step="any"
+            oninput="updatePowerStation()"
           />
           <b>م³</b>
         </div>
@@ -2267,12 +2741,10 @@
 
       </div>
 
-
+      <div class="external-stations-grid">
       <!-- =================================================== -->
       <!--                    صحاري كربلاء                      -->
       <!-- =================================================== -->
-
-      <div class="external-station-card sahara-card">
 
         <div class="external-station-header">
 
@@ -2321,14 +2793,12 @@
 
         </div>
 
-      </div>
+     
 
 
       <!-- =================================================== -->
       <!--                      شركة ديوان                      -->
       <!-- =================================================== -->
-
-      <div class="external-station-card diwan-card">
 
         <div class="external-station-header">
 
@@ -2377,8 +2847,11 @@
 
         </div>
 
-      </div>
 
+
+         </div>  
+
+         <BR/>
 
       <!-- =================================================== -->
       <!--                     مراجل الريان                     -->
@@ -2568,41 +3041,45 @@
 
     </div>
 
-  </details>
-
-
 <!-- ======================================================= -->
 <!--                    اعتماد القسم                         -->
 <!-- ======================================================= -->
 
-<div class="power-approval-area">
+<div class="power-approval-area power-command-approval">
 
-  <div class="approval-info">
+    <div class="approval-info">
 
-    <span class="approval-icon">
-      ✅
-    </span>
+        <span class="approval-icon">
+            ✅
+        </span>
 
-    <div>
-      <strong>اعتماد تقرير محطات الطاقة والنفط الأسود</strong>
+        <div>
+            <strong>
+                اعتماد تقرير محطات الطاقة والنفط الأسود
+            </strong>
 
-      <small>
-        تأكد من إدخال جميع البيانات والملاحظات قبل اعتماد القسم
-      </small>
+            <small>
+                تأكد من إدخال جميع البيانات والملاحظات قبل اعتماد القسم
+            </small>
+        </div>
+
     </div>
 
-  </div>
-
-  <button
-    id="approvePowerBtn"
-    class="power-approve-btn"
-    onclick="approvePowerSection()"
-  >
-    <span>✓</span>
-    <span>اعتماد القسم</span>
-  </button>
+    <button
+        id="approvePowerBtn"
+        class="power-approve-btn"
+        onclick="approvePowerSection()"
+    >
+        <span>✓</span>
+        <span>اعتماد القسم</span>
+    </button>
 
 </div>
+
+  </details>
+
+</div>
+
 
 </section>
 
@@ -2635,7 +3112,7 @@
         <div class="sugar-command-brand">
 
             <div class="sugar-command-logo">
-                🍬
+                ⬜
             </div>
 
             <div class="sugar-command-title">
@@ -4108,7 +4585,8 @@ PKF
 
             <div class="sugar-panel-body">
 
-                <div class="sugar-packing-matrix">
+                <div class="sugar-packing-scroll">
+    <div class="sugar-packing-matrix">
 
                     <div class="sugar-packing-cell header">
                         الشفت
@@ -4233,6 +4711,7 @@ PKF
                 </div>
 
             </div>
+             </div>
 
         </div>
 
@@ -8637,202 +9116,649 @@ PKF
 </div>
 
       </section>
-      <!-- ===================================== -->
-      <!-- مصنع الطحين -->
-      <!-- ===================================== -->
-
+<!-- ===================================== -->
+<!-- مصنع الطحين -->
+<!-- ===================================== -->
       <section id="flour" class="section">
-        <h2 style="color: #1f3c88">🌾 مصنع الطحين</h2>
+       <!-- =========================
+     Flour Command Center
+========================= -->
+
+<div class="flour-command-header">
+  <div class="flour-command-title">
+    <div class="flour-command-icon">🌾</div>
+
+    <div>
+      <div class="flour-command-main-title">
+        مصنع المطحنة
+      </div>
+
+      <div class="flour-command-subtitle">
+        FLOUR MILL • DAILY OPERATIONS COMMAND CENTER
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="flour-command-toggle"
+    onclick="toggleFlourDashboard()"
+    aria-expanded="true"
+  >
+    <span>لوحة التشغيل</span>
+    <span id="flourDashboardChevron">⌄</span>
+  </button>
+</div>
+
+<div id="flourDashboardContent" class="flour-dashboard-content">
+
+  <!-- =========================
+       مؤشرات المطحنة الرئيسية
+  ========================== -->
+
+  <div class="flour-kpi-grid">
+
+    <div class="flour-kpi-card flour-kpi-consumption">
+      <div class="flour-kpi-icon">🌾</div>
+
+      <div class="flour-kpi-info">
+        <span>استهلاك الحنطة اليومي</span>
+        <small>WHEAT CONSUMPTION</small>
+      </div>
+
+      <div class="flour-kpi-value">
+        <strong id="flourDashConsumption">0.00</strong>
+        <b>طن</b>
+      </div>
+    </div>
+
+    <div class="flour-kpi-card flour-kpi-production">
+      <div class="flour-kpi-icon">🏭</div>
+
+      <div class="flour-kpi-info">
+        <span>الإنتاج الكلي</span>
+        <small>TOTAL PRODUCTION</small>
+      </div>
+
+      <div class="flour-kpi-value">
+        <strong id="flourDashProduction">0.00</strong>
+        <b>طن</b>
+      </div>
+    </div>
+
+<div class="extraction-efficiency-card">
+
+  <div class="extraction-efficiency-header">
+
+    <div class="extraction-header-icon">
+      ⚙️
+    </div>
+
+    <div>
+      <strong>كفاءة استخراج الطحين</strong>
+      <small>EXTRACTION EFFICIENCY</small>
+    </div>
+
+  </div>
+
+
+  <div class="extraction-efficiency-body">
+
+    <div class="extraction-ring-wrapper">
+
+      <div class="extraction-ring">
+
+        <svg
+          class="extraction-ring-svg"
+          viewBox="0 0 120 120"
+        >
+
+          <circle
+            class="extraction-ring-bg"
+            cx="60"
+            cy="60"
+            r="48"
+          ></circle>
+
+          <circle
+            id="flourDashboardExtractionRingProgress"
+            class="extraction-ring-progress"
+            cx="60"
+            cy="60"
+            r="48"
+          ></circle>
+
+        </svg>
+
+        <div class="extraction-ring-value">
+
+          <strong id="flourDashboardExtractionEfficiencyDisplay">
+            0.00
+          </strong>
+
+          <span>%</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- الحقل الأصلي للنظام -->
+
+  <input
+    id="extraction_eff"
+    data-save
+    type="number"
+    step="any"
+    readonly
+    style="display:none"
+  />
+
+</div>
+
+    <div class="flour-kpi-card flour-kpi-stock">
+      <div class="flour-kpi-icon">🚚</div>
+
+      <div class="flour-kpi-info">
+        <span >     اجمالي انتاج التعبئة    </span>
+        <small>TOTAL FLOUR PACKAGING PRODUCTION</small>
+      </div>
+
+      <div class="flour-kpi-value">
+        <strong id="flourDashStock">0.00</strong>
+        <b>طن</b>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- =========================
+       ملخص إنتاج المنتجات
+  ========================== -->
+
+  <div class="flour-dashboard-panels">
+
+    <div class="flour-dashboard-panel">
+      <div class="flour-panel-header">
+        <div>
+          <strong>مزيج الإنتاج</strong>
+          <small>PRODUCT OUTPUT MIX</small>
+        </div>
+      </div>
+
+      <div class="flour-output-summary">
+
+        <div class="flour-output-item">
+          <div class="flour-output-label">
+            <span>F1</span>
+            <strong id="flourDashF1">0.00 طن</strong>
+          </div>
+
+          <div class="flour-output-bar">
+            <div id="flourDashF1Bar"></div>
+          </div>
+        </div>
+
+        <div class="flour-output-item">
+          <div class="flour-output-label">
+            <span>F3</span>
+            <strong id="flourDashF3">0.00 طن</strong>
+          </div>
+
+          <div class="flour-output-bar">
+            <div id="flourDashF3Bar"></div>
+          </div>
+        </div>
+
+        <div class="flour-output-item">
+          <div class="flour-output-label">
+            <span>W.Bran</span>
+            <strong id="flourDashBran">0.00 طن</strong>
+          </div>
+
+          <div class="flour-output-bar">
+            <div id="flourDashBranBar"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flour-dashboard-panel">
+      <div class="flour-panel-header">
+        <div>
+          <strong>أرصدة الحنطة</strong>
+          <small>RAW MATERIAL STOCK</small>
+        </div>
+      </div>
+
+      <div class="flour-stock-summary">
+
+        <div class="flour-stock-summary-item">
+          <div>
+            <span>🇦🇺 الحنطة الأسترالية</span>
+            <strong id="flourDashAusStock">0.00 طن</strong>
+          </div>
+
+          <div class="flour-stock-summary-bar">
+            <div id="flourDashAusStockBar"></div>
+          </div>
+        </div>
+
+        <div class="flour-stock-summary-item">
+          <div>
+            <span>🇷🇺 الحنطة الروسية</span>
+            <strong id="flourDashRusStock">0.00 طن</strong>
+          </div>
+
+          <div class="flour-stock-summary-bar">
+            <div id="flourDashRusStockBar"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
         <!-- استهلاك الخام -->
 
-        <!-- =========================
+<!-- =========================================================
      استهلاك المواد الخام
-========================= -->
+========================================================= -->
 
-        <details open>
-          <summary>استهلاك المواد الخام</summary>
+<details open class="flour-section-card">
+  <summary class="flour-section-card-header">
 
-          <div class="details-content">
-            <div class="flour-wheat-consumption">
-              <!-- الحنطة الأسترالية -->
+    <div class="flour-section-card-title">
+      <div class="flour-section-card-icon">🌾</div>
 
-              <div class="wheat-consumption-card wheat-australian">
-                <div class="wheat-card-icon">🌾</div>
+      <div>
+        <strong>استهلاك المواد الخام</strong>
+        <small>RAW MATERIAL CONSUMPTION</small>
+      </div>
+    </div>
 
-                <div class="wheat-card-title">الحنطة الأسترالية</div>
+    <div class="flour-section-card-toggle">
+      <span>عرض التفاصيل</span>
+      <span class="flour-section-card-arrow">⌄</span>
+    </div>
 
-                <div class="wheat-card-label">الاستهلاك اليومي</div>
+  </summary>
 
-                <div class="wheat-input-wrap">
-                  <input
-                    id="aus_wheat_use"
-                    data-save
-                    step="any"
-                    oninput="updateFlourRawDashboard()"
-                  />
+  <div class="details-content">
 
-                  <span>طن</span>
-                </div>
-              </div>
+    <div class="flour-raw-consumption-dashboard">
 
-              <!-- الحنطة العراقية -->
+      <!-- =========================
+           إجمالي الاستهلاك
+      ========================== -->
 
-              <div class="wheat-consumption-card wheat-iraqi">
-                <div class="wheat-card-icon">🌾</div>
+      <div class="flour-raw-total-card">
 
-                <div class="wheat-card-title">الحنطة العراقية</div>
+        <div class="flour-raw-total-icon">
+          🌾
+        </div>
 
-                <div class="wheat-card-label">الاستهلاك اليومي</div>
+        <div class="flour-raw-total-info">
+          <span>إجمالي استهلاك الحنطة</span>
+          <small>TOTAL WHEAT CONSUMPTION</small>
+        </div>
 
-                <div class="wheat-input-wrap">
-                  <input
-                    id="iraq_wheat_use"
-                    data-save
-                    step="any"
-                    oninput="updateFlourRawDashboard()"
-                  />
+        <div class="flour-raw-total-value">
+          <strong id="flourRawDashboardTotal">0.00</strong>
+          <b>طن</b>
+        </div>
 
-                  <span>طن</span>
-                </div>
-              </div>
+      </div>
 
-              <!-- الحنطة الروسية -->
 
-              <div class="wheat-consumption-card wheat-russian">
-                <div class="wheat-card-icon">🌾</div>
+      <!-- =========================
+           أنواع الحنطة
+      ========================== -->
 
-                <div class="wheat-card-title">الحنطة الروسية</div>
+      <div class="flour-raw-types">
 
-                <div class="wheat-card-label">الاستهلاك اليومي</div>
+        <!-- أسترالية -->
 
-                <div class="wheat-input-wrap">
-                  <input
-                    id="rus_wheat_use"
-                    data-save
-                    step="any"
-                    oninput="updateFlourRawDashboard()"
-                  />
+        <div class="flour-raw-card flour-raw-australian">
 
-                  <span>طن</span>
-                </div>
-              </div>
+          <div class="flour-raw-card-header">
+
+            <div class="flour-raw-icon">
+              🌾
             </div>
 
-            <!-- إجمالي الاستهلاك -->
-
-            <div class="flour-wheat-total-card">
-              <div class="flour-total-icon">⚖️</div>
-
-              <div>
-                <div class="flour-total-title">إجمالي استهلاك الحنطة</div>
-
-                <div class="flour-total-subtitle">مجموع الأنواع الثلاثة</div>
-              </div>
-
-              <div class="flour-total-value">
-                <span id="flour_wheat_consumption_total"> 0.00 </span>
-
-                <small>طن</small>
-              </div>
+            <div>
+              <strong>الحنطة الأسترالية</strong>
+              <small>AUSTRALIAN WHEAT</small>
             </div>
+
           </div>
-        </details>
 
-        <!-- =========================
+          <div class="flour-raw-value">
+
+            <input
+              id="aus_wheat_use"
+              data-save
+              step="any"
+              oninput="
+                updateFlourRawDashboard();
+                refreshFlourDashboard();
+              "
+            />
+
+            <span>طن</span>
+
+          </div>
+
+          <div class="flour-raw-progress">
+            <div id="flourRawAusBar"></div>
+          </div>
+
+        </div>
+
+
+        <!-- العراقية -->
+
+        <div class="flour-raw-card flour-raw-iraqi">
+
+          <div class="flour-raw-card-header">
+
+            <div class="flour-raw-icon">
+              🌾
+            </div>
+
+            <div>
+              <strong>الحنطة العراقية</strong>
+              <small>IRAQI WHEAT</small>
+            </div>
+
+          </div>
+
+          <div class="flour-raw-value">
+
+            <input
+              id="iraq_wheat_use"
+              data-save
+              step="any"
+              oninput="
+                updateFlourRawDashboard();
+                refreshFlourDashboard();
+              "
+            />
+
+            <span>طن</span>
+
+          </div>
+
+          <div class="flour-raw-progress">
+            <div id="flourRawIraqBar"></div>
+          </div>
+
+        </div>
+
+
+        <!-- الروسية -->
+
+        <div class="flour-raw-card flour-raw-russian">
+
+          <div class="flour-raw-card-header">
+
+            <div class="flour-raw-icon">
+              🌾
+            </div>
+
+            <div>
+              <strong>الحنطة الروسية</strong>
+              <small>RUSSIAN WHEAT</small>
+            </div>
+
+          </div>
+
+          <div class="flour-raw-value">
+
+            <input
+              id="rus_wheat_use"
+              data-save
+              step="any"
+              oninput="
+                updateFlourRawDashboard();
+                refreshFlourDashboard();
+              "
+            />
+
+            <span>طن</span>
+
+          </div>
+
+          <div class="flour-raw-progress">
+            <div id="flourRawRusBar"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</details>
+
+<!-- =========================================================
      أرصدة المواد الخام
-========================= -->
+========================================================= -->
 
-        <details open>
-          <summary>أرصدة المواد الخام</summary>
+<details open class="flour-section-card">
 
-          <div class="details-content">
-            <div class="flour-stock-dashboard">
-              <!-- =====================
-                 المخزون الأسترالي
-            ====================== -->
+  <summary class="flour-section-card-header">
 
-              <div class="flour-stock-card">
-                <div class="stock-card-header">
-                  <div class="stock-grain-icon">🌾</div>
+    <div class="flour-section-card-title">
+      <div class="flour-section-card-icon">📦</div>
 
-                  <div>
-                    <div class="stock-title">الحنطة الأسترالية</div>
+      <div>
+        <strong>أرصدة المواد الخام</strong>
+        <small>RAW MATERIAL STOCK</small>
+      </div>
+    </div>
 
-                    <div class="stock-location">📍 الشركة</div>
-                  </div>
-                </div>
+    <div class="flour-section-card-toggle">
+      <span>عرض التفاصيل</span>
+      <span class="flour-section-card-arrow">⌄</span>
+    </div>
 
-                <div class="stock-gauge">
-                  <div class="stock-gauge-fill" id="aus_stock_fill"></div>
-                </div>
+  </summary>
 
-                <div class="stock-bottom">
-                  <div>
-                    <div class="stock-label">الرصيد الحالي</div>
+  <div class="details-content">
 
-                    <div class="stock-input-wrap">
-                      <input
-                        id="auseti"
-                        data-save
-                        step="any"
-                        oninput="updateFlourRawDashboard()"
-                      />
+    <div class="flour-stock-command">
 
-                      <span>طن</span>
-                    </div>
-                  </div>
+      <!-- =========================
+           إجمالي المخزون
+      ========================== -->
 
-                  <div class="stock-status" id="aus_stock_status">متوفر</div>
-                </div>
-              </div>
+      <div class="flour-stock-total-card">
 
-              <!-- =====================
-                 المخزون الروسي
-            ====================== -->
+        <div class="flour-stock-total-icon">
+          📦
+        </div>
 
-              <div class="flour-stock-card">
-                <div class="stock-card-header">
-                  <div class="stock-grain-icon">🌾</div>
+        <div class="flour-stock-total-info">
+          <span>إجمالي رصيد الحنطة</span>
+          <small>TOTAL WHEAT STOCK</small>
+        </div>
 
-                  <div>
-                    <div class="stock-title">الحنطة الروسية</div>
+        <div class="flour-stock-total-value">
+          <strong id="flourStockDashboardTotal">0.00</strong>
+          <b>طن</b>
+        </div>
 
-                    <div class="stock-location">📍 الشركة</div>
-                  </div>
-                </div>
+      </div>
 
-                <div class="stock-gauge">
-                  <div class="stock-gauge-fill" id="rus_stock_fill"></div>
-                </div>
 
-                <div class="stock-bottom">
-                  <div>
-                    <div class="stock-label">الرصيد الحالي</div>
+      <!-- =========================
+           مخزون الحنطة
+      ========================== -->
 
-                    <div class="stock-input-wrap">
-                      <input
-                        id="ruseti"
-                        data-save
-                        step="any"
-                        oninput="updateFlourRawDashboard()"
-                      />
+      <div class="flour-stock-command-grid">
 
-                      <span>طن</span>
-                    </div>
-                  </div>
+        <!-- =====================
+             الحنطة الأسترالية
+        ====================== -->
 
-                  <div class="stock-status" id="rus_stock_status">متوفر</div>
-                </div>
-              </div>
+        <div class="flour-stock-command-card">
+
+          <div class="flour-stock-command-header">
+
+            <div class="flour-stock-command-icon">
+              🌾
             </div>
+
+            <div class="flour-stock-command-title">
+              <strong>الحنطة الأسترالية</strong>
+              <small>AUSTRALIAN WHEAT</small>
+            </div>
+
+            <div
+              id="aus_stock_status"
+              class="flour-stock-command-status"
+            >
+              متوفر
+            </div>
+
           </div>
-        </details>
+
+
+          <div class="flour-stock-command-value">
+
+            <input
+              id="auseti"
+              data-save
+              step="any"
+              oninput="
+                updateFlourRawDashboard();
+                updateFlourStockDashboard();
+              "
+            />
+
+            <span>طن</span>
+
+          </div>
+
+
+          <div class="flour-stock-command-progress">
+
+            <div
+              id="aus_stock_fill"
+              class="flour-stock-command-progress-fill"
+            ></div>
+
+          </div>
+
+
+          <div class="flour-stock-command-footer">
+            <span>الرصيد الحالي</span>
+            <b id="flourAusStockPercent">0%</b>
+          </div>
+
+        </div>
+
+
+        <!-- =====================
+             الحنطة الروسية
+        ====================== -->
+
+        <div class="flour-stock-command-card">
+
+          <div class="flour-stock-command-header">
+
+            <div class="flour-stock-command-icon">
+              🌾
+            </div>
+
+            <div class="flour-stock-command-title">
+              <strong>الحنطة الروسية</strong>
+              <small>RUSSIAN WHEAT</small>
+            </div>
+
+            <div
+              id="rus_stock_status"
+              class="flour-stock-command-status"
+            >
+              متوفر
+            </div>
+
+          </div>
+
+
+          <div class="flour-stock-command-value">
+
+            <input
+              id="ruseti"
+              data-save
+              step="any"
+              oninput="
+                updateFlourRawDashboard();
+                updateFlourStockDashboard();
+              "
+            />
+
+            <span>طن</span>
+
+          </div>
+
+
+          <div class="flour-stock-command-progress">
+
+            <div
+              id="rus_stock_fill"
+              class="flour-stock-command-progress-fill"
+            ></div>
+
+          </div>
+
+
+          <div class="flour-stock-command-footer">
+            <span>الرصيد الحالي</span>
+            <b id="flourRusStockPercent">0%</b>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</details>
 
         <!-- الإنتاج -->
-        <details open>
-          <summary>إنتاج المطحنة</summary>
+    <details open class="flour-section-card">
 
+  <summary class="flour-section-card-header">
+
+    <div class="flour-section-card-title">
+      <div class="flour-section-card-icon">🏭</div>
+
+      <div>
+        <strong>إنتاج المطحنة</strong>
+        <small>MILL PRODUCTION</small>
+      </div>
+    </div>
+
+    <div class="flour-section-card-toggle">
+      <span>عرض التفاصيل</span>
+      <span class="flour-section-card-arrow">⌄</span>
+    </div>
+
+  </summary>
           <div class="details-content">
             <div class="mill-dashboard">
               <!-- =========================
@@ -8852,20 +9778,7 @@ PKF
                   </div>
                 </div>
 
-                <!-- مدخل الخط -->
 
-                <div class="mill-input-section">
-                  <div class="mill-input-label">الحنطة المطحونة</div>
-
-                  <input
-                    id="line1_ground_wheat"
-                    data-save
-                    step="any"
-                    oninput="calcMillTotals()"
-                  />
-
-                  <span>طن</span>
-                </div>
 
                 <!-- المخرجات -->
 
@@ -8932,18 +9845,7 @@ PKF
                   </div>
                 </div>
 
-                <div class="mill-input-section">
-                  <div class="mill-input-label">الحنطة المطحونة</div>
-
-                  <input
-                    id="line2_ground_wheat"
-                    data-save
-                    step="any"
-                    oninput="calcMillTotals()"
-                  />
-
-                  <span>طن</span>
-                </div>
+ 
 
                 <div class="mill-output-grid">
                   <div class="mill-output flour-f1">
@@ -9006,18 +9908,6 @@ PKF
                   </div>
                 </div>
 
-                <div class="mill-input-section">
-                  <div class="mill-input-label">الحنطة المطحونة</div>
-
-                  <input
-                    id="line3_ground_wheat"
-                    data-save
-                    step="any"
-                    oninput="calcMillTotals()"
-                  />
-
-                  <span>طن</span>
-                </div>
 
                 <div class="mill-output-grid">
                   <div class="mill-output flour-f1">
@@ -9080,18 +9970,6 @@ PKF
                   </div>
                 </div>
 
-                <div class="mill-input-section">
-                  <div class="mill-input-label">الحنطة المطحونة</div>
-
-                  <input
-                    id="line4_ground_wheat"
-                    data-save
-                    step="any"
-                    oninput="calcMillTotals()"
-                  />
-
-                  <span>طن</span>
-                </div>
 
                 <div class="mill-output-grid">
                   <div class="mill-output flour-f1">
@@ -9154,18 +10032,6 @@ PKF
                   </div>
                 </div>
 
-                <div class="mill-input-section">
-                  <div class="mill-input-label">الحنطة المطحونة</div>
-
-                  <input
-                    id="line5_ground_wheat"
-                    data-save
-                    step="any"
-                    oninput="calcMillTotals()"
-                  />
-
-                  <span>طن</span>
-                </div>
 
                 <div class="mill-output-grid">
                   <div class="mill-output flour-f1">
@@ -9228,19 +10094,6 @@ PKF
                   </div>
                 </div>
 
-                <div class="mill-input-section">
-                  <div class="mill-input-label">الحنطة المطحونة</div>
-
-                  <input
-                    id="line6_ground_wheat"
-                    data-save
-                    step="any"
-                    oninput="calcMillTotals()"
-                  />
-
-                  <span>طن</span>
-                </div>
-
                 <div class="mill-output-grid">
                   <div class="mill-output flour-f1">
                     <label>F1</label>
@@ -9294,15 +10147,23 @@ PKF
               <div class="mill-grand-title">🏭 إجمالي إنتاج المطحنة</div>
 
               <div class="mill-grand-items">
-                <div>
-                  <span>الحنطة المطحونة</span>
+   <div class="mill-ground-wheat-main">
 
-                  <strong>
-                    <input id="flour_total_ground_wheat" readonly step="any" />
-                  </strong>
+  <span>الحنطة المطحونة</span>
 
-                  <small>طن</small>
-                </div>
+  <strong>
+    <input
+      id="flour_total_ground_wheat"
+      data-save
+      type="number"
+      step="any"
+      oninput="updateFlourExtractionEfficiency()"
+    />
+  </strong>
+
+  <b>طن</b>
+
+</div>
 
                 <div>
                   <span>F1</span>
@@ -9346,758 +10207,1219 @@ PKF
               </div>
             </div>
           </div>
+
+<!-- =====================================================
+     FLOUR — PRODUCTION HISTORY
+====================================================== -->
+
+<div class="flour-production-history">
+
+  <div class="flour-history-header">
+
+    <div class="flour-history-title">
+      <span class="flour-history-icon">📊</span>
+
+      <div>
+        <strong>تطور الإنتاج</strong>
+        <small>PRODUCTION TREND</small>
+      </div>
+    </div>
+
+    <div class="flour-history-period">
+      اليوم + آخر 3 أيام
+    </div>
+
+  </div>
+
+
+  <div class="flour-history-body">
+
+    <!-- الرسم -->
+    <div class="flour-history-chart-wrap">
+
+      <canvas id="flourProductionHistoryChart"></canvas>
+
+    </div>
+
+
+    <!-- ملخص المقارنة -->
+    <div class="flour-history-summary">
+
+      <div class="flour-history-summary-card current">
+
+        <span>إنتاج اليوم</span>
+
+        <strong id="flourHistoryCurrentValue">
+          0
+        </strong>
+
+        <small>طن</small>
+
+      </div>
+
+
+      <div class="flour-history-summary-card">
+
+        <span>متوسط آخر 3 أيام</span>
+
+        <strong id="flourHistoryAverage">
+          0
+        </strong>
+
+        <small>طن</small>
+
+      </div>
+
+
+      <div
+        class="flour-history-summary-card"
+        id="flourHistoryChangeCard"
+      >
+
+        <span>الفرق عن أمس</span>
+
+        <strong id="flourHistoryChange">
+          —
+        </strong>
+
+        <small id="flourHistoryChangePercent">
+          —
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
         </details>
 
         <!-- كفاءة الاستخراج -->
 
-        <details open>
-          <summary>كفاءة الاستخراج</summary>
+<details open class="flour-section-card">
 
-          <div class="details-content">
-            <div class="extraction-efficiency-card">
-              <div class="extraction-efficiency-header">
-                <span class="extraction-icon">⚙️</span>
-                <span>كفاءة الاستخراج</span>
-              </div>
+  <summary class="flour-section-card-header">
 
-              <div class="extraction-efficiency-body">
-                <div class="extraction-gauge">
-                  <div class="extraction-gauge-inner">
-                    <input
-                      id="extraction_eff"
-                      data-save
-                      type="number"
-                      step="any"
-                      placeholder="0.00"
-                      oninput="
-                        updateExtractionGauge(this.value);
-                        checkExtractionEfficiency(this);
-                      "
-                      onchange="
-                        updateExtractionGauge(this.value);
-                        checkExtractionEfficiency(this);
-                      "
-                    />
+    <div class="flour-section-card-title">
+      <div class="flour-section-card-icon">⚙️</div>
 
-                    <span class="extraction-percent">%</span>
-                  </div>
-                </div>
+      <div>
+        <strong>كفاءة الاستخراج</strong>
+        <small>EXTRACTION EFFICIENCY</small>
+      </div>
+    </div>
 
-                <div class="extraction-efficiency-info">
-                  <div class="efficiency-label">نسبة كفاءة الاستخراج</div>
+    <div class="flour-section-card-toggle">
+      <span>عرض التفاصيل</span>
+      <span class="flour-section-card-arrow">⌄</span>
+    </div>
 
-                  <div class="efficiency-description">
-                    مؤشر الأداء اليومي لعملية استخراج الطحين
-                  </div>
-                </div>
-              </div>
+  </summary>
+
+  <div class="details-content">
+
+    <div class="extraction-efficiency-card">
+
+      <div class="extraction-efficiency-header">
+
+        <div class="extraction-header-icon">
+          ⚙️
+        </div>
+
+        <div>
+          <strong>كفاءة استخراج الطحين</strong>
+          <small>EXTRACTION EFFICIENCY</small>
+        </div>
+
+      </div>
+
+
+      <div class="extraction-efficiency-body">
+
+        <!-- الحلقة -->
+
+        <div class="extraction-ring-wrapper">
+
+          <div class="extraction-ring">
+
+            <svg
+              class="extraction-ring-svg"
+              viewBox="0 0 120 120"
+            >
+
+              <circle
+                class="extraction-ring-bg"
+                cx="60"
+                cy="60"
+                r="48"
+              ></circle>
+
+              <circle
+                id="extractionRingProgress"
+                class="extraction-ring-progress"
+                cx="60"
+                cy="60"
+                r="48"
+              ></circle>
+
+            </svg>
+
+            <div class="extraction-ring-value">
+
+              <strong id="extractionEfficiencyDisplay">
+                0.00
+              </strong>
+
+              <span>%</span>
+
             </div>
+
           </div>
-        </details>
-        <!-- توقفات الخطوط -->
 
-        <details open>
-          <summary>توقفات الخطوط الإنتاجية</summary>
+        </div>
 
-          <div class="details-content">
-            <div class="stops-dashboard">
-              <!-- =========================
-                 الخط A
-            ========================== -->
 
-              <div class="stop-card" data-line="A">
-                <div class="stop-card-header">
-                  <div class="stop-line-name">
-                    <span class="stop-line-icon">⚙️</span>
-                    <span>الخط A</span>
-                  </div>
+      </div>
 
-                  <div class="stop-status">
-                    <span class="stop-status-dot"></span>
-                    <span class="stop-status-text"> حالة التوقف </span>
-                  </div>
-                </div>
 
-                <div class="stop-card-body">
-                  <!-- مدة التوقف -->
+      <!-- الحقل الأصلي للحفظ فقط -->
+      <!-- المستخدم لا يدخل فيه -->
 
-                  <div class="stop-duration-box">
-                    <label> ⏱️ مدة التوقف </label>
+      <input
+        id="extraction_eff"
+        data-save
+        type="number"
+        step="any"
+        readonly
+        tabindex="-1"
+        style="display:none"
+      />
 
-                    <div class="stop-input-wrap">
-                      <input
-                        id="astoptime"
-                        data-save
-                        step="any"
-                        oninput="updateStopCard(this)"
-                      />
+    </div>
 
-                      <span>دقيقة</span>
-                    </div>
-                  </div>
+  </div>
 
-                  <!-- سبب التوقف -->
+</details>
 
-                  <div class="stop-cause-box">
-                    <label> 🔧 نوع التوقف </label>
 
-                    <div class="cause-chips">
-                      <button
-                        type="button"
-                        onclick="setStopCause('astopcause', 'عطل ميكانيكي: ')"
-                      >
-                        ⚙️ ميكانيكي
-                      </button>
 
-                      <button
-                        type="button"
-                        onclick="setStopCause('astopcause', 'عطل كهربائي: ')"
-                      >
-                        ⚡ كهربائي
-                      </button>
 
-                      <button
-                        type="button"
-                        onclick="setStopCause('astopcause', 'مشكلة تشغيلية: ')"
-                      >
-                        🏭 تشغيل
-                      </button>
+      <!-- =========================================================
+     توقفات خطوط الإنتاج
+========================================================= -->
 
-                      <button
-                        type="button"
-                        onclick="setStopCause('astopcause', 'نقص مواد خام: ')"
-                      >
-                        📦 مواد خام
-                      </button>
+<details open class="flour-section-card">
 
-                      <button
-                        type="button"
-                        onclick="
-                          setStopCause('astopcause', 'تنظيف / صيانة دورية: ')
-                        "
-                      >
-                        🧹 تنظيف
-                      </button>
+  <summary class="flour-section-card-header">
 
-                      <button
-                        type="button"
-                        onclick="setStopCause('astopcause', 'أخرى: ')"
-                      >
-                        ••• أخرى
-                      </button>
-                    </div>
+    <div class="flour-section-card-title">
+      <div class="flour-section-card-icon">⏱️</div>
 
-                    <label> 📝 شرح سبب التوقف </label>
+      <div>
+        <strong>توقفات خطوط الإنتاج</strong>
+        <small>PRODUCTION LINE STOPS</small>
+      </div>
+    </div>
 
-                    <textarea
-                      id="astopcause"
-                      data-save
-                      rows="3"
-                      placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
-                      oninput="updateStopCard(this)"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
+    <div class="flour-section-card-toggle">
+      <span>عرض التفاصيل</span>
+      <span class="flour-section-card-arrow">⌄</span>
+    </div>
 
-              <!-- =========================
-                 الخط B
-            ========================== -->
+  </summary>
 
-              <div class="stop-card" data-line="B">
-                <div class="stop-card-header">
-                  <div class="stop-line-name">
-                    <span class="stop-line-icon">⚙️</span>
-                    <span>الخط B</span>
-                  </div>
+  <div class="details-content">
 
-                  <div class="stop-status">
-                    <span class="stop-status-dot"></span>
-                    <span class="stop-status-text"> حالة التوقف </span>
-                  </div>
-                </div>
+    <div class="flour-stops-dashboard">
 
-                <div class="stop-card-body">
-                  <div class="stop-duration-box">
-                    <label>⏱️ مدة التوقف</label>
+      <!-- =====================================================
+           LINE A
+      ====================================================== -->
 
-                    <div class="stop-input-wrap">
-                      <input
-                        id="bstoptime"
-                        data-save
-                        step="any"
-                        oninput="updateStopCard(this)"
-                      />
+      <div class="flour-stop-card" data-line="A">
 
-                      <span>دقيقة</span>
-                    </div>
-                  </div>
+        <div class="flour-stop-header">
 
-                  <div class="stop-cause-box">
-                    <label>🔧 نوع التوقف</label>
+          <div class="flour-stop-line">
 
-                    <div class="cause-chips">
-                      <button
-                        type="button"
-                        onclick="setStopCause('bstopcause', 'عطل ميكانيكي: ')"
-                      >
-                        ⚙️ ميكانيكي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('bstopcause', 'عطل كهربائي: ')"
-                      >
-                        ⚡ كهربائي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('bstopcause', 'مشكلة تشغيلية: ')"
-                      >
-                        🏭 تشغيل
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('bstopcause', 'نقص مواد خام: ')"
-                      >
-                        📦 مواد خام
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="
-                          setStopCause('bstopcause', 'تنظيف / صيانة دورية: ')
-                        "
-                      >
-                        🧹 تنظيف
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('bstopcause', 'أخرى: ')"
-                      >
-                        ••• أخرى
-                      </button>
-                    </div>
-
-                    <label>📝 شرح سبب التوقف</label>
-
-                    <textarea
-                      id="bstopcause"
-                      data-save
-                      rows="3"
-                      placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
-                      oninput="updateStopCard(this)"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- =========================
-                 الخط C
-            ========================== -->
-
-              <div class="stop-card" data-line="C">
-                <div class="stop-card-header">
-                  <div class="stop-line-name">
-                    <span class="stop-line-icon">⚙️</span>
-                    <span>الخط C</span>
-                  </div>
-
-                  <div class="stop-status">
-                    <span class="stop-status-dot"></span>
-                    <span class="stop-status-text"> حالة التوقف </span>
-                  </div>
-                </div>
-
-                <div class="stop-card-body">
-                  <div class="stop-duration-box">
-                    <label>⏱️ مدة التوقف</label>
-
-                    <div class="stop-input-wrap">
-                      <input
-                        id="cstoptime"
-                        data-save
-                        step="any"
-                        oninput="updateStopCard(this)"
-                      />
-
-                      <span>دقيقة</span>
-                    </div>
-                  </div>
-
-                  <div class="stop-cause-box">
-                    <label>🔧 نوع التوقف</label>
-
-                    <div class="cause-chips">
-                      <button
-                        type="button"
-                        onclick="setStopCause('cstopcause', 'عطل ميكانيكي: ')"
-                      >
-                        ⚙️ ميكانيكي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('cstopcause', 'عطل كهربائي: ')"
-                      >
-                        ⚡ كهربائي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('cstopcause', 'مشكلة تشغيلية: ')"
-                      >
-                        🏭 تشغيل
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('cstopcause', 'نقص مواد خام: ')"
-                      >
-                        📦 مواد خام
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="
-                          setStopCause('cstopcause', 'تنظيف / صيانة دورية: ')
-                        "
-                      >
-                        🧹 تنظيف
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('cstopcause', 'أخرى: ')"
-                      >
-                        ••• أخرى
-                      </button>
-                    </div>
-
-                    <label>📝 شرح سبب التوقف</label>
-
-                    <textarea
-                      id="cstopcause"
-                      data-save
-                      rows="3"
-                      placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
-                      oninput="updateStopCard(this)"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- =========================
-                 الخط D
-            ========================== -->
-
-              <div class="stop-card" data-line="D">
-                <div class="stop-card-header">
-                  <div class="stop-line-name">
-                    <span class="stop-line-icon">⚙️</span>
-                    <span>الخط D</span>
-                  </div>
-
-                  <div class="stop-status">
-                    <span class="stop-status-dot"></span>
-                    <span class="stop-status-text"> حالة التوقف </span>
-                  </div>
-                </div>
-
-                <div class="stop-card-body">
-                  <div class="stop-duration-box">
-                    <label>⏱️ مدة التوقف</label>
-
-                    <div class="stop-input-wrap">
-                      <input
-                        id="dstoptime"
-                        data-save
-                        step="any"
-                        oninput="updateStopCard(this)"
-                      />
-
-                      <span>دقيقة</span>
-                    </div>
-                  </div>
-
-                  <div class="stop-cause-box">
-                    <label>🔧 نوع التوقف</label>
-
-                    <div class="cause-chips">
-                      <button
-                        type="button"
-                        onclick="setStopCause('dstopcause', 'عطل ميكانيكي: ')"
-                      >
-                        ⚙️ ميكانيكي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('dstopcause', 'عطل كهربائي: ')"
-                      >
-                        ⚡ كهربائي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('dstopcause', 'مشكلة تشغيلية: ')"
-                      >
-                        🏭 تشغيل
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('dstopcause', 'نقص مواد خام: ')"
-                      >
-                        📦 مواد خام
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="
-                          setStopCause('dstopcause', 'تنظيف / صيانة دورية: ')
-                        "
-                      >
-                        🧹 تنظيف
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('dstopcause', 'أخرى: ')"
-                      >
-                        ••• أخرى
-                      </button>
-                    </div>
-
-                    <label>📝 شرح سبب التوقف</label>
-
-                    <textarea
-                      id="dstopcause"
-                      data-save
-                      rows="3"
-                      placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
-                      oninput="updateStopCard(this)"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- =========================
-                 الخط E
-            ========================== -->
-
-              <div class="stop-card" data-line="E">
-                <div class="stop-card-header">
-                  <div class="stop-line-name">
-                    <span class="stop-line-icon">⚙️</span>
-                    <span>الخط E</span>
-                  </div>
-
-                  <div class="stop-status">
-                    <span class="stop-status-dot"></span>
-                    <span class="stop-status-text"> حالة التوقف </span>
-                  </div>
-                </div>
-
-                <div class="stop-card-body">
-                  <div class="stop-duration-box">
-                    <label>⏱️ مدة التوقف</label>
-
-                    <div class="stop-input-wrap">
-                      <input
-                        id="estoptime"
-                        data-save
-                        step="any"
-                        oninput="updateStopCard(this)"
-                      />
-
-                      <span>دقيقة</span>
-                    </div>
-                  </div>
-
-                  <div class="stop-cause-box">
-                    <label>🔧 نوع التوقف</label>
-
-                    <div class="cause-chips">
-                      <button
-                        type="button"
-                        onclick="setStopCause('estopcause', 'عطل ميكانيكي: ')"
-                      >
-                        ⚙️ ميكانيكي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('estopcause', 'عطل كهربائي: ')"
-                      >
-                        ⚡ كهربائي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('estopcause', 'مشكلة تشغيلية: ')"
-                      >
-                        🏭 تشغيل
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('estopcause', 'نقص مواد خام: ')"
-                      >
-                        📦 مواد خام
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="
-                          setStopCause('estopcause', 'تنظيف / صيانة دورية: ')
-                        "
-                      >
-                        🧹 تنظيف
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('estopcause', 'أخرى: ')"
-                      >
-                        ••• أخرى
-                      </button>
-                    </div>
-
-                    <label>📝 شرح سبب التوقف</label>
-
-                    <textarea
-                      id="estopcause"
-                      data-save
-                      rows="3"
-                      placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
-                      oninput="updateStopCard(this)"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- =========================
-                 الخط F
-            ========================== -->
-
-              <div class="stop-card" data-line="F">
-                <div class="stop-card-header">
-                  <div class="stop-line-name">
-                    <span class="stop-line-icon">⚙️</span>
-                    <span>الخط F</span>
-                  </div>
-
-                  <div class="stop-status">
-                    <span class="stop-status-dot"></span>
-                    <span class="stop-status-text"> حالة التوقف </span>
-                  </div>
-                </div>
-
-                <div class="stop-card-body">
-                  <div class="stop-duration-box">
-                    <label>⏱️ مدة التوقف</label>
-
-                    <div class="stop-input-wrap">
-                      <input
-                        id="fstoptime"
-                        data-save
-                        step="any"
-                        oninput="updateStopCard(this)"
-                      />
-
-                      <span>دقيقة</span>
-                    </div>
-                  </div>
-
-                  <div class="stop-cause-box">
-                    <label>🔧 نوع التوقف</label>
-
-                    <div class="cause-chips">
-                      <button
-                        type="button"
-                        onclick="setStopCause('fstopcause', 'عطل ميكانيكي: ')"
-                      >
-                        ⚙️ ميكانيكي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('fstopcause', 'عطل كهربائي: ')"
-                      >
-                        ⚡ كهربائي
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('fstopcause', 'مشكلة تشغيلية: ')"
-                      >
-                        🏭 تشغيل
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('fstopcause', 'نقص مواد خام: ')"
-                      >
-                        📦 مواد خام
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="
-                          setStopCause('fstopcause', 'تنظيف / صيانة دورية: ')
-                        "
-                      >
-                        🧹 تنظيف
-                      </button>
-
-                      <button
-                        type="button"
-                        onclick="setStopCause('fstopcause', 'أخرى: ')"
-                      >
-                        ••• أخرى
-                      </button>
-                    </div>
-
-                    <label>📝 شرح سبب التوقف</label>
-
-                    <textarea
-                      id="fstopcause"
-                      data-save
-                      rows="3"
-                      placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
-                      oninput="updateStopCard(this)"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
+            <div class="flour-stop-icon">
+              A
             </div>
+
+            <div>
+              <strong>الخط A</strong>
+              <small>PRODUCTION LINE A</small>
+            </div>
+
           </div>
-        </details>
-        <!-- موقف قسم التعبئة -->
 
-        <details open>
-          <summary>موقف قسم التعبئة</summary>
+          <div class="flour-stop-status">
 
-          <div class="details-content">
-            <!-- =========================
-             بطاقات موقف التعبئة
-        ========================== -->
+            <span class="flour-stop-status-dot"></span>
 
-            <div class="packaging-stock-dashboard">
-              <!-- =========================
-                 بطاقة الطحين
-            ========================== -->
+            <span
+              id="flourStopStatusA"
+              class="flour-stop-status-text"
+            >
+              لا يوجد توقف
+            </span>
 
-              <div class="packaging-stock-card flour-stock-card">
-                <div class="packaging-stock-icon">🌾</div>
+          </div>
 
-                <div class="packaging-stock-info">
-                  <div class="packaging-stock-title">الطحين</div>
+        </div>
 
-                  <div class="packaging-stock-label">الرصيد الحالي</div>
-                </div>
 
-                <div class="packaging-stock-value">
-                  <input
-                    id="flour_packaging_stock"
-                    data-save
-                    step="any"
-                    oninput="updatePackagingStockVisual('flour')"
-                  />
+        <div class="flour-stop-body">
 
-                  <span>طن</span>
-                </div>
+          <div class="flour-stop-duration">
 
-                <!-- المؤشر البصري -->
+            <label>⏱️ مدة التوقف</label>
 
-                <div class="packaging-stock-bar">
-                  <div
-                    id="flour_packaging_stock_bar"
-                    class="packaging-stock-fill"
-                  ></div>
-                </div>
-              </div>
-
-              <!-- =========================
-                 بطاقة النخالة
-            ========================== -->
-
-              <div class="packaging-stock-card bran-stock-card">
-                <div class="packaging-stock-icon">🌿</div>
-
-                <div class="packaging-stock-info">
-                  <div class="packaging-stock-title">النخالة</div>
-
-                  <div class="packaging-stock-label">الرصيد الحالي</div>
-                </div>
-
-                <div class="packaging-stock-value">
-                  <input
-                    id="bran_packaging_stock"
-                    data-save
-                    step="any"
-                    oninput="updatePackagingStockVisual('bran')"
-                  />
-
-                  <span>طن</span>
-                </div>
-
-                <!-- المؤشر البصري -->
-
-                <div class="packaging-stock-bar">
-                  <div
-                    id="bran_packaging_stock_bar"
-                    class="packaging-stock-fill"
-                  ></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- =========================
-             المرفقات
-        ========================== -->
-
-            <div class="packaging-notes">
-              <label for="flour_packaging_notes_image" class="uploadImageBtn">
-                📎 إرفاق ملف أو صورة
-              </label>
+            <div class="flour-stop-input">
 
               <input
-                type="file"
-                multiple
-                accept="image/*,application/pdf"
-                id="flour_packaging_notes_image"
-                data-factory="flour"
-                data-field="flour_packaging_notes"
-                onchange="uploadNoteImage(this)"
-                style="display: none"
+                id="astoptime"
+                data-save
+                step="any"
+                oninput="updateStopCard(this)"
               />
 
-              <br />
+              <span>دقيقة</span>
 
-              <a
-                id="flour_packaging_notes_link"
-                target="_blank"
-                style="display: none; font-size: 13px; text-decoration: none"
-              >
-                👁 عرض الملف
-              </a>
             </div>
+
           </div>
-        </details>
 
-        <!-- الجودة والسلامة -->
 
-        <!-- =========================================
+          <div class="flour-stop-cause">
+
+            <label>🔧 نوع التوقف</label>
+
+            <div class="flour-stop-chips">
+
+              <button
+                type="button"
+                onclick="setStopCause('astopcause','عطل ميكانيكي: ')"
+              >
+                ⚙️ ميكانيكي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('astopcause','عطل كهربائي: ')"
+              >
+                ⚡ كهربائي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('astopcause','مشكلة تشغيلية: ')"
+              >
+                🏭 تشغيل
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('astopcause','نقص مواد خام: ')"
+              >
+                📦 مواد خام
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('astopcause','تنظيف / صيانة دورية: ')"
+              >
+                🧹 تنظيف
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('astopcause','أخرى: ')"
+              >
+                ••• أخرى
+              </button>
+
+            </div>
+
+
+            <label>📝 شرح سبب التوقف</label>
+
+            <textarea
+              id="astopcause"
+              data-save
+              rows="3"
+              placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+              oninput="updateStopCard(this)"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           LINE B
+      ====================================================== -->
+
+      <div class="flour-stop-card" data-line="B">
+
+        <div class="flour-stop-header">
+
+          <div class="flour-stop-line">
+
+            <div class="flour-stop-icon">
+              B
+            </div>
+
+            <div>
+              <strong>الخط B</strong>
+              <small>PRODUCTION LINE B</small>
+            </div>
+
+          </div>
+
+          <div class="flour-stop-status">
+
+            <span class="flour-stop-status-dot"></span>
+
+            <span
+              id="flourStopStatusB"
+              class="flour-stop-status-text"
+            >
+              لا يوجد توقف
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="flour-stop-body">
+
+          <div class="flour-stop-duration">
+
+            <label>⏱️ مدة التوقف</label>
+
+            <div class="flour-stop-input">
+
+              <input
+                id="bstoptime"
+                data-save
+                step="any"
+                oninput="updateStopCard(this)"
+              />
+
+              <span>دقيقة</span>
+
+            </div>
+
+          </div>
+
+
+          <div class="flour-stop-cause">
+
+            <label>🔧 نوع التوقف</label>
+
+            <div class="flour-stop-chips">
+
+              <button
+                type="button"
+                onclick="setStopCause('bstopcause','عطل ميكانيكي: ')"
+              >
+                ⚙️ ميكانيكي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('bstopcause','عطل كهربائي: ')"
+              >
+                ⚡ كهربائي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('bstopcause','مشكلة تشغيلية: ')"
+              >
+                🏭 تشغيل
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('bstopcause','نقص مواد خام: ')"
+              >
+                📦 مواد خام
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('bstopcause','تنظيف / صيانة دورية: ')"
+              >
+                🧹 تنظيف
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('bstopcause','أخرى: ')"
+              >
+                ••• أخرى
+              </button>
+
+            </div>
+
+
+            <label>📝 شرح سبب التوقف</label>
+
+            <textarea
+              id="bstopcause"
+              data-save
+              rows="3"
+              placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+              oninput="updateStopCard(this)"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           LINE C
+      ====================================================== -->
+
+      <div class="flour-stop-card" data-line="C">
+
+        <div class="flour-stop-header">
+
+          <div class="flour-stop-line">
+
+            <div class="flour-stop-icon">
+              C
+            </div>
+
+            <div>
+              <strong>الخط C</strong>
+              <small>PRODUCTION LINE C</small>
+            </div>
+
+          </div>
+
+          <div class="flour-stop-status">
+
+            <span class="flour-stop-status-dot"></span>
+
+            <span
+              id="flourStopStatusC"
+              class="flour-stop-status-text"
+            >
+              لا يوجد توقف
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="flour-stop-body">
+
+          <div class="flour-stop-duration">
+
+            <label>⏱️ مدة التوقف</label>
+
+            <div class="flour-stop-input">
+
+              <input
+                id="cstoptime"
+                data-save
+                step="any"
+                oninput="updateStopCard(this)"
+              />
+
+              <span>دقيقة</span>
+
+            </div>
+
+          </div>
+
+
+          <div class="flour-stop-cause">
+
+            <label>🔧 نوع التوقف</label>
+
+            <div class="flour-stop-chips">
+
+              <button
+                type="button"
+                onclick="setStopCause('cstopcause','عطل ميكانيكي: ')"
+              >
+                ⚙️ ميكانيكي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('cstopcause','عطل كهربائي: ')"
+              >
+                ⚡ كهربائي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('cstopcause','مشكلة تشغيلية: ')"
+              >
+                🏭 تشغيل
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('cstopcause','نقص مواد خام: ')"
+              >
+                📦 مواد خام
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('cstopcause','تنظيف / صيانة دورية: ')"
+              >
+                🧹 تنظيف
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('cstopcause','أخرى: ')"
+              >
+                ••• أخرى
+              </button>
+
+            </div>
+
+
+            <label>📝 شرح سبب التوقف</label>
+
+            <textarea
+              id="cstopcause"
+              data-save
+              rows="3"
+              placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+              oninput="updateStopCard(this)"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           LINE D
+      ====================================================== -->
+
+      <div class="flour-stop-card" data-line="D">
+
+        <div class="flour-stop-header">
+
+          <div class="flour-stop-line">
+
+            <div class="flour-stop-icon">
+              D
+            </div>
+
+            <div>
+              <strong>الخط D</strong>
+              <small>PRODUCTION LINE D</small>
+            </div>
+
+          </div>
+
+          <div class="flour-stop-status">
+
+            <span class="flour-stop-status-dot"></span>
+
+            <span
+              id="flourStopStatusD"
+              class="flour-stop-status-text"
+            >
+              لا يوجد توقف
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="flour-stop-body">
+
+          <div class="flour-stop-duration">
+
+            <label>⏱️ مدة التوقف</label>
+
+            <div class="flour-stop-input">
+
+              <input
+                id="dstoptime"
+                data-save
+                step="any"
+                oninput="updateStopCard(this)"
+              />
+
+              <span>دقيقة</span>
+
+            </div>
+
+          </div>
+
+
+          <div class="flour-stop-cause">
+
+            <label>🔧 نوع التوقف</label>
+
+            <div class="flour-stop-chips">
+
+              <button
+                type="button"
+                onclick="setStopCause('dstopcause','عطل ميكانيكي: ')"
+              >
+                ⚙️ ميكانيكي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('dstopcause','عطل كهربائي: ')"
+              >
+                ⚡ كهربائي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('dstopcause','مشكلة تشغيلية: ')"
+              >
+                🏭 تشغيل
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('dstopcause','نقص مواد خام: ')"
+              >
+                📦 مواد خام
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('dstopcause','تنظيف / صيانة دورية: ')"
+              >
+                🧹 تنظيف
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('dstopcause','أخرى: ')"
+              >
+                ••• أخرى
+              </button>
+
+            </div>
+
+
+            <label>📝 شرح سبب التوقف</label>
+
+            <textarea
+              id="dstopcause"
+              data-save
+              rows="3"
+              placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+              oninput="updateStopCard(this)"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           LINE E
+      ====================================================== -->
+
+      <div class="flour-stop-card" data-line="E">
+
+        <div class="flour-stop-header">
+
+          <div class="flour-stop-line">
+
+            <div class="flour-stop-icon">
+              E
+            </div>
+
+            <div>
+              <strong>الخط E</strong>
+              <small>PRODUCTION LINE E</small>
+            </div>
+
+          </div>
+
+          <div class="flour-stop-status">
+
+            <span class="flour-stop-status-dot"></span>
+
+            <span
+              id="flourStopStatusE"
+              class="flour-stop-status-text"
+            >
+              لا يوجد توقف
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="flour-stop-body">
+
+          <div class="flour-stop-duration">
+
+            <label>⏱️ مدة التوقف</label>
+
+            <div class="flour-stop-input">
+
+              <input
+                id="estoptime"
+                data-save
+                step="any"
+                oninput="updateStopCard(this)"
+              />
+
+              <span>دقيقة</span>
+
+            </div>
+
+          </div>
+
+
+          <div class="flour-stop-cause">
+
+            <label>🔧 نوع التوقف</label>
+
+            <div class="flour-stop-chips">
+
+              <button
+                type="button"
+                onclick="setStopCause('estopcause','عطل ميكانيكي: ')"
+              >
+                ⚙️ ميكانيكي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('estopcause','عطل كهربائي: ')"
+              >
+                ⚡ كهربائي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('estopcause','مشكلة تشغيلية: ')"
+              >
+                🏭 تشغيل
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('estopcause','نقص مواد خام: ')"
+              >
+                📦 مواد خام
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('estopcause','تنظيف / صيانة دورية: ')"
+              >
+                🧹 تنظيف
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('estopcause','أخرى: ')"
+              >
+                ••• أخرى
+              </button>
+
+            </div>
+
+
+            <label>📝 شرح سبب التوقف</label>
+
+            <textarea
+              id="estopcause"
+              data-save
+              rows="3"
+              placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+              oninput="updateStopCard(this)"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           LINE F
+      ====================================================== -->
+
+      <div class="flour-stop-card" data-line="F">
+
+        <div class="flour-stop-header">
+
+          <div class="flour-stop-line">
+
+            <div class="flour-stop-icon">
+              F
+            </div>
+
+            <div>
+              <strong>الخط F</strong>
+              <small>PRODUCTION LINE F</small>
+            </div>
+
+          </div>
+
+          <div class="flour-stop-status">
+
+            <span class="flour-stop-status-dot"></span>
+
+            <span
+              id="flourStopStatusF"
+              class="flour-stop-status-text"
+            >
+              لا يوجد توقف
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="flour-stop-body">
+
+          <div class="flour-stop-duration">
+
+            <label>⏱️ مدة التوقف</label>
+
+            <div class="flour-stop-input">
+
+              <input
+                id="fstoptime"
+                data-save
+                step="any"
+                oninput="updateStopCard(this)"
+              />
+
+              <span>دقيقة</span>
+
+            </div>
+
+          </div>
+
+
+          <div class="flour-stop-cause">
+
+            <label>🔧 نوع التوقف</label>
+
+            <div class="flour-stop-chips">
+
+              <button
+                type="button"
+                onclick="setStopCause('fstopcause','عطل ميكانيكي: ')"
+              >
+                ⚙️ ميكانيكي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('fstopcause','عطل كهربائي: ')"
+              >
+                ⚡ كهربائي
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('fstopcause','مشكلة تشغيلية: ')"
+              >
+                🏭 تشغيل
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('fstopcause','نقص مواد خام: ')"
+              >
+                📦 مواد خام
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('fstopcause','تنظيف / صيانة دورية: ')"
+              >
+                🧹 تنظيف
+              </button>
+
+              <button
+                type="button"
+                onclick="setStopCause('fstopcause','أخرى: ')"
+              >
+                ••• أخرى
+              </button>
+
+            </div>
+
+
+            <label>📝 شرح سبب التوقف</label>
+
+            <textarea
+              id="fstopcause"
+              data-save
+              rows="3"
+              placeholder="اكتب تفاصيل سبب التوقف والإجراء المتخذ..."
+              oninput="updateStopCard(this)"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</details>
+
+
+
+<!-- =========================================================
+     موقف قسم التعبئة
+========================================================= -->
+
+<details open class="flour-section-card">
+
+  <summary class="flour-section-card-header">
+
+    <div class="flour-section-card-title">
+      <div class="flour-section-card-icon">📦</div>
+
+      <div>
+        <strong>موقف قسم التعبئة</strong>
+        <small>PACKAGING STATUS</small>
+      </div>
+    </div>
+
+    <div class="flour-section-card-toggle">
+      <span>عرض التفاصيل</span>
+      <span class="flour-section-card-arrow">⌄</span>
+    </div>
+
+  </summary>
+
+  <div class="details-content">
+
+    <div class="flour-packaging-command">
+
+
+<!-- =========================
+     بطاقات المخزون
+========================== -->
+
+      <div class="flour-packaging-grid">
+
+        <!-- الطحين -->
+
+        <div class="flour-packaging-card">
+
+          <div class="flour-packaging-card-top">
+
+            <div class="flour-packaging-icon">
+              🌾
+            </div>
+
+            <div class="flour-packaging-title">
+              <strong>أكياس الطحين</strong>
+              <small>FLOUR PACKAGING</small>
+            </div>
+
+          </div>
+
+
+          <div class="flour-packaging-value">
+
+           <input
+  id="flour_packaging_stock"
+  data-save
+  step="any"
+  oninput="
+    updatePackagingStockVisual('flour');
+    refreshFlourDashboard();
+  "
+/>
+
+            <span>طن</span>
+
+          </div>
+
+
+          <div class="flour-packaging-bar">
+
+            <div
+              id="flour_packaging_stock_bar"
+              class="flour-packaging-fill"
+            ></div>
+
+          </div>
+
+
+          <div class="flour-packaging-footer">
+
+            <span>  ما تم تعبئته</span>
+
+          </div>
+
+        </div>
+
+
+        <!-- النخالة -->
+
+        <div class="flour-packaging-card">
+
+          <div class="flour-packaging-card-top">
+
+            <div class="flour-packaging-icon bran">
+              🌿
+            </div>
+
+            <div class="flour-packaging-title">
+              <strong>أكياس النخالة</strong>
+              <small>BRAN PACKAGING</small>
+            </div>
+
+          </div>
+
+
+          <div class="flour-packaging-value">
+
+           <input
+  id="bran_packaging_stock"
+  data-save
+  step="any"
+  oninput="
+    updatePackagingStockVisual('bran');
+    refreshFlourDashboard();
+  "
+/>
+
+            <span>طن</span>
+
+          </div>
+
+
+          <div class="flour-packaging-bar">
+
+            <div
+              id="bran_packaging_stock_bar"
+              class="flour-packaging-fill"
+            ></div>
+
+          </div>
+
+
+          <div class="flour-packaging-footer">
+
+            <span>  ما تم تعبئته</span>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- =========================
+           المرفقات
+      ========================== -->
+
+      <div class="flour-packaging-attachments">
+
+        <div class="flour-attachment-title">
+          <span>📎</span>
+          <strong>مرفقات موقف التعبئة</strong>
+        </div>
+
+        <label
+          for="flour_packaging_notes_image"
+          class="flour-upload-btn"
+        >
+          📎 إرفاق ملف أو صورة
+        </label>
+
+        <input
+          type="file"
+          multiple
+          accept="image/*,application/pdf"
+          id="flour_packaging_notes_image"
+          data-factory="flour"
+          data-field="flour_packaging_notes"
+          onchange="uploadNoteImage(this)"
+          style="display:none"
+        />
+
+        <a
+          id="flour_packaging_notes_link"
+          target="_blank"
+          class="flour-file-link"
+          style="display:none"
+        >
+          👁 عرض الملف
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</details>
+
+
+
+  
+
+<!-- =========================================
      الجودة والسلامة
 ========================================= -->
 
-        <details open>
-          <summary>الجودة والسلامة</summary>
+<details open class="flour-section-card">
+
+  <summary class="flour-section-card-header">
+
+    <div class="flour-section-card-title">
+      <div class="flour-section-card-icon">🛡️</div>
+
+      <div>
+        <strong>الجودة والسلامة</strong>
+        <small>QUALITY & SAFETY</small>
+      </div>
+    </div>
+
+    <div class="flour-section-card-toggle">
+      <span>عرض التفاصيل</span>
+      <span class="flour-section-card-arrow">⌄</span>
+    </div>
+
+  </summary>
 
           <div class="details-content">
             <div class="quality-safety-dashboard">
@@ -10216,12 +11538,29 @@ PKF
           </div>
         </details>
 
-        <!-- =========================================
+<!-- =========================================
      الملاحظات العامة
 ========================================= -->
 
-        <details open>
-          <summary>الملاحظات العامة</summary>
+ <details open class="flour-section-card">
+
+  <summary class="flour-section-card-header">
+
+    <div class="flour-section-card-title">
+      <div class="flour-section-card-icon">📝</div>
+
+      <div>
+        <strong>الملاحظات العامة</strong>
+        <small>GENERAL NOTES</small>
+      </div>
+    </div>
+
+    <div class="flour-section-card-toggle">
+      <span>عرض التفاصيل</span>
+      <span class="flour-section-card-arrow">⌄</span>
+    </div>
+
+  </summary>
 
           <div class="details-content">
             <div class="general-notes-dashboard">
@@ -10248,14 +11587,42 @@ PKF
           </div>
         </details>
 
-        <!-- =========================================
+<!-- =========================================
      اعتماد قسم الطحين
 ========================================= -->
 
-        <button id="approveFlourBtn" onclick="approveSection('flour')">
-          ✅ اعتماد قسم الطحين
-        </button>
-      </section>
+      <div class="flour-approval-area">
+
+  <div class="flour-approval-info">
+
+    <div class="flour-approval-icon">
+      ✓
+    </div>
+
+    <div>
+      <strong>اعتماد تقرير المطحنة</strong>
+      <small>
+        بعد مراجعة جميع بيانات الإنتاج والتوقفات والمخزون
+      </small>
+    </div>
+
+  </div>
+
+
+  <button
+    id="approveFlourBtn"
+    class="flour-approval-btn"
+    onclick="approveSection('flour')"
+  >
+    ✓ اعتماد تقرير الطحين
+  </button>
+
+ </div>
+</section>
+
+
+
+
       <!-- ===================================== -->
       <!-- مصنع الأعلاف والبريمكس -->
       <!-- ===================================== -->
@@ -12096,17 +13463,33 @@ window.fieldLastUpdatedAt = new Map();
         }
       }
 
-      function updatePowerStation() {
-        let power = parseFloat(
-          document.getElementById("union_power_use")?.value || 0,
-        );
+   function updatePowerStation() {
 
-        let boiler = parseFloat(
-          document.getElementById("union_boiler_use")?.value || 0,
-        );
+    const powerEl =
+        document.getElementById("union_power_use");
 
-        document.getElementById("union_total_use").value = power + boiler;
-      }
+    const boilerEl =
+        document.getElementById("union_boiler_use");
+
+    const totalEl =
+        document.getElementById("union_total_use");
+
+    if (!powerEl || !boilerEl || !totalEl) {
+        return;
+    }
+
+    const power =
+        Number(powerEl.value) || 0;
+
+    const boiler =
+        Number(boilerEl.value) || 0;
+
+    const total =
+        power + boiler;
+
+    totalEl.value =
+        total.toFixed(2);
+}
 
       function copyReportLink() {
         const reportDate = document.getElementById("reportDateKey").value;
@@ -12581,13 +13964,13 @@ window.fieldLastUpdatedAt = new Map();
         saveSalesField("feed_sales_total", "feed");
       }
 
-      function updateBlackOilStockTotals() {
+function updateBlackOilStockTotals() {
 
     const unionPowerEl =
         document.getElementById("blackoil_union_power_stock");
 
-    const unionRayyanEl =
-        document.getElementById("blackoil_union_boiler_stock");
+    const rayanBoilerEl =
+        document.getElementById("blackoil_rayan_boiler_stock");
 
     const extractionEl =
         document.getElementById("blackoil_extraction_stock");
@@ -12598,12 +13981,19 @@ window.fieldLastUpdatedAt = new Map();
     const diwanEl =
         document.getElementById("blackoil_diwan_stock");
 
+    const unionTotalEl =
+        document.getElementById("blackoil_union_total_stock");
 
-    // إذا كانت حقول النفط الأسود غير موجودة في الصفحة
-    // لا تفعل شيئاً ولا تسبب خطأ
+    const grandTotalEl =
+        document.getElementById("blackoil_total_stock");
+
+    /*
+     * إذا لم تكن عناصر القسم موجودة،
+     * لا تسبب الدالة أي خطأ.
+     */
     if (
         !unionPowerEl ||
-        !unionRayyanEl ||
+        !rayanBoilerEl ||
         !extractionEl ||
         !saharaEl ||
         !diwanEl
@@ -12611,12 +14001,11 @@ window.fieldLastUpdatedAt = new Map();
         return;
     }
 
-
     const unionPower =
         Number(unionPowerEl.value) || 0;
 
-    const unionRayyan =
-        Number(unionRayyanEl.value) || 0;
+    const rayanBoiler =
+        Number(rayanBoilerEl.value) || 0;
 
     const extraction =
         Number(extractionEl.value) || 0;
@@ -12628,36 +14017,40 @@ window.fieldLastUpdatedAt = new Map();
         Number(diwanEl.value) || 0;
 
 
-    // مجموع موقع الاتحاد
-    const unionTotalEl =
-        document.getElementById("blackoil_union_total_stock");
+    /* =========================================
+       إجمالي موقع الاتحاد
+       الاتحاد + الريان + الاستخلاص
+       ========================================= */
+
+    const unionTotal =
+        unionPower +
+        rayanBoiler +
+        extraction;
+
 
     if (unionTotalEl) {
-
         unionTotalEl.value =
-            unionPower +
-            unionRayyan +
-            extraction;
-
+            unionTotal.toFixed(2);
     }
 
 
-    // المجموع الكلي
-    const totalStockEl =
-        document.getElementById("blackoil_total_stock");
+    /* =========================================
+       إجمالي كل الأرصدة
+       ========================================= */
 
-    if (totalStockEl) {
+    const grandTotal =
+        unionTotal +
+        sahara +
+        diwan;
 
-        totalStockEl.value =
-            unionPower +
-            unionRayyan +
-            extraction +
-            sahara +
-            diwan;
 
+    if (grandTotalEl) {
+        grandTotalEl.value =
+            grandTotal.toFixed(2);
     }
 
 }
+
       function updateSunStockTotal() {
         let total = 0;
 
@@ -12986,78 +14379,145 @@ function recalculateAll() {
       }
 
       function updateShorteningSalesTotal() {}
-      function calcMillTotals() {
-        let totalGroundWheat = 0;
-        let totalF1 = 0;
-        let totalF3 = 0;
-        let totalBran = 0;
-        let grandTotal = 0;
+     function calcMillTotals() {
 
-        for (let i = 1; i <= 6; i++) {
-          const groundWheat =
-            parseFloat(
-              document.getElementById(`line${i}_ground_wheat`)?.value,
-            ) || 0;
+  const lines = [
+    {
+      f1: "line1_f1",
+      f3: "line1_f3",
+      bran: "line1_bran",
+      total: "line1_total",
+      card: "millCardTotal1"
+    },
+    {
+      f1: "line2_f1",
+      f3: "line2_f3",
+      bran: "line2_bran",
+      total: "line2_total",
+      card: "millCardTotal2"
+    },
+    {
+      f1: "line3_f1",
+      f3: "line3_f3",
+      bran: "line3_bran",
+      total: "line3_total",
+      card: "millCardTotal3"
+    },
+    {
+      f1: "line4_f1",
+      f3: "line4_f3",
+      bran: "line4_bran",
+      total: "line4_total",
+      card: "millCardTotal4"
+    },
+    {
+      f1: "line5_f1",
+      f3: "line5_f3",
+      bran: "line5_bran",
+      total: "line5_total",
+      card: "millCardTotal5"
+    },
+    {
+      f1: "line6_f1",
+      f3: "line6_f3",
+      bran: "line6_bran",
+      total: "line6_total",
+      card: "millCardTotal6"
+    }
+  ];
 
-          const f1 =
-            parseFloat(document.getElementById(`line${i}_f1`)?.value) || 0;
+  let totalF1 = 0;
+  let totalF3 = 0;
+  let totalBran = 0;
+  let grandTotal = 0;
 
-          const f3 =
-            parseFloat(document.getElementById(`line${i}_f3`)?.value) || 0;
 
-          const bran =
-            parseFloat(document.getElementById(`line${i}_bran`)?.value) || 0;
+  lines.forEach(line => {
 
-          /* مجموع منتجات الخط */
-          const lineTotal = f1 + f3 + bran;
+    const f1 =
+      Number(document.getElementById(line.f1)?.value) || 0;
 
-          const lineTotalElement = document.getElementById(`line${i}_total`);
+    const f3 =
+      Number(document.getElementById(line.f3)?.value) || 0;
 
-          if (lineTotalElement) {
-            lineTotalElement.value = lineTotal.toFixed(2);
-          }
+    const bran =
+      Number(document.getElementById(line.bran)?.value) || 0;
 
-          /* المجاميع الكلية */
+    const lineTotal = f1 + f3 + bran;
 
-          totalGroundWheat += groundWheat;
-          totalF1 += f1;
-          totalF3 += f3;
-          totalBran += bran;
-          grandTotal += lineTotal;
-        }
 
-        const groundWheatTotal = document.getElementById(
-          "flour_total_ground_wheat",
-        );
+    const totalEl =
+      document.getElementById(line.total);
 
-        const f1Total = document.getElementById("flour_total_f1");
+    const cardEl =
+      document.getElementById(line.card);
 
-        const f3Total = document.getElementById("flour_total_f3");
 
-        const branTotal = document.getElementById("flour_total_wbran");
+    if (totalEl) {
+      totalEl.value = lineTotal.toFixed(2);
+    }
 
-        const grandTotalElement = document.getElementById("flour_grand_total");
+    if (cardEl) {
+      cardEl.textContent = lineTotal.toFixed(2);
+    }
 
-        if (groundWheatTotal) {
-          groundWheatTotal.value = totalGroundWheat.toFixed(2);
-        }
 
-        if (f1Total) {
-          f1Total.value = totalF1.toFixed(2);
-        }
+    totalF1 += f1;
+    totalF3 += f3;
+    totalBran += bran;
 
-        if (f3Total) {
-          f3Total.value = totalF3.toFixed(2);
-        }
+    grandTotal += lineTotal;
+  });
 
-        if (branTotal) {
-          branTotal.value = totalBran.toFixed(2);
-        }
 
-        if (grandTotalElement) {
-          grandTotalElement.value = grandTotal.toFixed(2);
-        }
-      }
+  const f1TotalEl =
+    document.getElementById("flour_total_f1");
+
+  const f3TotalEl =
+    document.getElementById("flour_total_f3");
+
+  const branTotalEl =
+    document.getElementById("flour_total_wbran");
+
+  const grandTotalEl =
+    document.getElementById("flour_grand_total");
+
+
+  if (f1TotalEl) {
+    f1TotalEl.value = totalF1.toFixed(2);
+  }
+
+  if (f3TotalEl) {
+    f3TotalEl.value = totalF3.toFixed(2);
+  }
+
+  if (branTotalEl) {
+    branTotalEl.value = totalBran.toFixed(2);
+  }
+
+  if (grandTotalEl) {
+    grandTotalEl.value = grandTotal.toFixed(2);
+  }
+
+
+  /*
+     الحنطة المطحونة أصبحت قيمة واحدة للمصنع.
+     لا نجمعها من الخطوط.
+  */
+
+updateFlourExtractionEfficiency();
+
+/* تحديث مخطط إنتاج الطحين */
+if (typeof refreshFlourProductionHistory === "function") {
+  refreshFlourProductionHistory();
+}
+
+if (typeof refreshFlourDashboard === "function") {
+  refreshFlourDashboard();
+}
+
+}
+
 
       function updateGEASalesTotal() {
         const totalElement = document.getElementById("GEA_sales_total");
@@ -13502,6 +14962,12 @@ if (activeMenu) {
 
         /* اعتماد القسم */
 
+        console.log("🟡 STARTING SECTION APPROVAL INSERT", {
+    reportDate,
+    section,
+    email: user?.email
+});
+
         const { error: approvalError } = await supabaseClient
           .from("section_approvals")
           .insert([
@@ -13511,6 +14977,10 @@ if (activeMenu) {
               approved_by: user.email,
             },
           ]);
+
+          console.log("🟢 SECTION APPROVAL INSERT FINISHED", {
+    approvalError
+});
 
         if (approvalError) {
           console.log(approvalError);
@@ -13534,13 +15004,27 @@ if (activeMenu) {
 
         /* إعادة تحميل البيانات */
 
-        if (reload) {
-          await loadDailyReport();
-        }
+       if (reload) {
+  try {
 
-        if (showMessage) {
-          showNotification("تم اعتماد القسم بنجاح", "success");
-        }
+    await loadDailyReport();
+
+  } catch (reloadError) {
+
+    console.error(
+      "APPROVAL RELOAD ERROR:",
+      reloadError
+    );
+
+  }
+}
+
+if (showMessage) {
+  showNotification(
+    "تم اعتماد القسم بنجاح",
+    "success"
+  );
+}
       }
 
       /* =========================================================
@@ -13906,14 +15390,33 @@ if (activeMenu) {
         container.appendChild(button);
       }
 
-      async function approvePowerSection() {
+   async function approvePowerSection() {
+    console.log("🟢 POWER APPROVAL BUTTON CLICKED");
+
+    try {
+        console.log("🟡 Calling approveSection...");
+        
         await approveSection("powerstation", false, false);
 
+        console.log("🟢 approveSection FINISHED SUCCESSFULLY");
+
         showNotification(
-          "تم اعتماد تقرير محطة الطاقة والنفط الأسود بنجاح",
-          "success",
+            "تم اعتماد تقرير محطة الطاقة والنفط الأسود بنجاح",
+            "success"
         );
-      }
+
+        console.log("🟢 SUCCESS NOTIFICATION SENT");
+
+    } catch (error) {
+
+        console.error("🔴 POWER APPROVAL FAILED:", error);
+
+        showNotification(
+            error?.message || "حدث خطأ أثناء اعتماد القسم",
+            "error"
+        );
+    }
+}
 
       async function loadFactorySection(factory) {
 
@@ -14148,6 +15651,35 @@ if (factory === "oil") {
   await loadRefineryProductionComparison();
 }
         
+if (factory === "flour") {
+
+  if (typeof updateFlourRawDashboard === "function") {
+    updateFlourRawDashboard();
+  }
+
+  if (typeof updateFlourStockDashboard === "function") {
+    updateFlourStockDashboard();
+  }
+
+  if (typeof refreshFlourDashboard === "function") {
+    refreshFlourDashboard();
+  }
+
+  /* تحديث حالات توقف خطوط الإنتاج بعد تحميل القيم */
+  if (typeof updateFlourStopVisualStatus === "function") {
+    updateFlourStopVisualStatus();
+  }
+}
+
+if (factory === "powerstation") {
+
+    updateBlackOilStockTotals();
+
+    updatePowerStation();
+
+    refreshPowerDashboardVisuals();
+
+}
 
         /* إعادة حساب جميع القيم المشتقة */
 
@@ -14315,70 +15847,171 @@ if (factory === "oil") {
         }
       }
 
-      async function loadDailyReport() {
-        const {
-          data: { user },
-        } = await supabaseClient.auth.getUser();
+    async function loadDailyReport() {
 
-        if (!user) return;
+    const {
+        data: { user },
+    } = await supabaseClient.auth.getUser();
 
-        const { data: userInfo } = await supabaseClient
-          .from("users")
-          .select("role")
-          .eq("email", user.email)
-          .single();
+    if (!user) return;
 
-        if (!userInfo) return;
 
-        setPlasticProductionDetailsByRole(userInfo.role);
+    const { data: userInfo } =
+        await supabaseClient
+            .from("users")
+            .select("role")
+            .eq("email", user.email)
+            .single();
 
-        switch (userInfo.role) {
-          case "admin":
+    if (!userInfo) return;
 
-          case "executive":
-            await loadFactorySection("powerstation");
-            await loadFactorySection("blackoil");
-            await loadFactorySection("sugar");
-            await loadFactorySection("oil");
-            await loadFactorySection("flour");
-            await loadFactorySection("feed");
-            await loadFactorySection("waterfiltration");
+
+    setPlasticProductionDetailsByRole(
+        userInfo.role
+    );
+
+
+    /* =====================================================
+       تحميل بيانات المصانع
+       ===================================================== */
+
+    switch (userInfo.role) {
+
+        case "admin":
+
+        case "executive":
+
+            await loadFactorySection(
+                "powerstation"
+            );
+
+            await loadFactorySection(
+                "blackoil"
+            );
+
+            await loadFactorySection(
+                "sugar"
+            );
+
+            await loadFactorySection(
+                "oil"
+            );
+
+            await loadFactorySection(
+                "flour"
+            );
+
+            await loadFactorySection(
+                "feed"
+            );
+
+            await loadFactorySection(
+                "waterfiltration"
+            );
 
             break;
 
-          case "power":
-            await loadFactorySection("powerstation");
+
+        case "power":
+
+            await loadFactorySection(
+                "powerstation"
+            );
+
             break;
 
-          case "sugar":
-            await loadFactorySection("sugar");
+
+        case "sugar":
+
+            await loadFactorySection(
+                "sugar"
+            );
+
             break;
 
-          case "oil":
-            await loadFactorySection("oil");
+
+        case "oil":
+
+            await loadFactorySection(
+                "oil"
+            );
+
             break;
 
-          case "flour":
-            await loadFactorySection("flour");
+
+        case "flour":
+
+            await loadFactorySection(
+                "flour"
+            );
+
             break;
 
-          case "feed":
-            await loadFactorySection("feed");
+
+        case "feed":
+
+            await loadFactorySection(
+                "feed"
+            );
+
             break;
 
-          case "waterfiltration":
-            await loadFactorySection("waterfiltration");
-            break;
-        }
 
-        /* =========================
+        case "waterfiltration":
+
+            await loadFactorySection(
+                "waterfiltration"
+            );
+
+            break;
+    }
+
+
+    /* =====================================================
+       تحديث الحسابات الأصلية
+       ===================================================== */
+
+    if (typeof recalculateAll === "function") {
+        recalculateAll();
+    }
+
+
+    /* =====================================================
        تحديث مؤشرات موقف التعبئة
-    ========================= */
+       ===================================================== */
 
-        updatePackagingStockVisual("flour");
+    updatePackagingStockVisual(
+        "flour"
+    );
 
-        updatePackagingStockVisual("bran");
-      }
+    updatePackagingStockVisual(
+        "bran"
+    );
+
+    if (
+    typeof loadElectricalLoadHistory === "function"
+) {
+    await loadElectricalLoadHistory();
+}
+
+
+    /* =====================================================
+       SALES DASHBOARD
+       يجب أن يعمل بعد تحميل البيانات
+       ===================================================== */
+
+    if (
+        typeof window.initializeSalesDashboard ===
+        "function"
+    ) {
+
+        await window.initializeSalesDashboard();
+
+    }
+
+    
+
+}
 
       const fieldLabels = {
         // ==========================
@@ -14644,47 +16277,52 @@ if (factory === "oil") {
       };
 
 function toggleSidebar() {
-  const sidebar = document.querySelector(".sidebar");
-  const overlay = document.getElementById("sidebarOverlay");
+    const sidebar = document.querySelector(".sidebar");
+    const overlay = document.getElementById("sidebarOverlay");
 
-  if (!sidebar) return;
+    if (!sidebar) return;
 
-  const isOpen = sidebar.classList.contains("open");
+    const isOpen = sidebar.classList.contains("open");
 
-  if (isOpen) {
-    // إغلاق
-    sidebar.classList.remove("open");
+    if (isOpen) {
 
-    if (overlay) {
-      overlay.classList.remove("show");
-      overlay.style.pointerEvents = "none";
-      overlay.style.opacity = "0";
-      overlay.style.visibility = "hidden";
+        sidebar.classList.remove("open");
+
+        document.body.classList.remove("sidebar-open");
+        document.body.classList.add("sidebar-closed");
+
+        if (overlay) {
+            overlay.classList.remove("show");
+        }
+
+    } else {
+
+        sidebar.classList.add("open");
+
+        document.body.classList.add("sidebar-open");
+        document.body.classList.remove("sidebar-closed");
+
+        if (overlay) {
+            overlay.classList.add("show");
+        }
     }
-
-  } else {
-    // فتح
-    sidebar.classList.add("open");
-
-    if (overlay) {
-      overlay.classList.add("show");
-      overlay.style.pointerEvents = "auto";
-      overlay.style.opacity = "1";
-      overlay.style.visibility = "visible";
-    }
-  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  const sidebar = document.querySelector(".sidebar");
+    const sidebar = document.querySelector(".sidebar");
+    const overlay = document.getElementById("sidebarOverlay");
 
-  if (!sidebar) return;
+    if (sidebar) {
+        sidebar.classList.remove("open");
+    }
 
-  document.body.classList.toggle(
-    "sidebar-closed",
-    !sidebar.classList.contains("open")
-  );
+    document.body.classList.remove("sidebar-open");
+    document.body.classList.add("sidebar-closed");
+
+    if (overlay) {
+        overlay.classList.remove("show");
+    }
 
 });
 
@@ -15400,6 +17038,8 @@ if (typeof refreshAllDashboards === "function") {
       } else {
         initFeedRawConsumptionDashboard();
       }
+
+      
     </script>
 
     <div id="installCard" class="install-card">
@@ -15413,8 +17053,6 @@ if (typeof refreshAllDashboards === "function") {
         <button id="installBtn" class="install-now">تثبيت</button>
       </div>
     </div>
-
-    <div id="notification-container"></div>
 
     <script>
       async function saveSalesField(fieldId, factory) {
@@ -15476,9 +17114,7 @@ if (typeof refreshAllDashboards === "function") {
         scheduleFieldHistoryUpdate(fieldId, factory, value, user.email);
       }
 
-      
-
-      
+    
     </script>
 
     <script src="js/pwa.js"></script>
@@ -16343,6 +17979,3449 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+/* =========================================================
+   📊 SALES EXECUTIVE DASHBOARD
+   Live Dashboard + Historical Comparison
+   المؤسسة بالكامل: السكر + الزيت + الطحين + الأعلاف
+   ========================================================= */
+
+(() => {
+
+  /* =======================================================
+     CONFIG
+     ======================================================= */
+
+  const SALES_DASHBOARD_CONFIG = {
+
+    sugar: {
+      label: "السكر",
+      icon: "🍬",
+
+      /* الحقول الأصلية المحفوظة في daily_reports */
+      salesFields: [
+        "sugar_sales_1kg",
+        "sugar_sales_10kg",
+        "sugar_sales_25kg",
+        "sugar_sales_50kg",
+        "sugar_sales_1ton"
+      ],
+
+      stockIds: [
+        "stock_1kg",
+        "stock_10kg",
+        "stock_25kg",
+        "stock_50kg",
+        "stock_1t"
+      ]
+    },
+
+
+    oil: {
+      label: "الزيت",
+      icon: "🫒",
+
+      /* الحقول الأصلية فقط */
+      salesFields: [
+        "shortening_sales_20kg",
+
+        "sun_sales_750",
+        "sun_sales_900",
+        "sun_sales_1l",
+        "sun_sales_1_1lirq",
+        "sun_sales_1_1l15",
+
+        "olein_sales_5l",
+        "olein_sales_10l",
+        "olein_sales_18l_big",
+        "olein_sales_20kg",
+
+        "palm_sales_5l",
+        "palm_sales_6l",
+        "palm_sales_10l",
+        "palm_sales_12l",
+        "palm_sales_14l"
+      ],
+
+      stockIds: [
+        "sun_750_stock",
+        "sun_900_stock",
+        "sun_1l_stock",
+        "sun_1_1lirq_stock",
+        "sun_1_1l15_stock",
+
+        "olein_5l_stock",
+        "olein_10l_stock",
+        "olein_18l_stock",
+        "olein_20kg_stock",
+
+        "palm_5l_stock",
+        "palm_6l_stock",
+        "palm_10l_stock",
+        "palm_12l_stock",
+        "palm_14l_stock"
+      ]
+    },
+
+
+    flour: {
+      label: "الطحين",
+      icon: "🌾",
+
+      salesFields: [
+        "flour_sales_flour",
+        "flour_sales_bran"
+      ],
+
+      stockIds: [
+        "flour_stock_flour",
+        "flour_stock_bran"
+      ]
+    },
+
+
+    feed: {
+      label: "الأعلاف",
+      icon: "🐄",
+
+      salesFields: [
+        "feed_sales_corn",
+        "feed_sales_soybean",
+        "feed_sales_feed_agents",
+        "feed_sales_feed_sahara",
+        "feed_sales_premix_agents",
+        "feed_sales_premix_sahara"
+      ],
+
+      stockIds: []
+    }
+
+  };
+
+
+  let salesChartPeriod = 3;
+
+  /*
+   * ترتيب البيانات:
+   * الأحدث أولاً
+   */
+  let salesHistoricalData = [];
+
+  let salesDashboardInitialized = false;
+
+
+  /* =======================================================
+     HELPERS
+     ======================================================= */
+
+  function salesNumber(value) {
+
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return 0;
+    }
+
+    const n = Number(
+      String(value)
+        .replace(/,/g, "")
+        .trim()
+    );
+
+    return Number.isFinite(n) ? n : 0;
+  }
+
+
+  function getSalesInputValue(id) {
+
+    const el =
+      document.getElementById(id);
+
+    if (!el) return 0;
+
+    return salesNumber(el.value);
+  }
+
+
+  function sumSalesFieldsFromDOM(fieldIds) {
+
+    return fieldIds.reduce(
+      (sum, id) =>
+        sum + getSalesInputValue(id),
+      0
+    );
+  }
+
+
+  function formatSalesNumber(
+    value,
+    decimals = 1
+  ) {
+
+    const n =
+      salesNumber(value);
+
+    return n.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:
+          n % 1 !== 0
+            ? decimals
+            : 0,
+
+        maximumFractionDigits:
+          decimals
+      }
+    );
+  }
+
+
+  function getTodayLocalDate() {
+
+    const now =
+      new Date();
+
+    return (
+      now.getFullYear() +
+      "-" +
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0") +
+      "-" +
+      String(
+        now.getDate()
+      ).padStart(2, "0")
+    );
+  }
+
+
+  function getPreviousDates(count) {
+
+    const today =
+      new Date();
+
+    const dates = [];
+
+    for (
+      let i = 1;
+      i <= count;
+      i++
+    ) {
+
+      const d =
+        new Date(today);
+
+      d.setDate(
+        d.getDate() - i
+      );
+
+      dates.push(
+        d.getFullYear() +
+        "-" +
+        String(
+          d.getMonth() + 1
+        ).padStart(2, "0") +
+        "-" +
+        String(
+          d.getDate()
+        ).padStart(2, "0")
+      );
+    }
+
+    return dates;
+  }
+
+
+  /* =======================================================
+     CURRENT DAY VALUES
+     ======================================================= */
+
+  function getCurrentSalesGroups() {
+
+    const sugar =
+      sumSalesFieldsFromDOM(
+        SALES_DASHBOARD_CONFIG
+          .sugar
+          .salesFields
+      );
+
+
+    const oil =
+      sumSalesFieldsFromDOM(
+        SALES_DASHBOARD_CONFIG
+          .oil
+          .salesFields
+      );
+
+
+    const flour =
+      sumSalesFieldsFromDOM(
+        SALES_DASHBOARD_CONFIG
+          .flour
+          .salesFields
+      );
+
+
+    const feed =
+      sumSalesFieldsFromDOM(
+        SALES_DASHBOARD_CONFIG
+          .feed
+          .salesFields
+      );
+
+
+    return {
+      sugar,
+      oil,
+      flour,
+      feed
+    };
+  }
+
+
+  function getCurrentSalesStock() {
+
+    let total = 0;
+
+
+    Object.values(
+      SALES_DASHBOARD_CONFIG
+    ).forEach(group => {
+
+      if (!group.stockIds) return;
+
+      total +=
+        sumSalesFieldsFromDOM(
+          group.stockIds
+        );
+
+    });
+
+
+    return total;
+  }
+
+
+  function getCurrentTotalSales() {
+
+    const groups =
+      getCurrentSalesGroups();
+
+    return (
+      groups.sugar +
+      groups.oil +
+      groups.flour +
+      groups.feed
+    );
+  }
+
+
+  /* =======================================================
+     TOP FACTORY
+     ======================================================= */
+
+  function getTopSalesProduct(groups) {
+
+    const products = [
+
+      {
+        name: "السكر",
+        value: groups.sugar
+      },
+
+      {
+        name: "الزيت",
+        value: groups.oil
+      },
+
+      {
+        name: "الطحين",
+        value: groups.flour
+      },
+
+      {
+        name: "الأعلاف",
+        value: groups.feed
+      }
+
+    ];
+
+
+    products.sort(
+      (a, b) =>
+        b.value - a.value
+    );
+
+
+    return (
+      products[0] || {
+        name: "—",
+        value: 0
+      }
+    );
+  }
+
+
+  /* =======================================================
+     KPI UPDATE
+     ======================================================= */
+
+  function updateSalesKPIs() {
+
+    const groups =
+      getCurrentSalesGroups();
+
+    const total =
+      getCurrentTotalSales();
+
+    const top =
+      getTopSalesProduct(groups);
+
+    const totalEl =
+      document.getElementById(
+        "salesDashboardTotal"
+      );
+
+    const topProductEl =
+      document.getElementById(
+        "salesDashboardTopProduct"
+      );
+
+    const topValueEl =
+      document.getElementById(
+        "salesDashboardTopValue"
+      );
+
+    if (totalEl) {
+
+      totalEl.textContent =
+        formatSalesNumber(total);
+
+    }
+
+
+    if (topProductEl) {
+
+      topProductEl.textContent =
+        top.value > 0
+          ? top.name
+          : "—";
+
+    }
+
+
+    if (topValueEl) {
+
+      topValueEl.textContent =
+        `${formatSalesNumber(
+          top.value
+        )} طن`;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     TREND INDICATOR
+     ======================================================= */
+
+  function updateSalesTrendIndicator(
+    current,
+    average
+  ) {
+
+    const el =
+      document.getElementById(
+        "salesDashboardTrend"
+      );
+
+    if (!el) return;
+
+
+    if (!average) {
+
+      el.className =
+        "sales-kpi-trend neutral";
+
+      el.innerHTML = `
+        <span>—</span>
+        <small>لا توجد مقارنة</small>
+      `;
+
+      return;
+    }
+
+
+    const change =
+      (
+        (current - average) /
+        average
+      ) * 100;
+
+
+    if (
+      Math.abs(change) < 0.1
+    ) {
+
+      el.className =
+        "sales-kpi-trend neutral";
+
+      el.innerHTML = `
+        <span>≈ 0%</span>
+        <small>قريب من المتوسط</small>
+      `;
+
+      return;
+    }
+
+
+    if (change > 0) {
+
+      el.className =
+        "sales-kpi-trend positive";
+
+      el.innerHTML = `
+        <span>
+          ▲ ${change.toFixed(1)}%
+        </span>
+        <small>أعلى من متوسط آخر 3 أيام</small>
+      `;
+
+    } else {
+
+      el.className =
+        "sales-kpi-trend negative";
+
+      el.innerHTML = `
+        <span>
+          ▼ ${Math.abs(change).toFixed(1)}%
+        </span>
+        <small>أقل من متوسط آخر 3 أيام</small>
+      `;
+    }
+  }
+
+
+  /* =======================================================
+     PRODUCT OVERVIEW
+     ======================================================= */
+
+  function updateSalesProductCards() {
+
+    const groups =
+      getCurrentSalesGroups();
+
+
+    const values =
+      Object.values(groups);
+
+
+    const maximum =
+      Math.max(
+        ...values,
+        1
+      );
+
+
+    updateProductCard(
+      "Sugar",
+      groups.sugar,
+      maximum
+    );
+
+    updateProductCard(
+      "Oil",
+      groups.oil,
+      maximum
+    );
+
+    updateProductCard(
+      "Flour",
+      groups.flour,
+      maximum
+    );
+
+    updateProductCard(
+      "Feed",
+      groups.feed,
+      maximum
+    );
+  }
+
+
+  function updateProductCard(
+    name,
+    value,
+    maximum
+  ) {
+
+    const valueEl =
+      document.getElementById(
+        `sales${name}Value`
+      );
+
+    const barEl =
+      document.getElementById(
+        `sales${name}Bar`
+      );
+
+    const percentEl =
+      document.getElementById(
+        `sales${name}Percent`
+      );
+
+    const trendEl =
+      document.getElementById(
+        `sales${name}Trend`
+      );
+
+
+    const percentage =
+      maximum > 0
+        ? (
+            value /
+            maximum
+          ) * 100
+        : 0;
+
+
+    if (valueEl) {
+
+      valueEl.textContent =
+        formatSalesNumber(value);
+
+    }
+
+
+    if (barEl) {
+
+      barEl.style.setProperty(
+        "--sales-product-width",
+        `${Math.max(
+          0,
+          Math.min(
+            100,
+            percentage
+          )
+        )}%`
+      );
+
+    }
+
+
+    if (percentEl) {
+
+      percentEl.textContent =
+        `${percentage.toFixed(0)}%`;
+
+    }
+
+
+    if (trendEl) {
+
+      trendEl.textContent =
+        "اليوم";
+
+    }
+  }
+
+
+  /* =======================================================
+     CHART PERIOD
+     ======================================================= */
+
+  window.changeSalesChartPeriod =
+    function(period) {
+
+      salesChartPeriod =
+        Number(period) === 7
+          ? 7
+          : 3;
+
+
+      document
+        .querySelectorAll(
+          ".sales-period-btn"
+        )
+        .forEach(btn => {
+
+          btn.classList.toggle(
+            "active",
+            Number(
+              btn.dataset.period
+            ) ===
+            salesChartPeriod
+          );
+
+        });
+
+
+      renderSalesTrendChart();
+    };
+
+
+  /* =======================================================
+     CURRENT DAY CHART DATA
+     ======================================================= */
+
+  function buildCurrentChartData() {
+
+    const todayString =
+      getTodayLocalDate();
+
+
+    return {
+
+      date:
+        new Date(
+          `${todayString}T00:00:00`
+        ),
+
+      label:
+        "اليوم",
+
+      total:
+        getCurrentTotalSales(),
+
+      sugar:
+        getCurrentSalesGroups().sugar,
+
+      oil:
+        getCurrentSalesGroups().oil,
+
+      flour:
+        getCurrentSalesGroups().flour,
+
+      feed:
+        getCurrentSalesGroups().feed,
+
+      current:
+        true
+
+    };
+  }
+
+
+function renderSalesTrendChart() {
+
+    const barsContainer =
+        document.getElementById(
+            "salesChartBars"
+        );
+
+    const labelsContainer =
+        document.getElementById(
+            "salesChartLabels"
+        );
+
+
+    if (
+        !barsContainer ||
+        !labelsContainer
+    ) {
+        return;
+    }
+
+
+    /* ==========================================
+       بيانات اليوم الحالي
+    ========================================== */
+
+    const current =
+        buildCurrentChartData();
+
+
+    /*
+     * الترتيب:
+     *
+     * اليوم
+     * أمس
+     * قبل أمس
+     * ...
+     */
+
+    const allData = [
+        current,
+        ...salesHistoricalData
+    ];
+
+
+    /*
+     * نأخذ 3 أو 7 أيام
+     */
+
+    let data =
+        allData.slice(
+            0,
+            salesChartPeriod
+        );
+
+
+    /*
+     * الرسم:
+     * الأقدم ← الأحدث
+     */
+
+    data =
+        data.reverse();
+
+
+    barsContainer.innerHTML = "";
+
+    labelsContainer.innerHTML = "";
+
+
+    if (!data.length) {
+        return;
+    }
+
+
+    /* ==========================================
+       الألوان المنطقية للمصانع
+       ========================================== */
+
+    const factories = [
+
+        {
+            key: "sugar",
+            label: "السكر",
+            className:
+                "sales-bar-sugar"
+        },
+
+        {
+            key: "oil",
+            label: "الزيت",
+            className:
+                "sales-bar-oil"
+        },
+
+        {
+            key: "flour",
+            label: "الطحين",
+            className:
+                "sales-bar-flour"
+        },
+
+        {
+            key: "feed",
+            label: "الأعلاف",
+            className:
+                "sales-bar-feed"
+        }
+
+    ];
+
+
+    /*
+     * أكبر قيمة بين جميع المصانع
+     * وجميع الأيام الظاهرة.
+     *
+     * هذا مهم جدًا:
+     *
+     * كل الأعمدة تستخدم نفس المقياس،
+     * حتى تكون المقارنة حقيقية.
+     */
+
+    const maximum =
+        Math.max(
+            ...data.flatMap(
+                item =>
+                    factories.map(
+                        factory =>
+                            salesNumber(
+                                item[
+                                    factory.key
+                                ]
+                            )
+                    )
+            ),
+            1
+        );
+
+
+    /* ==========================================
+       رسم الأيام
+       ========================================== */
+
+    data.forEach(item => {
+
+        const day =
+            document.createElement(
+                "div"
+            );
+
+
+        day.className =
+            `sales-chart-day-group${
+                item.current
+                    ? " current"
+                    : ""
+            }`;
+
+
+        /*
+         * اسم اليوم
+         */
+
+        const dayTitle =
+            document.createElement(
+                "div"
+            );
+
+        dayTitle.className =
+            "sales-chart-day-title";
+
+        dayTitle.textContent =
+            item.current
+                ? "اليوم"
+                : (
+                    item.label ||
+                    formatSalesDate(
+                        item.date
+                    )
+                );
+
+
+        day.appendChild(
+            dayTitle
+        );
+
+
+        /*
+         * حاوية الأعمدة الأربعة
+         */
+
+        const bars =
+            document.createElement(
+                "div"
+            );
+
+        bars.className =
+            "sales-chart-four-bars";
+
+
+        factories.forEach(
+            factory => {
+
+                const value =
+                    salesNumber(
+                        item[
+                            factory.key
+                        ]
+                    );
+
+
+                const height =
+                    value > 0
+                        ? Math.max(
+                            6,
+                            (
+                                value /
+                                maximum
+                            ) * 100
+                        )
+                        : 2;
+
+
+                const barWrapper =
+                    document.createElement(
+                        "div"
+                    );
+
+                barWrapper.className =
+                    "sales-chart-factory-bar";
+
+
+                /*
+                 * القيمة فوق العمود
+                 */
+
+                const valueLabel =
+                    document.createElement(
+                        "div"
+                    );
+
+                valueLabel.className =
+                    "sales-chart-value";
+
+                valueLabel.textContent =
+                    formatSalesNumber(
+                        value
+                    );
+
+
+                /*
+                 * العمود نفسه
+                 */
+
+                const bar =
+                    document.createElement(
+                        "div"
+                    );
+
+                bar.className =
+                    `sales-chart-bar ${factory.className}`;
+
+                bar.style.height =
+                    `${height}%`;
+
+
+                /*
+                 * Tooltip عند الضغط
+                 */
+
+                barWrapper.addEventListener(
+                    "mouseenter",
+                    () => {
+
+                        showSalesFactoryTooltip(
+                            barWrapper,
+                            item,
+                            factory,
+                            value
+                        );
+
+                    }
+                );
+
+
+                barWrapper.addEventListener(
+                    "mouseleave",
+                    hideSalesTooltip
+                );
+
+
+                barWrapper.addEventListener(
+                    "click",
+                    () => {
+
+                        showSalesFactoryTooltip(
+                            barWrapper,
+                            item,
+                            factory,
+                            value
+                        );
+
+                    }
+                );
+
+
+                barWrapper.appendChild(
+                    valueLabel
+                );
+
+                barWrapper.appendChild(
+                    bar
+                );
+
+
+                bars.appendChild(
+                    barWrapper
+                );
+
+            }
+        );
+
+
+        day.appendChild(
+            bars
+        );
+
+
+        barsContainer.appendChild(
+            day
+        );
+
+    });
+
+
+    /*
+     * ملاحظة:
+     * لا نستخدم labels منفصلة لكل Bar.
+     *
+     * اسم اليوم أصبح داخل مجموعة اليوم.
+     */
+
+    labelsContainer.innerHTML = "";
+
+}
+  /* =======================================================
+     DATE FORMAT
+     ======================================================= */
+
+  function formatSalesDate(date) {
+
+    if (!date) return "—";
+
+
+    const d =
+      date instanceof Date
+        ? date
+        : new Date(date);
+
+
+    if (
+      Number.isNaN(
+        d.getTime()
+      )
+    ) {
+      return "—";
+    }
+
+
+    return d.toLocaleDateString(
+      "ar-IQ",
+      {
+        day: "numeric",
+        month: "numeric"
+      }
+    );
+  }
+
+
+  /* =======================================================
+     TOOLTIP
+     ======================================================= */
+
+  function showSalesTooltip(
+    day,
+    item
+  ) {
+
+    const tooltip =
+      document.getElementById(
+        "salesChartTooltip"
+      );
+
+
+    if (!tooltip) return;
+
+
+    const dateEl =
+      document.getElementById(
+        "salesTooltipDate"
+      );
+
+    const valueEl =
+      document.getElementById(
+        "salesTooltipValue"
+      );
+
+    const changeEl =
+      document.getElementById(
+        "salesTooltipChange"
+      );
+
+
+    if (dateEl) {
+
+      dateEl.textContent =
+        item.current
+          ? "اليوم"
+          : (
+              item.label ||
+              formatSalesDate(
+                item.date
+              )
+            );
+
+    }
+
+
+    if (valueEl) {
+
+      valueEl.textContent =
+        formatSalesNumber(
+          item.total
+        );
+
+    }
+
+
+    if (changeEl) {
+
+      const previous =
+        findPreviousSalesValue(
+          item
+        );
+
+
+      if (previous > 0) {
+
+        const change =
+          (
+            (
+              item.total -
+              previous
+            ) /
+            previous
+          ) * 100;
+
+
+        changeEl.textContent =
+          change >= 0
+            ? `▲ ${change.toFixed(1)}% عن اليوم السابق`
+            : `▼ ${Math.abs(change).toFixed(1)}% عن اليوم السابق`;
+
+      } else {
+
+        changeEl.textContent =
+          "لا توجد مقارنة سابقة";
+
+      }
+
+    }
+
+
+    const chart =
+      document.getElementById(
+        "salesTrendChart"
+      );
+
+
+    if (!chart) return;
+
+
+    const dayRect =
+      day.getBoundingClientRect();
+
+    const chartRect =
+      chart.getBoundingClientRect();
+
+
+    let left =
+      dayRect.left -
+      chartRect.left +
+      dayRect.width / 2 -
+      72;
+
+
+    let top =
+      dayRect.top -
+      chartRect.top -
+      92;
+
+
+    left =
+      Math.max(
+        5,
+        Math.min(
+          left,
+          chartRect.width - 155
+        )
+      );
+
+
+    top =
+      Math.max(
+        5,
+        top
+      );
+
+
+    tooltip.style.left =
+      `${left}px`;
+
+    tooltip.style.top =
+      `${top}px`;
+
+
+    tooltip.classList.add(
+      "show"
+    );
+  }
+
+
+  function hideSalesTooltip() {
+
+    const tooltip =
+      document.getElementById(
+        "salesChartTooltip"
+      );
+
+
+    if (tooltip) {
+
+      tooltip.classList.remove(
+        "show"
+      );
+
+    }
+  }
+
+  function showSalesFactoryTooltip(
+    bar,
+    item,
+    factory,
+    value
+) {
+
+    const tooltip =
+        document.getElementById(
+            "salesChartTooltip"
+        );
+
+    if (!tooltip) return;
+
+
+    const dateEl =
+        document.getElementById(
+            "salesTooltipDate"
+        );
+
+    const valueEl =
+        document.getElementById(
+            "salesTooltipValue"
+        );
+
+    const changeEl =
+        document.getElementById(
+            "salesTooltipChange"
+        );
+
+
+    /*
+     * التاريخ
+     */
+
+    if (dateEl) {
+
+        dateEl.textContent =
+            item.current
+                ? "اليوم"
+                : (
+                    item.label ||
+                    formatSalesDate(
+                        item.date
+                    )
+                );
+
+    }
+
+
+    /*
+     * المصنع + القيمة
+     */
+
+    if (valueEl) {
+
+        valueEl.textContent =
+            `${factory.label}: ${formatSalesNumber(value)} طن`;
+
+    }
+
+
+    /*
+     * مقارنة المصنع نفسه
+     * باليوم السابق.
+     */
+
+    if (changeEl) {
+
+        const previous =
+            findPreviousFactorySalesValue(
+                item,
+                factory.key
+            );
+
+
+        if (previous > 0) {
+
+            const change =
+                (
+                    (
+                        value -
+                        previous
+                    ) /
+                    previous
+                ) * 100;
+
+
+            changeEl.textContent =
+                change >= 0
+                    ? `▲ ${change.toFixed(1)}% عن اليوم السابق`
+                    : `▼ ${Math.abs(change).toFixed(1)}% عن اليوم السابق`;
+
+        } else {
+
+            changeEl.textContent =
+                "لا توجد مقارنة سابقة";
+
+        }
+
+    }
+
+
+    const chart =
+        document.getElementById(
+            "salesTrendChart"
+        );
+
+    if (!chart) return;
+
+
+    const barRect =
+        bar.getBoundingClientRect();
+
+    const chartRect =
+        chart.getBoundingClientRect();
+
+
+    let left =
+        barRect.left -
+        chartRect.left +
+        barRect.width / 2 -
+        75;
+
+
+    let top =
+        barRect.top -
+        chartRect.top -
+        105;
+
+
+    left =
+        Math.max(
+            5,
+            Math.min(
+                left,
+                chartRect.width - 165
+            )
+        );
+
+
+    top =
+        Math.max(
+            5,
+            top
+        );
+
+
+    tooltip.style.left =
+        `${left}px`;
+
+    tooltip.style.top =
+        `${top}px`;
+
+
+    tooltip.classList.add(
+        "show"
+    );
+}
+
+function findPreviousFactorySalesValue(
+    item,
+    factoryKey
+) {
+
+    if (!item) return 0;
+
+
+    /*
+     * اليوم الحالي:
+     * السابق = أمس
+     */
+
+    if (item.current) {
+
+        return salesHistoricalData[0]
+            ? salesNumber(
+                salesHistoricalData[0][
+                    factoryKey
+                ]
+            )
+            : 0;
+    }
+
+
+    const index =
+        salesHistoricalData.findIndex(
+            x =>
+                x.date.getTime() ===
+                item.date.getTime()
+        );
+
+
+    if (
+        index >= 0 &&
+        salesHistoricalData[index + 1]
+    ) {
+
+        return salesNumber(
+            salesHistoricalData[
+                index + 1
+            ][factoryKey]
+        );
+
+    }
+
+
+    return 0;
+}
+
+
+  /* =======================================================
+     FIND PREVIOUS DAY
+     ======================================================= */
+
+  function findPreviousSalesValue(
+    item
+  ) {
+
+    if (!item) return 0;
+
+
+    /*
+     * اليوم الحالي:
+     * السابق = أول عنصر في historicalData
+     */
+
+    if (item.current) {
+
+      return salesHistoricalData[0]
+        ? salesNumber(
+            salesHistoricalData[0].total
+          )
+        : 0;
+    }
+
+
+    const index =
+      salesHistoricalData.findIndex(
+        x =>
+          x.date.getTime() ===
+          item.date.getTime()
+      );
+
+
+    if (
+      index >= 0 &&
+      salesHistoricalData[index + 1]
+    ) {
+
+      return salesNumber(
+        salesHistoricalData[
+          index + 1
+        ].total
+      );
+
+    }
+
+
+    return 0;
+  }
+
+
+  /* =======================================================
+     READ HISTORICAL DATA
+     ======================================================= */
+
+  async function loadSalesHistoricalData() {
+
+    /*
+     * نستخدم نفس عميل Supabase
+     * الموجود أصلًا في النظام.
+     */
+
+    if (
+      typeof supabaseClient ===
+        "undefined" ||
+      !supabaseClient ||
+      typeof supabaseClient.from !==
+        "function"
+    ) {
+
+      salesHistoricalData = [];
+
+      renderSalesTrendChart();
+
+      updateSalesKPIs();
+
+      return;
+    }
+
+
+    try {
+
+      /*
+       * نقرأ آخر 7 أيام مكتملة.
+       */
+
+      const dates =
+        getPreviousDates(7);
+
+
+      /*
+       * الحقول الأصلية فقط.
+       *
+       * لا نستخدم total fields التاريخية.
+       */
+
+      const fieldNames = [
+
+        ...SALES_DASHBOARD_CONFIG
+          .sugar
+          .salesFields,
+
+        ...SALES_DASHBOARD_CONFIG
+          .oil
+          .salesFields,
+
+        ...SALES_DASHBOARD_CONFIG
+          .flour
+          .salesFields,
+
+        ...SALES_DASHBOARD_CONFIG
+          .feed
+          .salesFields
+
+      ];
+
+
+      /*
+       * نستعلم عن:
+       *
+       * التاريخ
+       * المصنع
+       * الحقل
+       * القيمة
+       */
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("daily_reports")
+          .select(
+            "report_date,factory,field_name,field_value"
+          )
+          .in(
+            "report_date",
+            dates
+          )
+          .in(
+            "field_name",
+            fieldNames
+          );
+
+
+      if (error) {
+
+        console.warn(
+          "Sales historical data:",
+          error
+        );
+
+        salesHistoricalData = [];
+
+        renderSalesTrendChart();
+
+        updateSalesKPIs();
+
+        return;
+      }
+
+
+      /*
+       * بناء يوم ← مصنع ← مجموع
+       */
+
+      const byDate = {};
+
+
+      dates.forEach(date => {
+
+        byDate[date] = {
+
+          sugar: 0,
+
+          oil: 0,
+
+          flour: 0,
+
+          feed: 0
+
+        };
+
+      });
+
+
+      /*
+       * ربط كل field بالمصنع الصحيح.
+       *
+       * هذا يمنع أي خلط بين المصانع.
+       */
+
+      const fieldFactoryMap =
+        new Map();
+
+
+      SALES_DASHBOARD_CONFIG
+        .sugar
+        .salesFields
+        .forEach(
+          field =>
+            fieldFactoryMap.set(
+              field,
+              "sugar"
+            )
+        );
+
+
+      SALES_DASHBOARD_CONFIG
+        .oil
+        .salesFields
+        .forEach(
+          field =>
+            fieldFactoryMap.set(
+              field,
+              "oil"
+            )
+        );
+
+
+      SALES_DASHBOARD_CONFIG
+        .flour
+        .salesFields
+        .forEach(
+          field =>
+            fieldFactoryMap.set(
+              field,
+              "flour"
+            )
+        );
+
+
+      SALES_DASHBOARD_CONFIG
+        .feed
+        .salesFields
+        .forEach(
+          field =>
+            fieldFactoryMap.set(
+              field,
+              "feed"
+            )
+        );
+
+
+      /*
+       * تجميع البيانات.
+       */
+
+      (data || []).forEach(row => {
+
+        const date =
+          row.report_date;
+
+        const field =
+          row.field_name;
+
+        if (
+          !date ||
+          !field ||
+          !byDate[date]
+        ) {
+          return;
+        }
+
+
+        const factory =
+          fieldFactoryMap.get(
+            field
+          );
+
+
+        if (!factory) {
+          return;
+        }
+
+
+        const value =
+          salesNumber(
+            row.field_value
+          );
+
+
+        byDate[date][factory] +=
+          value;
+
+      });
+
+
+      /*
+       * تحويلها إلى مصفوفة.
+       *
+       * الأحدث أولاً.
+       */
+
+      salesHistoricalData =
+        dates.map(date => {
+
+          const d =
+            byDate[date];
+
+
+          return {
+
+            date:
+              new Date(
+                `${date}T00:00:00`
+              ),
+
+            label:
+              formatSalesDate(
+                date
+              ),
+
+            sugar:
+              d.sugar,
+
+            oil:
+              d.oil,
+
+            flour:
+              d.flour,
+
+            feed:
+              d.feed,
+
+            total:
+              d.sugar +
+              d.oil +
+              d.flour +
+              d.feed,
+
+            current:
+              false
+
+          };
+
+        });
+
+
+      /*
+       * الآن البيانات أصبحت:
+       *
+       * أمس
+       * قبل أمس
+       * قبل 3 أيام
+       * ...
+       * قبل 7 أيام
+       */
+
+
+      renderSalesTrendChart();
+
+      updateSalesKPIs();
+
+      updateSalesHistoricalTrends();
+
+
+    } catch (error) {
+
+      console.error(
+        "Sales dashboard history error:",
+        error
+      );
+
+      salesHistoricalData = [];
+
+      renderSalesTrendChart();
+
+      updateSalesKPIs();
+
+    }
+  }
+
+
+  /* =======================================================
+     PRODUCT HISTORICAL TREND
+     ======================================================= */
+
+  function updateSalesHistoricalTrends() {
+
+    const groups =
+      getCurrentSalesGroups();
+
+
+    const mapping = [
+
+      {
+        key: "sugar",
+        value: groups.sugar,
+        trendId:
+          "salesSugarTrend"
+      },
+
+      {
+        key: "oil",
+        value: groups.oil,
+        trendId:
+          "salesOilTrend"
+      },
+
+      {
+        key: "flour",
+        value: groups.flour,
+        trendId:
+          "salesFlourTrend"
+      },
+
+      {
+        key: "feed",
+        value: groups.feed,
+        trendId:
+          "salesFeedTrend"
+      }
+
+    ];
+
+
+    mapping.forEach(item => {
+
+      const el =
+        document.getElementById(
+          item.trendId
+        );
+
+
+      if (!el) return;
+
+
+      const values =
+        salesHistoricalData
+          .slice(0, 3)
+          .map(
+            x =>
+              salesNumber(
+                x[item.key]
+              )
+          );
+
+
+      /*
+       * إذا لم توجد بيانات سابقة
+       */
+
+      if (!values.length) {
+
+        el.textContent =
+          "—";
+
+        return;
+      }
+
+
+      const average =
+        values.reduce(
+          (sum, value) =>
+            sum + value,
+          0
+        ) /
+        values.length;
+
+
+      if (!average) {
+
+        el.textContent =
+          "—";
+
+        return;
+      }
+
+
+      const change =
+        (
+          (
+            item.value -
+            average
+          ) /
+          average
+        ) * 100;
+
+
+      if (
+        Math.abs(change) < 0.1
+      ) {
+
+        el.textContent =
+          "≈ 0%";
+
+      } else if (
+        change > 0
+      ) {
+
+        el.textContent =
+          `▲ ${change.toFixed(1)}%`;
+
+      } else {
+
+        el.textContent =
+          `▼ ${Math.abs(change).toFixed(1)}%`;
+
+      }
+
+    });
+
+  }
+
+
+  /* =======================================================
+     LIVE REFRESH
+     ======================================================= */
+
+  window.refreshSalesDashboard =
+    function() {
+
+      if (
+        !document.getElementById(
+          "salesMarketing"
+        )
+      ) {
+        return;
+      }
+
+
+      updateSalesKPIs();
+
+      updateSalesProductCards();
+
+      updateSalesHistoricalTrends();
+
+      renderSalesTrendChart();
+
+    };
+
+
+  /* =======================================================
+     INITIALIZE
+     ======================================================= */
+
+  window.initializeSalesDashboard =
+    async function() {
+
+      if (
+        !document.getElementById(
+          "salesMarketing"
+        )
+      ) {
+        return;
+      }
+
+
+      updateSalesKPIs();
+
+      updateSalesProductCards();
+
+      renderSalesTrendChart();
+
+
+      /*
+       * تحميل الأيام السابقة
+       */
+
+      await loadSalesHistoricalData();
+
+
+      salesDashboardInitialized =
+        true;
+
+    };
+
+
+  /* =======================================================
+     WATCH SALES INPUTS
+     ======================================================= */
+
+  function attachSalesLiveListeners() {
+
+    const selectors = [
+
+      /* السكر */
+
+      "#sugar_sales_1kg",
+      "#sugar_sales_10kg",
+      "#sugar_sales_25kg",
+      "#sugar_sales_50kg",
+      "#sugar_sales_1ton",
+
+
+      /* الزيت */
+
+      "#shortening_sales_20kg",
+
+      "#sun_sales_750",
+      "#sun_sales_900",
+      "#sun_sales_1l",
+      "#sun_sales_1_1lirq",
+      "#sun_sales_1_1l15",
+
+      "#olein_sales_5l",
+      "#olein_sales_10l",
+      "#olein_sales_18l_big",
+      "#olein_sales_20kg",
+
+      "#palm_sales_5l",
+      "#palm_sales_6l",
+      "#palm_sales_10l",
+      "#palm_sales_12l",
+      "#palm_sales_14l",
+
+
+      /* الطحين */
+
+      "#flour_sales_flour",
+      "#flour_sales_bran",
+
+
+      /* الأعلاف */
+
+      "#feed_sales_corn",
+      "#feed_sales_soybean",
+      "#feed_sales_feed_agents",
+      "#feed_sales_feed_sahara",
+      "#feed_sales_premix_agents",
+      "#feed_sales_premix_sahara"
+
+    ];
+
+
+    selectors.forEach(
+      selector => {
+
+        const el =
+          document.querySelector(
+            selector
+          );
+
+
+        if (!el) return;
+
+
+        el.addEventListener(
+          "input",
+          () => {
+
+            /*
+             * نعطي الحسابات الأصلية
+             * فرصة للتحديث أولاً.
+             */
+
+            requestAnimationFrame(
+              () => {
+
+                refreshSalesDashboard();
+
+              }
+            );
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    attachSalesLiveListeners();
+
+  }
+);
+
+})();
+
+
+
+</script>
+<script>
+
+/* =========================================================
+   ELECTRICAL LOAD HISTORY
+   اليوم + 3 أيام سابقة
+   ========================================================= */
+
+let electricalLoadHistoryChart = null;
+
+
+/* ---------------------------------------------------------
+   تاريخ سابق
+   --------------------------------------------------------- */
+
+function getElectricalLoadPreviousDate(dateString, daysAgo) {
+
+    const date = new Date(dateString + "T00:00:00");
+
+    date.setDate(date.getDate() - daysAgo);
+
+    return (
+        date.getFullYear() +
+        "-" +
+        String(date.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(date.getDate()).padStart(2, "0")
+    );
+}
+
+
+/* ---------------------------------------------------------
+   قراءة بيانات الأحمال
+   --------------------------------------------------------- */
+
+async function loadElectricalLoadHistory() {
+
+    const dateElement =
+        document.getElementById("reportDateKey");
+
+    if (!dateElement || !dateElement.value) {
+        return;
+    }
+
+    const selectedDate = dateElement.value;
+
+    const dates = [
+        selectedDate,
+        getElectricalLoadPreviousDate(selectedDate, 1),
+        getElectricalLoadPreviousDate(selectedDate, 2),
+        getElectricalLoadPreviousDate(selectedDate, 3)
+    ].reverse();
+
+
+    const { data, error } = await supabaseClient
+        .from("daily_reports")
+        .select(
+            "report_date,field_name,field_value"
+        )
+        .eq("factory", "powerstation")
+        .in(
+            "report_date",
+            dates
+        )
+        .in(
+            "field_name",
+            [
+                "max_electrical_load",
+                "min_electrical_load"
+            ]
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Electrical load history error:",
+            error
+        );
+
+        return;
+    }
+
+
+    const byDate = {};
+
+    dates.forEach(date => {
+
+        byDate[date] = {
+            max: null,
+            min: null
+        };
+
+    });
+
+
+    (data || []).forEach(row => {
+
+        if (!byDate[row.report_date]) {
+            byDate[row.report_date] = {
+                max: null,
+                min: null
+            };
+        }
+
+        const value =
+            Number(row.field_value);
+
+        if (!Number.isFinite(value)) {
+            return;
+        }
+
+        if (
+            row.field_name ===
+            "max_electrical_load"
+        ) {
+
+            byDate[row.report_date].max = value;
+
+        }
+
+        if (
+            row.field_name ===
+            "min_electrical_load"
+        ) {
+
+            byDate[row.report_date].min = value;
+
+        }
+
+    });
+
+    /* =========================================================
+   اليوم الحالي يأخذ القيم الحية من حقول التقرير
+   وليس القيمة القديمة من قاعدة البيانات
+   ========================================================= */
+
+const currentMaxEl =
+    document.getElementById("max_electrical_load");
+
+const currentMinEl =
+    document.getElementById("min_electrical_load");
+
+const currentMax =
+    Number(currentMaxEl?.value);
+
+const currentMin =
+    Number(currentMinEl?.value);
+
+if (Number.isFinite(currentMax)) {
+    byDate[selectedDate].max = currentMax;
+}
+
+if (Number.isFinite(currentMin)) {
+    byDate[selectedDate].min = currentMin;
+}
+
+
+    renderElectricalLoadHistory(
+        dates,
+        byDate,
+        selectedDate
+    );
+}
+
+
+/* ---------------------------------------------------------
+   رسم المخطط
+   --------------------------------------------------------- */
+
+function renderElectricalLoadHistory(
+    dates,
+    byDate,
+    selectedDate
+) {
+
+    const canvas =
+        document.getElementById(
+            "electricalLoadHistoryChart"
+        );
+
+    if (!canvas || typeof Chart === "undefined") {
+        return;
+    }
+
+
+    const labels = dates.map(date => {
+
+        if (date === selectedDate) {
+            return "اليوم";
+        }
+
+        const d =
+            new Date(date + "T00:00:00");
+
+        return (
+            d.getDate() +
+            "/" +
+            (d.getMonth() + 1)
+        );
+
+    });
+
+
+    const maxValues = dates.map(
+        date => byDate[date]?.max ?? null
+    );
+
+    const minValues = dates.map(
+        date => byDate[date]?.min ?? null
+    );
+
+
+    /* تحديث مؤشر نطاق اليوم */
+
+    const todayMax =
+        byDate[selectedDate]?.max;
+
+    const todayMin =
+        byDate[selectedDate]?.min;
+
+
+    const rangeElement =
+        document.getElementById(
+            "electricalLoadRangeValue"
+        );
+
+
+  if (
+    rangeElement &&
+    Number.isFinite(todayMax) &&
+    Number.isFinite(todayMin)
+) {
+
+    rangeElement.textContent =
+        todayMin.toFixed(2) +
+        " – " +
+        todayMax.toFixed(2);
+
+} else if (rangeElement) {
+
+    rangeElement.textContent = "—";
+
+}
+
+
+    /* تدمير الرسم السابق */
+
+    if (electricalLoadHistoryChart) {
+
+        electricalLoadHistoryChart.destroy();
+
+        electricalLoadHistoryChart = null;
+    }
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    electricalLoadHistoryChart =
+        new Chart(ctx, {
+
+            type: "line",
+
+            data: {
+
+                labels: labels,
+
+                datasets: [
+
+                    /* أقل حمل */
+                    {
+                        label: "أقل حمل",
+
+                        data: minValues,
+
+                        borderColor: "#d5b765",
+
+                        backgroundColor:
+                            "rgba(213,183,101,.04)",
+
+                        borderWidth: 2,
+
+                        pointRadius:
+                            dates.map(
+                                date =>
+                                    date === selectedDate
+                                        ? 5
+                                        : 3
+                            ),
+
+                        pointHoverRadius: 7,
+
+                        pointBorderWidth: 2,
+
+                        tension: .38,
+
+                        spanGaps: true,
+
+                        fill: false
+                    },
+
+
+                    /* أعلى حمل */
+                    {
+                        label: "أعلى حمل",
+
+                        data: maxValues,
+
+                        borderColor: "#73c78b",
+
+                        backgroundColor:
+                            "rgba(115,199,139,.16)",
+
+                        borderWidth: 2.5,
+
+                        pointRadius:
+                            dates.map(
+                                date =>
+                                    date === selectedDate
+                                        ? 5
+                                        : 3
+                            ),
+
+                        pointHoverRadius: 7,
+
+                        pointBorderWidth: 2,
+
+                        tension: .38,
+
+                        spanGaps: true,
+
+                        /*
+                         * يملأ المنطقة بين
+                         * أعلى حمل وأقل حمل
+                         */
+                        fill: "-1"
+                    }
+
+                ]
+
+            },
+
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+
+                interaction: {
+
+                    mode: "index",
+
+                    intersect: false
+
+                },
+
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    },
+
+
+                    tooltip: {
+
+                        backgroundColor:
+                            "rgba(20,28,27,.96)",
+
+                        borderColor:
+                            "rgba(255,255,255,.12)",
+
+                        borderWidth: 1,
+
+                        titleColor: "#f3f6f4",
+
+                        bodyColor:
+                            "rgba(255,255,255,.72)",
+
+                        padding: 12,
+
+                        cornerRadius: 10,
+
+                        displayColors: true,
+
+
+                        callbacks: {
+
+                            title: function(items) {
+
+                                const index =
+                                    items[0].dataIndex;
+
+                                const date =
+                                    dates[index];
+
+                                if (
+                                    date ===
+                                    selectedDate
+                                ) {
+                                    return "اليوم";
+                                }
+
+                                const d =
+                                    new Date(
+                                        date +
+                                        "T00:00:00"
+                                    );
+
+                                return (
+                                    d.getDate() +
+                                    "/" +
+                                    (d.getMonth() + 1)
+                                );
+
+                            },
+
+
+                            afterBody: function(items) {
+
+                                const index =
+                                    items[0].dataIndex;
+
+                                const max =
+                                    maxValues[index];
+
+                                const min =
+                                    minValues[index];
+
+
+                                if (
+                                    Number.isFinite(max) &&
+                                    Number.isFinite(min)
+                                ) {
+
+                                    return [
+                                        "",
+                                        "نطاق الحمل: " +
+                                        (max - min)
+                                            .toFixed(2) +
+                                        " MW"
+                                    ];
+
+                                }
+
+                                return [];
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+
+                scales: {
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        },
+
+                        border: {
+                            display: false
+                        },
+
+                        ticks: {
+
+                            color:
+                                "rgba(255,255,255,.42)",
+
+                            font: {
+                                size: 9,
+                                weight: "600"
+                            },
+
+                            padding: 7
+                        }
+
+                    },
+
+
+                  y: {
+
+    min: 0,
+    max: 60,
+
+    grid: {
+        color:
+            "rgba(255,255,255,.055)",
+
+        drawBorder: false
+    },
+
+    border: {
+        display: false
+    },
+
+    ticks: {
+
+        stepSize: 10,
+
+        color:
+            "rgba(255,255,255,.35)",
+
+        font: {
+            size: 8
+        },
+
+        padding: 7,
+
+        callback: function(value) {
+
+            return value + " MW";
+
+        }
+    }
+}
+
+                }
+
+            }
+
+        });
+
+}
+
+
+/* ---------------------------------------------------------
+   تحديث الرسم عند تغيير قيمة اليوم
+   --------------------------------------------------------- */
+
+let electricalLoadChartTimer = null;
+
+function updateElectricalLoadHistoryChart() {
+
+    clearTimeout(
+        electricalLoadChartTimer
+    );
+
+    electricalLoadChartTimer =
+        setTimeout(() => {
+
+            const maxEl =
+                document.getElementById(
+                    "max_electrical_load"
+                );
+
+            const minEl =
+                document.getElementById(
+                    "min_electrical_load"
+                );
+
+            const rangeEl =
+                document.getElementById(
+                    "electricalLoadRangeValue"
+                );
+
+
+            const max =
+                Number(maxEl?.value);
+
+            const min =
+                Number(minEl?.value);
+
+
+          if (
+    rangeEl &&
+    Number.isFinite(max) &&
+    Number.isFinite(min)
+) {
+
+    rangeEl.textContent =
+        min.toFixed(2) +
+        " – " +
+        max.toFixed(2);
+}
+
+
+            loadElectricalLoadHistory();
+
+        }, 400);
+
+}
+
+
+/* ---------------------------------------------------------
+   التشغيل الأول
+   --------------------------------------------------------- */
+
+function initializeElectricalLoadHistory() {
+
+    if (
+        document.getElementById(
+            "electricalLoadHistoryChart"
+        )
+    ) {
+
+        loadElectricalLoadHistory();
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   بعد تحميل الصفحة
+   --------------------------------------------------------- */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeElectricalLoadHistory
+    );
+
+} else {
+
+    initializeElectricalLoadHistory();
+
+}
+
+</script>
+
+<script>
+function showNotification(message, type = "success") {
+
+    const container = document.getElementById("notification-container");
+
+    if (!container) {
+        console.warn("notification-container غير موجود");
+        return;
+    }
+
+    const notification = document.createElement("div");
+
+    notification.className = "custom-notification " + type;
+
+    notification.innerHTML = `
+        <span class="notification-icon">
+            ${type === "error" ? "✕" : "✓"}
+        </span>
+        <span class="notification-message">${message}</span>
+    `;
+
+    container.appendChild(notification);
+
+    requestAnimationFrame(() => {
+        notification.classList.add("show");
+    });
+
+    setTimeout(() => {
+
+        notification.classList.remove("show");
+
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+
+    }, 3500);
+}
+
+
+</script>
+<style>
+#notification-container {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+    direction: rtl;
+}
+
+.custom-notification {
+    min-width: 320px;
+    max-width: 90vw;
+    padding: 14px 20px;
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #0d5c4a,
+        #16755d
+    );
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.30),
+        0 4px 12px rgba(0,0,0,.15);
+
+    opacity: 0;
+    transform: translateY(-18px) scale(.96);
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease;
+}
+
+.custom-notification.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.custom-notification.error {
+    background: linear-gradient(
+        135deg,
+        #8b2e2e,
+        #b43b3b
+    );
+}
+
+.notification-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,.18);
+
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+.notification-message {
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+
+    #notification-container {
+        top: 15px;
+        width: calc(100% - 30px);
+    }
+
+    .custom-notification {
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+    }
+}
+</style>
+
+<script>
+/* =========================================================
+   OIL PACKING PRODUCTION PROGRESS
+   الأهداف اليومية لخطوط التعبئة
+   ========================================================= */
+
+(function () {
+
+    /* =====================================================
+       الأهداف اليومية
+       ===================================================== */
+
+    const PACKING_TARGETS = {
+
+        /* Krones */
+        krones1: 54000,
+        krones2: 54000,
+        krones3: 54000,
+
+        /* Plastic */
+        bottle1: 1000000,
+        bottle2: 1000000,
+        spout1: 900000,
+        spout2: 900000,
+        cap: 1800000
+    };
+
+
+    /* =====================================================
+       أدوات مساعدة
+       ===================================================== */
+
+    function getNumber(id) {
+
+        const el = document.getElementById(id);
+
+        if (!el) {
+            return 0;
+        }
+
+        const value = Number(
+            String(el.value ?? "").replace(/,/g, "")
+        );
+
+        return Number.isFinite(value) ? value : 0;
+    }
+
+
+    function setProgress(barId, percent) {
+
+        const bar = document.getElementById(barId);
+
+        if (!bar) {
+            return;
+        }
+
+        const safePercent = Math.max(
+            0,
+            Math.min(percent, 100)
+        );
+
+        bar.style.width = safePercent + "%";
+    }
+
+
+    function setText(id, value) {
+
+        const el = document.getElementById(id);
+
+        if (!el) {
+            return;
+        }
+
+        el.textContent = value;
+    }
+
+
+    /* =====================================================
+       تحديث خط كرونس
+       ===================================================== */
+
+    function updateKronesLine(line) {
+
+        const morning = getNumber("krones" + line + "a");
+        const evening = getNumber("krones" + line + "b");
+        const night = getNumber("krones" + line + "c");
+
+        const total =
+            morning +
+            evening +
+            night;
+
+        const target =
+            PACKING_TARGETS["krones" + line];
+
+        const percent =
+            target > 0
+                ? (total / target) * 100
+                : 0;
+
+
+        /* إجمالي الخط */
+
+        setText(
+            "krones" + line + "Total",
+            total.toLocaleString("en-US", {
+                maximumFractionDigits: 0
+            })
+        );
+
+
+        /* النسبة */
+
+        setText(
+            "krones" + line + "TargetPercent",
+            percent.toFixed(1) + "%"
+        );
+
+
+        /* الشريط */
+
+        setProgress(
+            "krones" + line + "Progress",
+            percent
+        );
+    }
+
+
+    /* =====================================================
+       تحديث خطوط كرونس الثلاثة
+       ===================================================== */
+
+    function updateKronesProgress() {
+
+        updateKronesLine(1);
+        updateKronesLine(2);
+        updateKronesLine(3);
+
+    }
+
+
+    /* =====================================================
+       تحديث خط بلاستيك واحد
+       ===================================================== */
+
+    function updatePlasticLine(config) {
+
+        const quantity =
+            getNumber(config.input);
+
+        const target =
+            config.target;
+
+        const percent =
+            target > 0
+                ? (quantity / target) * 100
+                : 0;
+
+        const safePercent =
+            Math.max(
+                0,
+                Math.min(percent, 100)
+            );
+
+
+        /* ==============================================
+           رقم الإنتاج في البطاقة
+           ============================================== */
+
+        setText(
+            config.cardQty,
+            quantity.toLocaleString("en-US", {
+                maximumFractionDigits: 0
+            })
+        );
+
+
+        /* ==============================================
+           شريط الإنتاج
+           ============================================== */
+
+        setProgress(
+            config.bar,
+            percent
+        );
+
+
+        /* ==============================================
+           الحلقة الدائرية
+           ============================================== */
+
+        const ring =
+            document.getElementById(config.ring);
+
+        if (ring) {
+
+            ring.style.setProperty(
+                "--progress",
+                safePercent + "%"
+            );
+
+            ring.style.setProperty(
+                "--percentage",
+                safePercent + "%"
+            );
+        }
+
+
+        setText(
+            config.ringValue,
+            percent.toFixed(1) + "%"
+        );
+
+
+        /* ==============================================
+           التوقف والنقص
+           ============================================== */
+
+        if (config.stopCard) {
+
+            setText(
+                config.stopCard,
+                getNumber(config.stopInput)
+                    .toLocaleString("en-US", {
+                        maximumFractionDigits: 0
+                    })
+            );
+        }
+
+
+        if (config.missingCard) {
+
+            setText(
+                config.missingCard,
+                getNumber(config.missingInput)
+                    .toLocaleString("en-US", {
+                        maximumFractionDigits: 0
+                    })
+            );
+        }
+
+    }
+
+
+    /* =====================================================
+       تحديث جميع خطوط البلاستيك
+       ===================================================== */
+
+    function updatePlasticPackingProgress() {
+
+        updatePlasticLine({
+
+            input: "plastic_bottle1_qty",
+
+            target: 1000000,
+
+            cardQty: "plasticBottle1CardQty",
+
+            bar: "plasticBottle1Bar",
+
+            ring: "plasticBottle1Ring",
+
+            ringValue: "plasticBottle1RingValue",
+
+            stopInput: "plastic_bottle1_stop",
+
+            stopCard: "plasticBottle1StopCard",
+
+            missingInput: "plastic_bottle1_missing",
+
+            missingCard: "plasticBottle1MissingCard"
+        });
+
+
+        updatePlasticLine({
+
+            input: "plastic_bottle2_qty",
+
+            target: 1000000,
+
+            cardQty: "plasticBottle2CardQty",
+
+            bar: "plasticBottle2Bar",
+
+            ring: "plasticBottle2Ring",
+
+            ringValue: "plasticBottle2RingValue",
+
+            stopInput: "plastic_bottle2_stop",
+
+            stopCard: "plasticBottle2StopCard",
+
+            missingInput: "plastic_bottle2_missing",
+
+            missingCard: "plasticBottle2MissingCard"
+        });
+
+
+        updatePlasticLine({
+
+            input: "plastic_spout1_qty",
+
+            target: 900000,
+
+            cardQty: "plasticSpout1CardQty",
+
+            bar: "plasticSpout1Bar",
+
+            ring: "plasticSpout1Ring",
+
+            ringValue: "plasticSpout1RingValue",
+
+            stopInput: "plastic_spout1_stop",
+
+            stopCard: "plasticSpout1StopCard",
+
+            missingInput: "plastic_spout1_missing",
+
+            missingCard: "plasticSpout1MissingCard"
+        });
+
+
+        updatePlasticLine({
+
+            input: "plastic_spout2_qty",
+
+            target: 900000,
+
+            cardQty: "plasticSpout2CardQty",
+
+            bar: "plasticSpout2Bar",
+
+            ring: "plasticSpout2Ring",
+
+            ringValue: "plasticSpout2RingValue",
+
+            stopInput: "plastic_spout2_stop",
+
+            stopCard: "plasticSpout2StopCard",
+
+            missingInput: "plastic_spout2_missing",
+
+            missingCard: "plasticSpout2MissingCard"
+        });
+
+
+        updatePlasticLine({
+
+            input: "plastic_cap_qty",
+
+            target: 1800000,
+
+            cardQty: "plasticCapCardQty",
+
+            bar: "plasticCapBar",
+
+            ring: "plasticCapRing",
+
+            ringValue: "plasticCapRingValue",
+
+            stopInput: "plastic_cap_stop",
+
+            stopCard: "plasticCapStopCard",
+
+            missingInput: "plastic_cap_missing",
+
+            missingCard: "plasticCapMissingCard"
+        });
+
+    }
+
+
+    /* =====================================================
+       تحديث شامل
+       ===================================================== */
+
+    function refreshOilPackingProgress() {
+
+        updateKronesProgress();
+
+        updatePlasticPackingProgress();
+
+    }
+
+
+    /* =====================================================
+       نراقب إدخال بيانات كرونس
+       ===================================================== */
+
+    const kronesInputs = [
+
+        "krones1a",
+        "krones1b",
+        "krones1c",
+
+        "krones2a",
+        "krones2b",
+        "krones2c",
+
+        "krones3a",
+        "krones3b",
+        "krones3c"
+    ];
+
+
+    kronesInputs.forEach(function (id) {
+
+        const el =
+            document.getElementById(id);
+
+        if (!el) {
+            return;
+        }
+
+        el.addEventListener(
+            "input",
+            refreshOilPackingProgress
+        );
+
+        el.addEventListener(
+            "change",
+            refreshOilPackingProgress
+        );
+    });
+
+
+    /* =====================================================
+       نراقب خطوط البلاستيك
+       ===================================================== */
+
+    const plasticInputs = [
+
+        "plastic_bottle1_qty",
+        "plastic_bottle1_eff",
+        "plastic_bottle1_missing",
+        "plastic_bottle1_stop",
+
+        "plastic_bottle2_qty",
+        "plastic_bottle2_eff",
+        "plastic_bottle2_missing",
+        "plastic_bottle2_stop",
+
+        "plastic_spout1_qty",
+        "plastic_spout1_eff",
+        "plastic_spout1_missing",
+        "plastic_spout1_stop",
+
+        "plastic_spout2_qty",
+        "plastic_spout2_eff",
+        "plastic_spout2_missing",
+        "plastic_spout2_stop",
+
+        "plastic_cap_qty",
+        "plastic_cap_eff",
+        "plastic_cap_missing",
+        "plastic_cap_stop"
+    ];
+
+
+    plasticInputs.forEach(function (id) {
+
+        const el =
+            document.getElementById(id);
+
+        if (!el) {
+            return;
+        }
+
+        el.addEventListener(
+            "input",
+            refreshOilPackingProgress
+        );
+
+        el.addEventListener(
+            "change",
+            refreshOilPackingProgress
+        );
+    });
+
+
+    /* =====================================================
+       تشغيل أولي
+       ===================================================== */
+
+    function initializeOilPackingProgress() {
+
+        refreshOilPackingProgress();
+
+    }
+
+
+    if (document.readyState === "loading") {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeOilPackingProgress
+        );
+
+    } else {
+
+        initializeOilPackingProgress();
+
+    }
+
+
+    /* =====================================================
+       إتاحة التحديث للدوال الأخرى
+       ===================================================== */
+
+    window.refreshOilPackingProgress =
+        refreshOilPackingProgress;
+
+})();
 
 </script>
 
