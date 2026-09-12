@@ -369,117 +369,312 @@
       <section id="home" class="section">
         <input type="date" id="reportDateKey" style="display: none" />
 
-        <div class="header">
-          <div class="title-box">
-            <div class="main-title">التقرير اليومي للمصانع</div>
+<!-- =========================================================
+     MAIN COMMAND HEADER
+     التقرير اليومي للمصانع
+========================================================= -->
 
-            <div
-              id="currentUserBox"
-              style="
-                margin-top: 8px;
-                padding: 8px 14px;
-                background: #eef6f1;
-                border-radius: 10px;
-                display: inline-block;
-                font-size: 14px;
-                font-weight: 600;
-                color: #184e3b;
-                border: 1px solid rgba(24, 78, 59, 0.12);
-              "
-            >
-              ⏳ جاري تحميل بيانات المستخدم...
+<div class="main-command-header">
+
+    <!-- =====================================================
+         الصف الرئيسي
+    ====================================================== -->
+
+    <div class="main-command-top">
+
+        <!-- الهوية -->
+        <div class="main-command-identity">
+
+            <div class="main-command-icon">
+                🏭
             </div>
-          </div>
 
-          <div class="header-buttons">
-            <button id="darkModeBtn" onclick="toggleDarkMode()">
-              🌙 الوضع الليلي
-            </button>
+            <div class="main-command-title">
 
-            <button onclick="window.print()">🖨️ طباعة PDF</button>
+                <div class="main-command-title-main">
+                    التقرير اليومي للمصانع
+                </div>
+
+                <div class="main-command-title-sub">
+                    ETIHAD INDUSTRIAL DAILY OPERATIONS
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- معلومات المستخدم -->
+        <div
+            id="currentUserBox"
+            class="main-command-user"
+        >
+            <span class="main-command-user-icon">
+                👤
+            </span>
+
+            <span>
+                ⏳ جاري تحميل بيانات المستخدم...
+            </span>
+        </div>
+
+
+        <!-- أزرار التحكم -->
+        <div class="main-command-actions">
 
             <button
-              id="loginBtn"
-              onclick="goToLogin()"
-              style="left: 10px; background: #7a2e2e; color: white"
+                id="darkModeBtn"
+                class="main-command-action"
+                onclick="toggleDarkMode()"
             >
-              🔑 تبديل المستخدم
+                🌙
+                <span>الوضع الليلي</span>
             </button>
-          </div>
+
+
+            <button
+                class="main-command-action"
+                onclick="window.print()"
+            >
+                🖨️
+                <span>طباعة PDF</span>
+            </button>
+
+
+            <button
+                id="loginBtn"
+                class="main-command-action main-command-switch"
+                onclick="goToLogin()"
+            >
+                🔑
+                <span>تبديل المستخدم</span>
+            </button>
+
         </div>
-        <!-- نهاية header -->
 
-        <div class="info-bar">
-          اليوم :
-          <span id="today"></span>
+    </div>
 
-          &nbsp;&nbsp;|&nbsp;&nbsp; التاريخ :
-          <span id="todayDate"></span>
-        </div>
 
-        <details id="adminTools">
-          <summary>🛠 أدوات الإدارة</summary>
+    <!-- =====================================================
+         شريط الحالة
+    ====================================================== -->
 
-          <br />
+    <div class="main-command-status">
 
-          <button onclick="refreshAdminTools()">🔄 تحديث الآن</button>
+        <div class="main-status-item">
 
-          <button
-            id="editModeBtn"
-            onclick="toggleAdminEditMode()"
-            style="display: none; background: #d97706; color: white"
-          >
-            ✏️ تفعيل وضع التعديل
-          </button>
+            <span class="main-status-dot"></span>
 
-          <br /><br />
-
-          <div id="approvalsDashboard"></div>
-
-          <div id="approvalStatusList"></div>
-
-          <div id="lateFieldsDashboard"></div>
-
-          <div id="remindersBox"></div>
-
-          <div class="admin-card">
-            <h3>🚀 إدارة تحديثات النظام</h3>
-
-            <label>الإصدار الجديد</label>
-
-            <input id="updateVersion" placeholder="مثال: 6.3.0" />
-
-            <br /><br />
-
-            <label>عنوان التحديث</label>
-
-            <input id="updateTitle" placeholder="عنوان التحديث" />
-
-            <br /><br />
-
-            <label>ما الجديد؟</label>
-
-            <textarea
-              id="updateChangelog"
-              rows="6"
-              placeholder="اكتب أهم التعديلات..."
-            ></textarea>
-
-            <br /><br />
-
-            <div class="update-checkbox">
-              <input type="checkbox" id="forceUpdate" />
-
-              <label for="forceUpdate"> تحديث إجباري </label>
+            <div>
+                <small>الحالة</small>
+                <strong>التشغيل اليومي</strong>
             </div>
 
-            <br /><br />
+        </div>
 
-            <button class="publishUpdateBtn" onclick="publishUpdate()">
-              🚀 نشر التحديث
-            </button>
-          </div>
-        </details>
+
+        <div class="main-status-divider"></div>
+
+
+        <div class="main-status-item">
+
+            <span class="main-status-icon">
+                📅
+            </span>
+
+            <div>
+                <small>اليوم</small>
+                <strong id="today"></strong>
+            </div>
+
+        </div>
+
+
+        <div class="main-status-divider"></div>
+
+
+        <div class="main-status-item">
+
+            <span class="main-status-icon">
+                🗓️
+            </span>
+
+            <div>
+                <small>التاريخ</small>
+                <strong id="todayDate"></strong>
+            </div>
+
+        </div>
+
+
+        <div class="main-status-divider"></div>
+
+
+        <div class="main-status-item main-status-report">
+
+            <span class="main-status-icon">
+                📋
+            </span>
+
+            <div>
+                <small>نوع التقرير</small>
+                <strong> موقف امس  </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         أدوات الإدارة
+    ====================================================== -->
+
+    <details id="adminTools" class="main-admin-tools">
+
+        <summary class="main-admin-summary">
+
+            <div class="main-admin-title">
+
+                <span class="main-admin-icon">
+                    ⚙️
+                </span>
+
+                <div>
+                    <strong>أدوات الإدارة</strong>
+
+                    <small>
+                        SYSTEM MANAGEMENT & CONTROL
+                    </small>
+                </div>
+
+            </div>
+
+
+            <div class="main-admin-chevron">
+                <span>⌄</span>
+            </div>
+
+        </summary>
+
+
+        <div class="main-admin-content">
+
+            <div class="main-admin-toolbar">
+
+                <button
+                    type="button"
+                    class="admin-tool-refresh"
+                    onclick="refreshAdminTools()"
+                >
+                    🔄
+                    <span>تحديث الآن</span>
+                </button>
+
+
+                <button
+                    id="editModeBtn"
+                    type="button"
+                    class="admin-tool-edit"
+                    onclick="toggleAdminEditMode()"
+                    style="display:none"
+                >
+                    ✏️
+                    <span>تفعيل وضع التعديل</span>
+                </button>
+
+            </div>
+
+
+            <div
+                id="approvalsDashboard"
+                class="main-admin-block"
+            ></div>
+
+
+            <div
+                id="approvalStatusList"
+                class="main-admin-block"
+            ></div>
+
+
+            <div
+                id="lateFieldsDashboard"
+                class="main-admin-block"
+            ></div>
+
+
+            <div
+                id="remindersBox"
+                class="main-admin-block"
+            ></div>
+
+
+            <div class="admin-card">
+
+                <h3>
+                    🚀 إدارة تحديثات النظام
+                </h3>
+
+                <label>
+                    الإصدار الجديد
+                </label>
+
+                <input
+                    id="updateVersion"
+                    placeholder="مثال: 6.3.0"
+                />
+
+
+                <label>
+                    عنوان التحديث
+                </label>
+
+                <input
+                    id="updateTitle"
+                    placeholder="عنوان التحديث"
+                />
+
+
+                <label>
+                    ما الجديد؟
+                </label>
+
+                <textarea
+                    id="updateChangelog"
+                    rows="6"
+                    placeholder="اكتب أهم التعديلات..."
+                ></textarea>
+
+
+                <div class="update-checkbox">
+
+                    <input
+                        type="checkbox"
+                        id="forceUpdate"
+                    />
+
+                    <label for="forceUpdate">
+                        تحديث إجباري
+                    </label>
+
+                </div>
+
+
+                <button
+                    class="publishUpdateBtn"
+                    onclick="publishUpdate()"
+                >
+                    🚀 نشر التحديث
+                </button>
+
+            </div>
+
+        </div>
+
+    </details>
+
+</div>
       </section>
 
 <!-- ========================================================= -->
