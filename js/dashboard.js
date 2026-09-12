@@ -579,121 +579,122 @@ function applySugarDashboardPermissions(role) {
     sugarApproveBtn.style.display = role === "sugar" ? "inline-flex" : "none";
   }
 }
-
 function applyApprovalPermissions(role) {
-  /* =========================================
-     إخفاء جميع مناطق الاعتماد أولاً
-     ========================================= */
+  /* =====================================================
+       إخفاء جميع مناطق الاعتماد أولاً
+       ===================================================== */
 
-  const powerApprovalArea = document.querySelector(".power-approval-area");
+  const approvalAreas = [
+    ".power-approval-area",
+    ".flour-approval-area",
+    ".sugar-approval-area",
+    ".oil-approval-area",
+    ".feed-approval-area",
+    ".water-approval-area",
+  ];
 
-  const flourApprovalArea = document.querySelector(".flour-approval-area");
+  approvalAreas.forEach((selector) => {
+    const area = document.querySelector(selector);
 
-  const sugarApprovalArea = document.querySelector(".sugar-approval-area");
+    if (area) {
+      area.style.display = "none";
+    }
+  });
 
-  const oilApprovalArea = document.querySelector(".oil-approval-area");
+  /* =====================================================
+       إخفاء جميع أزرار الاعتماد أولاً
+       ===================================================== */
 
-  if (powerApprovalArea) {
-    powerApprovalArea.style.display = "none";
-  }
+  const approvalButtons = [
+    "approvePowerBtn",
+    "approveFlourBtn",
+    "SugarBtn",
+    "OilBtn",
+    "approveFeedBtn",
+    "approvewaterBtn",
+  ];
 
-  if (flourApprovalArea) {
-    flourApprovalArea.style.display = "none";
-  }
+  approvalButtons.forEach((id) => {
+    const button = document.getElementById(id);
 
-  if (sugarApprovalArea) {
-    sugarApprovalArea.style.display = "none";
-  }
+    if (button) {
+      button.style.display = "none";
+    }
+  });
 
-  if (oilApprovalArea) {
-    oilApprovalArea.style.display = "none";
-  }
-
-  /* =========================================
-     إخفاء أزرار الاعتماد نفسها
-     ========================================= */
-
-  const powerBtn = document.getElementById("approvePowerBtn");
-
-  const flourBtn = document.getElementById("approveFlourBtn");
-
-  const sugarBtn = document.getElementById("SugarBtn");
-
-  const oilBtn = document.getElementById("OilBtn");
-
-  if (powerBtn) {
-    powerBtn.style.display = "none";
-  }
-
-  if (flourBtn) {
-    flourBtn.style.display = "none";
-  }
-
-  if (sugarBtn) {
-    sugarBtn.style.display = "none";
-  }
-
-  if (oilBtn) {
-    oilBtn.style.display = "none";
-  }
-
-  /* =========================================
-     حساب الطاقة
-     ========================================= */
+  /* =====================================================
+       الطاقة
+       ===================================================== */
 
   if (role === "power") {
-    if (powerApprovalArea) {
-      powerApprovalArea.style.display = "flex";
-    }
+    const area = document.querySelector(".power-approval-area");
+    const button = document.getElementById("approvePowerBtn");
 
-    if (powerBtn) {
-      powerBtn.style.display = "inline-flex";
-    }
+    if (area) area.style.display = "flex";
+    if (button) button.style.display = "inline-flex";
   }
 
-  /* =========================================
-     حساب المطحنة
-     ========================================= */
+  /* =====================================================
+       المطحنة
+       ===================================================== */
 
   if (role === "flour") {
-    if (flourApprovalArea) {
-      flourApprovalArea.style.display = "flex";
-    }
+    const area = document.querySelector(".flour-approval-area");
+    const button = document.getElementById("approveFlourBtn");
 
-    if (flourBtn) {
-      flourBtn.style.display = "inline-flex";
-    }
+    if (area) area.style.display = "flex";
+    if (button) button.style.display = "inline-flex";
   }
 
-  /* =========================================
-     حساب السكر
-     ========================================= */
+  /* =====================================================
+       السكر
+       ===================================================== */
 
   if (role === "sugar") {
-    if (sugarApprovalArea) {
-      sugarApprovalArea.style.display = "flex";
-    }
+    const area = document.querySelector(".sugar-approval-area");
+    const button = document.getElementById("SugarBtn");
 
-    if (sugarBtn) {
-      sugarBtn.style.display = "inline-flex";
-    }
+    if (area) area.style.display = "flex";
+    if (button) button.style.display = "inline-flex";
   }
 
-  /* =========================================
-     حساب الزيت
-     ========================================= */
+  /* =====================================================
+       الزيت
+       ===================================================== */
 
   if (role === "oil") {
-    if (oilApprovalArea) {
-      oilApprovalArea.style.display = "flex";
-    }
+    const area = document.querySelector(".oil-approval-area");
+    const button = document.getElementById("OilBtn");
 
-    if (oilBtn) {
-      oilBtn.style.display = "inline-flex";
-    }
+    if (area) area.style.display = "flex";
+    if (button) button.style.display = "inline-flex";
+  }
+
+  /* =====================================================
+       الأعلاف
+       ===================================================== */
+
+  if (role === "feed") {
+    const area = document.querySelector(".feed-approval-area");
+    const button = document.getElementById("approveFeedBtn");
+
+    if (area) area.style.display = "flex";
+    if (button) button.style.display = "inline-flex";
+  }
+
+  /* =====================================================
+       التصفية
+       يظهر لحساب التصفية فقط
+       ===================================================== */
+
+  if (role === "waterfiltration") {
+    const area = document.querySelector(".water-approval-area");
+    const button = document.getElementById("approvewaterBtn");
+
+    if (area) area.style.display = "flex";
+    if (button) button.style.display = "inline-flex";
   }
 }
-
 async function applyPermissions() {
   console.log("applyPermissions started");
 
@@ -779,10 +780,28 @@ async function applyPermissions() {
   const buttons = document.querySelectorAll("button");
 
   buttons.forEach((btn) => {
+    if (
+      btn.id === "approvewaterBtn" ||
+      btn.id === "approvePowerBtn" ||
+      btn.id === "approveFlourBtn" ||
+      btn.id === "SugarBtn" ||
+      btn.id === "OilBtn" ||
+      btn.id === "approveFeedBtn"
+    ) {
+      return;
+    }
+
     btn.style.display = "inline-block";
   });
 
   applyApprovalPermissions(role);
+
+  /* =========================================
+   صلاحية اعتماد تقرير الأعلاف
+   يظهر لحساب الأعلاف فقط
+========================================= */
+
+  applyFeedApprovalPermissions(role);
 
   /* =========================================
    الحسابات الفرعية
@@ -1017,6 +1036,22 @@ async function applyPermissions() {
     window.location.hash = "waterfiltration";
 
     return;
+  }
+}
+
+function applyFeedApprovalPermissions(role) {
+  const feedApprovalArea = document.querySelector(".feed-approval-area");
+
+  const feedApprovalBtn = document.getElementById("approveFeedBtn");
+
+  const isFeedAccount = role === "feed";
+
+  if (feedApprovalArea) {
+    feedApprovalArea.style.display = isFeedAccount ? "flex" : "none";
+  }
+
+  if (feedApprovalBtn) {
+    feedApprovalBtn.style.display = isFeedAccount ? "inline-flex" : "none";
   }
 }
 
@@ -5380,6 +5415,340 @@ function refreshFlourProductionHistory() {
   window.flourProductionHistoryTimer = setTimeout(() => {
     loadFlourProductionHistory();
   }, 500);
+}
+
+/* =========================================================
+   FEED — FULL DASHBOARD REFRESH
+   ========================================================= */
+
+function refreshFeedDashboard() {
+  updateNetFeedProduction();
+
+  refreshFeedConsumption();
+
+  updatePremixRate();
+
+  updateFeedDashboardKPIs();
+}
+
+/* =========================================================
+   FEED — PRODUCTION HISTORY
+   ========================================================= */
+
+function getFeedPreviousDate(dateString, daysAgo) {
+  const date = new Date(`${dateString}T00:00:00`);
+
+  date.setDate(date.getDate() - daysAgo);
+
+  return (
+    date.getFullYear() +
+    "-" +
+    String(date.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(date.getDate()).padStart(2, "0")
+  );
+}
+
+function getFeedCurrentGrossProduction() {
+  let gross = 0;
+
+  for (let i = 1; i <= 6; i++) {
+    gross += Number(document.getElementById(`feed_l${i}_total`)?.value) || 0;
+  }
+
+  return gross;
+}
+
+async function loadFeedProductionHistory() {
+  const dateEl = document.getElementById("reportDateKey");
+
+  if (!dateEl?.value) return;
+
+  const selectedDate = dateEl.value;
+
+  const dates = [
+    getFeedPreviousDate(selectedDate, 2),
+
+    getFeedPreviousDate(selectedDate, 1),
+
+    selectedDate,
+  ];
+
+  /*
+   * اليوم يأخذ القيمة الحالية من الحقول
+   */
+
+  const todayValue = getFeedCurrentGrossProduction();
+
+  /*
+   * الأيام السابقة من قاعدة البيانات
+   */
+
+  const previousDates = dates.slice(0, 2);
+
+  let previousData = [];
+
+  if (typeof supabaseClient !== "undefined" && previousDates.length) {
+    const result = await supabaseClient
+      .from("daily_reports")
+      .select("report_date,field_name,field_value")
+      .eq("factory", "feed")
+      .in("report_date", previousDates)
+      .in("field_name", ["feed_gross_total"]);
+
+    if (!result.error) {
+      previousData = result.data || [];
+    }
+  }
+
+  const values = {
+    [dates[0]]: 0,
+    [dates[1]]: 0,
+    [selectedDate]: todayValue,
+  };
+
+  previousData.forEach((row) => {
+    const value = Number(row.field_value);
+
+    if (Number.isFinite(value) && values.hasOwnProperty(row.report_date)) {
+      values[row.report_date] = value;
+    }
+  });
+
+  renderFeedProductionHistory(dates, values, selectedDate);
+}
+
+function renderFeedProductionHistory(dates, values, selectedDate) {
+  const today = Number(values[selectedDate]) || 0;
+
+  const yesterday = Number(values[dates[1]]) || 0;
+
+  const beforeYesterday = Number(values[dates[0]]) || 0;
+
+  const todayEl = document.getElementById("feedChartToday");
+
+  const yesterdayEl = document.getElementById("feedChartYesterday");
+
+  const beforeEl = document.getElementById("feedChartBeforeYesterday");
+
+  const changeEl = document.getElementById("feedChartChange");
+
+  if (todayEl) {
+    todayEl.textContent = today.toFixed(2);
+  }
+
+  if (yesterdayEl) {
+    yesterdayEl.textContent = yesterday.toFixed(2);
+  }
+
+  if (beforeEl) {
+    beforeEl.textContent = beforeYesterday.toFixed(2);
+  }
+
+  const change = today - yesterday;
+
+  if (changeEl) {
+    changeEl.textContent = `${change >= 0 ? "+" : ""}${change.toFixed(2)} طن`;
+  }
+
+  const canvas = document.getElementById("feedProductionComparisonChart");
+
+  if (!canvas || typeof Chart === "undefined") {
+    return;
+  }
+
+  /*
+   * لا نستخدم let/const عام حتى لا يحدث
+   * already been declared عند إعادة تحميل dashboard
+   */
+
+  if (window.feedProductionComparisonChart) {
+    window.feedProductionComparisonChart.destroy();
+
+    window.feedProductionComparisonChart = null;
+  }
+
+  window.feedProductionComparisonChart = new Chart(canvas.getContext("2d"), {
+    type: "bar",
+
+    data: {
+      labels: ["قبل أمس", "أمس", "اليوم"],
+
+      datasets: [
+        {
+          label: "الإنتاج طن",
+
+          data: [beforeYesterday, yesterday, today],
+
+          borderRadius: 9,
+
+          borderSkipped: false,
+
+          backgroundColor: [
+            "rgba(75,155,131,.45)",
+            "rgba(55,184,120,.55)",
+            "rgba(55,184,120,.90)",
+          ],
+
+          borderColor: ["#4b9b83", "#37b878", "#75d47b"],
+
+          borderWidth: 1,
+        },
+      ],
+    },
+
+    options: {
+      responsive: true,
+
+      maintainAspectRatio: false,
+
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+
+      scales: {
+        x: {
+          ticks: {
+            color: "rgba(255,255,255,.55)",
+          },
+
+          grid: {
+            display: false,
+          },
+        },
+
+        y: {
+          beginAtZero: true,
+
+          ticks: {
+            color: "rgba(255,255,255,.45)",
+          },
+
+          grid: {
+            color: "rgba(255,255,255,.06)",
+          },
+        },
+      },
+    },
+  });
+}
+
+function refreshFeedProductionHistory() {
+  clearTimeout(window.feedProductionHistoryTimer);
+
+  window.feedProductionHistoryTimer = setTimeout(() => {
+    loadFeedProductionHistory();
+  }, 350);
+}
+
+/* =========================================================
+   FEED — INITIALIZATION
+   ========================================================= */
+
+function initializeFeedDashboard() {
+  const section = document.getElementById("feed");
+
+  if (!section) return;
+
+  /*
+   * حساب الإنتاج
+   */
+
+  calculateFeed();
+
+  /*
+   * حساب المرتجع والصافي
+   */
+
+  updateNetFeedProduction();
+
+  /*
+   * حساب الاستهلاك
+   */
+
+  refreshFeedConsumption();
+
+  /*
+   * تحديث Dashboard
+   */
+
+  updateFeedDashboardKPIs();
+
+  /*
+   * تحميل الرسم التاريخي
+   */
+
+  loadFeedProductionHistory();
+
+  updatePremixRate();
+}
+
+/* =========================================================
+   PREMIX — PRODUCTION RATE
+   ========================================================= */
+function updatePremixRate() {
+  const productionEl = document.getElementById("premix1_prod");
+
+  const hoursEl = document.getElementById("premix1_hours");
+
+  const rateEl = document.getElementById("premix1_rate");
+
+  if (!productionEl || !hoursEl || !rateEl) {
+    console.warn("PREMIX: elements not found");
+    return;
+  }
+
+  const production = parseFloat(productionEl.value) || 0;
+
+  const hours = parseFloat(hoursEl.value) || 0;
+
+  const rate = hours > 0 ? production / hours : 0;
+
+  console.log(
+    "PREMIX RATE CALC:",
+    "production =",
+    production,
+    "hours =",
+    hours,
+    "rate =",
+    rate,
+  );
+
+  rateEl.value = rate.toFixed(1);
+}
+
+function applyFeedDashboardPermissions(role) {
+  const feedApproveArea = document.querySelector(".feed-approval-area");
+
+  const feedApproveBtn = document.getElementById("approveFeedBtn");
+
+  const canApprove = role === "feed";
+
+  if (feedApproveArea) {
+    feedApproveArea.style.display = canApprove ? "flex" : "none";
+  }
+
+  if (feedApproveBtn) {
+    feedApproveBtn.style.display = canApprove ? "inline-flex" : "none";
+  }
+}
+
+function applyWaterApprovalPermissions(role) {
+  const area = document.querySelector(".water-approval-area");
+  const button = document.getElementById("approvewaterBtn");
+
+  const isWaterFiltration =
+    String(role).trim().toLowerCase() === "waterfiltration";
+
+  if (area) {
+    area.style.display = isWaterFiltration ? "flex" : "none";
+  }
+
+  if (button) {
+    button.style.display = isWaterFiltration ? "inline-flex" : "none";
+  }
 }
 
 /* يبدأ فحص الحقول كل دقيقة */
