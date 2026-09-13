@@ -552,7 +552,7 @@
 
 
             <div class="main-admin-chevron">
-                <span>⌄</span>
+                <span>▼</span>
             </div>
 
         </summary>
@@ -3936,9 +3936,9 @@
                         </div>
 
                         <div class="sugar-station-value">
-                            <span id="sugartempratureDash">
-                                0
-                            </span>
+                          <span id="sugartempratureDash">
+    0
+</span>
                             درجة مئوية
                         </div>
 
@@ -4255,7 +4255,7 @@ PKF
                 </div>
 
                 <strong>
-                    بريكس العصير
+بريكس العصير الداخل
                 </strong>
 
                 <small>
@@ -6119,6 +6119,7 @@ PKF
 </div>
 
 </section>
+
       <!-- ===================================== -->
       <!-- مصنع الزيت -->
       <!-- ===================================== -->
@@ -6160,7 +6161,11 @@ PKF
 
         <!-- أرصدة الخام -->
 
-       <details open class="oil-section-details">
+       <details Open
+    id="oilRawStockDetails"
+    open
+    class="oil-section-details"
+>
 
   <summary class="oil-section-summary">
 
@@ -6443,7 +6448,11 @@ PKF
 
 
 
-       <details open class="oil-section-details">
+       <details 
+    id="oilRefineryDetails"
+    open
+    class="oil-section-details"
+>
 
   <summary class="oil-section-summary">
 
@@ -6914,7 +6923,11 @@ PKF
       محطة الفصل
         ========================== -->
 
-      <details open class="oil-section-details">
+      <details
+    id="oilSeparationDetails"
+    open
+    class="oil-section-details"
+>
 
   <summary class="oil-section-summary">
 
@@ -7052,7 +7065,11 @@ PKF
      موقف خطوط التعبئة
 ========================================================= -->
 
-<details open class="packing-dashboard-details">
+<details open
+    id="oilPackingDetails"
+    open
+    class="packing-dashboard-details"
+>
 
   <summary class="packing-dashboard-summary">
 
@@ -7853,7 +7870,11 @@ PKF
    <!-- =========================================================-->
    <!--              تقرير مصنع اللدائن - التصميم الجديد      -->
    <!-- =========================================================-->
-<details open class="plastic-section-details">
+<details open
+    id="oilPlasticDetails"
+    open
+    class="plastic-section-details"
+>
 
   <summary class="dashboard-section-title plastic-production-title">
 
@@ -8636,7 +8657,11 @@ PKF
 <!--       ماكينات التجميع والسداد المعدني           -->
 <!-- ================================================= -->
 
-<details open class="oil-section-details">
+<details open
+    id="oilAssemblyDetails"
+    open
+    class="oil-section-details"
+>
 
   <summary class="oil-section-summary">
 
@@ -8819,9 +8844,7 @@ PKF
     </div>
 
   </div>
-
-
-  <!-- =========================
+<!-- =========================
        السداد المعدني
   ========================== -->
 
@@ -8839,7 +8862,6 @@ PKF
       </div>
 
       <span class="oil-machine-number">03</span>
-
     </div>
 
     <div class="oil-machine-metrics">
@@ -8896,9 +8918,7 @@ PKF
     </div>
 
   </div>
-
-
-  <!-- =========================
+<!-- =========================
        UST
   ========================== -->
 
@@ -8973,8 +8993,6 @@ PKF
     </div>
 
   </div>
-
-
   <!-- =========================
        اللحام
   ========================== -->
@@ -9159,11 +9177,15 @@ PKF
           </div>
         </details>
 
-        <!-- ========================================================= -->
-        <!--                    الملاحظات العامة                        -->
-        <!-- ========================================================= -->
+<!-- ========================================================= -->
+<!--                   الملاحظات العامة                        -->
+<!-- ========================================================= -->
 
-    <details open class="oil-section-details">
+    <details
+    id="oilGeneralNotesDetails"
+    open
+    class="oil-section-details"
+>
 
   <summary class="oil-section-summary">
 
@@ -9192,7 +9214,7 @@ PKF
           </div>
         </details>
 
-        <!-- =========================================================
+<!-- =========================================================
      اعتماد تقرير الزيت
 ========================================================= -->
 
@@ -9221,8 +9243,43 @@ PKF
     ✓ اعتماد تقرير الزيت
   </button>
 
-</div>
 
+
+</div>
+  <div
+    id="oilProductionApprovalArea"
+    class="oil-approval-area oil-subsection-approval"
+    style="display:none;"
+>
+    <div class="oil-approval-content">
+
+        <div class="oil-approval-info">
+            <div class="oil-approval-icon">
+                ✅
+            </div>
+
+            <div>
+                <strong>
+                    اعتماد تقرير إنتاج الزيت
+                </strong>
+
+                <small>
+                    سيتم اعتماد أرصدة الزيوت الخام والتكرير والفصل والملاحظات العامة فقط
+                </small>
+            </div>
+        </div>
+
+        <button
+            type="button"
+            id="approveOilProductionBtn"
+            class="oil-approve-btn"
+            onclick="approveOilProductionSubsection()"
+        >
+            ✓ اعتماد إنتاج الزيت
+        </button>
+
+    </div>
+</div>
       </section>
 <!-- ===================================== -->
 <!-- مصنع الطحين -->
@@ -9357,14 +9414,7 @@ PKF
 
   <!-- الحقل الأصلي للنظام -->
 
-  <input
-    id="extraction_eff"
-    data-save
-    type="number"
-    step="any"
-    readonly
-    style="display:none"
-  />
+
 
 </div>
 
@@ -9776,6 +9826,67 @@ PKF
           </div>
 
         </div>
+
+        <!-- =====================
+     الحنطة العراقية
+====================== -->
+
+<div class="flour-stock-command-card">
+
+  <div class="flour-stock-command-header">
+
+    <div class="flour-stock-command-icon">
+      🌾
+    </div>
+
+    <div class="flour-stock-command-title">
+      <strong>الحنطة العراقية</strong>
+      <small>IRAQI WHEAT</small>
+    </div>
+
+    <div
+      id="iraq_stock_status"
+      class="flour-stock-command-status"
+    >
+      متوفر
+    </div>
+
+  </div>
+
+  <div class="flour-stock-command-value">
+
+    <input
+      id="iraqeti"
+      data-save
+      step="any"
+      oninput="
+        updateFlourRawDashboard();
+        updateFlourStockDashboard();
+      "
+    />
+
+    <span>طن</span>
+
+  </div>
+
+  <div class="flour-stock-command-progress">
+
+    <div
+      id="iraq_stock_fill"
+      class="flour-stock-command-progress-fill"
+    ></div>
+
+  </div>
+
+  <div class="flour-stock-command-footer">
+
+    <span>الرصيد الحالي</span>
+
+    <b id="flourIraqStockPercent">0%</b>
+
+  </div>
+
+</div>
 
 
         <!-- =====================
@@ -10261,12 +10372,11 @@ PKF
 
   <strong>
     <input
-      id="flour_total_ground_wheat"
-      data-save
-      type="number"
-      step="any"
-      oninput="updateFlourExtractionEfficiency()"
-    />
+    id="flour_total_ground_wheat"
+    data-save
+    type="number"
+    step="any"
+/>
   </strong>
 
   <b>طن</b>
@@ -10494,17 +10604,27 @@ PKF
 
 
       <!-- الحقل الأصلي للحفظ فقط -->
-      <!-- المستخدم لا يدخل فيه -->
 
-      <input
-        id="extraction_eff"
-        data-save
-        type="number"
-        step="any"
-        readonly
-        tabindex="-1"
-        style="display:none"
-      />
+      <div class="extraction-efficiency-input">
+    <label for="extraction_eff">
+        كفاءة الاستخراج
+    </label>
+
+    <div class="extraction-efficiency-input-wrap">
+        <input
+            id="extraction_eff"
+            data-save
+            type="number"
+            step="0.1"
+            min="0"
+            max="100"
+            placeholder="أدخل النسبة"
+            oninput="updateFlourExtractionEfficiency()"
+        />
+
+        <span>%</span>
+    </div>
+</div>
 
     </div>
 
@@ -11727,10 +11847,6 @@ PKF
 
  </div>
 </section>
-
-
-
-
 <!-- =========================================================
      FEED & PREMIX FACTORY
      ========================================================= -->
@@ -11860,7 +11976,11 @@ PKF
        RAW MATERIAL STOCK
        ======================================================= -->
 
-  <details open class="feed-section-card feed-stock-section">
+  <details
+    id="feedRawStockDetails"
+    open
+    class="feed-section-card feed-stock-section"
+>
 
     <summary class="feed-section-card-header">
 
@@ -12019,7 +12139,7 @@ PKF
        PRODUCTION LINES
        ======================================================= -->
 
-  <details open class="feed-section-card feed-production-section">
+<details id="feedProductionDetails" open class="feed-production-section">
 
     <summary class="feed-section-card-header">
 
@@ -12580,7 +12700,10 @@ PKF
        PREMIX
        ======================================================= -->
 
-  <details open class="feed-section-card">
+  <details open
+    id="feedPremixDetails"
+    class="feed-section-card"
+>
 
     <summary class="feed-section-card-header">
 
@@ -12783,7 +12906,11 @@ PKF
        RETURNED FEED
        ======================================================= -->
 
-  <details open class="feed-section-card">
+  <details
+    id="feedReturnedDetails"
+    open
+    class="feed-section-card"
+>
 
     <summary class="feed-section-card-header">
 
@@ -12872,7 +12999,11 @@ PKF
        RAW MATERIAL CONSUMPTION
        ======================================================= -->
 
-  <details open class="feed-section-card">
+  <details
+    id="feedConsumptionDetails"
+    open
+    class="feed-section-card"
+>
 
     <summary class="feed-section-card-header">
 
@@ -13546,7 +13677,11 @@ PKF
        GENERAL NOTES
        ======================================================= -->
 
-  <details open class="feed-section-card">
+  <details
+    id="feedGeneralNotesDetails"
+    open
+    class="feed-section-card"
+>
 
     <summary class="feed-section-card-header">
 
@@ -13642,6 +13777,69 @@ PKF
         ✓ اعتماد تقرير الأعلاف
     </button>
 
+</div>
+
+    <div
+    id="feedProductionApprovalArea"
+    class="feed-approval-area feed-subsection-approval"
+    style="display:none;"
+>
+    <div class="feed-approval-info">
+        <div class="feed-approval-icon">
+            ✅
+        </div>
+
+        <div>
+            <strong>
+                اعتماد تقرير إنتاج الأعلاف
+            </strong>
+
+            <small>
+                سيتم اعتماد بيانات إنتاج الأعلاف والمرتجع والاستهلاك والملاحظات العامة فقط
+            </small>
+        </div>
+    </div>
+
+    <button
+        type="button"
+        id="approveFeedProductionBtn"
+        class="feed-approve-btn"
+        onclick="approveFeedProductionSubsection()"
+    >
+        ✓ اعتماد إنتاج الأعلاف
+    </button>
+</div>
+
+
+<div
+    id="feedPremixApprovalArea"
+    class="feed-approval-area feed-subsection-approval"
+    style="display:none;"
+>
+    <div class="feed-approval-info">
+        <div class="feed-approval-icon">
+            ✅
+        </div>
+
+        <div>
+            <strong>
+                اعتماد تقرير البريمكس
+            </strong>
+
+            <small>
+                سيتم اعتماد بيانات إنتاج البريمكس والملاحظات الخاصة به فقط
+            </small>
+        </div>
+    </div>
+
+    <button
+        type="button"
+        id="approveFeedPremixBtn"
+        class="feed-approve-btn"
+        onclick="approveFeedPremixSubsection()"
+    >
+        ✓ اعتماد تقرير البريمكس
+    </button>
 </div>
 
 </section>
@@ -15599,20 +15797,19 @@ function recalculateAll() {
 
       function updateShorteningSalesTotal() {}
      
-      
-function calcMillTotals() {
-    let totalGroundWheat = 0;
+ function calcMillTotals() {
+
     let totalF1 = 0;
     let totalF3 = 0;
     let totalBran = 0;
     let grandTotal = 0;
 
-    for (let i = 1; i <= 6; i++) {
 
-        const groundWheat =
-            parseFloat(
-                document.getElementById(`line${i}_ground_wheat`)?.value
-            ) || 0;
+    /* =====================================================
+       حساب إنتاج الخطوط A → F
+       ===================================================== */
+
+    for (let i = 1; i <= 6; i++) {
 
         const f1 =
             parseFloat(
@@ -15630,25 +15827,23 @@ function calcMillTotals() {
             ) || 0;
 
 
-        /* =========================================
-           إجمالي منتجات الخط
-           ========================================= */
+        /* إجمالي إنتاج الخط */
 
-        const lineTotal = f1 + f3 + bran;
+        const lineTotal =
+            f1 + f3 + bran;
+
 
         const lineTotalElement =
             document.getElementById(`line${i}_total`);
 
         if (lineTotalElement) {
-            lineTotalElement.value = lineTotal.toFixed(2);
+            lineTotalElement.value =
+                lineTotal.toFixed(2);
         }
 
 
-        /* =========================================
-           المجاميع الكلية
-           ========================================= */
+        /* المجاميع */
 
-        totalGroundWheat += groundWheat;
         totalF1 += f1;
         totalF3 += f3;
         totalBran += bran;
@@ -15656,12 +15851,9 @@ function calcMillTotals() {
     }
 
 
-    /* =========================================
+    /* =====================================================
        تحديث المجاميع الأصلية
-       ========================================= */
-
-    const groundWheatTotal =
-        document.getElementById("flour_total_ground_wheat");
+       ===================================================== */
 
     const f1Total =
         document.getElementById("flour_total_f1");
@@ -15675,11 +15867,6 @@ function calcMillTotals() {
     const grandTotalElement =
         document.getElementById("flour_grand_total");
 
-
-    if (groundWheatTotal) {
-        groundWheatTotal.value =
-            totalGroundWheat.toFixed(2);
-    }
 
     if (f1Total) {
         f1Total.value =
@@ -15702,22 +15889,32 @@ function calcMillTotals() {
     }
 
 
-    /* =========================================
+    /* =====================================================
        تحديث Dashboard المطحنة
-       ========================================= */
+       ===================================================== */
 
     if (typeof refreshFlourDashboard === "function") {
         refreshFlourDashboard();
     }
 
 
-    /* =========================================
+    /* =====================================================
        تحديث رسم تطور الإنتاج
-       اليوم + آخر 3 أيام
-       ========================================= */
+       ===================================================== */
 
     if (typeof refreshFlourProductionHistory === "function") {
         refreshFlourProductionHistory();
+    }
+
+
+    /* =====================================================
+       تحديث كفاءة الاستخراج من الحقل اليدوي فقط
+       ===================================================== */
+
+    if (
+        typeof updateFlourExtractionEfficiency === "function"
+    ) {
+        updateFlourExtractionEfficiency();
     }
 }
 
@@ -16593,6 +16790,204 @@ if (showMessage) {
         container.appendChild(button);
       }
 
+      /* =========================================================
+   🔐 SUBSECTION APPROVAL
+   اعتماد الأقسام الفرعية فقط
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   استخراج الحقول الموجودة داخل Details محددة فقط
+   --------------------------------------------------------- */
+function getSubsectionSaveFields(detailIds) {
+
+    const fields = [];
+
+    detailIds.forEach((detailId) => {
+
+        const detail = document.getElementById(detailId);
+
+        if (!detail) {
+            console.warn(
+                "SUBSECTION DETAIL NOT FOUND:",
+                detailId
+            );
+            return;
+        }
+
+        detail.querySelectorAll("[data-save][id]").forEach((field) => {
+
+            if (!fields.includes(field.id)) {
+                fields.push(field.id);
+            }
+
+        });
+
+    });
+
+    console.log(
+        "SUBSECTION APPROVAL FIELDS:",
+        fields
+    );
+
+    return fields;
+}
+
+
+/* ---------------------------------------------------------
+   اعتماد إنتاج الأعلاف
+   --------------------------------------------------------- */
+async function approveFeedProductionSubsection() {
+
+    console.log(
+        "🟢 FEED PRODUCTION APPROVAL STARTED"
+    );
+
+    const fields = getSubsectionSaveFields([
+        "feedProductionDetails",
+        "feedReturnedDetails",
+        "feedConsumptionDetails",
+        "feedGeneralNotesDetails"
+    ]);
+
+    if (!fields.length) {
+
+        showNotification(
+            "لم يتم العثور على حقول اعتماد إنتاج الأعلاف",
+            "error"
+        );
+
+        return;
+    }
+
+    try {
+
+        await approveSubsection(
+            "feed_production",
+            fields
+        );
+
+        console.log(
+            "🟢 FEED PRODUCTION APPROVAL FINISHED"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "🔴 FEED PRODUCTION APPROVAL FAILED:",
+            error
+        );
+
+        showNotification(
+            error?.message ||
+            "حدث خطأ أثناء اعتماد إنتاج الأعلاف",
+            "error"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   اعتماد البريمكس
+   --------------------------------------------------------- */
+async function approveFeedPremixSubsection() {
+
+    console.log(
+        "🟢 FEED PREMIX APPROVAL STARTED"
+    );
+
+    const fields = getSubsectionSaveFields([
+        "feedPremixDetails"
+    ]);
+
+    if (!fields.length) {
+
+        showNotification(
+            "لم يتم العثور على حقول اعتماد البريمكس",
+            "error"
+        );
+
+        return;
+    }
+
+    try {
+
+        await approveSubsection(
+            "feed_premix",
+            fields
+        );
+
+        console.log(
+            "🟢 FEED PREMIX APPROVAL FINISHED"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "🔴 FEED PREMIX APPROVAL FAILED:",
+            error
+        );
+
+        showNotification(
+            error?.message ||
+            "حدث خطأ أثناء اعتماد البريمكس",
+            "error"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   اعتماد إنتاج الزيت
+   --------------------------------------------------------- */
+async function approveOilProductionSubsection() {
+
+    console.log(
+        "🟢 OIL PRODUCTION APPROVAL STARTED"
+    );
+
+    const fields = getSubsectionSaveFields([
+        "oilRawStockDetails",
+        "oilRefineryDetails",
+        "oilSeparationDetails",
+        "oilGeneralNotesDetails"
+    ]);
+
+    if (!fields.length) {
+
+        showNotification(
+            "لم يتم العثور على حقول اعتماد إنتاج الزيت",
+            "error"
+        );
+
+        return;
+    }
+
+    try {
+
+        await approveSubsection(
+            "oil_production",
+            fields
+        );
+
+        console.log(
+            "🟢 OIL PRODUCTION APPROVAL FINISHED"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "🔴 OIL PRODUCTION APPROVAL FAILED:",
+            error
+        );
+
+        showNotification(
+            error?.message ||
+            "حدث خطأ أثناء اعتماد إنتاج الزيت",
+            "error"
+        );
+    }
+}
+
    async function approvePowerSection() {
     console.log("🟢 POWER APPROVAL BUTTON CLICKED");
 
@@ -16825,6 +17220,12 @@ console.log(
         /* الحسابات الموجودة أصلًا */
      recalculateAll();
 
+     if (factory === "sugar") {
+    if (typeof updateSugarProductTemperature === "function") {
+        updateSugarProductTemperature();
+    }
+}
+
      if (factory === "feed") {
 
     updatePremixRate();
@@ -16881,15 +17282,23 @@ if (factory === "flour") {
 }
 
 if (factory === "flour") {
+
     if (typeof calcMillTotals === "function") {
         calcMillTotals();
+    }
+
+    if (typeof refreshFlourDashboard === "function") {
+        refreshFlourDashboard();
+    }
+
+    if (typeof updateFlourExtractionEfficiency === "function") {
+        updateFlourExtractionEfficiency();
     }
 
     if (typeof loadFlourProductionHistory === "function") {
         loadFlourProductionHistory();
     }
 }
-
 if (factory === "feed") {
 
     initializeFeedDashboard();
@@ -17301,6 +17710,9 @@ if (userInfo.role === "feed" ||
         flour_sales_f1: "مبيعات طحين F1",
         flour_sales_f3: "مبيعات طحين F3",
         flour_sales_bran: "مبيعات النخالة",
+        auseti: "📦 رصيد الحنطة الأسترالية - الشركة",
+ruseti: "📦 رصيد الحنطة الروسية - الشركة",
+iraqeti: "📦 رصيد الحنطة العراقية - الشركة",
 
         feed_sales_corn: "مبيعات الذرة",
         feed_sales_soybean: "مبيعات كسبة الصويا",

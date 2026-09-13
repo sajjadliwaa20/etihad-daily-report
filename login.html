@@ -1,105 +1,761 @@
 <!doctype html>
-<html dir="rtl">
+<html lang="ar" dir="rtl">
   <head>
-    <link rel="icon" type="image/jpeg" href="favicon.png" />
-
     <meta charset="UTF-8" />
 
-    <title>تسجيل الدخول</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/jpeg" href="favicon.png" />
+
+    <title>التقرير اليومي للمصانع</title>
 
     <style>
+      /* =========================================================
+       RESET
+       ========================================================= */
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "IBM Plex Sans Arabic", sans-serif;
+        font-family: "IBM Plex Sans Arabic", "Segoe UI", sans-serif;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
       }
 
       body {
         min-height: 100vh;
 
         display: flex;
-
+        align-items: center;
         justify-content: center;
 
-        align-items: center;
+        padding: 24px;
 
-        padding: 20px;
+        overflow-x: hidden;
 
         background:
-          linear-gradient(rgba(240, 245, 252, 0.22), rgba(240, 245, 252, 0.22)),
+          linear-gradient(
+            115deg,
+            rgba(3, 34, 43, 0.78),
+            rgba(5, 67, 56, 0.42),
+            rgba(8, 28, 45, 0.6)
+          ),
           url("background-desktop.jpg");
 
         background-size: cover;
-
         background-position: center;
-
         background-repeat: no-repeat;
+
+        position: relative;
       }
 
+      /* =========================================================
+       BACKGROUND EFFECTS
+       ========================================================= */
+
+      body::before {
+        content: "";
+
+        position: fixed;
+
+        inset: 0;
+
+        pointer-events: none;
+
+        background:
+          radial-gradient(
+            circle at 15% 30%,
+            rgba(73, 190, 138, 0.14),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 85% 70%,
+            rgba(212, 170, 67, 0.1),
+            transparent 28%
+          );
+
+        z-index: 0;
+      }
+
+      body::after {
+        content: "";
+
+        position: fixed;
+
+        inset: 0;
+
+        pointer-events: none;
+
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.04),
+          rgba(0, 0, 0, 0.22)
+        );
+
+        z-index: 0;
+      }
+
+      /* =========================================================
+       MAIN PAGE
+       ========================================================= */
+
+      .login-page {
+        width: min(1380px, 100%);
+
+        min-height: 760px;
+
+        display: grid;
+
+        grid-template-columns:
+          minmax(0, 1fr)
+          minmax(430px, 560px);
+
+        direction: ltr;
+
+        position: relative;
+
+        z-index: 2;
+
+        border-radius: 30px;
+
+        overflow: hidden;
+
+        background: rgba(4, 26, 31, 0.24);
+
+        border: 1px solid rgba(255, 255, 255, 0.16);
+
+        box-shadow:
+          0 35px 90px rgba(0, 0, 0, 0.35),
+          0 10px 30px rgba(0, 0, 0, 0.18);
+
+        backdrop-filter: blur(4px);
+
+        -webkit-backdrop-filter: blur(4px);
+      }
+
+      /* =========================================================
+       LEFT BRANDING SIDE
+       ========================================================= */
+
+      .brand-panel {
+        direction: rtl;
+
+        padding: 55px 65px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: space-between;
+
+        min-width: 0;
+
+        position: relative;
+
+        background: linear-gradient(
+          145deg,
+          rgba(2, 44, 48, 0.8),
+          rgba(4, 69, 55, 0.48)
+        );
+      }
+
+      .brand-panel::after {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        width: 1px;
+
+        background: linear-gradient(
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+      }
+
+      /* =========================================================
+       COMPANY LOGO / BRAND
+       ========================================================= */
+
+      .company-brand {
+        display: flex;
+
+        align-items: center;
+
+        gap: 16px;
+      }
+
+      .company-logo {
+        width: 72px;
+        height: 72px;
+
+        padding: 8px;
+
+        object-fit: contain;
+
+        border-radius: 20px;
+
+        background: rgba(255, 255, 255, 0.09);
+
+        border: 1px solid rgba(255, 255, 255, 0.15);
+
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      }
+
+      .company-brand-text {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 3px;
+      }
+
+      .company-brand-ar {
+        color: #fff;
+
+        font-size: 25px;
+
+        font-weight: 800;
+
+        line-height: 1.2;
+      }
+
+      .company-brand-en {
+        color: rgba(255, 255, 255, 0.7);
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        letter-spacing: 2px;
+
+        direction: ltr;
+
+        text-align: right;
+      }
+
+      .company-brand-sub {
+        color: #71d39a;
+
+        font-size: 11px;
+
+        font-weight: 600;
+
+        margin-top: 4px;
+      }
+
+      /* =========================================================
+       SLOGAN
+       ========================================================= */
+
+      .brand-middle {
+        margin-top: 25px;
+      }
+
+      .brand-overline {
+        color: #71d39a;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        margin-bottom: 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+      }
+
+      .brand-overline::before {
+        content: "";
+
+        width: 28px;
+        height: 2px;
+
+        border-radius: 99px;
+
+        background: #d5ad45;
+      }
+
+      .brand-slogan,
+      .brand-slogan span {
+        font-family: "Tajawal", sans-serif !important;
+      }
+
+      .brand-slogan {
+        font-size: clamp(45px, 4.5vw, 72px);
+        line-height: 1.15;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -1px;
+        max-width: 600px;
+      }
+
+      .brand-slogan span {
+        color: #d9b451;
+        font-weight: 900;
+      }
+
+      .brand-slogan-en {
+        margin-top: 13px;
+
+        font-size: 14px;
+
+        color: rgba(255, 255, 255, 0.7);
+
+        letter-spacing: 4px;
+
+        direction: ltr;
+
+        text-align: right;
+      }
+
+      /* =========================================================
+       FACTORIES
+       ========================================================= */
+
+      .factory-title {
+        margin-top: 45px;
+
+        margin-bottom: 17px;
+
+        color: rgba(255, 255, 255, 0.82);
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+      }
+
+      .factory-title::after {
+        content: "";
+
+        height: 1px;
+
+        flex: 1;
+
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .factory-grid {
+        display: grid;
+
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: 10px;
+
+        max-width: 610px;
+      }
+
+      .factory-item {
+        min-height: 82px;
+
+        padding: 12px 8px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 6px;
+
+        border-radius: 15px;
+
+        background: rgba(255, 255, 255, 0.055);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease,
+          border-color 0.2s ease;
+      }
+
+      .factory-item:hover {
+        transform: translateY(-3px);
+
+        background: rgba(255, 255, 255, 0.09);
+
+        border-color: rgba(113, 211, 154, 0.28);
+      }
+
+      .factory-icon {
+        width: 34px;
+        height: 34px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: rgba(255, 255, 255, 0.07);
+
+        font-size: 18px;
+      }
+
+      .factory-item span:last-child {
+        color: rgba(255, 255, 255, 0.82);
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      /* =========================================================
+       BRAND FOOTER
+       ========================================================= */
+
+      .brand-footer {
+        display: flex;
+
+        align-items: flex-end;
+
+        justify-content: space-between;
+
+        gap: 20px;
+
+        padding-top: 30px;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .brand-footer-text {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 3px;
+      }
+
+      .brand-footer-en {
+        font-size: 10px;
+
+        letter-spacing: 2px;
+
+        color: rgba(255, 255, 255, 0.6);
+
+        direction: ltr;
+      }
+
+      .brand-footer-ar {
+        color: rgba(255, 255, 255, 0.8);
+
+        font-size: 11px;
+
+        font-weight: 600;
+      }
+
+      .system-status {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        padding: 9px 13px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.06);
+
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        color: rgba(255, 255, 255, 0.82);
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+
+        border-radius: 50%;
+
+        background: #48d483;
+
+        box-shadow:
+          0 0 0 4px rgba(72, 212, 131, 0.1),
+          0 0 12px rgba(72, 212, 131, 0.45);
+      }
+
+      /* =========================================================
+       LOGIN SIDE
+       ========================================================= */
+
+      .login-panel {
+        direction: rtl;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 35px;
+
+        position: relative;
+
+        background: linear-gradient(
+          145deg,
+          rgba(248, 252, 250, 0.9),
+          rgba(231, 242, 238, 0.78)
+        );
+
+        border-right: 1px solid rgba(255, 255, 255, 0.35);
+      }
+
+      .login-panel::before {
+        content: "";
+
+        position: absolute;
+
+        width: 400px;
+        height: 400px;
+
+        top: -180px;
+        right: -160px;
+
+        border-radius: 50%;
+
+        background: rgba(68, 164, 119, 0.12);
+
+        filter: blur(4px);
+
+        pointer-events: none;
+      }
+
+      .login-panel::after {
+        content: "";
+
+        position: absolute;
+
+        width: 250px;
+        height: 250px;
+
+        bottom: -140px;
+        left: -120px;
+
+        border-radius: 50%;
+
+        background: rgba(205, 163, 65, 0.1);
+
+        pointer-events: none;
+      }
+
+      /* =========================================================
+       LOGIN CARD
+       ========================================================= */
+
       .login-box {
-        width: 95%;
+        width: 100%;
 
-        max-width: 520px;
+        max-width: 465px;
 
-        background: rgba(255, 255, 255, 0.45);
+        padding: 42px 42px 35px;
 
-        backdrop-filter: blur(6px);
+        position: relative;
 
-        -webkit-backdrop-filter: blur(12px);
-
-        border-radius: 24px;
-
-        padding: 50px 40px;
-
-        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
-
-        border: 1px solid rgba(255, 255, 255, 0.45);
+        z-index: 2;
 
         text-align: center;
+
+        border-radius: 27px;
+
+        background: rgba(255, 255, 255, 0.56);
+
+        border: 1px solid rgba(255, 255, 255, 0.82);
+
+        box-shadow:
+          0 25px 60px rgba(22, 54, 44, 0.13),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+        backdrop-filter: blur(18px);
+
+        -webkit-backdrop-filter: blur(18px);
+      }
+
+      /* =========================================================
+       LOGIN LOGO
+       ========================================================= */
+
+      .login-logo-wrap {
+        width: 78px;
+        height: 78px;
+
+        margin: 0 auto 17px;
+
+        padding: 8px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 21px;
+
+        background: linear-gradient(145deg, #eaf6f0, #dceee6);
+
+        border: 1px solid rgba(31, 111, 79, 0.12);
+
+        box-shadow: 0 10px 25px rgba(28, 85, 63, 0.1);
       }
 
       .logo {
-        width: 120px;
+        width: 100%;
+        height: 100%;
 
-        margin-bottom: 18px;
+        object-fit: contain;
       }
 
-      h1 {
-        color: #1d356d;
+      /* =========================================================
+       LOGIN TITLE
+       ========================================================= */
+
+      .login-box h1 {
+        color: #153c32;
 
         font-size: 30px;
+
+        line-height: 1.25;
+
+        font-weight: 900;
 
         margin-bottom: 8px;
       }
 
       .company {
-        color: #666;
+        color: #62736d;
 
-        font-size: 15px;
+        font-size: 14px;
 
-        margin-bottom: 30px;
+        font-weight: 600;
+
+        margin-bottom: 8px;
+      }
+
+      .login-welcome {
+        color: #7c8985;
+
+        font-size: 11px;
+
+        margin-bottom: 27px;
+      }
+
+      /* =========================================================
+       FORM
+       ========================================================= */
+
+      .field {
+        position: relative;
+
+        margin-bottom: 13px;
+      }
+
+      .field-icon {
+        position: absolute;
+
+        right: 16px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        width: 25px;
+        height: 25px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        color: #52736a;
+
+        font-size: 16px;
+
+        pointer-events: none;
+
+        z-index: 2;
       }
 
       input {
         width: 100%;
 
-        padding: 16px;
+        height: 58px;
 
-        margin: 12px 0;
+        padding: 0 48px 0 48px;
 
-        font-size: 16px;
+        border: 1px solid #ccd9d4;
 
-        border: 2px solid #cfd6e5;
+        border-radius: 15px;
 
-        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.78);
 
-        border: 1px solid #cfd6e5;
+        color: #183b31;
 
-        background: white;
+        font-size: 15px;
 
-        transition: 0.25s;
+        font-weight: 600;
+
+        outline: none;
+
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease,
+          transform 0.2s ease;
       }
+
+      input::placeholder {
+        color: #8a9894;
+
+        font-weight: 500;
+      }
+
+      input:focus {
+        background: #fff;
+
+        border-color: #2d9568;
+
+        box-shadow: 0 0 0 4px rgba(45, 149, 104, 0.1);
+
+        transform: translateY(-1px);
+      }
+
+      /* =========================================================
+       PASSWORD
+       ========================================================= */
 
       .password-container {
         position: relative;
@@ -108,11 +764,7 @@
       }
 
       .password-container input {
-        width: 100%;
-
-        padding-left: 45px;
-
-        box-sizing: border-box;
+        padding-left: 52px;
       }
 
       .toggle-password {
@@ -124,86 +776,287 @@
 
         transform: translateY(-50%);
 
+        width: 32px;
+        height: 32px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 9px;
+
         cursor: pointer;
 
         user-select: none;
 
-        font-size: 18px;
+        font-size: 17px;
 
-        opacity: 0.7;
+        opacity: 0.65;
 
-        transition: 0.2s;
+        transition:
+          opacity 0.2s ease,
+          background 0.2s ease,
+          transform 0.2s ease;
+
+        z-index: 3;
       }
 
       .toggle-password:hover {
         opacity: 1;
 
-        transform: translateY(-50%) scale(1.15);
+        background: rgba(45, 149, 104, 0.08);
+
+        transform: translateY(-50%) scale(1.05);
       }
 
-      input:focus {
-        outline: none;
+      /* =========================================================
+       LOGIN BUTTON
+       ========================================================= */
 
-        border-color: #204a9c;
-
-        box-shadow: 0 0 10px rgba(32, 74, 156, 0.22);
-      }
-
-      button {
+      .login-button {
         width: 100%;
 
-        padding: 16px;
+        height: 58px;
 
-        margin-top: 18px;
+        margin-top: 8px;
 
         border: none;
 
-        border-radius: 14px;
+        border-radius: 15px;
 
-        background: #204a9c;
+        background: linear-gradient(135deg, #16865d, #08704f);
 
-        color: white;
+        color: #fff;
 
-        font-size: 18px;
+        font-size: 17px;
 
-        font-weight: bold;
+        font-weight: 800;
+
+        font-family: inherit;
 
         cursor: pointer;
 
-        transition: 0.25s;
+        box-shadow: 0 12px 25px rgba(8, 112, 79, 0.22);
+
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          filter 0.2s ease;
       }
 
-      button:hover {
-        background: #17397a;
-
+      .login-button:hover {
         transform: translateY(-2px);
+
+        box-shadow: 0 16px 30px rgba(8, 112, 79, 0.28);
+
+        filter: brightness(1.04);
+      }
+
+      .login-button:active {
+        transform: translateY(0);
+      }
+
+      .login-button.loading {
+        pointer-events: none;
+
+        opacity: 0.78;
+      }
+
+      /* =========================================================
+       BUTTON CONTENT
+       ========================================================= */
+
+      .login-button-content {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 12px;
+      }
+
+      .login-arrow {
+        font-size: 21px;
+
+        line-height: 1;
+
+        transition: transform 0.2s ease;
+      }
+
+      .login-button:hover .login-arrow {
+        transform: translateX(-3px);
+      }
+
+      /* =========================================================
+       LOGIN FOOTER
+       ========================================================= */
+
+      .login-divider {
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        margin: 25px 0 17px;
+
+        color: #9aa6a2;
+
+        font-size: 10px;
+      }
+
+      .login-divider::before,
+      .login-divider::after {
+        content: "";
+
+        height: 1px;
+
+        flex: 1;
+
+        background: #d4dfdb;
+      }
+
+      .login-security {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 7px;
+
+        color: #6f807a;
+
+        font-size: 10px;
+
+        margin-bottom: 22px;
+      }
+
+      .login-security-icon {
+        width: 25px;
+        height: 25px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 8px;
+
+        background: rgba(25, 126, 88, 0.08);
+
+        color: #17835c;
       }
 
       .version {
-        margin-top: 22px;
+        padding-top: 17px;
+
+        border-top: 1px solid #dce5e1;
+
+        color: #899691;
+
+        font-size: 10px;
+
+        line-height: 1.6;
+      }
+
+      .version-name {
+        color: #285d4c;
 
         font-size: 13px;
 
-        color: #777;
+        font-weight: 800;
+
+        margin-top: 3px;
       }
 
-      @media (max-width: 768px) {
-        .login-box {
-          width: 96%;
+      /* =========================================================
+       NOTIFICATION
+       ========================================================= */
 
-          max-width: 96%;
+      .login-notification {
+        position: fixed;
 
-          padding: 45px 30px;
+        top: 24px;
+        left: 50%;
 
-          border-radius: 22px;
+        transform: translate(-50%, -120px);
+
+        min-width: 280px;
+
+        max-width: calc(100vw - 40px);
+
+        padding: 13px 18px;
+
+        border-radius: 13px;
+
+        background: rgba(54, 35, 35, 0.94);
+
+        color: #fff;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        text-align: center;
+
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.22);
+
+        z-index: 10000;
+
+        opacity: 0;
+
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+      }
+
+      .login-notification.show {
+        transform: translate(-50%, 0);
+
+        opacity: 1;
+      }
+
+      /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+      @media (max-width: 1100px) {
+        body {
+          padding: 15px;
         }
 
+        .login-page {
+          grid-template-columns:
+            minmax(0, 1fr)
+            minmax(390px, 500px);
+
+          min-height: 700px;
+        }
+
+        .brand-panel {
+          padding: 42px;
+        }
+
+        .brand-slogan {
+          font-size: 48px;
+        }
+
+        .factory-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 850px) {
         body {
+          padding: 0;
+
+          align-items: stretch;
+
           background:
-            linear-gradient(
-              rgba(255, 255, 255, 0.22),
-              rgba(255, 255, 255, 0.22)
-            ),
+            linear-gradient(rgba(4, 42, 40, 0.52), rgba(4, 42, 40, 0.52)),
             url("background-mobile.jpg");
 
           background-size: cover;
@@ -211,120 +1064,591 @@
           background-position: center;
         }
 
-        .logo {
-          width: 110px;
+        .login-page {
+          width: 100%;
+
+          min-height: 100vh;
+
+          display: flex;
+
+          flex-direction: column;
+
+          border-radius: 0;
+
+          border: none;
+
+          box-shadow: none;
+
+          background: transparent;
         }
 
-        h1 {
+        .brand-panel {
+          min-height: 290px;
+
+          padding: 28px 24px 25px;
+
+          justify-content: flex-start;
+
+          background: linear-gradient(
+            145deg,
+            rgba(3, 49, 48, 0.84),
+            rgba(4, 77, 59, 0.62)
+          );
+        }
+
+        .company-logo {
+          width: 54px;
+          height: 54px;
+
+          border-radius: 15px;
+        }
+
+        .company-brand-ar {
+          font-size: 19px;
+        }
+
+        .company-brand-en {
+          font-size: 8px;
+
+          letter-spacing: 1.3px;
+        }
+
+        .company-brand-sub {
+          font-size: 9px;
+        }
+
+        .brand-middle {
+          margin-top: 25px;
+        }
+
+        .brand-slogan {
+          font-size: 39px;
+
+          letter-spacing: -0.5px;
+        }
+
+        .brand-slogan-en {
+          font-size: 10px;
+
+          letter-spacing: 2.5px;
+        }
+
+        .factory-title,
+        .factory-grid,
+        .brand-footer {
+          display: none;
+        }
+
+        .login-panel {
+          flex: 1;
+
+          padding: 18px;
+
+          background: rgba(241, 247, 244, 0.94);
+
+          border: none;
+
+          align-items: flex-start;
+        }
+
+        .login-box {
+          max-width: 520px;
+
+          margin: 0 auto;
+
+          padding: 32px 25px 28px;
+
+          border-radius: 23px;
+
+          background: rgba(255, 255, 255, 0.78);
+        }
+
+        .login-box h1 {
           font-size: 26px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .brand-panel {
+          min-height: 255px;
+
+          padding: 23px 18px;
+        }
+
+        .company-brand {
+          gap: 11px;
+        }
+
+        .company-logo {
+          width: 48px;
+          height: 48px;
+        }
+
+        .company-brand-ar {
+          font-size: 17px;
+        }
+
+        .brand-slogan {
+          font-size: 34px;
+        }
+
+        .brand-overline {
+          font-size: 11px;
+        }
+
+        .login-panel {
+          padding: 12px;
+        }
+
+        .login-box {
+          padding: 28px 18px 24px;
+
+          border-radius: 20px;
+        }
+
+        .login-logo-wrap {
+          width: 68px;
+          height: 68px;
+
+          margin-bottom: 14px;
+        }
+
+        .login-box h1 {
+          font-size: 23px;
+        }
+
+        .company {
+          font-size: 12px;
+        }
+
+        .login-welcome {
+          margin-bottom: 21px;
+        }
+
+        input,
+        .login-button {
+          height: 54px;
+        }
+
+        input {
+          font-size: 14px;
+        }
+
+        .login-button {
+          font-size: 16px;
         }
       }
     </style>
   </head>
 
   <body>
-    <div class="login-box">
-      <img src="favicon.png" class="logo" />
+    <!-- =======================================================
+       MAIN LOGIN PAGE
+  ======================================================== -->
 
-      <h1>التقرير اليومي للمصانع</h1>
+    <main class="login-page">
+      <!-- =====================================================
+         BRAND / COMPANY SIDE
+    ====================================================== -->
 
-      <div class="company">شركة الاتحاد للصناعات الغذائية</div>
+      <section class="brand-panel">
+        <!-- الشركة -->
 
-      <input type="email" id="email" placeholder="البريد الإلكتروني" />
+        <div class="company-brand">
+          <img
+            src="favicon.png"
+            class="company-logo"
+            alt="Etihad Industrial Group"
+          />
 
-      <div class="password-container">
-        <input type="password" id="password" placeholder="كلمة المرور" />
+          <div class="company-brand-text">
+            <div class="company-brand-ar">مجموعة الاتحاد للصناعات الغذائية</div>
 
-        <span id="togglePassword" class="toggle-password"> 👁️ </span>
-      </div>
-
-      <button onclick="login()">تسجيل الدخول</button>
-
-      <div class="version">
-        <div style="margin-top: 12px">Designed & Developed by</div>
-
-        <div
-          style="
-            font-weight: bold;
-            font-size: 15px;
-            color: #1d356d;
-            margin-top: 4px;
-          "
-        >
-          Sajjad Liwaa
+            <div class="company-brand-en">ETIHAD INDUSTRIAL GROUP</div>
+          </div>
         </div>
-      </div>
-    </div>
+
+        <!-- الشعار -->
+
+        <div class="brand-middle">
+          <div class="brand-overline">الموقف اليومي للمصانع</div>
+
+          <div class="brand-slogan">جودة <span>تبني الثقة</span></div>
+
+          <!-- المصانع -->
+
+          <div class="factory-title">وحدات ومصانع المجموعة</div>
+
+          <div class="factory-grid">
+            <div class="factory-item">
+              <div class="factory-icon">🌾</div>
+
+              <span>مصنع الطحين</span>
+            </div>
+
+            <div class="factory-item">
+              <div class="factory-icon">💧</div>
+
+              <span>مصنع السكر</span>
+            </div>
+
+            <div class="factory-item">
+              <div class="factory-icon">🌻</div>
+
+              <span>مصنع الزيت</span>
+            </div>
+
+            <div class="factory-item">
+              <div class="factory-icon">🐄</div>
+
+              <span>مصنع الأعلاف</span>
+            </div>
+
+            <div class="factory-item">
+              <div class="factory-icon">⚡</div>
+
+              <span>محطة الطاقة</span>
+            </div>
+
+            <div class="factory-item">
+              <div class="factory-icon">💧</div>
+
+              <span>محطات التصفية</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+
+        <div class="brand-footer">
+          <div class="brand-footer-text">
+            <div class="brand-footer-en">ETIHAD INDUSTRIAL GROUP</div>
+
+            <div class="brand-footer-ar">جميع الحقوق محفوظة © 2026</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+         LOGIN SIDE
+    ====================================================== -->
+
+      <section class="login-panel">
+        <div class="login-box">
+          <!-- Logo -->
+
+          <div class="login-logo-wrap">
+            <img src="favicon.png" class="logo" alt="شعار الشركة" />
+          </div>
+
+          <!-- Title -->
+
+          <h1>التقرير اليومي للمصانع</h1>
+
+          <div class="company">شركة الاتحاد للصناعات الغذائية</div>
+
+          <div class="login-welcome">مرحباً بك .. سجّل دخولك للمتابعة</div>
+
+          <!-- =================================================
+             EMAIL
+        ================================================== -->
+
+          <div class="field">
+            <div class="field-icon">✉</div>
+
+            <input
+              type="email"
+              id="email"
+              placeholder="البريد الإلكتروني"
+              autocomplete="email"
+            />
+          </div>
+
+          <!-- =================================================
+             PASSWORD
+        ================================================== -->
+
+          <div class="field password-container">
+            <div class="field-icon">🔒</div>
+
+            <input
+              type="password"
+              id="password"
+              placeholder="كلمة المرور"
+              autocomplete="current-password"
+            />
+
+            <span
+              id="togglePassword"
+              class="toggle-password"
+              title="إظهار كلمة المرور"
+              aria-label="إظهار كلمة المرور"
+              role="button"
+              tabindex="0"
+            >
+              👁️
+            </span>
+          </div>
+
+          <!-- =================================================
+             LOGIN BUTTON
+        ================================================== -->
+
+          <button
+            type="button"
+            id="loginButton"
+            class="login-button"
+            onclick="login()"
+          >
+            <span class="login-button-content">
+              <span id="loginButtonText"> تسجيل الدخول </span>
+
+              <span class="login-arrow"> ← </span>
+            </span>
+          </button>
+
+          <!-- Divider -->
+
+          <div class="login-divider">نظام آمن لمتابعة العمليات اليومية</div>
+
+          <div class="login-security">
+            <span class="login-security-icon"> 🛡️ </span>
+
+            بيانات الدخول محمية عبر النظام
+          </div>
+
+          <!-- =================================================
+             CREDIT
+        ================================================== -->
+
+          <div class="version">
+            <div>Designed &amp; Developed by</div>
+
+            <div class="version-name">Sajjad Liwaa</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =======================================================
+       NOTIFICATION
+  ======================================================== -->
+
+    <div id="loginNotification" class="login-notification"></div>
+
+    <!-- =======================================================
+       SUPABASE
+  ======================================================== -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
     <script>
+      /* =========================================================
+       SUPABASE
+       ========================================================= */
+
       const supabaseUrl = "https://aptamsjgburgubfwamep.supabase.co";
 
       const supabaseKey = "sb_publishable_q0VgF-S8RkmWdRUvA9pQMQ_nDrLa28F";
 
       const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+      /* =========================================================
+       NOTIFICATION
+       ========================================================= */
+
+      function showNotification(message, type = "error") {
+        const notification = document.getElementById("loginNotification");
+
+        if (!notification) return;
+
+        notification.textContent = message;
+
+        notification.style.background =
+          type === "success" ? "rgba(20,105,70,.95)" : "rgba(105,42,42,.95)";
+
+        notification.classList.add("show");
+
+        clearTimeout(window.loginNotificationTimer);
+
+        window.loginNotificationTimer = setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3500);
+      }
+
+      /* =========================================================
+       AUTO LOGIN
+       ========================================================= */
+
       async function autoLogin() {
-        const {
-          data: { session },
-        } = await supabaseClient.auth.getSession();
+        try {
+          const {
+            data: { session },
+          } = await supabaseClient.auth.getSession();
 
-        if (!session) return;
+          if (!session) return;
 
-        const { data: userInfo } = await supabaseClient
-          .from("users")
-          .select("role")
-          .eq("email", session.user.email)
-          .single();
+          const { data: userInfo } = await supabaseClient
 
-        if (userInfo?.role === "admin" || userInfo?.role === "executive") {
-          window.location = "index.html";
+            .from("users")
+
+            .select("role")
+
+            .eq("email", session.user.email)
+
+            .single();
+
+          if (userInfo?.role === "admin" || userInfo?.role === "executive") {
+            window.location = "index.html";
+          }
+        } catch (error) {
+          console.error("Auto login error:", error);
         }
       }
 
+      /* =========================================================
+       LOGIN
+       ========================================================= */
+
       async function login() {
-        const email = document.getElementById("email").value;
+        const email = document.getElementById("email").value.trim();
 
         const password = document.getElementById("password").value;
 
-        const { error } = await supabaseClient.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (error) {
-          showNotification(error.message, "error");
+        if (!email || !password) {
+          showNotification(
+            "يرجى إدخال البريد الإلكتروني وكلمة المرور",
+            "error",
+          );
 
           return;
         }
 
-        // حفظ آخر بريد إلكتروني بعد نجاح تسجيل الدخول
-        localStorage.setItem("lastEmail", email);
+        const button = document.getElementById("loginButton");
 
-        window.location = "index.html";
+        const buttonText = document.getElementById("loginButtonText");
+
+        if (button) {
+          button.classList.add("loading");
+
+          button.disabled = true;
+        }
+
+        if (buttonText) {
+          buttonText.textContent = "جاري تسجيل الدخول...";
+        }
+
+        try {
+          const { error } = await supabaseClient.auth.signInWithPassword({
+            email,
+            password,
+          });
+
+          if (error) {
+            showNotification(error.message, "error");
+
+            return;
+          }
+
+          /* حفظ آخر بريد إلكتروني */
+
+          localStorage.setItem("lastEmail", email);
+
+          showNotification("تم تسجيل الدخول بنجاح", "success");
+
+          setTimeout(() => {
+            window.location = "index.html";
+          }, 350);
+        } catch (error) {
+          console.error("Login error:", error);
+
+          showNotification("حدث خطأ أثناء تسجيل الدخول", "error");
+        } finally {
+          if (button) {
+            button.classList.remove("loading");
+
+            button.disabled = false;
+          }
+
+          if (buttonText) {
+            buttonText.textContent = "تسجيل الدخول";
+          }
+        }
       }
+
+      /* =========================================================
+       PASSWORD VISIBILITY
+       ========================================================= */
 
       const passwordInput = document.getElementById("password");
 
       const togglePassword = document.getElementById("togglePassword");
 
-      togglePassword.addEventListener("click", () => {
+      function togglePasswordVisibility() {
+        if (!passwordInput) return;
+
         if (passwordInput.type === "password") {
           passwordInput.type = "text";
 
-          togglePassword.textContent = "✉️";
+          togglePassword.textContent = "🙈";
+
+          togglePassword.title = "إخفاء كلمة المرور";
+
+          togglePassword.setAttribute("aria-label", "إخفاء كلمة المرور");
         } else {
           passwordInput.type = "password";
 
           togglePassword.textContent = "👁️";
+
+          togglePassword.title = "إظهار كلمة المرور";
+
+          togglePassword.setAttribute("aria-label", "إظهار كلمة المرور");
+        }
+      }
+
+      if (togglePassword) {
+        togglePassword.addEventListener("click", togglePasswordVisibility);
+
+        togglePassword.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+
+            togglePasswordVisibility();
+          }
+        });
+      }
+
+      /* =========================================================
+       ENTER TO LOGIN
+       ========================================================= */
+
+      document
+        .getElementById("password")
+        ?.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            login();
+          }
+        });
+
+      document.getElementById("email")?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          document.getElementById("password")?.focus();
         }
       });
+
+      /* =========================================================
+       LOAD LAST EMAIL
+       ========================================================= */
 
       const lastEmail = localStorage.getItem("lastEmail");
 
       if (lastEmail) {
         document.getElementById("email").value = lastEmail;
       }
+
+      /* =========================================================
+       START AUTO LOGIN
+       ========================================================= */
 
       autoLogin();
     </script>

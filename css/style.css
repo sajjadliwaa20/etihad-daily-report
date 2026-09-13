@@ -30395,3 +30395,189 @@ body:not(.dark-mode) .main-status-icon {
     display: none;
   }
 }
+.cooker-donut .donut-progress {
+  fill: none;
+  stroke: #38d9a9;
+  stroke-width: 10;
+  stroke-linecap: round;
+
+  transform: rotate(-90deg);
+  transform-origin: 60px 60px;
+
+  stroke-dasharray: 301.59;
+  stroke-dashoffset: 301.59;
+
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+/* =========================================
+   اعتماد إنتاج الزيت
+   مطابق لتصميم اعتماد إنتاج الأعلاف
+   ========================================= */
+
+#oilProductionApprovalArea {
+  width: 100%;
+  box-sizing: border-box;
+
+  margin-top: 20px;
+  padding: 20px 28px;
+
+  background: linear-gradient(135deg, #064d3d, #075b48);
+
+  border: 1px solid rgba(190, 150, 45, 0.65);
+  border-radius: 28px;
+
+  direction: rtl;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* الصف الداخلي */
+#oilProductionApprovalArea .oil-approval-content {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 28px;
+
+  box-sizing: border-box;
+}
+
+/* =========================================
+   المعلومات — جهة اليمين
+   ========================================= */
+
+#oilProductionApprovalArea .oil-approval-info {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  flex: 1;
+  min-width: 0;
+
+  text-align: right;
+}
+
+/* الأيقونة */
+#oilProductionApprovalArea .oil-approval-icon {
+  width: 58px;
+  height: 58px;
+
+  min-width: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: rgba(72, 201, 140, 0.16);
+  border: 1px solid rgba(72, 201, 140, 0.2);
+
+  font-size: 34px;
+
+  box-shadow: inset 0 0 15px rgba(72, 201, 140, 0.08);
+}
+
+/* العنوان */
+#oilProductionApprovalArea .oil-approval-info strong {
+  display: block;
+
+  margin: 0 0 5px;
+
+  color: #ffffff;
+
+  font-size: 20px;
+  font-weight: 800;
+
+  line-height: 1.4;
+}
+
+/* الوصف */
+#oilProductionApprovalArea .oil-approval-info small {
+  display: block;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  line-height: 1.6;
+}
+
+/* =========================================
+   زر اعتماد إنتاج الزيت — جهة اليسار
+   ========================================= */
+
+#oilProductionApprovalArea #approveOilProductionBtn {
+  width: 295px;
+  min-width: 295px;
+
+  height: 70px;
+
+  padding: 0 28px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: linear-gradient(135deg, #39ad6a, #2f965b);
+
+  color: #ffffff;
+
+  font-size: 19px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#oilProductionApprovalArea #approveOilProductionBtn:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.05);
+
+  box-shadow:
+    0 9px 20px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+#oilProductionApprovalArea #approveOilProductionBtn:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   الموبايل
+   ========================================= */
+
+@media (max-width: 800px) {
+  #oilProductionApprovalArea .oil-approval-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #oilProductionApprovalArea .oil-approval-info {
+    width: 100%;
+  }
+
+  #oilProductionApprovalArea #approveOilProductionBtn {
+    width: 100%;
+    min-width: 0;
+  }
+}

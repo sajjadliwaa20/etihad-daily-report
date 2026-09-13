@@ -29,282 +29,250 @@ function applySubsectionPermissions(role, subsection) {
 
   const salesMarketing = document.getElementById("salesMarketing");
 
-  const salesSection = document.getElementById("salesSection");
+  /* =====================================================
+       أدوات مساعدة
+       ===================================================== */
 
-  const feedSales = document.getElementById("sales_feed");
+  function hideAllDetails(section) {
+    if (!section) return;
 
-  const oilSales = document.getElementById("sales_oil");
+    section.querySelectorAll(":scope > details").forEach((detail) => {
+      detail.style.display = "none";
+      detail.open = false;
+    });
+  }
+
+  function showDetails(section, ids) {
+    if (!section) return;
+
+    ids.forEach((id) => {
+      const detail = document.getElementById(id);
+
+      if (detail && section.contains(detail)) {
+        detail.style.display = "block";
+      }
+    });
+  }
+
+  function hideSalesProducts() {
+    if (!salesMarketing) return;
+
+    salesMarketing.querySelectorAll(".sales-product-card").forEach((detail) => {
+      detail.style.display = "none";
+
+      if (detail.tagName === "DETAILS") {
+        detail.open = false;
+      }
+    });
+  }
 
   /* =====================================================
-       الحسابات الفرعية للأعلاف
-    ===================================================== */
+       FEED
+       ===================================================== */
 
   if (role === "feed") {
-    /* -------------------------------------------------
+    if (!feedSection) return;
+
+    /* -----------------------------------------------
            إنتاج الأعلاف
-        ------------------------------------------------- */
+           ----------------------------------------------- */
 
-    if (subsection === "production") {
-      if (!feedSection) return;
-
+    if (subsection === "production" || subsection === "feed_production") {
       feedSection.style.display = "block";
 
-      feedSection.querySelectorAll("details").forEach((detail) => {
-        detail.style.display = "none";
-      });
+      hideAllDetails(feedSection);
 
-      const allowedSections = [
-        "أرصدة المواد الخام",
+      showDetails(feedSection, [
+        "feedProductionDetails",
+        "feedReturnedDetails",
+        "feedConsumptionDetails",
+        "feedGeneralNotesDetails",
+      ]);
 
-        "إنتاج خطوط الأعلاف",
+      hideSalesProducts();
 
-        "العلف المرتجع",
+      const dashboard = document.getElementById("salesDashboardContent");
 
-        "استهلاك المواد الخام",
+      if (dashboard) {
+        dashboard.style.display = "none";
+      }
 
-        "الملاحظات العامة",
-      ];
-
-      feedSection.querySelectorAll("details").forEach((detail) => {
-        const summary = detail.querySelector("summary");
-
-        if (!summary) return;
-
-        if (allowedSections.includes(summary.textContent.trim())) {
-          detail.style.display = "block";
-        }
-      });
+      window.location.hash = "feed";
 
       return;
     }
 
-    /* -------------------------------------------------
+    /* -----------------------------------------------
            البريمكس
-        ------------------------------------------------- */
+           ----------------------------------------------- */
 
-    if (subsection === "premix") {
-      if (!feedSection) return;
-
+    if (subsection === "premix" || subsection === "feed_premix") {
       feedSection.style.display = "block";
 
-      feedSection.querySelectorAll("details").forEach((detail) => {
-        detail.style.display = "none";
-      });
+      hideAllDetails(feedSection);
 
-      feedSection.querySelectorAll("details").forEach((detail) => {
-        const summary = detail.querySelector("summary");
+      showDetails(feedSection, ["feedPremixDetails"]);
 
-        if (!summary) return;
+      hideSalesProducts();
 
-        if (summary.textContent.trim() === "إنتاج مصنع البريمكس") {
-          detail.style.display = "block";
-        }
-      });
+      const dashboard = document.getElementById("salesDashboardContent");
+
+      if (dashboard) {
+        dashboard.style.display = "none";
+      }
+
+      window.location.hash = "feed";
 
       return;
     }
 
-    /* -------------------------------------------------
+    /* -----------------------------------------------
            مبيعات الأعلاف
-        ------------------------------------------------- */
+    ----------------------------------------------- */
 
-    if (subsection === "sales") {
-      /*
-       * إخفاء مصنع الأعلاف بالكامل
-       */
+    if (subsection === "sales" || subsection === "feed_sales") {
+      feedSection.style.display = "none";
 
-      if (feedSection) {
-        feedSection.style.display = "none";
+      hideAllDetails(feedSection);
 
-        feedSection.querySelectorAll("details").forEach((detail) => {
-          detail.style.display = "none";
-        });
-      }
+      const feedSales = document.getElementById("sales_feed");
 
-      /*
-       * إخفاء قسم المبيعات بالكامل أولاً
-       */
-
-      if (salesMarketing) {
-        salesMarketing.style.display = "none";
-      }
-
-      if (salesSection) {
-        salesSection.style.display = "none";
-      }
-
-      /*
-       * إخفاء جميع أقسام المبيعات
-       */
-
-      document
-        .querySelectorAll("#salesMarketing > details details")
-        .forEach((detail) => {
-          detail.style.display = "none";
-        });
-
-      /*
-       * إظهار قسم المبيعات الرئيسي
-       */
-
-      if (salesMarketing) {
-        salesMarketing.style.display = "block";
-      }
-
-      if (salesSection) {
-        salesSection.style.display = "block";
-      }
-
-      /*
-       * إظهار مبيعات الأعلاف فقط
-       */
+      hideSalesProducts();
 
       if (feedSales) {
         feedSales.style.display = "block";
+
+        feedSales.open = true;
       }
 
-      /*
-       * إخفاء بقية أقسام المبيعات
-       */
-
-      const salesSugar = document.getElementById("sales_sugar");
-
-      const salesOil = document.getElementById("sales_oil");
-
-      const salesFlour = document.getElementById("sales_flour");
-
-      if (salesSugar) salesSugar.style.display = "none";
-
-      if (salesOil) salesOil.style.display = "none";
-
-      if (salesFlour) salesFlour.style.display = "none";
+      window.location.hash = "salesMarketing";
 
       return;
     }
   }
 
   /* =====================================================
-       الحسابات الفرعية للزيت
-    ===================================================== */
+       OIL
+       ===================================================== */
 
   if (role === "oil") {
-    /* -------------------------------------------------
+    if (!oilSection) return;
+
+    /* -----------------------------------------------
            إنتاج الزيت
-        ------------------------------------------------- */
+           ----------------------------------------------- */
 
-    if (subsection === "production") {
-      if (!oilSection) return;
-
+    if (subsection === "production" || subsection === "oil_production") {
       oilSection.style.display = "block";
 
-      oilSection.querySelectorAll("details").forEach((detail) => {
-        detail.style.display = "none";
-      });
+      hideAllDetails(oilSection);
 
-      const allowedSections = [
-        "أرصدة الزيوت الخام",
+      showDetails(oilSection, [
+        "oilRawStockDetails",
+        "oilRefineryDetails",
+        "oilSeparationDetails",
+        "oilGeneralNotesDetails",
+      ]);
 
-        "إنتاج خطوط التكرير",
+      hideSalesProducts();
 
-        "موقف وأرصدة المنتج النهائي",
+      const dashboard = document.getElementById("salesDashboardContent");
 
-        "موقف محطة الفصل",
-      ];
+      if (dashboard) {
+        dashboard.style.display = "none";
+      }
 
-      oilSection.querySelectorAll("details").forEach((detail) => {
-        const summary = detail.querySelector("summary");
-
-        if (!summary) return;
-
-        if (allowedSections.includes(summary.textContent.trim())) {
-          detail.style.display = "block";
-        }
-      });
+      window.location.hash = "oil";
 
       return;
     }
 
-    /* -------------------------------------------------
-       مبيعات الزيت
-------------------------------------------------- */
+    /* -----------------------------------------------
+           مبيعات الزيت
+           ----------------------------------------------- */
 
-    if (subsection === "sales") {
-      /*
-       * 1️⃣ إخفاء مصنع الزيت بالكامل أولاً
-       */
-      if (oilSection) {
-        oilSection.style.display = "none";
+    if (subsection === "sales" || subsection === "oil_sales") {
+      oilSection.style.display = "block";
 
-        oilSection.querySelectorAll("details").forEach((detail) => {
-          detail.style.display = "none";
-        });
-      }
+      hideAllDetails(oilSection);
 
-      /*
-       * 2️⃣ إظهار قسم المبيعات والتسويق
-       */
+      const oilSales = document.getElementById("sales_oil");
+
+      showDetails(oilSection, [
+        "oilPackingDetails",
+        "oilPlasticDetails",
+        "oilAssemblyDetails",
+      ]);
+
       if (salesMarketing) {
         salesMarketing.style.display = "block";
       }
 
-      if (salesSection) {
-        salesSection.style.display = "block";
-      }
+      hideSalesProducts();
 
-      /*
-       * 3️⃣ إخفاء جميع أقسام المبيعات
-       */
-      const salesSugar = document.getElementById("sales_sugar");
-      const salesFlour = document.getElementById("sales_flour");
-      const salesFeed = document.getElementById("sales_feed");
-
-      if (salesSugar) salesSugar.style.display = "none";
-
-      if (salesFlour) salesFlour.style.display = "none";
-
-      if (salesFeed) salesFeed.style.display = "none";
-
-      /*
-       * 4️⃣ إظهار مبيعات الزيت فقط
-       */
       if (oilSales) {
         oilSales.style.display = "block";
+
+        oilSales.open = true;
       }
 
-      /*
-       * =================================================
-       * 5️⃣ إظهار أجزاء معينة من مصنع الزيت
-       * =================================================
-       */
-
-      if (oilSection) {
-        oilSection.style.display = "block";
-
-        oilSection.querySelectorAll("details").forEach((detail) => {
-          const summary = detail.querySelector(":scope > summary");
-
-          if (!summary) return;
-
-          const title = summary.textContent.trim();
-
-          /*
-           * موقف خطوط التعبئة
-           */
-          if (title === "موقف خطوط التعبئة") {
-            detail.style.display = "block";
-          }
-
-          /*
-           * تقرير مصنع اللدائن
-           */
-          if (title === "تقرير مصنع اللدائن") {
-            detail.style.display = "block";
-          }
-        });
-      }
+      window.location.hash = "salesMarketing";
 
       return;
     }
+  }
+}
+
+/*
+ * =========================================================
+ * 🔒 حماية مخطط المبيعات التفاعلي
+ * =========================================================
+ *
+ * المخطط وبطاقات Dashboard المبيعات:
+ *
+ * salesDashboardContent
+ *
+ * تظهر فقط:
+ * - admin
+ * - executive
+ *
+ * جميع حسابات المبيعات مخفية عنها بالكامل.
+ * =========================================================
+ */
+
+function hideSalesInteractiveDashboard() {
+  const dashboard = document.getElementById("salesDashboardContent");
+
+  if (dashboard) {
+    dashboard.style.display = "none";
+  }
+}
+
+/*
+ * =========================================================
+ * إظهار Dashboard المبيعات للإدارة فقط
+ * =========================================================
+ */
+
+function applySalesDashboardPermissions(role, subsection = null) {
+  const salesDashboard = document.querySelector(".sales-executive-dashboard");
+
+  if (!salesDashboard) return;
+
+  const isManagement = role === "admin" || role === "executive";
+
+  if (isManagement) {
+    /* الإدارة ترى Dashboard المبيعات */
+    salesDashboard.style.display = "";
+  } else {
+    /*
+     * جميع الحسابات غير الإدارية:
+     * إخفاء Dashboard التفاعلي فقط
+     *
+     * ولا نخفي salesDashboardContent
+     * لأن بداخله بطاقات وجداول المبيعات.
+     */
+    salesDashboard.style.display = "none";
   }
 }
 
@@ -730,17 +698,13 @@ async function applyPermissions() {
   window.currentUserRole = role;
   window.currentUserSubsection = subsection;
 
+  applySalesDashboardPermissions(role, subsection);
+
   /* =========================================================
- 🍬 تطبيق صلاحيات Dashboard السكر
- ========================================================= */
+     🍬 صلاحيات Dashboard السكر
+     ========================================================= */
 
   applySugarDashboardPermissions(role);
-
-  /* =========================================================
- 🛢️ تطبيق صلاحيات اعتماد مصنع الزيت
- ========================================================= */
-
-  applyOilDashboardPermissions(role);
 
   console.log("ROLE =", role);
   console.log("SUBSECTION =", subsection);
@@ -794,14 +758,20 @@ async function applyPermissions() {
     btn.style.display = "inline-block";
   });
 
+  /* =========================================================
+     صلاحيات الاعتماد الأساسية
+     ========================================================= */
+
   applyApprovalPermissions(role);
 
-  /* =========================================
-   صلاحية اعتماد تقرير الأعلاف
-   يظهر لحساب الأعلاف فقط
-========================================= */
+  /* =========================================================
+     صلاحيات الاعتماد الفرعية
+     يجب أن تكون آخر شيء حتى لا يتم تجاوزها
+     ========================================================= */
 
-  applyFeedApprovalPermissions(role);
+  applyFeedApprovalPermissions(role, subsection);
+
+  applyOilSubsectionApprovalPermissions(role, subsection);
 
   /* =========================================
    الحسابات الفرعية
@@ -1039,19 +1009,120 @@ async function applyPermissions() {
   }
 }
 
-function applyFeedApprovalPermissions(role) {
-  const feedApprovalArea = document.querySelector(".feed-approval-area");
+function applyFeedApprovalPermissions(role, subsection = null) {
+  const factoryArea = document.querySelector(".feed-only-area");
 
-  const feedApprovalBtn = document.getElementById("approveFeedBtn");
+  const factoryButton = document.getElementById("approveFeedBtn");
 
-  const isFeedAccount = role === "feed";
+  const feedProductionArea = document.getElementById(
+    "feedProductionApprovalArea",
+  );
 
-  if (feedApprovalArea) {
-    feedApprovalArea.style.display = isFeedAccount ? "flex" : "none";
+  const feedPremixArea = document.getElementById("feedPremixApprovalArea");
+
+  /* -----------------------------------------
+       إخفاء أزرار الاعتماد الفرعية أولاً
+       ----------------------------------------- */
+
+  if (feedProductionArea) {
+    feedProductionArea.style.display = "none";
   }
 
-  if (feedApprovalBtn) {
-    feedApprovalBtn.style.display = isFeedAccount ? "inline-flex" : "none";
+  if (feedPremixArea) {
+    feedPremixArea.style.display = "none";
+  }
+
+  /* -----------------------------------------
+       زر اعتماد المصنع الكامل
+       يظهر فقط للحساب الرئيسي
+       ----------------------------------------- */
+
+  const isMainFeedAccount = role === "feed" && !subsection;
+
+  if (factoryArea) {
+    factoryArea.style.display = isMainFeedAccount ? "flex" : "none";
+  }
+
+  if (factoryButton) {
+    factoryButton.style.display = isMainFeedAccount ? "inline-flex" : "none";
+  }
+
+  /* -----------------------------------------
+       حساب إنتاج الأعلاف
+       ----------------------------------------- */
+
+  if (
+    role === "feed" &&
+    (subsection === "production" || subsection === "feed_production")
+  ) {
+    if (feedProductionArea) {
+      feedProductionArea.style.display = "flex";
+    }
+
+    return;
+  }
+
+  /* -----------------------------------------
+       حساب البريمكس
+       ----------------------------------------- */
+
+  if (
+    role === "feed" &&
+    (subsection === "premix" || subsection === "feed_premix")
+  ) {
+    if (feedPremixArea) {
+      feedPremixArea.style.display = "flex";
+    }
+
+    return;
+  }
+}
+
+function applyOilSubsectionApprovalPermissions(role, subsection = null) {
+  const factoryArea = document.querySelector(".oil-approval-area");
+
+  const factoryButton = document.getElementById("OilBtn");
+
+  const oilProductionArea = document.getElementById(
+    "oilProductionApprovalArea",
+  );
+
+  /* -----------------------------------------
+       إخفاء زر الاعتماد الفرعي أولاً
+       ----------------------------------------- */
+
+  if (oilProductionArea) {
+    oilProductionArea.style.display = "none";
+  }
+
+  /* -----------------------------------------
+       زر المصنع الكامل
+       للحساب الرئيسي فقط
+       ----------------------------------------- */
+
+  const isMainOilAccount = role === "oil" && !subsection;
+
+  if (factoryArea) {
+    factoryArea.style.display = isMainOilAccount ? "flex" : "none";
+  }
+
+  if (factoryButton) {
+    factoryButton.style.display = isMainOilAccount ? "inline-flex" : "none";
+  }
+
+  /* -----------------------------------------
+       حساب إنتاج الزيت
+       ----------------------------------------- */
+
+  if (
+    role === "oil" &&
+    (subsection === "production" || subsection === "oil_production")
+  ) {
+    if (oilProductionArea) {
+      oilProductionArea.style.display = "flex";
+    }
+
+    return;
   }
 }
 
@@ -1074,12 +1145,12 @@ function showOnlySection(sectionId) {
 
   targetSection.style.display = "block";
 
-  // فتح الـ details الداخلي إن كان موجودًا
-  const innerDetails = targetSection.querySelector("details");
-
-  if (innerDetails) {
-    innerDetails.open = true;
-  }
+  /*
+   * لا نفتح أي details تلقائيًا هنا.
+   *
+   * صلاحيات الحسابات الفرعية هي التي تحدد
+   * أي قسم يفتح وأي قسم يبقى مغلقًا.
+   */
 
   // الانتقال إلى أعلى القسم
   targetSection.scrollIntoView({
@@ -2485,10 +2556,11 @@ function updateNovasepDashboard() {
 
 function updateCookerDashboard() {
   /* =====================================================
-       قراءة القيم من بطاقات / حقول التقرير
-       ===================================================== */
+     قراءة القيم من الحقول الأصلية
+     ===================================================== */
 
-  const brix = parseFloat(document.getElementById("cooker_brix")?.value) || 0;
+  const brix =
+    parseFloat(document.getElementById("cooker_in_brix")?.value) || 0;
 
   const molassesQty =
     parseFloat(document.getElementById("molasses_qty")?.value) || 0;
@@ -2500,8 +2572,8 @@ function updateCookerDashboard() {
     parseFloat(document.getElementById("molasses_purity")?.value) || 0;
 
   /* =====================================================
-       تحديث الأرقام
-       ===================================================== */
+     تحديث الأرقام
+     ===================================================== */
 
   const dashBrix = document.getElementById("dashCookerBrix");
 
@@ -2511,17 +2583,25 @@ function updateCookerDashboard() {
 
   const dashPurity = document.getElementById("dashMolassesPurity");
 
-  if (dashBrix) dashBrix.textContent = brix.toFixed(1);
+  if (dashBrix) {
+    dashBrix.textContent = brix.toFixed(1);
+  }
 
-  if (dashQty) dashQty.textContent = molassesQty.toFixed(1);
+  if (dashQty) {
+    dashQty.textContent = molassesQty.toFixed(1);
+  }
 
-  if (dashMolassesBrix) dashMolassesBrix.textContent = molassesBrix.toFixed(1);
+  if (dashMolassesBrix) {
+    dashMolassesBrix.textContent = molassesBrix.toFixed(1);
+  }
 
-  if (dashPurity) dashPurity.textContent = molassesPurity.toFixed(1);
+  if (dashPurity) {
+    dashPurity.textContent = molassesPurity.toFixed(1);
+  }
 
   /* =====================================================
-       تحديث الـ Donut
-       ===================================================== */
+     تحديث الحلقات
+     ===================================================== */
 
   updateCookerDonut(0, brix);
 
@@ -2530,10 +2610,8 @@ function updateCookerDashboard() {
   updateCookerDonut(2, molassesPurity);
 
   /* =====================================================
-       تحديث خزان المولاس
-       MIN = 15
-       MAX = 60
-       ===================================================== */
+     تحديث خزان المولاس
+     ===================================================== */
 
   updateMolassesLevel(molassesQty);
 }
@@ -2643,6 +2721,8 @@ function updateDryerDashboard() {
   if (dustDisplay) dustDisplay.textContent = dust;
 
   if (qtyDisplay) qtyDisplay.textContent = qty.toFixed(2) + " طن";
+
+  updateSugarProductTemperature();
 
   /* =========================================
        تحديث الـ Donut Charts
@@ -2823,6 +2903,14 @@ function refreshAllDashboards() {
   try {
     if (typeof updateDryerDashboard === "function") {
       updateDryerDashboard();
+    }
+
+    try {
+      if (typeof updateSugarProductTemperature === "function") {
+        updateSugarProductTemperature();
+      }
+    } catch (e) {
+      console.error("Sugar Product Temperature:", e);
     }
   } catch (e) {
     console.error("Dryer Dashboard:", e);
@@ -4276,9 +4364,11 @@ function updateFlourRawDashboard() {
 function updateFlourStockDashboard() {
   const aus = Number(document.getElementById("auseti")?.value) || 0;
 
+  const iraq = Number(document.getElementById("iraqeti")?.value) || 0;
+
   const rus = Number(document.getElementById("ruseti")?.value) || 0;
 
-  const total = aus + rus;
+  const total = aus + iraq + rus;
 
   /* =========================
      إجمالي المخزون
@@ -4292,13 +4382,12 @@ function updateFlourStockDashboard() {
 
   /* =========================
      نسب المخزون
-     
-     النسبة هنا مقارنة بين
-     المخزون الأسترالي والروسي
-     وليس سعة خزان افتراضية.
+     مقارنة بين الأنواع الثلاثة
   ========================== */
 
   const ausPercent = total > 0 ? (aus / total) * 100 : 0;
+
+  const iraqPercent = total > 0 ? (iraq / total) * 100 : 0;
 
   const rusPercent = total > 0 ? (rus / total) * 100 : 0;
 
@@ -4308,10 +4397,16 @@ function updateFlourStockDashboard() {
 
   const ausBar = document.getElementById("aus_stock_fill");
 
+  const iraqBar = document.getElementById("iraq_stock_fill");
+
   const rusBar = document.getElementById("rus_stock_fill");
 
   if (ausBar) {
     ausBar.style.width = `${Math.min(ausPercent, 100)}%`;
+  }
+
+  if (iraqBar) {
+    iraqBar.style.width = `${Math.min(iraqPercent, 100)}%`;
   }
 
   if (rusBar) {
@@ -4324,10 +4419,16 @@ function updateFlourStockDashboard() {
 
   const ausPercentEl = document.getElementById("flourAusStockPercent");
 
+  const iraqPercentEl = document.getElementById("flourIraqStockPercent");
+
   const rusPercentEl = document.getElementById("flourRusStockPercent");
 
   if (ausPercentEl) {
     ausPercentEl.textContent = `${ausPercent.toFixed(0)}%`;
+  }
+
+  if (iraqPercentEl) {
+    iraqPercentEl.textContent = `${iraqPercent.toFixed(0)}%`;
   }
 
   if (rusPercentEl) {
@@ -4335,10 +4436,12 @@ function updateFlourStockDashboard() {
   }
 
   /* =========================
-     حالة المخزون
+     حالات المخزون
   ========================== */
 
   updateFlourStockStatus("aus_stock_status", aus);
+
+  updateFlourStockStatus("iraq_stock_status", iraq);
 
   updateFlourStockStatus("rus_stock_status", rus);
 
@@ -5586,6 +5689,86 @@ function applyWaterApprovalPermissions(role) {
 
   if (button) {
     button.style.display = isWaterFiltration ? "inline-flex" : "none";
+  }
+}
+
+function updateSugarProductTemperature() {
+  const sourceEl = document.getElementById("dryer_temp");
+  const dashboardEl = document.getElementById("sugartempratureDash");
+
+  if (!sourceEl || !dashboardEl) return;
+
+  const value = parseFloat(sourceEl.value);
+
+  dashboardEl.textContent = Number.isFinite(value) ? value.toFixed(1) : "0.0";
+}
+
+function updateFlourExtractionEfficiency() {
+  const input = document.getElementById("extraction_eff");
+
+  if (!input) return;
+
+  let value = parseFloat(input.value);
+
+  if (!Number.isFinite(value)) {
+    value = 0;
+  }
+
+  // منع القيم خارج النطاق
+  value = Math.max(0, Math.min(100, value));
+
+  /* =====================================================
+       عرض القيمة في الحلقة الرئيسية
+       ===================================================== */
+
+  const dashboardDisplay = document.getElementById(
+    "flourDashboardExtractionEfficiencyDisplay",
+  );
+
+  if (dashboardDisplay) {
+    dashboardDisplay.textContent = value.toFixed(1);
+  }
+
+  /* =====================================================
+       عرض القيمة في حلقة قسم كفاءة الاستخراج
+       ===================================================== */
+
+  const detailDisplay = document.getElementById("extractionEfficiencyDisplay");
+
+  if (detailDisplay) {
+    detailDisplay.textContent = value.toFixed(1);
+  }
+
+  /* =====================================================
+       تحديث الحلقة الرئيسية
+       ===================================================== */
+
+  const dashboardRing = document.getElementById(
+    "flourDashboardExtractionRingProgress",
+  );
+
+  if (dashboardRing) {
+    const circumference = 2 * Math.PI * 48;
+
+    dashboardRing.style.strokeDasharray = circumference;
+
+    dashboardRing.style.strokeDashoffset =
+      circumference - (value / 100) * circumference;
+  }
+
+  /* =====================================================
+       تحديث الحلقة التفصيلية
+       ===================================================== */
+
+  const detailRing = document.getElementById("extractionRingProgress");
+
+  if (detailRing) {
+    const circumference = 2 * Math.PI * 48;
+
+    detailRing.style.strokeDasharray = circumference;
+
+    detailRing.style.strokeDashoffset =
+      circumference - (value / 100) * circumference;
   }
 }
 
