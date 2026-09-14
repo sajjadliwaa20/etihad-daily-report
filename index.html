@@ -182,9 +182,10 @@
       class="sidebar-menu-item"
       href="#powerstation"
       onclick="
-        showOnlySection('powerstation');
-        toggleSidebar();
-      "
+  if (showOnlySection('powerstation') !== false) return;
+  toggleSidebar();
+  return false;
+"
     >
 
       <span class="sidebar-menu-icon">⚡</span>
@@ -203,9 +204,10 @@
       class="sidebar-menu-item"
       href="#sugar"
       onclick="
-        showOnlySection('sugar');
-        toggleSidebar();
-      "
+  if (showOnlySection('sugar') !== false) return;
+  toggleSidebar();
+  return false;
+"
     >
 
       <span class="sidebar-menu-icon">🍚</span>
@@ -224,9 +226,10 @@
       class="sidebar-menu-item"
       href="#oil"
       onclick="
-        showOnlySection('oil');
-        toggleSidebar();
-      "
+  if (showOnlySection('oil') !== false) return;
+  toggleSidebar();
+  return false;
+"
     >
 
       <span class="sidebar-menu-icon">🌻</span>
@@ -245,9 +248,10 @@
       class="sidebar-menu-item"
       href="#flour"
       onclick="
-        showOnlySection('flour');
-        toggleSidebar();
-      "
+  if (showOnlySection('flour') !== false) return;
+  toggleSidebar();
+  return false;
+"
     >
 
       <span class="sidebar-menu-icon">🍞</span>
@@ -266,9 +270,10 @@
       class="sidebar-menu-item"
       href="#feed"
       onclick="
-        showOnlySection('feed');
-        toggleSidebar();
-      "
+  if (showOnlySection('feed') !== false) return;
+  toggleSidebar();
+  return false;
+"
     >
 
       <span class="sidebar-menu-icon">🐓</span>
@@ -287,9 +292,10 @@
       class="sidebar-menu-item"
       href="#waterfiltration"
       onclick="
-        showOnlySection('waterfiltration');
-        toggleSidebar();
-      "
+  if (showOnlySection('waterfiltration') !== false) return;
+  toggleSidebar();
+  return false;
+"
     >
 
       <span class="sidebar-menu-icon">💧</span>
@@ -9277,10 +9283,55 @@ PKF
         >
             ✓ اعتماد إنتاج الزيت
         </button>
+             </div>
+               </div>
+
+<!-- =========================================================
+     اعتماد مبيعات الزيت
+     التعبئة + اللدائن + ملحقاتها
+========================================================= -->
+
+<div
+    id="oilSalesApprovalArea"
+    class="sugar-approval-area oil-approval-area"
+    style="display:none;"
+    data-oil-sales-only="true"
+>
+
+    <div class="approval-info">
+
+        <span class="approval-icon">
+            ✓
+        </span>
+
+        <div>
+
+            <strong>
+                اعتماد تقرير مبيعات الزيت
+            </strong>
+
+            <small>
+                تأكد من مراجعة بيانات التعبئة واللدائن
+                وملحقاتها قبل الاعتماد
+            </small>
+
+        </div>
 
     </div>
+
+    <button
+        type="button"
+        id="approveOilSalesBtn"
+        class="sugar-approve-btn"
+        data-subsection-approval="oil_sales"
+        onclick="approveOilSalesSubsection()"
+    >
+        ✓ اعتماد مبيعات الزيت
+    </button>
+
 </div>
-      </section>
+
+             </section>
 <!-- ===================================== -->
 <!-- مصنع الطحين -->
 <!-- ===================================== -->
@@ -10618,7 +10669,7 @@ PKF
             step="0.1"
             min="0"
             max="100"
-            placeholder="أدخل النسبة"
+            placeholder=""
             oninput="updateFlourExtractionEfficiency()"
         />
 
@@ -16045,78 +16096,6 @@ function recalculateAll() {
         document.getElementById("remindersBox").style.display = "none";
       }
 
-      function showOnlySection(sectionId) {
-  // هذا السلوك مخصص فقط للإدارة والتنفيذي
-  if (
-    window.currentUserRole !== "admin" &&
-    window.currentUserRole !== "executive"
-  ) {
-    return;
-  }
-
-  /* =========================================
-     إخفاء جميع الأقسام
-  ========================================= */
-
-  document.querySelectorAll(".section").forEach((section) => {
-    section.style.display = "none";
-  });
-
-
-  /* =========================================
-     إظهار القسم المطلوب
-  ========================================= */
-
-  const target = document.getElementById(sectionId);
-
-  if (target) {
-    target.style.display = "block";
-  }
-
-
-  /* =========================================
-     تحديث الحالة النشطة للشريط الجانبي
-  ========================================= */
-
-  document
-    .querySelectorAll(".sidebar-menu-item")
-    .forEach((item) => {
-      item.classList.remove("active");
-    });
-
-
- let activeMenu = document.getElementById(
-  "menu_" + sectionId
-);
-
-/* المبيعات والتسويق */
-if (sectionId === "salesMarketing") {
-  activeMenu = document.getElementById(
-    "menu_sales_marketing"
-  );
-}
-
-if (activeMenu) {
-  activeMenu.classList.add("active");
-}
-
-
-  /* =========================================
-     تحديث الرابط
-  ========================================= */
-
-  window.location.hash = sectionId;
-
-
-  /* =========================================
-     العودة إلى أعلى التقرير بسلاسة
-  ========================================= */
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-}
       function showAllSections() {
 
     document.querySelectorAll(".section").forEach((section) => {
@@ -16988,6 +16967,65 @@ async function approveOilProductionSubsection() {
     }
 }
 
+/* ---------------------------------------------------------
+   اعتماد مبيعات الزيت
+   التعبئة + اللدائن + ملحقاتها
+   --------------------------------------------------------- */
+
+async function approveOilSalesSubsection() {
+
+    console.log(
+        "🟢 OIL SALES APPROVAL STARTED"
+    );
+
+    const fields =
+        getSubsectionSaveFields([
+            "oilPackingDetails",
+            "oilPlasticDetails",
+            "oilAssemblyDetails"
+        ]);
+
+    console.log(
+        "OIL SALES APPROVAL FIELDS:",
+        fields
+    );
+
+    if (!fields.length) {
+
+        showNotification(
+            "لم يتم العثور على حقول اعتماد مبيعات الزيت",
+            "error"
+        );
+
+        return;
+    }
+
+    try {
+
+        await approveSubsection(
+            "oil_sales",
+            fields
+        );
+
+        console.log(
+            "🟢 OIL SALES APPROVAL FINISHED"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "🔴 OIL SALES APPROVAL FAILED:",
+            error
+        );
+
+        showNotification(
+            error?.message ||
+            "حدث خطأ أثناء اعتماد مبيعات الزيت",
+            "error"
+        );
+    }
+}
+
    async function approvePowerSection() {
     console.log("🟢 POWER APPROVAL BUTTON CLICKED");
 
@@ -17117,102 +17155,190 @@ async function approveOilProductionSubsection() {
 
         await loadFieldHistoryForFactory(factory, fieldIds);
 
-        /* =========================================
+     /* =========================================
    تحميل بيانات اليوم
 ========================================= */
 
-        const currentFieldNames = new Set(
-          currentRows.map((row) => row.field_name),
-        );
+const currentFieldNames = new Set(
+  currentRows.map((row) => row.field_name)
+);
 
-        /* =========================================
-   إذا كان هذا تقرير اليوم:
-   نكمل الحقول غير الموجودة من آخر قيمة
+/* =========================================
+   حقول المبيعات:
+   تُحمّل لليوم الحالي فقط
+   ولا تدخل في نظام التوريث
 ========================================= */
 
-        let inheritedRows = [];
+const salesFieldIds =
+  factory === "feed"
+    ? [
+        "feed_sales_corn",
+        "feed_sales_soybean",
+        "feed_sales_feed_agents",
+        "feed_sales_feed_sahara",
+        "feed_sales_premix_agents",
+        "feed_sales_premix_sahara"
+      ]
+    : factory === "oil"
+    ? [
+        "shortening_sales_20kg",
 
-        if (reportDate === getTodayLocalDate()) {
-          const missingFieldIds = fieldIds.filter(
-            (id) => !currentFieldNames.has(id),
-          );
+        "sun_sales_750",
+        "sun_sales_900",
+        "sun_sales_1l",
+        "sun_sales_1_1lirq",
+        "sun_sales_1_1l15",
 
-          if (missingFieldIds.length) {
-            const { data: previousRows, error: previousError } =
-              await supabaseClient
-                .from("daily_reports")
-                .select("field_name,field_value,report_date,updated_at")
-                .eq("factory", factory)
-                .lt("report_date", reportDate)
-                .in("field_name", missingFieldIds)
-                .order("report_date", { ascending: false })
-                .order("updated_at", { ascending: false })
-                .range(0, 999);
+        "olein_sales_5l",
+        "olein_sales_10l",
+        "olein_sales_18l_big",
+        "olein_sales_20kg",
 
-            if (previousError) {
-              console.error("PREVIOUS VALUES LOAD ERROR:", previousError);
-            } else {
-              const found = new Set();
+        "palm_sales_5l",
+        "palm_sales_6l",
+        "palm_sales_10l",
+        "palm_sales_12l",
+        "palm_sales_14l"
+      ]
+    : [];
 
-              (previousRows || []).forEach((row) => {
-                if (found.has(row.field_name)) {
-                  return;
-                }
+/*
+   فقط الحقول الموجودة فعليًا في daily_reports لليوم
+   سيتم تطبيقها.
+*/
+const salesRowsToApply = currentRows.filter((row) =>
+  salesFieldIds.includes(row.field_name)
+);
 
-                found.add(row.field_name);
+/* =========================================
+   إذا كان هذا تقرير اليوم:
+   نكمل الحقول غير الموجودة من آخر قيمة
 
-                inheritedRows.push(row);
-              });
-            }
-          }
+   ملاحظة مهمة:
+   حقول المبيعات مستثناة من التوريث.
+========================================= */
+
+let inheritedRows = [];
+
+if (reportDate === getTodayLocalDate()) {
+
+  const missingFieldIds = fieldIds.filter(
+    (id) =>
+      !currentFieldNames.has(id) &&
+      !salesFieldIds.includes(id)
+  );
+
+  if (missingFieldIds.length) {
+
+    const { data: previousRows, error: previousError } =
+      await supabaseClient
+        .from("daily_reports")
+        .select("field_name,field_value,report_date,updated_at")
+        .eq("factory", factory)
+        .lt("report_date", reportDate)
+        .in("field_name", missingFieldIds)
+        .order("report_date", { ascending: false })
+        .order("updated_at", { ascending: false })
+        .range(0, 999);
+
+    if (previousError) {
+
+      console.error(
+        "PREVIOUS VALUES LOAD ERROR:",
+        previousError
+      );
+
+    } else {
+
+      const found = new Set();
+
+      (previousRows || []).forEach((row) => {
+
+        if (found.has(row.field_name)) {
+          return;
         }
 
-        /* =========================================
+        found.add(row.field_name);
+        inheritedRows.push(row);
+
+      });
+    }
+  }
+}
+
+/* =========================================
    دمج بيانات اليوم + القيم الموروثة
+
+   salesRowsToApply = اليوم فقط
+   inheritedRows    = بقية الحقول فقط
 ========================================= */
 
 console.log(
-    "FIELD MAP CHECK:",
-    {
-        saved:
-            window.fieldLastSavedValues,
-        updated:
-            window.fieldLastUpdatedAt,
-        savedIsMap:
-            window.fieldLastSavedValues instanceof Map,
-        updatedIsMap:
-            window.fieldLastUpdatedAt instanceof Map
-    }
+  "FIELD MAP CHECK:",
+  {
+    saved: window.fieldLastSavedValues,
+    updated: window.fieldLastUpdatedAt,
+    savedIsMap:
+      window.fieldLastSavedValues instanceof Map,
+    updatedIsMap:
+      window.fieldLastUpdatedAt instanceof Map
+  }
 );
 
-        const rowsToApply = [...currentRows, ...inheritedRows];
+/*
+   لا نضيف salesRowsToApply بشكل منفصل هنا،
+   لأن currentRows يحتوي أصلًا على جميع بيانات اليوم.
+   المهم أن salesFieldIds لم تدخل في inheritedRows.
+*/
 
-        rowsToApply.forEach((row) => {
-          const element = document.getElementById(row.field_name);
+const rowsToApply = [
+  ...currentRows,
+  ...inheritedRows
+];
 
-          if (!element) return;
+rowsToApply.forEach((row) => {
 
-          element.value = row.field_value ?? "";
+  const element = document.getElementById(row.field_name);
 
-          const key = fieldStateKey(factory, row.field_name);
+  if (!element) return;
 
-          /*
-       إذا كانت هذه أول مرة نرى الحقل
-       ولا توجد له قيمة محفوظة في الذاكرة
-    */
-          if (!window.fieldLastSavedValues.has(key)) {
-            window.fieldLastSavedValues.set(key, normalizeFieldValue(element));
-          }
+  element.value = row.field_value ?? "";
 
-          /*
-       fallback احتياطي:
-       إذا لم يوجد field_history
-       نستخدم updated_at من daily_reports
-    */
-          if (!window.fieldLastUpdatedAt.has(key) && row.updated_at) {
-            window.fieldLastUpdatedAt.set(key, row.updated_at);
-          }
-        });
+  const key = fieldStateKey(
+    factory,
+    row.field_name
+  );
+
+  /*
+     إذا كانت هذه أول مرة نرى الحقل
+     ولا توجد له قيمة محفوظة في الذاكرة
+  */
+  if (!window.fieldLastSavedValues.has(key)) {
+
+    window.fieldLastSavedValues.set(
+      key,
+      normalizeFieldValue(element)
+    );
+
+  }
+
+  /*
+     fallback احتياطي:
+     إذا لم يوجد field_history
+     نستخدم updated_at من daily_reports
+  */
+  if (
+    !window.fieldLastUpdatedAt.has(key) &&
+    row.updated_at
+  ) {
+
+    window.fieldLastUpdatedAt.set(
+      key,
+      row.updated_at
+    );
+
+  }
+});
 
         /* تحديث ألوان الحقول */
         refreshAllFieldStaleStyles();

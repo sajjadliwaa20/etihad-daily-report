@@ -1,5 +1,4 @@
 window.testDashboard = true;
-document.addEventListener("DOMContentLoaded", updateSugarTankCards);
 
 async function showCurrentUser() {
   const {
@@ -22,6 +21,13 @@ async function showCurrentUser() {
 
 function applySubsectionPermissions(role, subsection) {
   console.log("SUBSECTION PERMISSIONS:", role, subsection);
+
+  const normalizedSubsection = String(subsection || "")
+    .trim()
+    .toLowerCase()
+    .replace(/^sales\//, "");
+
+  console.log("NORMALIZED SUBSECTION:", normalizedSubsection);
 
   const feedSection = document.getElementById("feed");
 
@@ -130,17 +136,87 @@ function applySubsectionPermissions(role, subsection) {
            مبيعات الأعلاف
     ----------------------------------------------- */
 
-    if (subsection === "sales" || subsection === "feed_sales") {
-      feedSection.style.display = "none";
+    if (
+      normalizedSubsection === "sales" ||
+      normalizedSubsection === "feed_sales"
+    ) {
+      /* إخفاء مصنع الأعلاف */
+      if (feedSection) {
+        feedSection.style.display = "none";
+      }
 
       hideAllDetails(feedSection);
 
-      const feedSales = document.getElementById("sales_feed");
+      /* =========================================
+     إظهار قسم المبيعات بالقوة
+  ========================================= */
+
+      if (salesMarketing) {
+        salesMarketing.style.setProperty("display", "block", "important");
+      }
+
+      const salesDashboardContent = document.getElementById(
+        "salesDashboardContent",
+      );
+
+      if (salesDashboardContent) {
+        salesDashboardContent.classList.remove("collapsed");
+
+        salesDashboardContent.style.setProperty(
+          "display",
+          "block",
+          "important",
+        );
+
+        salesDashboardContent.style.setProperty(
+          "max-height",
+          "none",
+          "important",
+        );
+
+        salesDashboardContent.style.setProperty("height", "auto", "important");
+
+        salesDashboardContent.style.setProperty("opacity", "1", "important");
+
+        salesDashboardContent.style.setProperty(
+          "visibility",
+          "visible",
+          "important",
+        );
+
+        salesDashboardContent.style.setProperty(
+          "overflow",
+          "visible",
+          "important",
+        );
+
+        salesDashboardContent.style.setProperty(
+          "pointer-events",
+          "auto",
+          "important",
+        );
+      }
+
+      /* =========================================
+     إخفاء كل منتجات المبيعات
+  ========================================= */
 
       hideSalesProducts();
 
+      /* =========================================
+     إظهار مبيعات الأعلاف فقط
+  ========================================= */
+
+      const feedSales = document.getElementById("sales_feed");
+
       if (feedSales) {
-        feedSales.style.display = "block";
+        feedSales.style.setProperty("display", "block", "important");
+
+        feedSales.style.setProperty("visibility", "visible", "important");
+
+        feedSales.style.setProperty("height", "auto", "important");
+
+        feedSales.style.setProperty("opacity", "1", "important");
 
         feedSales.open = true;
       }
@@ -187,31 +263,91 @@ function applySubsectionPermissions(role, subsection) {
       return;
     }
 
-    /* -----------------------------------------------
+    /* --------------------------------------------
            مبيعات الزيت
-           ----------------------------------------------- */
+    -------------------------------------------- */
 
-    if (subsection === "sales" || subsection === "oil_sales") {
-      oilSection.style.display = "block";
+    if (
+      normalizedSubsection === "sales" ||
+      normalizedSubsection === "oil_sales"
+    ) {
+      /* إخفاء مصنع الزيت */
+      if (oilSection) {
+        oilSection.style.display = "none";
+      }
 
       hideAllDetails(oilSection);
 
-      const oilSales = document.getElementById("sales_oil");
-
-      showDetails(oilSection, [
-        "oilPackingDetails",
-        "oilPlasticDetails",
-        "oilAssemblyDetails",
-      ]);
+      /* =========================================
+     إظهار قسم المبيعات بالقوة
+  ========================================= */
 
       if (salesMarketing) {
-        salesMarketing.style.display = "block";
+        salesMarketing.style.setProperty("display", "block", "important");
       }
+
+      const salesDashboardContent = document.getElementById(
+        "salesDashboardContent",
+      );
+
+      if (salesDashboardContent) {
+        salesDashboardContent.classList.remove("collapsed");
+
+        salesDashboardContent.style.setProperty(
+          "display",
+          "block",
+          "important",
+        );
+
+        salesDashboardContent.style.setProperty(
+          "max-height",
+          "none",
+          "important",
+        );
+
+        salesDashboardContent.style.setProperty("height", "auto", "important");
+
+        salesDashboardContent.style.setProperty("opacity", "1", "important");
+
+        salesDashboardContent.style.setProperty(
+          "visibility",
+          "visible",
+          "important",
+        );
+
+        salesDashboardContent.style.setProperty(
+          "overflow",
+          "visible",
+          "important",
+        );
+
+        salesDashboardContent.style.setProperty(
+          "pointer-events",
+          "auto",
+          "important",
+        );
+      }
+
+      /* =========================================
+     إخفاء كل منتجات المبيعات
+  ========================================= */
 
       hideSalesProducts();
 
+      /* =========================================
+     إظهار مبيعات الزيت فقط
+  ========================================= */
+
+      const oilSales = document.getElementById("sales_oil");
+
       if (oilSales) {
-        oilSales.style.display = "block";
+        oilSales.style.setProperty("display", "block", "important");
+
+        oilSales.style.setProperty("visibility", "visible", "important");
+
+        oilSales.style.setProperty("height", "auto", "important");
+
+        oilSales.style.setProperty("opacity", "1", "important");
 
         oilSales.open = true;
       }
@@ -241,7 +377,7 @@ function applySubsectionPermissions(role, subsection) {
  */
 
 function hideSalesInteractiveDashboard() {
-  const dashboard = document.getElementById("salesDashboardContent");
+  const dashboard = document.querySelector(".sales-executive-dashboard");
 
   if (dashboard) {
     dashboard.style.display = "none";
@@ -778,19 +914,242 @@ async function applyPermissions() {
    لا تؤثر على الحسابات الرئيسية
 ========================================= */
 
+  /* =========================================================
+   الحسابات الفرعية للزيت والأعلاف
+   ========================================================= */
+
+  /* =========================================================
+   الحسابات الفرعية للزيت والأعلاف
+   ========================================================= */
+
   if (subsection && (role === "feed" || role === "oil")) {
-    // الحساب الفرعي يرى الأرشيف
+    const normalizedSubsection = String(subsection).trim().toLowerCase();
+
+    const isFeedSales =
+      role === "feed" &&
+      (normalizedSubsection === "sales" ||
+        normalizedSubsection === "feed_sales" ||
+        normalizedSubsection === "sales/feed_sales");
+
+    const isOilSales =
+      role === "oil" &&
+      (normalizedSubsection === "sales" ||
+        normalizedSubsection === "oil_sales" ||
+        normalizedSubsection === "sales/oil_sales");
+
+    console.log("FINAL SUBSECTION MODE:", {
+      role,
+      subsection,
+      normalizedSubsection,
+      isFeedSales,
+      isOilSales,
+    });
+
+    /* =====================================================
+     حساب المبيعات
+     ===================================================== */
+
+    if (isFeedSales || isOilSales) {
+      /* الصفحة الرئيسية */
+      const home = document.getElementById("home");
+
+      if (home) {
+        home.style.display = "block";
+      }
+
+      /* الأرشيف */
+      const archive = document.getElementById("archive");
+
+      if (archive) {
+        archive.style.display = "block";
+      }
+
+      const archiveMenu = document.getElementById("menu_archive");
+
+      if (archiveMenu) {
+        archiveMenu.style.display = "block";
+      }
+
+      /* =====================================================
+   صلاحيات خاصة بحساب مبيعات الزيت
+   يرى بعض أقسام مصنع الزيت + المبيعات
+===================================================== */
+
+      if (isOilSales) {
+        const oilSection = document.getElementById("oil");
+
+        if (oilSection) {
+          /* إظهار مصنع الزيت */
+          oilSection.style.setProperty("display", "block", "important");
+
+          /*
+       إخفاء كل أقسام مصنع الزيت أولاً
+       ثم نظهر فقط الأقسام المسموح بها
+    */
+          oilSection.querySelectorAll(":scope > details").forEach((detail) => {
+            detail.style.display = "none";
+            detail.open = false;
+          });
+
+          /* ---------------------------------------------
+       1. موقف خطوط التعبئة
+    --------------------------------------------- */
+
+          const packing = document.getElementById("oilPackingDetails");
+
+          if (packing) {
+            packing.style.setProperty("display", "block", "important");
+
+            packing.open = true;
+          }
+
+          /* ---------------------------------------------
+       2. خطوط مصنع اللدائن
+    --------------------------------------------- */
+
+          const plastic = document.getElementById("oilPlasticDetails");
+
+          if (plastic) {
+            plastic.style.setProperty("display", "block", "important");
+
+            plastic.open = true;
+          }
+
+          /* ---------------------------------------------
+       3. ماكينات التجميع والسداد المعدني
+    --------------------------------------------- */
+
+          const assembly = document.getElementById("oilAssemblyDetails");
+
+          if (assembly) {
+            assembly.style.setProperty("display", "block", "important");
+
+            assembly.open = true;
+          }
+        }
+      } else {
+        /* الحسابات الأخرى لا ترى مصنع الإنتاج */
+        const factorySection = document.getElementById(role);
+
+        if (factorySection) {
+          factorySection.style.display = "none";
+        }
+      }
+
+      /* قسم المبيعات */
+      const salesMarketing = document.getElementById("salesMarketing");
+
+      if (!salesMarketing) {
+        console.error("SALES MARKETING NOT FOUND");
+        return;
+      }
+
+      salesMarketing.style.setProperty("display", "block", "important");
+
+      /* البطاقة المطلوبة */
+      const targetId = isFeedSales ? "sales_feed" : "sales_oil";
+
+      const target = document.getElementById(targetId);
+
+      console.log("TARGET SALES CARD:", targetId, target);
+
+      if (!target) {
+        console.error("SALES CARD NOT FOUND:", targetId);
+        return;
+      }
+
+      /* أخفِ كل بطاقات المبيعات */
+      salesMarketing.querySelectorAll(".sales-product-card").forEach((card) => {
+        card.style.setProperty("display", "none", "important");
+
+        if (card.tagName === "DETAILS") {
+          card.open = false;
+        }
+      });
+
+      /* الحاوية القابلة للطي */
+      const collapseContainer = document.getElementById(
+        "salesDashboardContent",
+      );
+
+      /*
+       الحاوية التنفيذية القديمة لن تظهر
+       للحساب الفرعي
+    */
+      if (collapseContainer) {
+        collapseContainer.style.setProperty("display", "none", "important");
+      }
+
+      /* أنشئ حاوية مستقلة للجدول */
+      let standalone = document.getElementById("salesSubsectionStandalone");
+
+      if (!standalone) {
+        standalone = document.createElement("div");
+
+        standalone.id = "salesSubsectionStandalone";
+
+        standalone.className = "sales-dashboard-content";
+
+        standalone.style.setProperty("display", "grid", "important");
+
+        standalone.style.setProperty("width", "100%", "important");
+
+        standalone.style.setProperty("height", "auto", "important");
+
+        standalone.style.setProperty("max-height", "none", "important");
+
+        standalone.style.setProperty("overflow", "visible", "important");
+
+        standalone.style.setProperty("opacity", "1", "important");
+
+        const header = salesMarketing.querySelector(".sales-command-header");
+
+        if (header) {
+          header.insertAdjacentElement("afterend", standalone);
+        } else {
+          salesMarketing.appendChild(standalone);
+        }
+      }
+
+      /* انقل الجدول خارج الحاوية القابلة للطي */
+      standalone.appendChild(target);
+
+      /* أظهر الجدول */
+      target.style.setProperty("display", "block", "important");
+
+      target.style.setProperty("visibility", "visible", "important");
+
+      target.style.setProperty("opacity", "1", "important");
+
+      target.style.setProperty("height", "auto", "important");
+
+      target.style.setProperty("max-height", "none", "important");
+
+      target.style.setProperty("overflow", "visible", "important");
+
+      target.open = true;
+
+      window.location.hash = "salesMarketing";
+
+      console.log("✅ SALES TABLE MOVED OUTSIDE COLLAPSE:", targetId);
+
+      return;
+    }
+
+    /* =====================================================
+     بقية الحسابات الفرعية
+     ===================================================== */
+
     document.getElementById("menu_archive").style.display = "block";
+
     document.getElementById("archive").style.display = "block";
 
-    // الصفحة الرئيسية
     document.getElementById("home").style.display = "block";
 
-    // إظهار مصنعه فقط
     document.getElementById(role).style.display = "block";
+
     document.getElementById("menu_sales_marketing").style.display = "none";
 
-    // تطبيق الصلاحيات التفصيلية
     applySubsectionPermissions(role, subsection);
 
     console.log("SUBSECTION MODE ACTIVE:", role, subsection);
@@ -1087,12 +1446,18 @@ function applyOilSubsectionApprovalPermissions(role, subsection = null) {
     "oilProductionApprovalArea",
   );
 
+  const oilSalesApprovalArea = document.getElementById("oilSalesApprovalArea");
+
   /* -----------------------------------------
        إخفاء زر الاعتماد الفرعي أولاً
        ----------------------------------------- */
 
   if (oilProductionArea) {
     oilProductionArea.style.display = "none";
+  }
+
+  if (oilSalesApprovalArea) {
+    oilSalesApprovalArea.style.display = "none";
   }
 
   /* -----------------------------------------
@@ -1108,6 +1473,23 @@ function applyOilSubsectionApprovalPermissions(role, subsection = null) {
 
   if (factoryButton) {
     factoryButton.style.display = isMainOilAccount ? "inline-flex" : "none";
+  }
+
+  /* -----------------------------------------
+   حساب مبيعات الزيت
+   ----------------------------------------- */
+
+  if (
+    role === "oil" &&
+    (subsection === "sales" ||
+      subsection === "oil_sales" ||
+      subsection === "sales/oil_sales")
+  ) {
+    if (oilSalesApprovalArea) {
+      oilSalesApprovalArea.style.display = "flex";
+    }
+
+    return;
   }
 
   /* -----------------------------------------
@@ -1127,39 +1509,183 @@ function applyOilSubsectionApprovalPermissions(role, subsection = null) {
 }
 
 function showOnlySection(sectionId) {
-  console.log("SHOW SECTION:", sectionId);
+  const role = String(window.currentUserRole || "")
+    .trim()
+    .toLowerCase();
 
-  // إخفاء جميع الأقسام الرئيسية
+  const subsection = String(window.currentUserSubsection || "")
+    .trim()
+    .toLowerCase();
+
+  console.log("SIDEBAR NAVIGATION:", {
+    role,
+    subsection,
+    requestedSection: sectionId,
+  });
+
+  /* =====================================================
+     الإدارة والتنفيذي
+     يسمح لهما بكل شيء
+  ===================================================== */
+
+  if (role === "admin" || role === "executive") {
+    allowSectionNavigation(sectionId);
+    return false;
+  }
+
+  /* =====================================================
+     تحديد الأقسام المسموح بها
+  ===================================================== */
+
+  let allowedSections = ["home", "archive"];
+
+  /* =====================================================
+     مدير السكر
+  ===================================================== */
+
+  if (role === "sugar") {
+    allowedSections.push("sugar");
+  } else if (role === "oil" && !subsection) {
+
+  /* =====================================================
+     مدير الزيت الرئيسي
+  ===================================================== */
+    allowedSections.push("oil");
+  } else if (role === "flour") {
+
+  /* =====================================================
+     مدير الطحين
+  ===================================================== */
+    allowedSections.push("flour");
+  } else if (role === "feed") {
+
+  /* =====================================================
+     مدير الأعلاف
+  ===================================================== */
+    allowedSections.push("feed");
+  } else if (role === "power") {
+
+  /* =====================================================
+     محطة الطاقة
+  ===================================================== */
+    allowedSections.push("powerstation", "blackoil");
+  } else if (role === "waterfiltration") {
+
+  /* =====================================================
+     محطات التصفية
+  ===================================================== */
+    allowedSections.push("waterfiltration");
+  }
+
+  /* =====================================================
+     مبيعات الأعلاف
+  ===================================================== */
+
+  if (
+    role === "feed" &&
+    (subsection === "sales" ||
+      subsection === "feed_sales" ||
+      subsection === "sales/feed_sales")
+  ) {
+    allowedSections = ["home", "archive", "salesMarketing"];
+  }
+
+  /* =====================================================
+     مبيعات الزيت
+
+     يستطيع الوصول إلى:
+     - مصنع الزيت
+     - قسم المبيعات
+  ===================================================== */
+
+  if (
+    role === "oil" &&
+    (subsection === "sales" ||
+      subsection === "oil_sales" ||
+      subsection === "sales/oil_sales")
+  ) {
+    allowedSections = ["home", "archive", "oil", "salesMarketing"];
+  }
+
+  /* =====================================================
+     التحقق النهائي
+  ===================================================== */
+
+  if (!allowedSections.includes(sectionId)) {
+    console.warn("🚫 NAVIGATION BLOCKED:", {
+      role,
+      subsection,
+      requestedSection: sectionId,
+      allowedSections,
+    });
+
+    /*
+       إعادة الحساب إلى الصفحة المسموحة
+    */
+
+    goToHomeByRole();
+
+    return false;
+  }
+
+  /* =====================================================
+     التنقل المسموح
+  ===================================================== */
+
+  allowSectionNavigation(sectionId);
+
+  return false;
+}
+
+/* =========================================================
+   تنفيذ التنقل بعد التأكد من الصلاحية
+========================================================= */
+
+function allowSectionNavigation(sectionId) {
+  /* إخفاء جميع الأقسام */
   document.querySelectorAll(".section").forEach((section) => {
     section.style.display = "none";
   });
 
-  // إظهار القسم المطلوب
-  const targetSection = document.getElementById(sectionId);
+  /* إظهار القسم المطلوب */
+  const target = document.getElementById(sectionId);
 
-  if (!targetSection) {
-    console.error("SECTION NOT FOUND:", sectionId);
-
-    return;
+  if (target) {
+    target.style.display = "block";
   }
 
-  targetSection.style.display = "block";
+  /* =====================================================
+     تحديث الزر النشط
+  ===================================================== */
 
-  /*
-   * لا نفتح أي details تلقائيًا هنا.
-   *
-   * صلاحيات الحسابات الفرعية هي التي تحدد
-   * أي قسم يفتح وأي قسم يبقى مغلقًا.
-   */
-
-  // الانتقال إلى أعلى القسم
-  targetSection.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
+  document.querySelectorAll(".sidebar-menu-item").forEach((item) => {
+    item.classList.remove("active");
   });
 
-  // تحديث الرابط
-  history.replaceState(null, "", "#" + sectionId);
+  let activeMenu = document.getElementById("menu_" + sectionId);
+
+  if (sectionId === "salesMarketing") {
+    activeMenu = document.getElementById("menu_sales_marketing");
+  }
+
+  if (activeMenu) {
+    activeMenu.classList.add("active");
+  }
+
+  /* =====================================================
+     الرابط
+  ===================================================== */
+
+  window.location.hash = sectionId;
+
+  /* =====================================================
+     أعلى الصفحة
+  ===================================================== */
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
 }
 
 function showAllSections() {
@@ -4850,7 +5376,7 @@ function formatFlourHistoryDate(dateString, index) {
    اليوم + آخر 3 أيام
 ========================================================= */
 
-let flourProductionHistoryChart = null;
+window.flourProductionHistoryChartInstance = null;
 
 /* ---------------------------------------------------------
    الحصول على تاريخ سابق
@@ -5221,15 +5747,18 @@ function renderFlourProductionHistory(
     return;
   }
 
-  if (flourProductionHistoryChart) {
-    flourProductionHistoryChart.destroy();
-
-    flourProductionHistoryChart = null;
+  if (
+    window.flourProductionHistoryChartInstance &&
+    typeof window.flourProductionHistoryChartInstance.destroy === "function"
+  ) {
+    window.flourProductionHistoryChartInstance.destroy();
   }
+
+  window.flourProductionHistoryChartInstance = null;
 
   const ctx = canvas.getContext("2d");
 
-  flourProductionHistoryChart = new Chart(ctx, {
+  window.flourProductionHistoryChartInstance = new Chart(ctx, {
     type: "bar",
 
     data: {
@@ -5343,9 +5872,12 @@ function renderFlourProductionHistory(
     */
 
   setTimeout(() => {
-    if (flourProductionHistoryChart) {
-      flourProductionHistoryChart.resize();
-      flourProductionHistoryChart.update();
+    if (
+      window.flourProductionHistoryChartInstance &&
+      typeof window.flourProductionHistoryChartInstance.resize === "function"
+    ) {
+      window.flourProductionHistoryChartInstance.resize();
+      window.flourProductionHistoryChartInstance.update();
     }
   }, 100);
 }
@@ -5399,6 +5931,8 @@ function getFeedCurrentGrossProduction() {
 
   return gross;
 }
+
+window.feedProductionComparisonChartInstance = null;
 
 async function loadFeedProductionHistory() {
   const dateEl = document.getElementById("reportDateKey");
@@ -5503,77 +6037,81 @@ function renderFeedProductionHistory(dates, values, selectedDate) {
    * already been declared عند إعادة تحميل dashboard
    */
 
-  if (window.feedProductionComparisonChart) {
-    window.feedProductionComparisonChart.destroy();
-
-    window.feedProductionComparisonChart = null;
+  if (
+    window.feedProductionComparisonChartInstance &&
+    typeof window.feedProductionComparisonChartInstance.destroy === "function"
+  ) {
+    window.feedProductionComparisonChartInstance.destroy();
   }
 
-  window.feedProductionComparisonChart = new Chart(canvas.getContext("2d"), {
-    type: "bar",
+  window.feedProductionComparisonChartInstance = new Chart(
+    canvas.getContext("2d"),
+    {
+      type: "bar",
 
-    data: {
-      labels: ["قبل أمس", "أمس", "اليوم"],
+      data: {
+        labels: ["قبل أمس", "أمس", "اليوم"],
 
-      datasets: [
-        {
-          label: "الإنتاج طن",
+        datasets: [
+          {
+            label: "الإنتاج طن",
 
-          data: [beforeYesterday, yesterday, today],
+            data: [beforeYesterday, yesterday, today],
 
-          borderRadius: 9,
+            borderRadius: 9,
 
-          borderSkipped: false,
+            borderSkipped: false,
 
-          backgroundColor: [
-            "rgba(75,155,131,.45)",
-            "rgba(55,184,120,.55)",
-            "rgba(55,184,120,.90)",
-          ],
+            backgroundColor: [
+              "rgba(75,155,131,.45)",
+              "rgba(55,184,120,.55)",
+              "rgba(55,184,120,.90)",
+            ],
 
-          borderColor: ["#4b9b83", "#37b878", "#75d47b"],
+            borderColor: ["#4b9b83", "#37b878", "#75d47b"],
 
-          borderWidth: 1,
-        },
-      ],
-    },
-
-    options: {
-      responsive: true,
-
-      maintainAspectRatio: false,
-
-      plugins: {
-        legend: {
-          display: false,
-        },
+            borderWidth: 1,
+          },
+        ],
       },
 
-      scales: {
-        x: {
-          ticks: {
-            color: "rgba(255,255,255,.55)",
-          },
+      options: {
+        responsive: true,
 
-          grid: {
+        maintainAspectRatio: false,
+
+        plugins: {
+          legend: {
             display: false,
           },
         },
 
-        y: {
-          beginAtZero: true,
+        scales: {
+          x: {
+            ticks: {
+              color: "rgba(255,255,255,.55)",
+            },
 
-          ticks: {
-            color: "rgba(255,255,255,.45)",
+            grid: {
+              display: false,
+            },
           },
 
-          grid: {
-            color: "rgba(255,255,255,.06)",
+          y: {
+            beginAtZero: true,
+
+            ticks: {
+              color: "rgba(255,255,255,.45)",
+            },
+
+            grid: {
+              color: "rgba(255,255,255,.06)",
+            },
           },
         },
       },
     },
-  });
+  );
 }
 
 function refreshFeedProductionHistory() {
