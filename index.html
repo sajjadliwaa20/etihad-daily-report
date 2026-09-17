@@ -5747,7 +5747,10 @@ PKF
                  التعبئة
                  ================================================= -->
 
-            <details open>
+            <details
+                id="sugarPackingDetails"
+                open
+            >
 
                 <summary>
                     📦 قسم التعبئة
@@ -6054,6 +6057,49 @@ PKF
                 </div>
 
             </details>
+
+
+<!-- =====================================================
+     اعتماد قسم تعبئة السكر
+     يظهر فقط لحساب sugar.sales
+===================================================== -->
+
+<div
+    id="sugarPackingApprovalArea"
+    class="sugar-approval-area sugar-packing-approval-area"
+    style="display:none;"
+    data-sugar-sales-only="true"
+>
+
+    <div class="sugar-approval-info">
+
+        <div class="sugar-approval-icon">
+            📦
+        </div>
+
+        <div>
+            <strong>
+                اعتماد تقرير تعبئة السكر
+            </strong>
+
+            <small>
+                تأكد من مراجعة بيانات التعبئة حسب الشفت قبل اعتماد قسم التعبئة
+            </small>
+        </div>
+
+    </div>
+
+    <button
+        type="button"
+        id="approveSugarPackingBtn"
+        class="sugar-approve-btn"
+        data-subsection-approval="sugar_packing"
+        onclick="approveSugarPackingSubsection()"
+    >
+        ✓ اعتماد تعبئة السكر
+    </button>
+
+</div>
 
 
             <!-- =================================================
@@ -11487,7 +11533,11 @@ PKF
      موقف قسم التعبئة
 ========================================================= -->
 
-<details open class="flour-section-card">
+<details
+  id="flourPackagingDetails"
+  open
+  class="flour-section-card"
+>
 
   <summary class="flour-section-card-header">
 
@@ -11671,6 +11721,46 @@ PKF
   </div>
 
 </details>
+
+<!-- =====================================================
+     اعتماد قسم تعبئة الطحين
+     يظهر فقط لحساب flour.sales
+===================================================== -->
+
+<div
+    id="flourPackingApprovalArea"
+    class="flour-approval-area flour-packing-approval-area"
+    style="display:none;"
+    data-flour-sales-only="true"
+>
+
+  <div class="flour-approval-info">
+
+    <div class="flour-approval-icon">
+      📦
+    </div>
+
+    <div>
+      <strong>اعتماد تقرير تعبئة الطحين</strong>
+      <small>
+        تأكد من مراجعة بيانات تعبئة الطحين والنخالة قبل الاعتماد
+      </small>
+    </div>
+
+  </div>
+
+  <button
+    type="button"
+    id="approveFlourPackingBtn"
+    class="flour-approval-btn"
+    data-subsection-approval="flour_packing"
+    onclick="approveFlourPackingSubsection()"
+  >
+    ✓ اعتماد تعبئة الطحين
+  </button>
+
+</div>
+
 
 
 
@@ -16459,6 +16549,10 @@ if (showMessage) {
           oil_production: "إنتاج الزيت",
 
           oil_sales: "مبيعات الزيت",
+
+          sugar_packing: "تعبئة السكر",
+
+          flour_packing: "تعبئة الطحين",
         };
 
         const subsectionName = subsectionNames[subsection] || "القسم الفرعي";
@@ -16489,6 +16583,9 @@ if (showMessage) {
 
           oil_production: "oil",
           oil_sales: "oil",
+
+          sugar_packing: "sugar",
+          flour_packing: "flour",
         };
 
         const parentFactory = subsectionFactoryMap[subsection] || subsection;
@@ -17021,6 +17118,105 @@ async function approveOilSalesSubsection() {
         showNotification(
             error?.message ||
             "حدث خطأ أثناء اعتماد مبيعات الزيت",
+            "error"
+        );
+    }
+}
+
+/* ---------------------------------------------------------
+   اعتماد قسم تعبئة السكر
+   --------------------------------------------------------- */
+async function approveSugarPackingSubsection() {
+
+    console.log(
+        "🟢 SUGAR PACKING APPROVAL STARTED"
+    );
+
+    const fields = getSubsectionSaveFields([
+        "sugarPackingDetails"
+    ]);
+
+    if (!fields.length) {
+
+        showNotification(
+            "لم يتم العثور على حقول اعتماد تعبئة السكر",
+            "error"
+        );
+
+        return;
+    }
+
+    try {
+
+        await approveSubsection(
+            "sugar_packing",
+            fields
+        );
+
+        console.log(
+            "🟢 SUGAR PACKING APPROVAL FINISHED"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "🔴 SUGAR PACKING APPROVAL FAILED:",
+            error
+        );
+
+        showNotification(
+            error?.message ||
+            "حدث خطأ أثناء اعتماد تعبئة السكر",
+            "error"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   اعتماد قسم تعبئة الطحين
+   --------------------------------------------------------- */
+async function approveFlourPackingSubsection() {
+
+    console.log(
+        "🟢 FLOUR PACKING APPROVAL STARTED"
+    );
+
+    const fields = getSubsectionSaveFields([
+        "flourPackagingDetails"
+    ]);
+
+    if (!fields.length) {
+
+        showNotification(
+            "لم يتم العثور على حقول اعتماد تعبئة الطحين",
+            "error"
+        );
+
+        return;
+    }
+
+    try {
+
+        await approveSubsection(
+            "flour_packing",
+            fields
+        );
+
+        console.log(
+            "🟢 FLOUR PACKING APPROVAL FINISHED"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "🔴 FLOUR PACKING APPROVAL FAILED:",
+            error
+        );
+
+        showNotification(
+            error?.message ||
+            "حدث خطأ أثناء اعتماد تعبئة الطحين",
             "error"
         );
     }

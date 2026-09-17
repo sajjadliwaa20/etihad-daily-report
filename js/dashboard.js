@@ -359,6 +359,463 @@ function applySubsectionPermissions(role, subsection) {
   }
 }
 
+/* =========================================================
+   الحسابات الفرعية للسكر والطحين
+========================================================= */
+
+function applySugarFlourSubsectionPermissions(role, subsection) {
+  const sub = String(subsection || "")
+    .trim()
+    .toLowerCase();
+
+  const home = document.getElementById("home");
+
+  const archive = document.getElementById("archive");
+
+  const archiveMenu = document.getElementById("menu_archive");
+
+  const salesMarketing = document.getElementById("salesMarketing");
+
+  const salesMenu = document.getElementById("menu_sales_marketing");
+
+  const sugarSection = document.getElementById("sugar");
+
+  const flourSection = document.getElementById("flour");
+
+  const sugarMenu = document.getElementById("menu_sugar");
+
+  const flourMenu = document.getElementById("menu_flour");
+
+  /* =====================================================
+     أدوات عامة
+  ===================================================== */
+
+  const hide = (el) => {
+    if (el) {
+      el.style.setProperty("display", "none", "important");
+    }
+  };
+
+  const show = (el, display = "block") => {
+    if (el) {
+      el.style.setProperty("display", display, "important");
+    }
+  };
+
+  /* =====================================================
+     الأرشيف + الرئيسية
+  ===================================================== */
+
+  show(home);
+  show(archive);
+  show(archiveMenu, "block");
+
+  /* =====================================================
+     إخفاء أزرار المصانع غير المطلوبة
+  ===================================================== */
+
+  hide(sugarMenu);
+  hide(flourMenu);
+  hide(salesMenu);
+
+  /* =====================================================
+     إخفاء مناطق الاعتماد الجديدة أولاً
+  ===================================================== */
+
+  const sugarPackingApproval = document.getElementById(
+    "sugarPackingApprovalArea",
+  );
+
+  const flourPackingApproval = document.getElementById(
+    "flourPackingApprovalArea",
+  );
+
+  hide(sugarPackingApproval);
+  hide(flourPackingApproval);
+
+  /* =====================================================
+     حساب مبيعات السكر
+  ===================================================== */
+
+  if (role === "sugar" && sub === "sugar_sales") {
+    show(sugarSection);
+
+    show(sugarMenu);
+
+    show(salesMenu);
+
+    show(salesMarketing);
+
+    /* ---------------------------------------------
+       إخفاء Dashboard السكر
+    --------------------------------------------- */
+
+    const sugarDashboard = document.getElementById("sugarDashboardContent");
+
+    hide(sugarDashboard);
+
+    /* ---------------------------------------------
+       إخفاء اعتماد السكر الكامل
+    --------------------------------------------- */
+
+    const sugarMainApproval = document.querySelector(
+      "#sugar .sugar-approval-area.sugar-only-area",
+    );
+
+    hide(sugarMainApproval);
+
+    /* ---------------------------------------------
+       قسم البيانات التفصيلية
+    --------------------------------------------- */
+
+    const sugarLegacy = sugarSection?.querySelector(".sugar-legacy-details");
+
+    if (sugarLegacy) {
+      show(sugarLegacy);
+
+      sugarLegacy.open = true;
+
+      /*
+         أخفِ جميع الأقسام الداخلية أولاً
+      */
+
+      sugarLegacy
+        .querySelectorAll(".details-content > details")
+        .forEach((detail) => {
+          hide(detail);
+
+          detail.open = false;
+        });
+
+      /*
+         أظهر التعبئة فقط
+      */
+
+      const packing = document.getElementById("sugarPackingDetails");
+
+      if (packing) {
+        show(packing);
+
+        packing.open = true;
+      }
+    }
+
+    /* ---------------------------------------------
+       زر اعتماد التعبئة
+    --------------------------------------------- */
+
+    if (sugarPackingApproval) {
+      show(sugarPackingApproval, "flex");
+    }
+
+    /* ---------------------------------------------
+       إظهار مبيعات السكر فقط
+    --------------------------------------------- */
+
+    showSalesCardForSubsection("sales_sugar");
+
+    window.location.hash = "salesMarketing";
+
+    return;
+  }
+
+  /* =====================================================
+     حساب إنتاج السكر
+  ===================================================== */
+
+  if (role === "sugar" && sub === "sugar_process") {
+    show(sugarSection);
+
+    show(sugarMenu);
+
+    hide(salesMenu);
+
+    hide(salesMarketing);
+
+    /* ---------------------------------------------
+       Dashboard السكر ظاهر
+    --------------------------------------------- */
+
+    const sugarDashboard = document.getElementById("sugarDashboardContent");
+
+    show(sugarDashboard);
+
+    /* ---------------------------------------------
+       البيانات التفصيلية
+    --------------------------------------------- */
+
+    const sugarLegacy = sugarSection?.querySelector(".sugar-legacy-details");
+
+    if (sugarLegacy) {
+      show(sugarLegacy);
+
+      sugarLegacy.open = true;
+
+      /*
+         أظهر جميع الأقسام الداخلية
+         ما عدا التعبئة
+      */
+
+      sugarLegacy
+        .querySelectorAll(".details-content > details")
+        .forEach((detail) => {
+          if (detail.id === "sugarPackingDetails") {
+            hide(detail);
+
+            detail.open = false;
+          } else {
+            show(detail);
+
+            detail.open = true;
+          }
+        });
+    }
+
+    hideSalesProductsForSubsection();
+
+    window.location.hash = "sugar";
+
+    return;
+  }
+
+  /* =====================================================
+     حساب مبيعات الطحين
+  ===================================================== */
+
+  if (role === "flour" && sub === "flour_sales") {
+    show(flourSection);
+
+    show(flourMenu);
+
+    show(salesMenu);
+
+    show(salesMarketing);
+
+    /* ---------------------------------------------
+       إخفاء Dashboard المطحنة
+    --------------------------------------------- */
+
+    const flourDashboard = document.getElementById("flourDashboardContent");
+
+    hide(flourDashboard);
+
+    /* ---------------------------------------------
+       إخفاء اعتماد المطحنة الكامل
+    --------------------------------------------- */
+
+    const flourMainApproval = document.querySelector(
+      "#flour .flour-approval-area:not(.flour-packing-approval-area)",
+    );
+
+    hide(flourMainApproval);
+
+    /* ---------------------------------------------
+       إخفاء كل أقسام الطحين
+    --------------------------------------------- */
+
+    flourSection?.querySelectorAll(":scope > details").forEach((detail) => {
+      hide(detail);
+
+      detail.open = false;
+    });
+
+    /* ---------------------------------------------
+       إظهار التعبئة فقط
+    --------------------------------------------- */
+
+    const flourPacking = document.getElementById("flourPackagingDetails");
+
+    if (flourPacking) {
+      show(flourPacking);
+
+      flourPacking.open = true;
+    }
+
+    /* ---------------------------------------------
+       زر اعتماد التعبئة
+    --------------------------------------------- */
+
+    if (flourPackingApproval) {
+      show(flourPackingApproval, "flex");
+    }
+
+    /* ---------------------------------------------
+       إظهار مبيعات الطحين فقط
+    --------------------------------------------- */
+
+    showSalesCardForSubsection("sales_flour");
+
+    window.location.hash = "salesMarketing";
+
+    return;
+  }
+
+  /* =====================================================
+     حساب إنتاج الطحين
+  ===================================================== */
+
+  if (role === "flour" && sub === "flour_production") {
+    show(flourSection);
+
+    show(flourMenu);
+
+    hide(salesMenu);
+
+    hide(salesMarketing);
+
+    /* ---------------------------------------------
+       Dashboard المطحنة
+    --------------------------------------------- */
+
+    const flourDashboard = document.getElementById("flourDashboardContent");
+
+    show(flourDashboard);
+
+    /* ---------------------------------------------
+       إظهار جميع أقسام الإنتاج
+       عدا التعبئة
+    --------------------------------------------- */
+
+    flourSection?.querySelectorAll(":scope > details").forEach((detail) => {
+      if (detail.id === "flourPackagingDetails") {
+        hide(detail);
+
+        detail.open = false;
+      } else {
+        show(detail);
+
+        detail.open = true;
+      }
+    });
+
+    hideSalesProductsForSubsection();
+
+    window.location.hash = "flour";
+
+    return;
+  }
+}
+
+/* =========================================================
+   عرض بطاقة مبيعات واحدة للحساب الفرعي
+========================================================= */
+
+function showSalesCardForSubsection(targetId) {
+  const salesMarketing = document.getElementById("salesMarketing");
+
+  const target = document.getElementById(targetId);
+
+  if (!salesMarketing || !target) {
+    console.error("SALES SUBSECTION TARGET NOT FOUND:", targetId);
+
+    return;
+  }
+
+  salesMarketing.style.setProperty("display", "block", "important");
+
+  /* أخفِ البطاقات الموجودة داخل قسم المبيعات */
+
+  salesMarketing.querySelectorAll(".sales-product-card").forEach((card) => {
+    card.style.setProperty("display", "none", "important");
+
+    if (card.tagName === "DETAILS") {
+      card.open = false;
+    }
+  });
+
+  /* =====================================================
+     الحاوية المستقلة
+  ===================================================== */
+
+  let standalone = document.getElementById("salesSubsectionStandalone");
+
+  if (!standalone) {
+    standalone = document.createElement("div");
+
+    standalone.id = "salesSubsectionStandalone";
+
+    standalone.className = "sales-dashboard-content";
+
+    standalone.style.setProperty("display", "grid", "important");
+
+    standalone.style.setProperty("width", "100%", "important");
+
+    standalone.style.setProperty("height", "auto", "important");
+
+    standalone.style.setProperty("max-height", "none", "important");
+
+    standalone.style.setProperty("overflow", "visible", "important");
+
+    standalone.style.setProperty("opacity", "1", "important");
+
+    const header = salesMarketing.querySelector(".sales-command-header");
+
+    if (header) {
+      header.insertAdjacentElement("afterend", standalone);
+    } else {
+      salesMarketing.appendChild(standalone);
+    }
+  }
+
+  /* =====================================================
+     أخفِ أي بطاقة قديمة موجودة في الحاوية المستقلة
+  ===================================================== */
+
+  standalone.querySelectorAll(".sales-product-card").forEach((card) => {
+    if (card !== target) {
+      card.style.setProperty("display", "none", "important");
+
+      card.open = false;
+    }
+  });
+
+  /* نقل البطاقة المطلوبة */
+
+  standalone.appendChild(target);
+
+  target.style.setProperty("display", "block", "important");
+
+  target.style.setProperty("visibility", "visible", "important");
+
+  target.style.setProperty("opacity", "1", "important");
+
+  target.style.setProperty("height", "auto", "important");
+
+  target.style.setProperty("max-height", "none", "important");
+
+  target.style.setProperty("overflow", "visible", "important");
+
+  target.open = true;
+}
+
+/* =========================================================
+   إخفاء بطاقات المبيعات للحسابات الإنتاجية
+========================================================= */
+
+function hideSalesProductsForSubsection() {
+  const salesMarketing = document.getElementById("salesMarketing");
+
+  if (!salesMarketing) return;
+
+  salesMarketing.querySelectorAll(".sales-product-card").forEach((card) => {
+    card.style.setProperty("display", "none", "important");
+
+    if (card.tagName === "DETAILS") {
+      card.open = false;
+    }
+  });
+
+  const standalone = document.getElementById("salesSubsectionStandalone");
+
+  if (standalone) {
+    standalone.querySelectorAll(".sales-product-card").forEach((card) => {
+      card.style.setProperty("display", "none", "important");
+
+      card.open = false;
+    });
+  }
+}
+
 /*
  * =========================================================
  * 🔒 حماية مخطط المبيعات التفاعلي
@@ -506,6 +963,15 @@ async function goToHomeByRole() {
    */
 
   if (role === "sugar") {
+    if (subsection) {
+      applySugarFlourSubsectionPermissions("sugar", subsection);
+
+      applySugarFlourSubsectionApprovalPermissions("sugar", subsection);
+
+      window.location.hash = "home";
+
+      return;
+    }
     const sugar = document.getElementById("sugar");
 
     if (sugar) {
@@ -524,6 +990,15 @@ async function goToHomeByRole() {
    */
 
   if (role === "flour") {
+    if (subsection) {
+      applySugarFlourSubsectionPermissions("flour", subsection);
+
+      applySugarFlourSubsectionApprovalPermissions("flour", subsection);
+
+      window.location.hash = "home";
+
+      return;
+    }
     const flour = document.getElementById("flour");
 
     if (flour) {
@@ -909,10 +1384,17 @@ async function applyPermissions() {
 
   applyOilSubsectionApprovalPermissions(role, subsection);
 
-  /* =========================================
-   الحسابات الفرعية
-   لا تؤثر على الحسابات الرئيسية
-========================================= */
+  applySugarFlourSubsectionApprovalPermissions(role, subsection);
+
+  /* =========================================================
+   الحسابات الفرعية للسكر والطحين
+========================================================= */
+
+  if (subsection && (role === "sugar" || role === "flour")) {
+    applySugarFlourSubsectionPermissions(role, subsection);
+
+    return;
+  }
 
   /* =========================================================
    الحسابات الفرعية للزيت والأعلاف
@@ -1508,6 +1990,42 @@ function applyOilSubsectionApprovalPermissions(role, subsection = null) {
   }
 }
 
+function applySugarFlourSubsectionApprovalPermissions(role, subsection = null) {
+  const sugarPackingArea = document.getElementById("sugarPackingApprovalArea");
+
+  const flourPackingArea = document.getElementById("flourPackingApprovalArea");
+
+  /* إخفاء الزرين أولاً */
+
+  if (sugarPackingArea) {
+    sugarPackingArea.style.display = "none";
+  }
+
+  if (flourPackingArea) {
+    flourPackingArea.style.display = "none";
+  }
+
+  /* Sugar Sales → اعتماد التعبئة */
+
+  if (role === "sugar" && subsection === "sugar_sales") {
+    if (sugarPackingArea) {
+      sugarPackingArea.style.display = "flex";
+    }
+
+    return;
+  }
+
+  /* Flour Sales → اعتماد التعبئة */
+
+  if (role === "flour" && subsection === "flour_sales") {
+    if (flourPackingArea) {
+      flourPackingArea.style.display = "flex";
+    }
+
+    return;
+  }
+}
+
 function showOnlySection(sectionId) {
   const role = String(window.currentUserRole || "")
     .trim()
@@ -1546,32 +2064,27 @@ function showOnlySection(sectionId) {
   if (role === "sugar") {
     allowedSections.push("sugar");
   } else if (role === "oil" && !subsection) {
-
-  /* =====================================================
+    /* =====================================================
      مدير الزيت الرئيسي
   ===================================================== */
     allowedSections.push("oil");
   } else if (role === "flour") {
-
-  /* =====================================================
+    /* =====================================================
      مدير الطحين
   ===================================================== */
     allowedSections.push("flour");
   } else if (role === "feed") {
-
-  /* =====================================================
+    /* =====================================================
      مدير الأعلاف
   ===================================================== */
     allowedSections.push("feed");
   } else if (role === "power") {
-
-  /* =====================================================
+    /* =====================================================
      محطة الطاقة
   ===================================================== */
     allowedSections.push("powerstation", "blackoil");
   } else if (role === "waterfiltration") {
-
-  /* =====================================================
+    /* =====================================================
      محطات التصفية
   ===================================================== */
     allowedSections.push("waterfiltration");
@@ -1605,6 +2118,38 @@ function showOnlySection(sectionId) {
       subsection === "sales/oil_sales")
   ) {
     allowedSections = ["home", "archive", "oil", "salesMarketing"];
+  }
+
+  /* =====================================================
+   مبيعات السكر
+===================================================== */
+
+  if (role === "sugar" && subsection === "sugar_sales") {
+    allowedSections = ["home", "archive", "sugar", "salesMarketing"];
+  }
+
+  /* =====================================================
+   إنتاج السكر
+===================================================== */
+
+  if (role === "sugar" && subsection === "sugar_process") {
+    allowedSections = ["home", "archive", "sugar"];
+  }
+
+  /* =====================================================
+   مبيعات الطحين
+===================================================== */
+
+  if (role === "flour" && subsection === "flour_sales") {
+    allowedSections = ["home", "archive", "flour", "salesMarketing"];
+  }
+
+  /* =====================================================
+   إنتاج الطحين
+===================================================== */
+
+  if (role === "flour" && subsection === "flour_production") {
+    allowedSections = ["home", "archive", "flour"];
   }
 
   /* =====================================================

@@ -518,12 +518,6 @@ textarea {
   transition: 0.25s;
 }
 
-.dark-mode input:focus,
-.dark-mode textarea:focus,
-.dark-mode select:focus {
-  color: #201d1d !important;
-}
-
 select {
   width: 100%;
 
@@ -545,14 +539,15 @@ select {
 input:focus,
 select:focus {
   outline: none;
-
   border-color: var(--main);
-
-  background: #fcfffd;
-
-  color: #222020;
-
+  background: #3a414b;
+  color: #ffffff !important;
   box-shadow: 0 0 8px rgba(31, 60, 136, 0.25);
+}
+
+textarea:focus {
+  background: #3a414b;
+  color: #ffffff !important;
 }
 
 textarea:focus {
