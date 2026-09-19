@@ -14892,26 +14892,144 @@ body.dark-mode details summary {
 }
 
 /* =========================================================
-   🌡️ DRYER TABLE - PROFESSIONAL HORIZONTAL SCROLL
+   🌡️ DRYER TABLE — RESPONSIVE HORIZONTAL SCROLL
    ========================================================= */
 
+/* الحاوية المسؤولة عن السكرول */
 .dryer-table-scroll {
   width: 100%;
+  max-width: 100%;
 
   overflow-x: auto;
   overflow-y: hidden;
 
-  /* مساحة بسيطة أسفل الجدول للسكرول */
-  padding-bottom: 10px;
-
-  /* منع الجدول من كسر تخطيط الصفحة */
   box-sizing: border-box;
 
-  /* سلاسة الحركة على الهاتف */
+  padding-bottom: 10px;
+
   -webkit-overflow-scrolling: touch;
 
-  /* إخفاء تمدد المحتوى */
   scrollbar-width: thin;
+
+  scrollbar-color: rgba(217, 173, 50, 0.85) rgba(255, 255, 255, 0.06);
+}
+
+/* =========================================================
+   شريط التمرير - Chrome / Edge / Safari
+========================================================= */
+
+.dryer-table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.dryer-table-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+
+  border-radius: 20px;
+}
+
+.dryer-table-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #12634f, #d9ad32);
+
+  border-radius: 20px;
+}
+
+.dryer-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #188267, #edc24f);
+}
+
+/* =========================================================
+   الجدول الحقيقي
+   ========================================================= */
+
+.dryer-data-table {
+  width: max-content;
+
+  min-width: 1050px;
+
+  max-width: none;
+
+  table-layout: auto;
+
+  border-collapse: collapse;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   الأعمدة
+========================================================= */
+
+.dryer-data-table th,
+.dryer-data-table td {
+  min-width: 125px;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+}
+
+/* العمود الأول */
+.dryer-data-table th:nth-child(1),
+.dryer-data-table td:nth-child(1) {
+  min-width: 130px;
+}
+
+/* باقي الأعمدة */
+.dryer-data-table th:nth-child(n + 2),
+.dryer-data-table td:nth-child(n + 2) {
+  min-width: 125px;
+}
+
+/* =========================================================
+   الحقول
+========================================================= */
+
+.dryer-data-table input {
+  width: 100%;
+
+  min-width: 100px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+}
+
+/* =========================================================
+   الهاتف
+========================================================= */
+
+@media (max-width: 700px) {
+  .dryer-table-scroll {
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    padding-bottom: 10px;
+  }
+
+  .dryer-data-table {
+    width: max-content;
+
+    min-width: 1050px;
+
+    table-layout: auto;
+  }
+
+  .dryer-data-table th,
+  .dryer-data-table td {
+    min-width: 125px;
+
+    white-space: nowrap;
+  }
+
+  .dryer-data-table input {
+    min-width: 100px;
+  }
 }
 
 /* =========================================================
@@ -14940,34 +15058,6 @@ body.dark-mode details summary {
 
 .dryer-table-scroll::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(90deg, #188267, #edc24f);
-}
-
-/* =========================================================
-   الجدول
-   ========================================================= */
-
-.dryer-data-table {
-  /*
-     * لا تسمح للجدول بأن ينكمش حتى تصبح
-     * الحقول ضيقة جداً
-     */
-
-  min-width: 1050px;
-
-  width: 100%;
-
-  table-layout: fixed;
-}
-
-/* =========================================================
-   عرض الأعمدة
-   ========================================================= */
-
-.dryer-data-table th,
-.dryer-data-table td {
-  min-width: 125px;
-
-  white-space: nowrap;
 }
 
 /* =========================================================
@@ -22080,7 +22170,7 @@ body.dark-mode details summary {
   }
 
   .sugar-panel.full .sugar-panel-body {
-    overflow-x: auto;
+    overflow-x: hidden;
   }
 }
 /* =========================================================
@@ -22090,7 +22180,7 @@ body.dark-mode details summary {
 .sugar-packing-scroll {
   width: 100%;
   max-width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
   box-sizing: border-box;
 
@@ -30575,4 +30665,311 @@ body:not(.dark-mode) .main-status-icon {
     width: 100%;
     min-width: 0;
   }
+}
+
+/* =========================================================
+   FEED PRODUCTION TABLE
+   توحيد الألوان مع بقية التقرير
+   ========================================================= */
+
+.feed-production-table {
+  background: #2d333b !important;
+  color: #ffffff !important;
+  border-color: #454d58 !important;
+}
+
+/* ---------------------------------------------------------
+   رؤوس الجدول
+--------------------------------------------------------- */
+
+.feed-production-table thead th {
+  background: #18563f !important;
+  color: #ffffff !important;
+  border-color: #454d58 !important;
+}
+
+.feed-production-table .feed-sub-header th {
+  background: #214f41 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+/* ---------------------------------------------------------
+   خلايا البيانات
+--------------------------------------------------------- */
+
+.feed-production-table tbody td {
+  background: #2d333b !important;
+  color: #ffffff !important;
+  border-color: #454d58 !important;
+}
+
+/* صف عند المرور عليه */
+
+.feed-production-table tbody tr:hover td {
+  background: #343b45 !important;
+}
+
+/* ---------------------------------------------------------
+   الحقول القابلة للإدخال
+--------------------------------------------------------- */
+
+.feed-production-table input {
+  background: #3a414b !important;
+  color: #ffffff !important;
+
+  border: 1px solid #5c6672 !important;
+  border-radius: 10px !important;
+
+  box-shadow: none !important;
+}
+
+/* عند التركيز */
+
+.feed-production-table input:focus {
+  background: #3f4752 !important;
+  color: #ffffff !important;
+
+  border-color: var(--main) !important;
+
+  box-shadow: 0 0 0 2px rgba(66, 133, 86, 0.2) !important;
+}
+
+/* ---------------------------------------------------------
+   الخلايا المحسوبة
+--------------------------------------------------------- */
+
+.feed-production-table .calculated-cell {
+  background: #343b45 !important;
+}
+
+.feed-production-table .calculated-cell input {
+  background: #3a414b !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* ---------------------------------------------------------
+   خلية المجموع
+--------------------------------------------------------- */
+
+.feed-production-table .total-cell {
+  background: #214f41 !important;
+
+  border-right: 2px solid rgba(66, 133, 86, 0.45) !important;
+}
+
+.feed-production-table .total-cell input {
+  background: #3a414b !important;
+
+  border: 1px solid rgba(66, 133, 86, 0.55) !important;
+
+  color: #ffffff !important;
+
+  font-weight: 800 !important;
+}
+
+/* ---------------------------------------------------------
+   أسماء الخطوط
+--------------------------------------------------------- */
+
+.feed-production-table .feed-line-name {
+  background: #293039 !important;
+  color: #ffffff !important;
+}
+
+/* رقم الخط */
+
+.feed-production-table .line-number {
+  background: rgba(66, 133, 86, 0.22) !important;
+  color: #d8e9df !important;
+}
+
+/* ---------------------------------------------------------
+   الحقول القديمة / غير المحدثة
+   نخفف الأحمر بدل إلغائه تمامًا
+--------------------------------------------------------- */
+
+.feed-production-table .field-stale {
+  background: #4a4140 !important;
+
+  border: 2px solid #9b6864 !important;
+
+  color: #ffffff !important;
+
+  box-shadow: 0 0 0 2px rgba(155, 104, 100, 0.1) !important;
+}
+
+/* =========================================================
+   FLOUR SALES — REAL MOBILE HORIZONTAL SCROLL
+   ========================================================= */
+
+/* منع بطاقة المبيعات من فرض عرض 620px على نفسها */
+#sales_flour {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* الجسم الداخلي */
+#sales_flour .sales-product-body {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* حاوية السكرول يجب أن تأخذ عرض الهاتف فقط */
+#sales_flour .sales-table-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+
+  box-sizing: border-box !important;
+
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* الجدول هو الذي يكون أعرض من الحاوية */
+#sales_flour .sales-table-container .sales-modern-table {
+  width: max-content !important;
+  min-width: 620px !important;
+  max-width: none !important;
+
+  table-layout: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* الهاتف */
+@media (max-width: 700px) {
+  #sales_flour .sales-table-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    overflow-x: auto !important;
+  }
+
+  #sales_flour .sales-table-container .sales-modern-table {
+    width: max-content !important;
+    min-width: 620px !important;
+    max-width: none !important;
+  }
+}
+
+/* =========================================================
+   GLOBAL INPUT CONTRAST FIX
+   توحيد جميع حقول الإدخال في المشروع
+   ========================================================= */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(
+    [type="range"]
+  ),
+textarea,
+select {
+  background: #3a414b !important;
+  color: #ffffff !important;
+
+  border-color: #5c6672 !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   عند الضغط / التركيز
+   ========================================================= */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(
+    [type="range"]
+  ):focus,
+textarea:focus,
+select:focus {
+  background: #3f4752 !important;
+  color: #ffffff !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+
+  border-color: #6a7888 !important;
+
+  outline: none !important;
+
+  box-shadow: 0 0 0 2px rgba(66, 133, 86, 0.22) !important;
+}
+
+/* =========================================================
+   عند المرور بالماوس
+   ========================================================= */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(
+    [type="range"]
+  ):hover,
+textarea:hover,
+select:hover {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   Readonly
+   ========================================================= */
+
+input[readonly],
+textarea[readonly] {
+  background: #343b45 !important;
+  color: #ffffff !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* =========================================================
+   Disabled
+   ========================================================= */
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background: #303640 !important;
+  color: #c7cdd4 !important;
+
+  -webkit-text-fill-color: #c7cdd4 !important;
+
+  opacity: 0.75;
+}
+
+/* =========================================================
+   Placeholder
+   ========================================================= */
+
+input::placeholder,
+textarea::placeholder {
+  color: #aeb7c1 !important;
+  opacity: 1 !important;
+}
+
+/* =========================================================
+   Chrome Autofill
+   منع Chrome من قلب لون الخلفية والنص
+   ========================================================= */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+
+  -webkit-box-shadow: 0 0 0 1000px #3a414b inset !important;
+
+  box-shadow: 0 0 0 1000px #3a414b inset !important;
+
+  background-color: #3a414b !important;
 }

@@ -540,6 +540,24 @@ function applySugarFlourSubsectionPermissions(role, subsection) {
 
     show(sugarDashboard);
 
+    /* =====================================================
+   لوحة مؤشرات السكر تبدأ مطوية
+===================================================== */
+
+    if (sugarDashboard) {
+      sugarDashboard.classList.add("collapsed");
+
+      const sugarDashboardHeader = document.getElementById(
+        "sugarDashboardHeader",
+      );
+
+      if (sugarDashboardHeader) {
+        sugarDashboardHeader.classList.add("collapsed");
+
+        sugarDashboardHeader.setAttribute("aria-expanded", "false");
+      }
+    }
+
     /* ---------------------------------------------
        البيانات التفصيلية
     --------------------------------------------- */
@@ -963,19 +981,24 @@ async function goToHomeByRole() {
    */
 
   if (role === "sugar") {
-    if (subsection) {
-      applySugarFlourSubsectionPermissions("sugar", subsection);
-
-      applySugarFlourSubsectionApprovalPermissions("sugar", subsection);
-
-      window.location.hash = "home";
-
-      return;
-    }
     const sugar = document.getElementById("sugar");
 
     if (sugar) {
       sugar.style.display = "block";
+    }
+
+    if (subsection) {
+      applySubsectionPermissions("sugar", subsection);
+
+      /* حساب إنتاج السكر */
+      const sub = String(subsection).trim().toLowerCase();
+
+      if (sub === "process" || sub === "sugar_process") {
+        initializeSugarDashboard();
+      }
+    } else {
+      /* حساب السكر الرئيسي */
+      initializeSugarDashboard();
     }
 
     window.location.hash = "home";
@@ -1713,6 +1736,26 @@ async function applyPermissions() {
     document.getElementById("archive").style.display = "block";
     document.getElementById("home").style.display = "block";
     document.getElementById("sugar").style.display = "block";
+
+    /* =====================================================
+   لوحة مؤشرات السكر تبدأ مطوية
+===================================================== */
+
+    const sugarDashboard = document.getElementById("sugarDashboardContent");
+
+    if (sugarDashboard) {
+      sugarDashboard.classList.add("collapsed");
+
+      const sugarDashboardHeader = document.getElementById(
+        "sugarDashboardHeader",
+      );
+
+      if (sugarDashboardHeader) {
+        sugarDashboardHeader.classList.add("collapsed");
+
+        sugarDashboardHeader.setAttribute("aria-expanded", "false");
+      }
+    }
 
     let salesSugar = document.getElementById("sales_sugar");
     if (salesSugar) {
@@ -4043,13 +4086,25 @@ function initializeSugarDashboard() {
 
   if (!header || !content) return;
 
-  /* البداية مفتوحة */
+  /* =====================================================
+     لوحة المؤشرات تبدأ مطوية
+  ===================================================== */
 
-  content.classList.remove("collapsed");
+  content.classList.add("collapsed");
 
-  header.classList.remove("collapsed");
+  header.classList.add("collapsed");
 
-  header.setAttribute("aria-expanded", "true");
+  header.setAttribute("aria-expanded", "false");
+
+  /* =====================================================
+     البيانات التفصيلية تبدأ مفتوحة
+  ===================================================== */
+
+  const details = document.querySelector("#sugar .sugar-legacy-details");
+
+  if (details) {
+    details.open = true;
+  }
 }
 
 function updateRefineryProductionVisuals() {
