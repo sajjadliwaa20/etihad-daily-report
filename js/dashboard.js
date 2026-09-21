@@ -923,6 +923,20 @@ async function goToHomeByRole() {
     home.style.display = "block";
   }
 
+  /* =====================================================
+   📚 الأرشيف متاح لجميع الحسابات
+===================================================== */
+
+  const archive = document.getElementById("archive");
+  const archiveMenu = document.getElementById("menu_archive");
+
+  if (archive) {
+    archive.style.display = "block";
+  }
+
+  if (archiveMenu) {
+    archiveMenu.style.display = "block";
+  }
   /*
    * ==========================================
    * ADMIN
@@ -1368,6 +1382,22 @@ async function applyPermissions() {
   document.getElementById("menu_feed").style.display = "none";
   document.getElementById("menu_waterfiltration").style.display = "none";
   document.getElementById("menu_archive").style.display = "none";
+
+  /* =========================================================
+   📚 الأرشيف متاح لجميع الحسابات
+========================================================= */
+
+  const globalArchiveMenu = document.getElementById("menu_archive");
+  const globalArchiveSection = document.getElementById("archive");
+
+  if (globalArchiveMenu) {
+    globalArchiveMenu.style.display = "block";
+  }
+
+  if (globalArchiveSection) {
+    globalArchiveSection.style.display = "block";
+  }
+
   document.getElementById("menu_sales_marketing").style.display = "none";
   document.getElementById("approvalsDashboard").style.display = "none";
 
@@ -1663,19 +1693,60 @@ async function applyPermissions() {
   }
 
   if (role === "power") {
-    document.getElementById("salesMarketing").style.display = "none";
-    document.getElementById("home").style.display = "block";
-    document.getElementById("powerstation").style.display = "block";
-    document.getElementById("blackoil").style.display = "block";
-    document.getElementById("menu_power").style.display = "block";
-    document.getElementById("menu_archive").style.display = "block";
-    document.getElementById("archive").style.display = "block";
-    document.getElementById("darkModeBtn").style.display = "inline-block";
-    document.querySelector("button[onclick='window.print()']").style.display =
-      "inline-block";
+    const salesMarketing = document.getElementById("salesMarketing");
+    const home = document.getElementById("home");
+    const powerstation = document.getElementById("powerstation");
+    const blackoil = document.getElementById("blackoil");
 
-    document.querySelector("button[onclick='goToLogin()']").style.display =
-      "inline-block";
+    const menuPower = document.getElementById("menu_power");
+    const menuArchive = document.getElementById("menu_archive");
+    const archive = document.getElementById("archive");
+
+    const darkModeBtn = document.getElementById("darkModeBtn");
+
+    const printBtn = document.querySelector("button[onclick='window.print()']");
+
+    const loginBtn = document.querySelector("button[onclick='goToLogin()']");
+
+    if (salesMarketing) {
+      salesMarketing.style.display = "none";
+    }
+
+    if (home) {
+      home.style.display = "block";
+    }
+
+    if (powerstation) {
+      powerstation.style.display = "block";
+    }
+
+    if (blackoil) {
+      blackoil.style.display = "block";
+    }
+
+    if (menuPower) {
+      menuPower.style.display = "block";
+    }
+
+    if (menuArchive) {
+      menuArchive.style.display = "block";
+    }
+
+    if (archive) {
+      archive.style.display = "block";
+    }
+
+    if (darkModeBtn) {
+      darkModeBtn.style.display = "inline-block";
+    }
+
+    if (printBtn) {
+      printBtn.style.display = "inline-block";
+    }
+
+    if (loginBtn) {
+      loginBtn.style.display = "inline-block";
+    }
 
     window.location.hash = "powerstation";
 
@@ -2068,6 +2139,291 @@ function applySugarFlourSubsectionApprovalPermissions(role, subsection = null) {
     return;
   }
 }
+
+function resetHistoricalApprovalButton(button, text) {
+  if (!button) return;
+
+  button.disabled = false;
+  button.style.display = "inline-flex";
+  button.style.cursor = "pointer";
+  button.style.opacity = "1";
+  button.style.background = "";
+  button.innerHTML = text;
+}
+
+/* =========================================================
+   🔄 إعادة تفعيل اعتماد التقرير السابق بعد تعديله
+========================================================= */
+
+function refreshHistoricalApprovalUI(affectedApprovals = []) {
+  const role = String(window.currentUserRole || "")
+    .trim()
+    .toLowerCase();
+
+  const subsection = String(window.currentUserSubsection || "")
+    .trim()
+    .toLowerCase();
+
+  /* التنفيذي لا يعدّل تقارير */
+  if (role === "executive") {
+    return;
+  }
+
+  /* ---------------------------------------------------------
+     أولاً: إخفاء جميع مناطق وأزرار الاعتماد
+  --------------------------------------------------------- */
+
+  const approvalAreas = [
+    ".power-approval-area",
+    ".flour-approval-area",
+    ".sugar-approval-area",
+    ".oil-approval-area",
+    ".feed-approval-area",
+    ".water-approval-area",
+
+    "#feedProductionApprovalArea",
+    "#feedPremixApprovalArea",
+    "#oilProductionApprovalArea",
+    "#oilSalesApprovalArea",
+    "#sugarPackingApprovalArea",
+    "#flourPackingApprovalArea",
+  ];
+
+  approvalAreas.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el) => {
+      el.style.display = "none";
+    });
+  });
+
+  /* ---------------------------------------------------------
+     أزرار الاعتماد
+  --------------------------------------------------------- */
+
+  const approvalButtons = [
+    "approvePowerBtn",
+    "approveFlourBtn",
+    "SugarBtn",
+    "OilBtn",
+    "approveFeedBtn",
+    "approvewaterBtn",
+
+    "approveFeedProductionBtn",
+    "approveFeedPremixBtn",
+    "approveOilProductionBtn",
+    "approveOilSalesBtn",
+    "approveSugarPackingBtn",
+    "approveFlourPackingBtn",
+  ];
+
+  approvalButtons.forEach((id) => {
+    const btn = document.getElementById(id);
+
+    if (!btn) return;
+
+    btn.style.display = "none";
+    btn.disabled = false;
+    btn.style.cursor = "pointer";
+    btn.style.opacity = "1";
+  });
+
+  /* ---------------------------------------------------------
+     إذا لم نرسل affectedApprovals،
+     نستخدم دور المستخدم الحالي
+  --------------------------------------------------------- */
+
+  let approvals = Array.isArray(affectedApprovals)
+    ? affectedApprovals.map((x) =>
+        String(x || "")
+          .trim()
+          .toLowerCase(),
+      )
+    : [];
+
+  if (!approvals.length) {
+    if (role === "power") {
+      approvals = ["powerstation"];
+    } else if (role === "oil" && !subsection) {
+      approvals = ["oil"];
+    } else if (role === "flour" && !subsection) {
+      approvals = ["flour"];
+    } else if (role === "sugar" && !subsection) {
+      approvals = ["sugar"];
+    } else if (role === "feed" && !subsection) {
+      approvals = ["feed"];
+    } else if (role === "waterfiltration") {
+      approvals = ["waterfiltration"];
+    } else if (
+      role === "oil" &&
+      (subsection === "production" || subsection === "oil_production")
+    ) {
+      approvals = ["oil_production"];
+    } else if (
+      role === "oil" &&
+      (subsection === "sales" ||
+        subsection === "oil_sales" ||
+        subsection === "sales/oil_sales")
+    ) {
+      approvals = ["oil_sales"];
+    } else if (
+      role === "feed" &&
+      (subsection === "production" || subsection === "feed_production")
+    ) {
+      approvals = ["feed_production"];
+    } else if (
+      role === "feed" &&
+      (subsection === "premix" || subsection === "feed_premix")
+    ) {
+      approvals = ["feed_premix"];
+    } else if (role === "sugar" && subsection === "sugar_sales") {
+      approvals = ["sugar_packing"];
+    } else if (role === "flour" && subsection === "flour_sales") {
+      approvals = ["flour_packing"];
+    }
+  }
+
+  /* ---------------------------------------------------------
+     إعادة إظهار الزر المتأثر فقط
+  --------------------------------------------------------- */
+
+  approvals.forEach((approval) => {
+    switch (approval) {
+      case "powerstation": {
+        const area = document.querySelector(".power-approval-area");
+        const btn = document.getElementById("approvePowerBtn");
+
+        if (area) area.style.display = "flex";
+
+        resetHistoricalApprovalButton(
+          btn,
+          "<span>✓</span><span>اعتماد القسم</span>",
+        );
+
+        break;
+      }
+
+      case "oil": {
+        const area = document.querySelector(
+          ".oil-approval-area:not(#oilSalesApprovalArea)",
+        );
+        const btn = document.getElementById("OilBtn");
+
+        if (area) area.style.display = "flex";
+
+        resetHistoricalApprovalButton(btn, "✓ اعتماد تقرير الزيت");
+
+        break;
+      }
+
+      case "flour": {
+        const area = document.querySelector(
+          ".flour-approval-area:not(#flourPackingApprovalArea)",
+        );
+        const btn = document.getElementById("approveFlourBtn");
+
+        if (area) area.style.display = "flex";
+
+        resetHistoricalApprovalButton(btn, "✓ اعتماد تقرير الطحين");
+
+        break;
+      }
+
+      case "sugar": {
+        const area = document.querySelector(
+          ".sugar-approval-area.sugar-only-area",
+        );
+        const btn = document.getElementById("SugarBtn");
+
+        if (area) area.style.display = "flex";
+
+        resetHistoricalApprovalButton(btn, "✓ اعتماد تقرير السكر");
+
+        break;
+      }
+
+      case "feed": {
+        const area = document.querySelector(".feed-only-area");
+        const btn = document.getElementById("approveFeedBtn");
+
+        if (area) area.style.display = "flex";
+
+        resetHistoricalApprovalButton(btn, "✓ اعتماد تقرير الأعلاف");
+
+        break;
+      }
+
+      case "waterfiltration": {
+        const area = document.querySelector(".water-approval-area");
+        const btn = document.getElementById("approvewaterBtn");
+
+        if (area) area.style.display = "flex";
+
+        resetHistoricalApprovalButton(btn, "✅ اعتماد قسم التصفية");
+
+        break;
+      }
+
+      case "feed_production": {
+        const area = document.getElementById("feedProductionApprovalArea");
+        const btn = document.getElementById("approveFeedProductionBtn");
+        if (area) area.style.display = "flex";
+        resetHistoricalApprovalButton(btn, "✓ اعتماد إنتاج الأعلاف");
+
+        break;
+      }
+
+      case "feed_premix": {
+        const area = document.getElementById("feedPremixApprovalArea");
+        const btn = document.getElementById("approveFeedPremixBtn");
+        if (area) area.style.display = "flex";
+        resetHistoricalApprovalButton(btn, "✓ اعتماد تقرير البريمكس");
+
+        break;
+      }
+
+      case "oil_production": {
+        const area = document.getElementById("oilProductionApprovalArea");
+        const btn = document.querySelector(
+          '[data-subsection-approval="oil_production"]',
+        );
+        if (area) area.style.display = "flex";
+        resetHistoricalApprovalButton(btn, "✓ اعتماد إنتاج الزيت");
+
+        break;
+      }
+
+      case "oil_sales": {
+        const area = document.getElementById("oilSalesApprovalArea");
+        const btn = document.getElementById("approveOilSalesBtn");
+        if (area) area.style.display = "flex";
+        resetHistoricalApprovalButton(btn, "✓ اعتماد مبيعات الزيت");
+
+        break;
+      }
+
+      case "sugar_packing": {
+        const area = document.getElementById("sugarPackingApprovalArea");
+        const btn = document.getElementById("approveSugarPackingBtn");
+        if (area) area.style.display = "flex";
+        resetHistoricalApprovalButton(btn, "✓ اعتماد تعبئة السكر");
+
+        break;
+      }
+
+      case "flour_packing": {
+        const area = document.getElementById("flourPackingApprovalArea");
+        const btn = document.getElementById("approveFlourPackingBtn");
+        if (area) area.style.display = "flex";
+        resetHistoricalApprovalButton(btn, "✓ اعتماد تعبئة الطحين");
+
+        break;
+      }
+    }
+  });
+
+  console.log("🔄 HISTORICAL APPROVAL UI REFRESHED:", approvals);
+}
+
+window.refreshHistoricalApprovalUI = refreshHistoricalApprovalUI;
 
 function showOnlySection(sectionId) {
   const role = String(window.currentUserRole || "")
@@ -6018,6 +6374,46 @@ function getFlourProductionFromScreen() {
 --------------------------------------------------------- */
 
 function calculateFlourProductionFromRows(rows) {
+  let sourceTotal = 0;
+  let hasSourceData = false;
+
+  /* ==========================================
+     الحقول الأصلية لإنتاج الخطوط A → F
+     ========================================== */
+
+  for (let i = 1; i <= 6; i++) {
+    const fields = [`line${i}_f1`, `line${i}_f3`, `line${i}_bran`];
+
+    fields.forEach((fieldName) => {
+      const row = rows.find((item) => item.field_name === fieldName);
+
+      if (!row) {
+        return;
+      }
+
+      const value = parseFloat(row.field_value);
+
+      if (Number.isFinite(value)) {
+        sourceTotal += value;
+        hasSourceData = true;
+      }
+    });
+  }
+
+  /* ==========================================
+     إذا كانت الحقول الأصلية موجودة
+     نستخدمها لأنها المصدر الحقيقي
+     ========================================== */
+
+  if (hasSourceData) {
+    return sourceTotal;
+  }
+
+  /* ==========================================
+     توافق مع البيانات القديمة
+     إذا كان هناك grand total محفوظ سابقًا
+     ========================================== */
+
   let total = null;
 
   let f1 = null;
@@ -6048,22 +6444,12 @@ function calculateFlourProductionFromRows(rows) {
     }
   });
 
-  /*
-       إذا كان grand total محفوظًا
-       نستخدمه مباشرة.
-    */
-
   if (total !== null) {
     return total;
   }
 
-  /*
-       احتياطياً نحسبه من المنتجات.
-    */
-
   return (f1 || 0) + (f3 || 0) + (bran || 0);
 }
-
 async function getFlourRowsForDate(date) {
   const { data, error } = await supabaseClient
     .from("daily_reports")
@@ -6071,6 +6457,31 @@ async function getFlourRowsForDate(date) {
     .eq("factory", "flour")
     .eq("report_date", date)
     .in("field_name", [
+      "line1_f1",
+      "line1_f3",
+      "line1_bran",
+
+      "line2_f1",
+      "line2_f3",
+      "line2_bran",
+
+      "line3_f1",
+      "line3_f3",
+      "line3_bran",
+
+      "line4_f1",
+      "line4_f3",
+      "line4_bran",
+
+      "line5_f1",
+      "line5_f3",
+      "line5_bran",
+
+      "line6_f1",
+      "line6_f3",
+      "line6_bran",
+
+      /* دعم البيانات القديمة */
       "flour_grand_total",
       "flour_total_f1",
       "flour_total_f3",
@@ -6146,6 +6557,31 @@ async function loadFlourProductionHistory() {
     .eq("factory", "flour")
     .in("report_date", previousDates)
     .in("field_name", [
+      "line1_f1",
+      "line1_f3",
+      "line1_bran",
+
+      "line2_f1",
+      "line2_f3",
+      "line2_bran",
+
+      "line3_f1",
+      "line3_f3",
+      "line3_bran",
+
+      "line4_f1",
+      "line4_f3",
+      "line4_bran",
+
+      "line5_f1",
+      "line5_f3",
+      "line5_bran",
+
+      "line6_f1",
+      "line6_f3",
+      "line6_bran",
+
+      /* دعم البيانات القديمة */
       "flour_grand_total",
       "flour_total_f1",
       "flour_total_f3",
@@ -6309,12 +6745,22 @@ function renderFlourProductionHistory(
        الفرق عن أمس
     */
 
+  /* =====================================================
+   الفرق عن آخر يوم سابق فيه إنتاج فعلي
+===================================================== */
+
+  /* =====================================================
+   الفرق الحقيقي عن أمس
+===================================================== */
+
+  const comparisonProduction = yesterday;
+
   const difference = today - yesterday;
 
   const percentage = yesterday > 0 ? (difference / yesterday) * 100 : null;
 
   if (changeEl) {
-    if (yesterday > 0) {
+    if (comparisonProduction > 0) {
       changeEl.textContent =
         (difference >= 0 ? "▲ " : "▼ ") +
         Math.abs(difference).toLocaleString("en-US", {

@@ -310,13 +310,15 @@
     <!-- الأرشيف -->
 
     <a
-      id="menu_archive"
-      class="sidebar-menu-item"
-      href="#archive"
-      onclick="
-        toggleSidebar();
-      "
-    >
+  id="menu_archive"
+  class="sidebar-menu-item"
+  href="#archive"
+  onclick="
+    showOnlySection('archive');
+    toggleSidebar();
+    return false;
+  "
+>
 
       <span class="sidebar-menu-icon">📚</span>
 
@@ -371,6 +373,52 @@
 
     <div class="content">
       <button id="menuToggle" onclick="toggleSidebar()">☰</button>
+      <!-- =========================================================
+     HISTORICAL REPORT EDIT BAR
+     ========================================================= -->
+
+<div
+    id="historicalEditBar"
+    class="historical-edit-bar"
+    style="display:none;"
+>
+
+    <div class="historical-edit-info">
+
+        <strong>
+            🟠 وضع تعديل تقرير سابق
+        </strong>
+
+        <span id="historicalEditDateLabel">
+            --
+        </span>
+
+    </div>
+
+
+    <div class="historical-edit-actions">
+
+        <button
+            type="button"
+            id="historicalSaveBtn"
+            class="historical-save-btn"
+            onclick="saveHistoricalReport()"
+        >
+            💾 حفظ التعديلات
+        </button>
+
+        <button
+            type="button"
+            id="historicalExitBtn"
+            class="historical-exit-btn"
+            onclick="exitHistoricalEditMode()"
+        >
+            ↩ العودة إلى تقرير اليوم
+        </button>
+
+    </div>
+
+</div>
 
       <section id="home" class="section">
         <input type="date" id="reportDateKey" style="display: none" />
@@ -14233,20 +14281,48 @@ PKF
       <!-- الأرشيف -->
 
       <section id="archive" class="section">
-        <h2>📚 الأرشيف</h2>
 
-        <details open>
-          <summary>📅 الأرشيف</summary>
+    <h2>📚 الأرشيف</h2>
 
-          <div class="details-content">
+    <details open>
+
+        <summary>📅 الأرشيف</summary>
+
+        <div class="details-content">
+
             <input
-              type="date"
-              id="archiveDate"
-              onchange="loadArchiveReport()"
+                type="date"
+                id="archiveDate"
+                onchange="loadArchiveReport()"
             />
-          </div>
-        </details>
-      </section>
+
+
+            <div class="archive-edit-controls">
+
+                <button
+                    type="button"
+                    id="archiveEditBtn"
+                    class="archive-edit-btn"
+                    style="display:none;"
+                    onclick="enterHistoricalEditMode()"
+                >
+                    ✏️ تفعيل تعديل هذا التقرير
+                </button>
+
+
+                <div
+                    id="archiveEditStatus"
+                    class="archive-edit-status"
+                    style="display:none;"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </details>
+
+</section>>
     </div>
     <script>
       let realtimeChannel = null;
@@ -17279,6 +17355,329 @@ async function approveFlourPackingSubsection() {
     }
 }
 
+
+/* =========================================================
+   🧹 مسح القيمة الموروثة لليوم الحالي
+   ========================================================= */
+
+function removeInheritedFieldClearButton(fieldId) {
+    const button = document.querySelector(
+        `.field-clear-btn[data-field-id="${fieldId}"]`
+    );
+
+    if (button) {
+        button.remove();
+    }
+
+    const element = document.getElementById(fieldId);
+
+    if (element) {
+        delete element.dataset.inheritedFromPrevious;
+        delete element.dataset.inheritedSourceDate;
+    }
+}
+
+
+/* =========================================================
+   إنشاء زر مسح للحقل الموروث
+   ========================================================= */
+
+function setupInheritedFieldClearButton(element, factory, sourceDate) {
+
+    if (!element || !element.id) {
+        return;
+    }
+
+    /*
+       لا نعرض الزر إلا في تقرير اليوم الحالي
+    */
+    if (!isCurrentReportDate()) {
+        removeInheritedFieldClearButton(element.id);
+        return;
+    }
+
+    /*
+       إذا كان الحقل غير قابل للتحرير
+       فلا نعرض زر المسح
+    */
+    if (element.readOnly || element.disabled) {
+        removeInheritedFieldClearButton(element.id);
+        return;
+    }
+
+    /*
+       منع إنشاء الزر أكثر من مرة
+    */
+    const existing = document.querySelector(
+        `.field-clear-btn[data-field-id="${element.id}"]`
+    );
+
+    if (existing) {
+        existing.dataset.sourceDate = sourceDate || "";
+        return;
+    }
+
+    /*
+       تعليم الحقل بأنه موروث
+    */
+    element.dataset.inheritedFromPrevious = "true";
+    element.dataset.inheritedSourceDate = sourceDate || "";
+
+    const parent = element.parentElement;
+
+    if (!parent) {
+        return;
+    }
+
+    /*
+       نجعل الحاوية مرجعًا للزر
+    */
+    const parentStyle = window.getComputedStyle(parent);
+
+    if (parentStyle.position === "static") {
+        parent.style.position = "relative";
+    }
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+
+    button.className = "field-clear-btn";
+
+    button.dataset.fieldId = element.id;
+
+    button.dataset.factory = factory;
+
+    button.dataset.sourceDate = sourceDate || "";
+
+    button.title = "مسح قيمة اليوم";
+
+    button.setAttribute(
+        "aria-label",
+        "مسح قيمة اليوم"
+    );
+
+    button.innerHTML = "×";
+
+    button.addEventListener(
+        "click",
+        async (event) => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            await clearInheritedFieldForToday(
+                element.id,
+                factory,
+                button
+            );
+        }
+    );
+
+    parent.appendChild(button);
+}
+
+
+/* =========================================================
+   تنفيذ مسح قيمة اليوم
+   ========================================================= */
+
+async function clearInheritedFieldForToday(
+    fieldId,
+    factory,
+    button
+) {
+
+    const reportDateElement =
+        document.getElementById("reportDateKey");
+
+    const element =
+        document.getElementById(fieldId);
+
+    if (!reportDateElement || !element) {
+        return;
+    }
+
+    const reportDate =
+        reportDateElement.value;
+
+    /*
+       الحذف مسموح لليوم الحالي فقط
+    */
+    if (reportDate !== getTodayLocalDate()) {
+
+        showNotification(
+            "يمكن مسح القيمة الموروثة من تقرير اليوم فقط",
+            "warning"
+        );
+
+        return;
+    }
+
+    if (window.isHistoricalEditMode) {
+        return;
+    }
+
+    if (element.readOnly || element.disabled) {
+        return;
+    }
+
+    const confirmed = confirm(
+        "هل تريد مسح قيمة هذا الحقل لليوم الحالي؟\n\n" +
+        "قيمة الأمس ستبقى محفوظة في الأرشيف."
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        const {
+            data: { user }
+        } = await supabaseClient.auth.getUser();
+
+        if (!user) {
+            showNotification(
+                "انتهت جلسة المستخدم",
+                "error"
+            );
+
+            return;
+        }
+
+        /*
+           إلغاء أي مؤقت حفظ سابق لهذا الحقل
+        */
+        const key =
+            fieldStateKey(factory, fieldId);
+
+        if (
+            window.fieldHistoryTimers &&
+            window.fieldHistoryTimers.has(key)
+        ) {
+
+            clearTimeout(
+                window.fieldHistoryTimers.get(key)
+            );
+
+            window.fieldHistoryTimers.delete(key);
+        }
+
+        /*
+           1) حفظ سجل اليوم بقيمة فارغة
+           مهم جدًا:
+           لا نحذف السجل، بل نجعله فارغًا
+           حتى لا يعود النظام إلى قيمة الأمس.
+        */
+        const { error: upsertError } =
+            await supabaseClient
+                .from("daily_reports")
+                .upsert(
+                    {
+                        report_date: reportDate,
+                        factory: factory,
+                        field_name: fieldId,
+                        field_value: "",
+                        updated_by: user.email,
+                        updated_at:
+                            new Date().toISOString()
+                    },
+                    {
+                        onConflict:
+                            "report_date,factory,field_name"
+                    }
+                );
+
+        if (upsertError) {
+            throw upsertError;
+        }
+
+        /*
+           2) تسجيل عملية المسح في التاريخ
+        */
+        const now =
+            new Date().toISOString();
+
+        const {
+            error: historyError
+        } =
+            await supabaseClient
+                .from("field_history")
+                .insert([
+                    {
+                        field_name: fieldId,
+                        field_value: "",
+                        updated_by: user.email,
+                        factory: factory,
+                        updated_at: now
+                    }
+                ]);
+
+        if (historyError) {
+            throw historyError;
+        }
+
+        /*
+           3) تحديث الشاشة
+        */
+        element.value = "";
+
+        window.fieldLastSavedValues.set(
+            key,
+            ""
+        );
+
+        window.fieldLastUpdatedAt.set(
+            key,
+            now
+        );
+
+        element.classList.remove(
+            "field-stale"
+        );
+
+        delete element.dataset.inheritedFromPrevious;
+
+        delete element.dataset.inheritedSourceDate;
+
+        if (button) {
+            button.remove();
+        }
+
+        showNotification(
+            "تم مسح قيمة الحقل لليوم الحالي ✅",
+            "success"
+        );
+
+        /*
+           تحديث الحسابات والـDashboard
+        */
+        if (typeof recalculateAll === "function") {
+            recalculateAll();
+        }
+
+        if (
+            typeof refreshAllDashboards ===
+            "function"
+        ) {
+            refreshAllDashboards();
+        }
+
+    } catch (error) {
+
+        console.error(
+            "CLEAR INHERITED FIELD ERROR:",
+            error
+        );
+
+        showNotification(
+            "فشل مسح قيمة الحقل",
+            "error"
+        );
+    }
+}
+
       async function loadFactorySection(factory) {
 
          /* =================================================
@@ -17516,41 +17915,122 @@ console.log(
    المهم أن salesFieldIds لم تدخل في inheritedRows.
 */
 
+/*
+   إزالة أزرار المسح القديمة أولًا
+   حتى لا تبقى من تحميل سابق
+*/
+fieldIds.forEach((fieldId) => {
+  removeInheritedFieldClearButton(fieldId);
+});
+
+
+const inheritedFieldIds = new Set(
+  inheritedRows.map((row) => row.field_name)
+);
+
+
 const rowsToApply = [
   ...currentRows,
   ...inheritedRows
 ];
 
+
 rowsToApply.forEach((row) => {
 
-  const element = document.getElementById(row.field_name);
+  /* =========================================================
+   🧹 أزرار مسح حقول ملاحظات محطات التصفية
+   تظهر دائمًا في تقرير اليوم
+========================================================= */
+
+if (reportDate === getTodayLocalDate()) {
+
+  const waterClearFields = [
+    "water_sugar_maintenance",
+    "water_sugar_notes",
+    "water_oil_maintenance",
+    "water_oil_notes"
+  ];
+
+  waterClearFields.forEach((fieldId) => {
+
+    const element =
+      document.getElementById(fieldId);
+
+    if (!element) return;
+
+    /*
+       لا نضيف الزر إذا كان الحقل غير قابل للتحرير
+    */
+    if (element.readOnly || element.disabled) {
+      return;
+    }
+
+    setupInheritedFieldClearButton(
+      element,
+      "waterfiltration",
+      element.dataset.inheritedSourceDate || ""
+    );
+
+  });
+}
+
+
+  const element =
+    document.getElementById(row.field_name);
 
   if (!element) return;
 
-  element.value = row.field_value ?? "";
+  element.value =
+    row.field_value ?? "";
 
-  const key = fieldStateKey(
-    factory,
-    row.field_name
-  );
+  const key =
+    fieldStateKey(
+      factory,
+      row.field_name
+    );
+
+  /*
+     إذا كان الحقل مأخوذًا من يوم سابق
+     نعرض زر المسح
+  */
+  if (
+    reportDate === getTodayLocalDate() &&
+    inheritedFieldIds.has(row.field_name)
+  ) {
+
+    setupInheritedFieldClearButton(
+      element,
+      factory,
+      row.report_date
+    );
+
+  } else {
+
+    /*
+       الحقل محفوظ فعليًا لليوم
+       لذلك لا نحتاج زر المسح
+    */
+    removeInheritedFieldClearButton(
+      row.field_name
+    );
+  }
 
   /*
      إذا كانت هذه أول مرة نرى الحقل
      ولا توجد له قيمة محفوظة في الذاكرة
   */
-  if (!window.fieldLastSavedValues.has(key)) {
+  if (
+    !window.fieldLastSavedValues.has(key)
+  ) {
 
     window.fieldLastSavedValues.set(
       key,
       normalizeFieldValue(element)
     );
-
   }
 
   /*
-     fallback احتياطي:
-     إذا لم يوجد field_history
-     نستخدم updated_at من daily_reports
+     fallback لتاريخ التحديث
   */
   if (
     !window.fieldLastUpdatedAt.has(key) &&
@@ -17561,8 +18041,8 @@ rowsToApply.forEach((row) => {
       key,
       row.updated_at
     );
-
   }
+
 });
 
         /* تحديث ألوان الحقول */
@@ -18410,8 +18890,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               }
 
-              /* يبقى نظام لوحة الأدمن القديم كما هو */
-              loadLateFieldsDashboard();
+             /* تحديث لوحة الحقول المتأخرة للأدمن فقط إذا كانت الدالة موجودة */
+if (typeof loadLateFieldsDashboard === "function") {
+  loadLateFieldsDashboard();
+}
             },
           )
           .on(
@@ -18450,6 +18932,20 @@ document.addEventListener("DOMContentLoaded", function () {
               console.log("DAILY REPORT UPDATE", payload);
               const row = payload.new;
               if (!row) return;
+              /* =====================================================
+   حماية وضع التقرير السابق
+   لا نعرض إلا بيانات التاريخ الموجود حاليًا
+===================================================== */
+
+const selectedReportDate =
+    document.getElementById("reportDateKey")?.value;
+
+if (
+    selectedReportDate &&
+    row.report_date !== selectedReportDate
+) {
+    return;
+}
               let element = document.getElementById(row.field_name);
               if (element) {
                 element.value = row.field_value;
@@ -18586,13 +19082,30 @@ if (typeof refreshAllDashboards === "function") {
       }
 
       document.querySelectorAll("input[data-save]").forEach((el) => {
-        if (!el.id.includes("note") && !el.id.includes("resin")) {
-          el.type = "number";
-          el.setAttribute("inputmode", "decimal");
+  const id = String(el.id || "").toLowerCase();
 
-          el.step = "any";
-        }
-      });
+  /* الحقول التي يجب أن تبقى نصية */
+  const isTextField =
+    id.includes("note") ||
+    id.includes("notes") ||
+    id.includes("resin");
+
+  /* لا نلمس حقول الملفات أو الاختيارات الخاصة */
+  const isSpecialInput =
+    el.type === "file" ||
+    el.type === "checkbox" ||
+    el.type === "radio" ||
+    el.type === "date" ||
+    el.type === "hidden";
+
+  if (isTextField || isSpecialInput) {
+    return;
+  }
+
+  el.type = "number";
+  el.step = "any";
+  el.setAttribute("inputmode", "decimal");
+});
 
       async function uploadNoteImage(input) {
         const files = [...input.files];
@@ -19104,6 +19617,14 @@ if (typeof applyApprovalPermissions === "function") {
 
     <script>
       async function saveSalesField(fieldId, factory) {
+            /* أثناء تعديل تقرير سابق:
+       لا تحفظ المبيعات مباشرة.
+       سيتم حفظها بواسطة زر "حفظ التعديلات".
+    */
+
+    if (window.isHistoricalEditMode) {
+        return;
+    }
         if (document.activeElement.id !== fieldId) {
           return;
         }
