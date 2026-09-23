@@ -24058,17 +24058,16 @@ body.sidebar-open #sidebarOverlay {
 }
 
 .legend-max {
-  background: #73c78b;
+  background: #d96b5f;
 }
 
 .legend-min {
-  background: #d5b765;
+  background: #8fd3a8;
 }
 
 .legend-range {
   height: 6px !important;
-
-  background: rgba(115, 199, 139, 0.22);
+  background: rgba(143, 211, 168, 0.2);
 }
 
 /* =========================================================
@@ -32210,7 +32209,7 @@ body:not(.dark-mode) .feed-general-notes-card small {
 .field-clear-btn {
   position: absolute;
 
-  left: 4px;
+  left: -8px;
   top: 50%;
 
   transform: translateY(-50%);
@@ -32249,6 +32248,8 @@ body:not(.dark-mode) .feed-general-notes-card small {
     transform 0.15s ease,
     background 0.15s ease,
     opacity 0.15s ease;
+
+  margin-left: 0 !important;
 }
 
 .field-clear-btn:hover {
@@ -32280,4 +32281,90 @@ body:not(.dark-mode) .field-clear-btn {
   color: #ffffff;
 
   box-shadow: 0 2px 7px rgba(120, 45, 45, 0.16);
+}
+
+/* =========================================================
+   ➖ زر السالب — POWER ACCOUNT ONLY
+========================================================= */
+
+.power-negative-control {
+  display: inline-flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 4px;
+
+  width: auto;
+
+  vertical-align: middle;
+}
+
+.power-negative-control input {
+  margin: 0 !important;
+}
+
+.power-negative-btn {
+  width: 12px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  display: inline-flex !important;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none !important;
+
+  border-radius: 50% !important;
+
+  background: #d95c5c !important;
+
+  color: #ffffff !important;
+
+  font-size: 12px !important;
+
+  font-weight: 800 !important;
+
+  line-height: 1 !important;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 6px rgba(80, 30, 30, 0.18);
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.power-negative-btn:hover {
+  background: #c74646 !important;
+
+  transform: scale(1.08);
+}
+
+.power-negative-btn:active {
+  transform: scale(0.94);
+}
+
+/* Light Mode */
+body:not(.dark-mode) .power-negative-btn {
+  background: #d85b5b !important;
+
+  color: #ffffff !important;
+}
+
+/* الهاتف */
+@media (max-width: 768px) {
+  .power-negative-btn {
+    width: 26px !important;
+    min-width: 26px !important;
+    height: 26px !important;
+
+    font-size: 17px !important;
+  }
 }

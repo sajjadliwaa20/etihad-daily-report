@@ -2743,7 +2743,7 @@
         </div>
 
         <div class="power-load-history-period">
-            آخر 4 أيام
+            آخر 7 أيام
         </div>
 
     </div>
@@ -18487,7 +18487,7 @@ if (userInfo.role === "feed" ||
     if (
     typeof loadElectricalLoadHistory === "function"
 ) {
-    await loadElectricalLoadHistory();
+   loadElectricalLoadHistory();
 }
 
 
@@ -19081,6 +19081,192 @@ if (typeof refreshAllDashboards === "function") {
         }
       }
 
+/* =========================================================
+   ➖ زر السالب — لحساب محطة الطاقة فقط
+   POWER@ETIHAD.LOCAL
+========================================================= */
+
+async function installPowerNegativeButtons() {
+
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  const email = String(user?.email || "")
+    .trim()
+    .toLowerCase();
+
+  /* هذا الحساب فقط */
+  if (email !== "power@etihad.local") {
+    return;
+  }
+
+  const powerSection =
+    document.getElementById("powerstation");
+
+  if (!powerSection) {
+    return;
+  }
+
+  const inputs =
+    powerSection.querySelectorAll("input[data-save]");
+
+  inputs.forEach((input) => {
+
+    const id =
+      String(input.id || "").toLowerCase();
+
+    /* لا نلمس الحقول النصية */
+    if (
+      id.includes("note") ||
+      id.includes("notes") ||
+      id.includes("resin")
+    ) {
+      return;
+    }
+
+    /* لا نضيفه للحقول غير القابلة للتحرير */
+    if (input.readOnly || input.disabled) {
+      return;
+    }
+
+    /* ضمان كون الحقل رقميًا */
+    input.type = "number";
+    input.step = "any";
+    input.setAttribute(
+      "inputmode",
+      "decimal"
+    );
+
+    /* منع إنشاء الزر أكثر من مرة */
+    if (
+      input.parentElement?.querySelector(
+        '.power-negative-btn[data-for="' + input.id + '"]'
+      )
+    ) {
+      return;
+    }
+
+    const parent = input.parentElement;
+
+    if (!parent) {
+      return;
+    }
+
+    const wrapper =
+      document.createElement("span");
+
+    wrapper.className =
+      "power-negative-control";
+
+    const button =
+      document.createElement("button");
+
+    button.type = "button";
+
+    button.className =
+      "power-negative-btn";
+
+    button.dataset.for =
+      input.id;
+
+    button.textContent = "−";
+
+    button.title =
+      "تحويل الرقم إلى سالب / موجب";
+
+    button.setAttribute(
+      "aria-label",
+      "تحويل الرقم إلى سالب"
+    );
+
+    button.addEventListener(
+      "click",
+      (event) => {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const raw =
+          String(input.value || "").trim();
+
+        /* لا يوجد رقم */
+        if (raw === "") {
+          input.focus();
+          return;
+        }
+
+        const number =
+          Number(raw);
+
+        if (!Number.isFinite(number)) {
+          input.focus();
+          return;
+        }
+
+        /* قلب الإشارة */
+        input.value =
+          String(number * -1);
+
+        /* تشغيل نفس أحداث الحقل الأصلية */
+        input.dispatchEvent(
+          new Event("input", {
+            bubbles: true
+          })
+        );
+
+        input.dispatchEvent(
+          new Event("change", {
+            bubbles: true
+          })
+        );
+
+        /* تحديث شكل الزر */
+        button.textContent =
+          Number(input.value) < 0
+            ? "+"
+            : "−";
+
+        button.title =
+          Number(input.value) < 0
+            ? "تحويل الرقم إلى موجب"
+            : "تحويل الرقم إلى سالب";
+      }
+    );
+
+    /*
+       نضع الحقل والزر داخل حاوية صغيرة
+    */
+    parent.insertBefore(
+      wrapper,
+      input
+    );
+
+    wrapper.appendChild(input);
+    wrapper.appendChild(button);
+
+    /*
+       تحديث الزر إذا تغيرت القيمة يدويًا
+    */
+    input.addEventListener(
+      "input",
+      () => {
+
+        if (!input.value) {
+          button.textContent = "−";
+          return;
+        }
+
+        button.textContent =
+          Number(input.value) < 0
+            ? "+"
+            : "−";
+      }
+    );
+  });
+}
+
+
       document.querySelectorAll("input[data-save]").forEach((el) => {
   const id = String(el.id || "").toLowerCase();
 
@@ -19106,6 +19292,8 @@ if (typeof refreshAllDashboards === "function") {
   el.step = "any";
   el.setAttribute("inputmode", "decimal");
 });
+
+installPowerNegativeButtons();
 
       async function uploadNoteImage(input) {
         const files = [...input.files];
@@ -22753,20 +22941,21 @@ function getElectricalLoadPreviousDate(dateString, daysAgo) {
 async function loadElectricalLoadHistory() {
 
     const dateElement =
-        document.getElementById("reportDateKey");
+    document.getElementById("reportDateKey");
 
-    if (!dateElement || !dateElement.value) {
-        return;
-    }
-
-    const selectedDate = dateElement.value;
+const selectedDate =
+    dateElement?.value ||
+    getTodayLocalDate();
 
     const dates = [
-        selectedDate,
-        getElectricalLoadPreviousDate(selectedDate, 1),
-        getElectricalLoadPreviousDate(selectedDate, 2),
-        getElectricalLoadPreviousDate(selectedDate, 3)
-    ].reverse();
+    selectedDate,
+    getElectricalLoadPreviousDate(selectedDate, 1),
+    getElectricalLoadPreviousDate(selectedDate, 2),
+    getElectricalLoadPreviousDate(selectedDate, 3),
+    getElectricalLoadPreviousDate(selectedDate, 4),
+    getElectricalLoadPreviousDate(selectedDate, 5),
+    getElectricalLoadPreviousDate(selectedDate, 6)
+].reverse();
 
 
     const { data, error } = await supabaseClient
@@ -22992,10 +23181,10 @@ function renderElectricalLoadHistory(
 
                         data: minValues,
 
-                        borderColor: "#d5b765",
+                        borderColor: "#8FD3A8",
 
-                        backgroundColor:
-                            "rgba(213,183,101,.04)",
+backgroundColor:
+    "rgba(143,211,168,.06)",
 
                         borderWidth: 2,
 
@@ -23025,10 +23214,10 @@ function renderElectricalLoadHistory(
 
                         data: maxValues,
 
-                        borderColor: "#73c78b",
+                        borderColor: "#D96B5F",
 
-                        backgroundColor:
-                            "rgba(115,199,139,.16)",
+backgroundColor:
+    "rgba(217,107,95,.10)",
 
                         borderWidth: 2.5,
 
@@ -23313,37 +23502,111 @@ function updateElectricalLoadHistoryChart() {
 
 function initializeElectricalLoadHistory() {
 
-    if (
+    const canvas =
         document.getElementById(
             "electricalLoadHistoryChart"
-        )
+        );
+
+    if (
+        !canvas ||
+        typeof Chart === "undefined"
     ) {
-
-        loadElectricalLoadHistory();
-
+        return;
     }
 
-}
+    /*
+       نحدد اليوم مباشرة حتى لو لم يكن
+       reportDateKey قد امتلأ بعد
+    */
+    const selectedDate =
+        document.getElementById(
+            "reportDateKey"
+        )?.value ||
+        getTodayLocalDate();
 
 
-/* ---------------------------------------------------------
-   بعد تحميل الصفحة
-   --------------------------------------------------------- */
+    /*
+       7 أيام
+    */
+    const dates = [
+        selectedDate,
+        getElectricalLoadPreviousDate(selectedDate, 1),
+        getElectricalLoadPreviousDate(selectedDate, 2),
+        getElectricalLoadPreviousDate(selectedDate, 3),
+        getElectricalLoadPreviousDate(selectedDate, 4),
+        getElectricalLoadPreviousDate(selectedDate, 5),
+        getElectricalLoadPreviousDate(selectedDate, 6)
+    ].reverse();
 
-if (
-    document.readyState === "loading"
-) {
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializeElectricalLoadHistory
+    /*
+       نرسم المخطط فورًا
+       بدون انتظار Supabase
+    */
+    const byDate = {};
+
+    dates.forEach((date) => {
+
+        byDate[date] = {
+            max: null,
+            min: null
+        };
+
+    });
+
+
+    /*
+       إذا كانت قيم اليوم موجودة في الصفحة
+       نعرضها فورًا
+    */
+    const currentMax =
+        Number(
+            document.getElementById(
+                "max_electrical_load"
+            )?.value
+        );
+
+    const currentMin =
+        Number(
+            document.getElementById(
+                "min_electrical_load"
+            )?.value
+        );
+
+
+    if (
+        Number.isFinite(currentMax)
+    ) {
+        byDate[selectedDate].max =
+            currentMax;
+    }
+
+    if (
+        Number.isFinite(currentMin)
+    ) {
+        byDate[selectedDate].min =
+            currentMin;
+    }
+
+
+    /*
+       رسم أولي فوري
+    */
+    renderElectricalLoadHistory(
+        dates,
+        byDate,
+        selectedDate
     );
 
-} else {
 
-    initializeElectricalLoadHistory();
+    /*
+       ثم تحميل بيانات الأسبوع في الخلفية
+    */
+    loadElectricalLoadHistory();
 
 }
+
+initializeElectricalLoadHistory();
 
 </script>
 
