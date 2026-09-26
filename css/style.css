@@ -4385,6 +4385,7 @@ body.dark-mode details summary {
 
 .extraction-gauge-inner input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* =========================================
