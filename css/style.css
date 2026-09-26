@@ -22109,125 +22109,104 @@ body.dark-mode details summary {
   }
 }
 /* =========================================================
-   SUGAR PACKING MATRIX — HORIZONTAL SCROLL
+   🍬 SUGAR PACKING — FINAL HORIZONTAL SCROLL
    ========================================================= */
 
 .sugar-panel.full .sugar-panel-body {
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-.sugar-panel.full .sugar-packing-matrix {
+/* الحاوية الوحيدة المسؤولة عن السكرول */
+.sugar-panel.full .sugar-packing-scroll {
   width: 100%;
-  min-width: 760px;
+  max-width: 100%;
+
   overflow-x: auto;
   overflow-y: hidden;
 
-  display: grid;
-
-  /* 6 أعمدة ثابتة بدون قص الحقول */
-  grid-template-columns:
-    130px
-    repeat(5, minmax(110px, 1fr));
-
   box-sizing: border-box;
 
-  scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+
+  overscroll-behavior-x: contain;
 }
 
-/* خلايا الجدول */
+/* الجدول نفسه */
+.sugar-panel.full .sugar-packing-matrix {
+  width: max-content;
+  min-width: 760px;
+
+  display: grid;
+
+  grid-template-columns:
+    115px
+    repeat(5, 129px);
+
+  box-sizing: border-box;
+}
+
+/* الخلايا */
 .sugar-panel.full .sugar-packing-cell {
   min-width: 0;
   box-sizing: border-box;
 }
 
-/* الحقول داخل الجدول */
+/* الحقول */
 .sugar-panel.full .sugar-packing-cell input {
   width: 100%;
-  min-width: 90px;
+  min-width: 0;
   box-sizing: border-box;
 }
 
-/* شاشة صغيرة */
-@media (max-width: 900px) {
+/* الكمبيوتر */
+@media (min-width: 901px) {
   .sugar-panel.full .sugar-packing-matrix {
-    min-width: 760px;
     grid-template-columns:
-      120px
-      repeat(5, 128px);
+      130px
+      repeat(5, 130px);
   }
 }
 
 /* الهاتف */
 @media (max-width: 600px) {
+  .sugar-panel.full .sugar-packing-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    touch-action: pan-x;
+  }
+
   .sugar-panel.full .sugar-packing-matrix {
     min-width: 760px;
+
     grid-template-columns:
       115px
       repeat(5, 129px);
   }
-
-  .sugar-panel.full .sugar-panel-body {
-    overflow-x: hidden;
-  }
-}
-/* =========================================================
-   SUGAR PACKING — PROFESSIONAL HORIZONTAL SCROLL
-   ========================================================= */
-
-.sugar-packing-scroll {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  box-sizing: border-box;
-
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
 }
 
-.sugar-packing-matrix {
-  width: 100%;
-  min-width: 760px;
-
-  display: grid;
-
-  grid-template-columns:
-    130px
-    repeat(5, minmax(110px, 1fr));
-
-  box-sizing: border-box;
+/* شكل السكرول */
+.sugar-panel.full .sugar-packing-scroll::-webkit-scrollbar {
+  height: 8px;
 }
 
-.sugar-packing-cell {
-  min-width: 0;
-  box-sizing: border-box;
+.sugar-panel.full .sugar-packing-scroll::-webkit-scrollbar-track {
+  background: rgba(120, 130, 135, 0.16);
+  border-radius: 20px;
 }
 
-.sugar-packing-cell input {
-  width: 100%;
-  min-width: 90px;
-  box-sizing: border-box;
+.sugar-panel.full .sugar-packing-scroll::-webkit-scrollbar-thumb {
+  background: rgba(80, 150, 120, 0.75);
+  border-radius: 20px;
 }
 
-@media (max-width: 900px) {
-  .sugar-packing-matrix {
-    min-width: 760px;
-    grid-template-columns:
-      120px
-      repeat(5, 128px);
-  }
-}
-
-@media (max-width: 600px) {
-  .sugar-packing-matrix {
-    min-width: 760px;
-    grid-template-columns:
-      115px
-      repeat(5, 129px);
-  }
+.sugar-panel.full .sugar-packing-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(60, 125, 100, 0.9);
 }
 
 /* =========================================================
@@ -24759,9 +24738,31 @@ body.sidebar-open #sidebarOverlay {
 
 .flour-raw-types {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 
   gap: 13px;
+}
+
+@media (max-width: 1000px) {
+  .flour-raw-types {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .flour-raw-types {
+    grid-template-columns: 1fr;
+  }
+}
+
+.flour-raw-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.flour-raw-water .flour-raw-value {
+  margin-top: auto;
 }
 
 .flour-raw-card {
@@ -32366,5 +32367,24 @@ body:not(.dark-mode) .power-negative-btn {
     height: 26px !important;
 
     font-size: 17px !important;
+  }
+}
+
+/* =========================================================
+   FEED RAW STOCK — توسيع حقول الإدخال
+========================================================= */
+
+#feedRawStockDetails input[data-save] {
+  width: 90px !important;
+  min-width: 90px !important;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* الهاتف */
+@media (max-width: 600px) {
+  #feedRawStockDetails input[data-save] {
+    width: 85px !important;
+    min-width: 85px !important;
   }
 }

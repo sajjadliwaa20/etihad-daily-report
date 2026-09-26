@@ -248,6 +248,10 @@ function historicalGetApprovalNames(element, role, subsection, factory) {
     approvals.add("feed_production");
   }
 
+  if (role === "feed" && (sub === "raw_stock" || sub === "feed_raw_stock")) {
+    approvals.add("feed_raw_stock");
+  }
+
   if (role === "feed" && (sub === "premix" || sub === "feed_premix")) {
     approvals.add("feed_premix");
   }

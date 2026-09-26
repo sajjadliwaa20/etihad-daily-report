@@ -76,6 +76,31 @@ function applySubsectionPermissions(role, subsection) {
        FEED
        ===================================================== */
 
+  if (
+    role === "feed" &&
+    (normalizedSubsection === "raw_stock" ||
+      normalizedSubsection === "feed_raw_stock")
+  ) {
+    feedSection.style.display = "block";
+
+    hideAllDetails(feedSection);
+
+    showDetails(feedSection, ["feedRawStockDetails"]);
+
+    hideSalesProducts();
+    hideSalesExecutive();
+
+    const dashboard = document.getElementById("feedDashboardContent");
+
+    if (dashboard) {
+      dashboard.style.display = "none";
+    }
+
+    window.location.hash = "feed";
+
+    return;
+  }
+
   if (role === "feed") {
     if (!feedSection) return;
 
@@ -1975,6 +2000,8 @@ function applyFeedApprovalPermissions(role, subsection = null) {
 
   const feedPremixArea = document.getElementById("feedPremixApprovalArea");
 
+  const feedRawStockArea = document.getElementById("feedRawStockApprovalArea");
+
   /* -----------------------------------------
        إخفاء أزرار الاعتماد الفرعية أولاً
        ----------------------------------------- */
@@ -1985,6 +2012,10 @@ function applyFeedApprovalPermissions(role, subsection = null) {
 
   if (feedPremixArea) {
     feedPremixArea.style.display = "none";
+  }
+
+  if (feedRawStockArea) {
+    feedRawStockArea.style.display = "none";
   }
 
   /* -----------------------------------------
@@ -2027,6 +2058,17 @@ function applyFeedApprovalPermissions(role, subsection = null) {
   ) {
     if (feedPremixArea) {
       feedPremixArea.style.display = "flex";
+    }
+
+    return;
+  }
+
+  if (
+    role === "feed" &&
+    (subsection === "raw_stock" || subsection === "feed_raw_stock")
+  ) {
+    if (feedRawStockArea) {
+      feedRawStockArea.style.display = "flex";
     }
 
     return;
@@ -2183,6 +2225,7 @@ function refreshHistoricalApprovalUI(affectedApprovals = []) {
 
     "#feedProductionApprovalArea",
     "#feedPremixApprovalArea",
+    "#feedRawStockApprovalArea",
     "#oilProductionApprovalArea",
     "#oilSalesApprovalArea",
     "#sugarPackingApprovalArea",
@@ -2209,6 +2252,7 @@ function refreshHistoricalApprovalUI(affectedApprovals = []) {
 
     "approveFeedProductionBtn",
     "approveFeedPremixBtn",
+    "approveFeedRawStockBtn",
     "approveOilProductionBtn",
     "approveOilSalesBtn",
     "approveSugarPackingBtn",
@@ -2347,6 +2391,19 @@ function refreshHistoricalApprovalUI(affectedApprovals = []) {
         if (area) area.style.display = "flex";
 
         resetHistoricalApprovalButton(btn, "✓ اعتماد تقرير الأعلاف");
+
+        break;
+      }
+      case "feed_raw_stock": {
+        const area = document.getElementById("feedRawStockApprovalArea");
+
+        const btn = document.getElementById("approveFeedRawStockBtn");
+
+        if (area) {
+          area.style.display = "flex";
+        }
+
+        resetHistoricalApprovalButton(btn, "✓ اعتماد أرصدة المواد الخام");
 
         break;
       }
@@ -3191,6 +3248,96 @@ function scheduleFieldHistoryUpdate(fieldId, factory, value, email) {
   }, 800);
 
   window.fieldHistoryTimers.set(key, timer);
+
+  /* =========================================================
+   AUTO SAVE - حفظ الحقول اليومية تلقائياً
+   ========================================================= */
+
+  window.autoSaveTimers = window.autoSaveTimers || new Map();
+
+  function scheduleDailyReportAutoSave(fieldId) {
+    const field = document.getElementById(fieldId);
+
+    if (!field) return;
+
+    /* لا نحفظ أثناء تعديل تقرير سابق */
+    if (window.isHistoricalEditMode) return;
+
+    /* لا نحفظ الحقول غير القابلة للتحرير */
+    if (field.readOnly || field.disabled) return;
+
+    const reportDateElement = document.getElementById("reportDateKey");
+    if (!reportDateElement?.value) return;
+
+    const factory =
+      window.fieldFactoryById instanceof Map
+        ? window.fieldFactoryById.get(fieldId)
+        : null;
+
+    if (!factory) {
+      console.warn("AUTO SAVE: factory not found for", fieldId);
+      return;
+    }
+
+    const key = fieldStateKey(factory, fieldId);
+
+    /* إلغاء المؤقت السابق لنفس الحقل */
+    if (window.autoSaveTimers.has(key)) {
+      clearTimeout(window.autoSaveTimers.get(key));
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        const {
+          data: { user },
+        } = await supabaseClient.auth.getUser();
+
+        if (!user) return;
+
+        const reportDate = reportDateElement.value;
+        const value = field.value ?? "";
+
+        const { error } = await supabaseClient.from("daily_reports").upsert(
+          {
+            report_date: reportDate,
+            factory: factory,
+            field_name: fieldId,
+            field_value: value,
+            updated_by: user.email,
+            updated_at: new Date().toISOString(),
+          },
+          {
+            onConflict: "report_date,factory,field_name",
+          },
+        );
+
+        if (error) {
+          console.error("AUTO SAVE ERROR:", error);
+          return;
+        }
+
+        console.log("AUTO SAVED:", factory, fieldId, value);
+
+        /* تحديث سجل التغيير */
+        scheduleFieldHistoryUpdate(fieldId, factory, value, user.email);
+      } catch (error) {
+        console.error("AUTO SAVE FAILED:", error);
+      } finally {
+        window.autoSaveTimers.delete(key);
+      }
+    }, 800);
+
+    window.autoSaveTimers.set(key, timer);
+  }
+
+  /* تشغيل AutoSave لجميع الحقول القابلة للحفظ */
+  document.addEventListener("input", (event) => {
+    const field = event.target;
+
+    if (!field?.matches?.("[data-save]")) return;
+
+    scheduleDailyReportAutoSave(field.id);
+  });
 }
 
 function updateRefineryTotals() {
@@ -6989,52 +7136,74 @@ async function loadFeedProductionHistory() {
 
   const dates = [
     getFeedPreviousDate(selectedDate, 2),
-
     getFeedPreviousDate(selectedDate, 1),
-
     selectedDate,
   ];
 
-  /*
-   * اليوم يأخذ القيمة الحالية من الحقول
-   */
+  /* =====================================================
+     الحقول الفعلية لإنتاج الأعلاف
+     ===================================================== */
 
-  const todayValue = getFeedCurrentGrossProduction();
+  const productionFields = [];
 
-  /*
-   * الأيام السابقة من قاعدة البيانات
-   */
+  for (let i = 1; i <= 6; i++) {
+    productionFields.push(`feed_l${i}_m`);
+    productionFields.push(`feed_l${i}_e`);
+    productionFields.push(`feed_l${i}_n`);
+  }
 
-  const previousDates = dates.slice(0, 2);
+  /* =====================================================
+     جلب بيانات الأيام السابقة من Supabase
+     ===================================================== */
 
   let previousData = [];
 
-  if (typeof supabaseClient !== "undefined" && previousDates.length) {
+  if (typeof supabaseClient !== "undefined") {
     const result = await supabaseClient
       .from("daily_reports")
       .select("report_date,field_name,field_value")
       .eq("factory", "feed")
-      .in("report_date", previousDates)
-      .in("field_name", ["feed_gross_total"]);
+      .in("report_date", dates)
+      .in("field_name", productionFields);
 
-    if (!result.error) {
-      previousData = result.data || [];
+    if (result.error) {
+      console.error("FEED PRODUCTION HISTORY ERROR:", result.error);
+
+      return;
     }
+
+    previousData = result.data || [];
   }
+
+  /* =====================================================
+     تجميع إنتاج كل يوم
+     ===================================================== */
 
   const values = {
     [dates[0]]: 0,
     [dates[1]]: 0,
-    [selectedDate]: todayValue,
+    [selectedDate]: 0,
   };
 
   previousData.forEach((row) => {
-    const value = Number(row.field_value);
-
-    if (Number.isFinite(value) && values.hasOwnProperty(row.report_date)) {
-      values[row.report_date] = value;
+    if (!values.hasOwnProperty(row.report_date)) {
+      return;
     }
+
+    if (!productionFields.includes(row.field_name)) {
+      return;
+    }
+
+    values[row.report_date] += Number(row.field_value) || 0;
   });
+
+  /* =====================================================
+     اليوم الحالي يأخذ البيانات الموجودة على الشاشة
+     ===================================================== */
+
+  if (selectedDate === getTodayLocalDate()) {
+    values[selectedDate] = getFeedCurrentGrossProduction();
+  }
 
   renderFeedProductionHistory(dates, values, selectedDate);
 }
@@ -7287,45 +7456,62 @@ function updateSugarProductTemperature() {
   dashboardEl.textContent = Number.isFinite(value) ? value.toFixed(1) : "0.0";
 }
 
+/* =========================================================
+   FLOUR — AUTOMATIC EXTRACTION EFFICIENCY
+   F1 ÷ الحنطة المطحونة × 100
+   ========================================================= */
+
 function updateFlourExtractionEfficiency() {
-  const input = document.getElementById("extraction_eff");
+  /* =========================
+     إجمالي F1
+  ========================== */
 
-  if (!input) return;
+  const f1 = Number(document.getElementById("flour_total_f1")?.value) || 0;
 
-  let value = parseFloat(input.value);
+  /* =========================
+     الحنطة المطحونة
+  ========================== */
 
-  if (!Number.isFinite(value)) {
-    value = 0;
+  const groundWheat =
+    Number(document.getElementById("flour_total_ground_wheat")?.value) || 0;
+
+  /* =========================
+     الحساب
+  ========================== */
+
+  let efficiency = 0;
+
+  if (groundWheat > 0) {
+    efficiency = (f1 / groundWheat) * 100;
   }
 
-  // منع القيم خارج النطاق
-  value = Math.max(0, Math.min(100, value));
+  /* =========================
+     حماية
+  ========================== */
 
-  /* =====================================================
-       عرض القيمة في الحلقة الرئيسية
-       ===================================================== */
+  efficiency = Math.max(0, Math.min(efficiency, 100));
+
+  /* =========================
+     الحقل الأصلي
+  ========================== */
+
+  const originalField = document.getElementById("extraction_eff");
+
+  if (originalField) {
+    originalField.value = efficiency.toFixed(2);
+  }
+
+  /* =========================
+     الحلقة الرئيسية
+  ========================== */
 
   const dashboardDisplay = document.getElementById(
     "flourDashboardExtractionEfficiencyDisplay",
   );
 
   if (dashboardDisplay) {
-    dashboardDisplay.textContent = value.toFixed(1);
+    dashboardDisplay.textContent = efficiency.toFixed(2);
   }
-
-  /* =====================================================
-       عرض القيمة في حلقة قسم كفاءة الاستخراج
-       ===================================================== */
-
-  const detailDisplay = document.getElementById("extractionEfficiencyDisplay");
-
-  if (detailDisplay) {
-    detailDisplay.textContent = value.toFixed(1);
-  }
-
-  /* =====================================================
-       تحديث الحلقة الرئيسية
-       ===================================================== */
 
   const dashboardRing = document.getElementById(
     "flourDashboardExtractionRingProgress",
@@ -7334,25 +7520,33 @@ function updateFlourExtractionEfficiency() {
   if (dashboardRing) {
     const circumference = 2 * Math.PI * 48;
 
+    const offset = circumference - (efficiency / 100) * circumference;
+
     dashboardRing.style.strokeDasharray = circumference;
 
-    dashboardRing.style.strokeDashoffset =
-      circumference - (value / 100) * circumference;
+    dashboardRing.style.strokeDashoffset = offset;
   }
 
-  /* =====================================================
-       تحديث الحلقة التفصيلية
-       ===================================================== */
+  /* =========================
+     الحلقة التفصيلية
+  ========================== */
+
+  const detailDisplay = document.getElementById("extractionEfficiencyDisplay");
+
+  if (detailDisplay) {
+    detailDisplay.textContent = efficiency.toFixed(2);
+  }
 
   const detailRing = document.getElementById("extractionRingProgress");
 
   if (detailRing) {
     const circumference = 2 * Math.PI * 48;
 
+    const offset = circumference - (efficiency / 100) * circumference;
+
     detailRing.style.strokeDasharray = circumference;
 
-    detailRing.style.strokeDashoffset =
-      circumference - (value / 100) * circumference;
+    detailRing.style.strokeDashoffset = offset;
   }
 }
 

@@ -4893,7 +4893,7 @@ PKF
                     </div>
 
                     <div class="sugar-packing-cell header">
-                        1 كغم
+                        المقطع (سكيب)
                     </div>
 
 
@@ -5861,7 +5861,7 @@ PKF
                             </th>
 
                             <th colspan="2">
-                                1 كغم
+                                المقطع (سكيب)
                             </th>
 
                         </tr>
@@ -9876,6 +9876,39 @@ PKF
 
         </div>
 
+        <!-- المياه -->
+
+<div class="flour-raw-card flour-raw-water">
+
+  <div class="flour-raw-card-header">
+
+    <div class="flour-raw-icon">
+      💧
+    </div>
+
+    <div>
+      <strong>استهلاك المياه</strong>
+      <small>WATER CONSUMPTION</small>
+    </div>
+
+  </div>
+
+  <div class="flour-raw-value">
+
+    <input
+      id="flour_water_consumption"
+      data-save
+      step="any"
+      type="number"
+      inputmode="decimal"
+    />
+
+    <span>م³</span>
+
+  </div>
+
+</div>
+
       </div>
 
     </div>
@@ -10786,15 +10819,15 @@ PKF
 
     <div class="extraction-efficiency-input-wrap">
         <input
-            id="extraction_eff"
-            data-save
-            type="number"
-            step="0.1"
-            min="0"
-            max="100"
-            placeholder=""
-            oninput="updateFlourExtractionEfficiency()"
-        />
+    id="extraction_eff"
+    data-save
+    type="number"
+    step="0.01"
+    min="0"
+    max="100"
+    placeholder=""
+    readonly
+/>
 
         <span>%</span>
     </div>
@@ -14060,6 +14093,43 @@ PKF
     </button>
 </div>
 
+<div
+    id="feedRawStockApprovalArea"
+    class="feed-approval-area feed-subsection-approval"
+    style="display:none;"
+>
+    <div class="feed-approval-info">
+
+        <div class="feed-approval-icon">
+            📦
+        </div>
+
+        <div>
+
+            <strong>
+                اعتماد أرصدة المواد الخام
+            </strong>
+
+            <small>
+                سيتم اعتماد أرصدة الذرة والحنطة وكسبة الصويا وزيت الصويا فقط
+            </small>
+
+        </div>
+
+    </div>
+
+    <button
+        type="button"
+        id="approveFeedRawStockBtn"
+        class="feed-approve-btn"
+        data-subsection-approval="feed_raw_stock"
+        onclick="approveFeedRawStockSubsection()"
+    >
+        ✓ اعتماد أرصدة المواد الخام
+    </button>
+
+</div>
+
 </section>
 
 
@@ -16649,6 +16719,8 @@ if (showMessage) {
 
           feed_sales: "مبيعات الأعلاف",
 
+          feed_raw_stock: "أرصدة المواد الخام",
+
           feed_premix: "إنتاج البريمكس",
 
           oil_production: "إنتاج الزيت",
@@ -16685,6 +16757,7 @@ if (showMessage) {
           feed_production: "feed",
           feed_sales: "feed",
           feed_premix: "feed",
+          feed_raw_stock: "feed",
 
           oil_production: "oil",
           oil_sales: "oil",
@@ -17111,6 +17184,56 @@ async function approveFeedPremixSubsection() {
         showNotification(
             error?.message ||
             "حدث خطأ أثناء اعتماد البريمكس",
+            "error"
+        );
+    }
+}
+
+/* ---------------------------------------------------------
+   اعتماد أرصدة المواد الخام
+   --------------------------------------------------------- */
+
+async function approveFeedRawStockSubsection() {
+
+    console.log(
+        "🟢 FEED RAW STOCK APPROVAL STARTED"
+    );
+
+    const fields = getSubsectionSaveFields([
+        "feedRawStockDetails"
+    ]);
+
+    if (!fields.length) {
+
+        showNotification(
+            "لم يتم العثور على حقول اعتماد أرصدة المواد الخام",
+            "error"
+        );
+
+        return;
+    }
+
+    try {
+
+        await approveSubsection(
+            "feed_raw_stock",
+            fields
+        );
+
+        console.log(
+            "🟢 FEED RAW STOCK APPROVAL FINISHED"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "🔴 FEED RAW STOCK APPROVAL FAILED:",
+            error
+        );
+
+        showNotification(
+            error?.message ||
+            "حدث خطأ أثناء اعتماد أرصدة المواد الخام",
             "error"
         );
     }
