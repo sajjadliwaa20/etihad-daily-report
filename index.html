@@ -1104,197 +1104,230 @@
 
   <div class="sales-dashboard-content">
 
+<!-- ================= السكر ================= -->
 
-      <!-- ================= السكر ================= -->
+<details id="sales_sugar"
+         open
+         class="sales-product-card sugar-sales-card">
 
-      <details id="sales_sugar"
-               open
-               class="sales-product-card sugar-sales-card">
+  <summary class="sales-product-header">
 
-        <summary class="sales-product-header">
+    <div class="sales-product-title">
 
-          <div class="sales-product-title">
+      <div class="sales-product-icon">
+        ⬜
+      </div>
 
-            <div class="sales-product-icon">
-              ⬜
-            </div>
+      <div>
+        <strong>مبيعات وأرصدة السكر المعبأ</strong>
+        <span>منتجات السكر الجاهزة للبيع</span>
+      </div>
 
-            <div>
-              <strong>مبيعات وأرصدة السكر المعبأ</strong>
-              <span>منتجات السكر الجاهزة للبيع</span>
-            </div>
+    </div>
 
-          </div>
+    <div class="sales-product-tag">
+      السكر
+    </div>
 
-          <div class="sales-product-tag">
-            السكر
-          </div>
-
-        </summary>
-
-
-        <div class="sales-product-body">
-
-          <div class="sales-table-container">
-
-            <table class="sales-modern-table">
-
-              <thead>
-                <tr>
-                  <th>الفئة</th>
-                  <th>المبيعات<br><small>(طن)</small></th>
-                  <th>الرصيد الحالي<br><small>(طن)</small></th>
-                </tr>
-              </thead>
+  </summary>
 
 
-              <tbody>
+  <div class="sales-product-body">
 
-                <tr>
-                  <td>1 كغم</td>
+    <div class="sales-table-container">
 
-                  <td>
-                    <input
-                      id="sugar_sales_1kg"
-                      data-save
-                      step="any"
-                      oninput="
-                        updateSugarSalesTotal();
-                        saveSalesField('sugar_sales_1kg', 'sugar');
-                      "
-                    />
-                  </td>
+      <table class="sales-modern-table">
 
-                  <td>
-                    <input id="stock_1kg" data-save step="any"  oninput="updateSugarStockTotal()"
-                    />
-                  </td>
-                </tr>
+        <thead>
+          <tr>
+            <th>الفئة</th>
+            <th>المبيعات<br><small>(طن)</small></th>
+            <th>الرصيد الحالي<br><small>(طن)</small></th>
+          </tr>
+        </thead>
 
 
-                <tr>
-                  <td>10 كغم</td>
+        <tbody>
 
-                  <td>
-                    <input
-                      id="sugar_sales_10kg"
-                      data-save
-                      step="any"
-                      oninput="
-                        updateSugarSalesTotal();
-                        saveSalesField('sugar_sales_10kg', 'sugar');
-                      "
-                    />
-                  </td>
+          <tr>
+            <td>1 كغم</td>
 
-                  <td>
-                    <input id="stock_10kg" data-save step="any"  oninput="updateSugarStockTotal()"
-                    />
-                  </td>
-                </tr>
+            <td>
+              <input
+                id="sugar_sales_1kg"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarSalesTotal();
+                  saveSalesField('sugar_sales_1kg', 'sugar');
+                "
+              />
+            </td>
 
-
-                <tr>
-                  <td>25 كغم</td>
-
-                  <td>
-                    <input
-                      id="sugar_sales_25kg"
-                      data-save
-                      step="any"
-                      oninput="
-                        updateSugarSalesTotal();
-                        saveSalesField('sugar_sales_25kg', 'sugar');
-                      "
-                    />
-                  </td>
-
-                  <td>
-                    <input id="stock_25kg" data-save step="any"  oninput="updateSugarStockTotal()"
-                    />
-                  </td>
-                </tr>
+            <td>
+              <input
+                id="stock_1kg"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarStockTotal();
+                  saveSalesField('stock_1kg', 'sugar');
+                "
+              />
+            </td>
+          </tr>
 
 
-                <tr>
-                  <td>50 كغم</td>
+          <tr>
+            <td>10 كغم</td>
 
-                  <td>
-                    <input
-                      id="sugar_sales_50kg"
-                      data-save
-                      step="any"
-                      oninput="
-                        updateSugarSalesTotal();
-                        saveSalesField('sugar_sales_50kg', 'sugar');
-                      "
-                    />
-                  </td>
+            <td>
+              <input
+                id="sugar_sales_10kg"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarSalesTotal();
+                  saveSalesField('sugar_sales_10kg', 'sugar');
+                "
+              />
+            </td>
 
-                  <td>
-                    <input id="stock_50kg" data-save step="any"  oninput="updateSugarStockTotal()"
-                    />
-                  </td>
-                </tr>
-
-
-                <tr>
-                  <td>1 طن</td>
-
-                  <td>
-                    <input
-                      id="sugar_sales_1ton"
-                      data-save
-                      step="any"
-                      oninput="
-                        updateSugarSalesTotal();
-                        saveSalesField('sugar_sales_1ton', 'sugar');
-                      "
-                    />
-                  </td>
-
-                  <td>
-                    <input id="stock_1t" data-save step="any"  oninput="updateSugarStockTotal()"
-                    />
-                  </td>
-                </tr>
-
-              </tbody>
+            <td>
+              <input
+                id="stock_10kg"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarStockTotal();
+                  saveSalesField('stock_10kg', 'sugar');
+                "
+              />
+            </td>
+          </tr>
 
 
-              <tfoot>
-                <tr>
-                  <td>
-                    <strong>الإجمالي</strong>
-                  </td>
+          <tr>
+            <td>25 كغم</td>
 
-                  <td>
-                    <input
-                      id="sugar_sales_total"
-                      readonly
-                      step="any"
-                      onchange="saveSalesField('sugar_sales_total', 'sugar')"
-                    />
-                  </td>
+            <td>
+              <input
+                id="sugar_sales_25kg"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarSalesTotal();
+                  saveSalesField('sugar_sales_25kg', 'sugar');
+                "
+              />
+            </td>
 
-                  <td>
-                    <input
-                      id="sugar_stock_total"
-                      readonly
-                      step="any"
-                    />
-                  </td>
-                </tr>
-              </tfoot>
+            <td>
+              <input
+                id="stock_25kg"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarStockTotal();
+                  saveSalesField('stock_25kg', 'sugar');
+                "
+              />
+            </td>
+          </tr>
 
-            </table>
 
-          </div>
+          <tr>
+            <td>50 كغم</td>
 
-        </div>
+            <td>
+              <input
+                id="sugar_sales_50kg"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarSalesTotal();
+                  saveSalesField('sugar_sales_50kg', 'sugar');
+                "
+              />
+            </td>
 
-      </details>
+            <td>
+              <input
+                id="stock_50kg"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarStockTotal();
+                  saveSalesField('stock_50kg', 'sugar');
+                "
+              />
+            </td>
+          </tr>
 
+
+          <tr>
+            <td>1 طن</td>
+
+            <td>
+              <input
+                id="sugar_sales_1ton"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarSalesTotal();
+                  saveSalesField('sugar_sales_1ton', 'sugar');
+                "
+              />
+            </td>
+
+            <td>
+              <input
+                id="stock_1t"
+                data-save
+                step="any"
+                oninput="
+                  updateSugarStockTotal();
+                  saveSalesField('stock_1t', 'sugar');
+                "
+              />
+            </td>
+          </tr>
+
+        </tbody>
+
+
+        <tfoot>
+          <tr>
+            <td>
+              <strong>الإجمالي</strong>
+            </td>
+
+            <td>
+              <input
+                id="sugar_sales_total"
+                readonly
+                step="any"
+                onchange="saveSalesField('sugar_sales_total', 'sugar')"
+              />
+            </td>
+
+            <td>
+              <input
+                id="sugar_stock_total"
+                readonly
+                step="any"
+              />
+            </td>
+          </tr>
+        </tfoot>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</details>
 
 
       <!-- ===================================================== -->
@@ -1422,10 +1455,11 @@
 
                   <td>
                     <input
-                      id="sun_750_stock"
-                      data-save
-                      step="any"
-                    />
+  id="sun_750_stock"
+  data-save
+  step="any"
+  oninput="saveSalesField('sun_750_stock', 'oil');"
+/>
                   </td>
                 </tr>
 
@@ -1984,11 +2018,12 @@
 
                 <td>
 
-                  <input
-                    id="flour_stock_flour"
-                    data-save
-                    step="any"
-                  />
+                 <input
+  id="flour_stock_flour"
+  data-save
+  step="any"
+  oninput="updateFlourStockTotal(); saveSalesField('flour_stock_flour', 'flour');"
+/>
 
                 </td>
 
@@ -2018,10 +2053,11 @@
                 <td>
 
                   <input
-                    id="flour_stock_bran"
-                    data-save
-                    step="any"
-                  />
+  id="flour_stock_bran"
+  data-save
+  step="any"
+  oninput="updateFlourStockTotal(); saveSalesField('flour_stock_bran', 'flour');"
+/>
 
                 </td>
 
