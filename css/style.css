@@ -3800,6 +3800,29 @@ body.dark-mode details summary {
   gap: 20px;
 
   margin-top: 12px;
+
+  min-width: 0;
+}
+
+.mill-output-grid {
+  display: flex;
+
+  gap: 9px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  flex-wrap: nowrap;
+
+  padding-bottom: 6px;
+
+  scrollbar-width: thin;
+}
+
+.mill-output {
+  flex: 0 0 180px;
+  min-width: 180px;
+  box-sizing: border-box;
 }
 
 /* =========================
@@ -3965,14 +3988,6 @@ body.dark-mode details summary {
 /* =========================
    المخرجات
 ========================= */
-
-.mill-output-grid {
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 9px;
-}
 
 .mill-output {
   padding: 10px 7px;

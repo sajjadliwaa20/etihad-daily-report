@@ -5050,7 +5050,7 @@ PKF
                     <textarea
                         id="sugar_quality_notes"
                         data-save
-                        placeholder="اكتب ملاحظات الجودة، نتائج الفحوصات، حالات عدم المطابقة أو أي ملاحظة تخص جودة السكر..."></textarea>
+                        placeholder="اكتب ملاحظات الجودة، نتائج الفحوصات و حالات عدم المطابقة ..."></textarea>
 
 
                     <br><br>
@@ -5098,7 +5098,7 @@ PKF
                     <textarea
                         id="sugar_safety_notes"
                         data-save
-                        placeholder="اكتب ملاحظات السلامة، المخاطر، الحوادث، إجراءات المعالجة والمتابعة..."></textarea>
+                        placeholder="اكتب ملاحظات السلامة، المخاطر،إجراءات المعالجة والمتابعة..."></textarea>
 
 
                     <br><br>
@@ -18977,6 +18977,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 10000);
 
       console.log("Realtime variable created");
+
       async function startRealtime() {
         console.log("startRealtime CALLED");
 
@@ -19087,6 +19088,12 @@ if (
               updateShorteningSalesTotal();
               updateFlourSalesTotal();
               updateFeedSalesTotal();
+              // إعادة حساب إجماليات الأرصدة لحظيًا
+updateSugarStockTotal();
+updateFlourStockTotal();
+updateSunStockTotal();
+updateOleinStockTotal();
+updatePalmStockTotal();
             },
           )
 

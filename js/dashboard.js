@@ -1335,6 +1335,56 @@ function applyApprovalPermissions(role) {
     if (area) area.style.display = "flex";
     if (button) button.style.display = "inline-flex";
   }
+
+  /* =====================================================
+   الإدارة لا ترى أزرار/مناطق الاعتماد
+===================================================== */
+
+  if (role === "admin" || role === "executive") {
+    document
+      .querySelectorAll(
+        `
+    .power-approval-area,
+    .flour-approval-area,
+    .sugar-approval-area,
+    .oil-approval-area,
+    .feed-approval-area,
+    .water-approval-area,
+    #feedProductionApprovalArea,
+    #feedPremixApprovalArea,
+    #feedRawStockApprovalArea,
+    #oilProductionApprovalArea,
+    #oilSalesApprovalArea,
+    #sugarPackingApprovalArea,
+    #flourPackingApprovalArea
+  `,
+      )
+      .forEach((el) => {
+        el.style.setProperty("display", "none", "important");
+      });
+
+    document
+      .querySelectorAll(
+        `
+    #approvePowerBtn,
+    #approveFlourBtn,
+    #SugarBtn,
+    #OilBtn,
+    #approveFeedBtn,
+    #approvewaterBtn,
+    #approveFeedProductionBtn,
+    #approveFeedPremixBtn,
+    #approveFeedRawStockBtn,
+    #approveOilProductionBtn,
+    #approveOilSalesBtn,
+    #approveSugarPackingBtn,
+    #approveFlourPackingBtn
+  `,
+      )
+      .forEach((btn) => {
+        btn.style.setProperty("display", "none", "important");
+      });
+  }
 }
 async function applyPermissions() {
   console.log("applyPermissions started");
@@ -2206,8 +2256,8 @@ function refreshHistoricalApprovalUI(affectedApprovals = []) {
     .trim()
     .toLowerCase();
 
-  /* التنفيذي لا يعدّل تقارير */
-  if (role === "executive") {
+  /* الإدارة والتنفيذي لا يعرض لهما اعتماد التقرير */
+  if (role === "admin" || role === "executive") {
     return;
   }
 
