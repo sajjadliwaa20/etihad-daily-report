@@ -1869,6 +1869,14 @@ async function applyPermissions() {
 
     applySugarDashboardPermissions(role);
 
+    const refineryProductFilter = document.getElementById(
+      "refineryCumulativeProduct",
+    );
+
+    if (refineryProductFilter) {
+      refineryProductFilter.disabled = false;
+    }
+
     window.location.hash = "home";
 
     return;
@@ -2759,100 +2767,112 @@ async function loadReminders() {
 
   if (!user) return;
 
+  // التأكد أن المستخدم Admin
   const { data: userInfo } = await supabaseClient
     .from("users")
-    .select("*")
+    .select("role")
     .eq("email", user.email)
     .single();
 
-  if (!userInfo) return;
+  if (!userInfo || userInfo.role !== "admin") return;
 
-  if (userInfo.role !== "admin") {
+  const container = document.getElementById("remindersContent");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  // جلب جميع الحسابات التي لديها رقم هاتف
+  const { data: users, error } = await supabaseClient
+    .from("users")
+    .select("email, name, role, subsection, phone")
+    .not("phone", "is", null)
+    .neq("role", "admin")
+    .order("name", { ascending: true });
+
+  if (error) {
+    console.error("LOAD WHATSAPP USERS ERROR:", error);
     return;
   }
 
-  const box = document.getElementById("remindersBox");
-
-  if (!box) return;
-
-  box.innerHTML = "";
-
-  const factories = [
-    {
-      role: "sugar",
-      name: "السكر",
-    },
-
-    {
-      role: "oil",
-      name: "الزيت",
-    },
-
-    {
-      role: "flour",
-      name: "الطحين",
-    },
-
-    {
-      role: "feed",
-      name: "الأعلاف",
-    },
-  ];
-
-  for (const factory of factories) {
-    const { data: userData } = await supabaseClient
-      .from("users")
-      .select("*")
-      .eq("role", factory.role)
-      .single();
-
-    if (!userData) continue;
-
-    document.getElementById("remindersContent").innerHTML += `
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#f8f9ff;
-border:1px solid #d9e3ff;
-padding:8px 12px;
-margin:6px 0;
-border-radius:8px;
-">
-
-<span style="
-font-weight:bold;
-font-size:14px;
-">
-${factory.name}
-</span>
-
-<button
-style="
-padding:5px 12px;
-font-size:13px;
-border:none;
-border-radius:6px;
-background:#1f3c88;
-color:white;
-cursor:pointer;
-"
-onclick="
-window.open(
-'https://wa.me/${userData.phone}?text=' +
-encodeURIComponent(
-'تذكير بتحديث تقرير ${factory.name}'
-)
-)
-">
-
-📲 تذكير
-
-</button>
-
-</div>
-`;
+  if (!users || users.length === 0) {
+    container.innerHTML = `
+      <div style="padding:10px;font-weight:bold;">
+        لا توجد حسابات تحتوي على أرقام هاتف
+      </div>
+    `;
+    return;
   }
+
+  users.forEach((userData) => {
+    const phone = String(userData.phone).replace(/\D/g, "");
+
+    if (!phone) return;
+
+    const displayName = userData.name || userData.email || "مستخدم";
+
+    const subsection = userData.subsection ? ` — ${userData.subsection}` : "";
+
+    container.innerHTML += `
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:10px;
+        padding:10px 12px;
+        margin:6px 0;
+        border-radius:8px;
+        background:#2b313a;
+        border:1px solid #454d58;
+      ">
+
+        <div style="display:flex;flex-direction:column;gap:3px;">
+
+          <span style="
+            font-weight:bold;
+            font-size:14px;
+          ">
+            ${displayName}
+          </span>
+
+          <span style="
+            font-size:11px;
+            opacity:.75;
+            direction:ltr;
+            text-align:right;
+          ">
+            ${userData.email}${subsection}
+          </span>
+
+        </div>
+
+        <button
+          style="
+            padding:7px 13px;
+            font-size:13px;
+            border:none;
+            border-radius:7px;
+            background:#25D366;
+            color:white;
+            cursor:pointer;
+            white-space:nowrap;
+          "
+          onclick="
+            window.open(
+              'https://wa.me/${phone}?text=' +
+              encodeURIComponent(
+                'تذكير بتحديث التقرير اليومي'
+              ),
+              '_blank'
+            )
+          "
+        >
+          💬 واتساب
+        </button>
+
+      </div>
+    `;
+  });
 }
 async function loadApprovalsDashboard() {
   const reportDate = document.getElementById("reportDateKey")?.value;
@@ -2864,7 +2884,7 @@ async function loadApprovalsDashboard() {
   if (!box) return;
 
   box.innerHTML = `
-<details>
+<details open>
 
 <summary style="
 font-size:18px;
@@ -4735,18 +4755,148 @@ function updateRefineryProductionVisuals() {
   }
 }
 
+/* =========================================================
+   REFINERY — MONTHLY CUMULATIVE PRODUCTION
+========================================================= */
+
+const REFINERY_CUMULATIVE_PRODUCTS = {
+  all: {
+    label: "كل المنتجات",
+
+    fields: [
+      "refinery1_sunflower",
+      "refinery1_olein",
+      "refinery1_ghee",
+      "refinery1_stearin",
+      "refinery1_shortening",
+      "refinery2",
+    ],
+  },
+
+  sunflower: {
+    label: "زيت عباد الشمس",
+
+    fields: ["refinery1_sunflower", "refinery2"],
+  },
+
+  olein: {
+    label: "زيت الأولين",
+
+    fields: ["refinery1_olein"],
+  },
+
+  ghee: {
+    label: "السمنة",
+
+    fields: ["refinery1_ghee"],
+  },
+
+  stearin: {
+    label: "زيت الستيارين",
+
+    fields: ["refinery1_stearin"],
+  },
+
+  shortening: {
+    label: "الشورتنينغ",
+
+    fields: ["refinery1_shortening"],
+  },
+};
+
+/* =========================================================
+   حالة لوحة التراكمي
+========================================================= */
+
+window.refineryCumulativeState = {
+  currentDate: null,
+
+  dates: [],
+
+  dailyByField: {},
+
+  chart: null,
+};
+
+/* =========================================================
+   تحميل الإنتاج التراكمي الشهري
+   ملاحظة:
+   report_date = تاريخ التقرير
+   production_date = report_date - يوم واحد
+========================================================= */
+
 async function loadRefineryProductionComparison() {
   const dateElement = document.getElementById("reportDateKey");
 
   if (!dateElement?.value) return;
 
-  const currentDate = dateElement.value;
+  const currentReportDate = dateElement.value;
 
   const factory = "oil";
 
-  /* =====================================
-     الحقول التي تدخل في الإنتاج
-  ===================================== */
+  /* =====================================================
+     تاريخ بداية شهر الإنتاج المطلوب
+     مثال:
+     تقرير 06/10 → شهر الإنتاج = أكتوبر
+  ====================================================== */
+
+  const monthStart = currentReportDate.slice(0, 8) + "01";
+
+  /* =====================================================
+     تاريخ آخر إنتاج مكتمل
+
+     تقرير 06/10
+     ↓
+     آخر إنتاج مكتمل = 05/10
+  ====================================================== */
+
+  const productionEndObject = new Date(currentReportDate + "T00:00:00");
+
+  productionEndObject.setDate(productionEndObject.getDate() - 1);
+
+  const productionEndDate =
+    productionEndObject.getFullYear() +
+    "-" +
+    String(productionEndObject.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(productionEndObject.getDate()).padStart(2, "0");
+
+  /* =====================================================
+     إذا كان أول يوم من الشهر:
+
+     تقرير 01/10
+     ↓
+     آخر إنتاج مكتمل = 30/09
+
+     بالتالي لا يوجد إنتاج مكتمل من أكتوبر حتى الآن.
+  ====================================================== */
+
+  const dates = [];
+
+  const start = new Date(monthStart + "T00:00:00");
+
+  const end = new Date(productionEndDate + "T00:00:00");
+
+  if (end >= start) {
+    for (
+      let date = new Date(start);
+      date <= end;
+      date.setDate(date.getDate() + 1)
+    ) {
+      const dateString =
+        date.getFullYear() +
+        "-" +
+        String(date.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(date.getDate()).padStart(2, "0");
+
+      dates.push(dateString);
+    }
+  }
+
+  /* =====================================================
+     جميع حقول إنتاج التكرير
+  ====================================================== */
 
   const productionFields = [
     "refinery1_sunflower",
@@ -4757,259 +4907,464 @@ async function loadRefineryProductionComparison() {
     "refinery2",
   ];
 
-  /* =====================================
-     حساب التواريخ
-  ===================================== */
+  /* =====================================================
+     إنشاء مصفوفة يومية لكل حقل
 
-  const dates = [];
+     المفتاح هنا هو production_date
+     وليس report_date
+  ====================================================== */
 
-  const baseDate = new Date(currentDate + "T00:00:00");
+  const dailyByField = {};
 
-  for (let i = 3; i >= 0; i--) {
-    const date = new Date(baseDate);
+  dates.forEach((productionDate) => {
+    dailyByField[productionDate] = {};
 
-    date.setDate(baseDate.getDate() - i);
-
-    const dateString =
-      date.getFullYear() +
-      "-" +
-      String(date.getMonth() + 1).padStart(2, "0") +
-      "-" +
-      String(date.getDate()).padStart(2, "0");
-
-    dates.push(dateString);
-  }
-
-  /* =====================================
-     جلب البيانات
-  ===================================== */
-
-  const { data, error } = await supabaseClient
-    .from("daily_reports")
-    .select("report_date,field_name,field_value")
-    .eq("factory", factory)
-    .in("report_date", dates)
-    .in("field_name", productionFields);
-
-  if (error) {
-    console.error("REFINERY COMPARISON ERROR:", error);
-
-    return;
-  }
-
-  /* =====================================
-     إنشاء مجموع لكل يوم
-  ===================================== */
-
-  const dailyTotals = {};
-
-  dates.forEach((date) => {
-    dailyTotals[date] = 0;
+    productionFields.forEach((field) => {
+      dailyByField[productionDate][field] = 0;
+    });
   });
 
-  (data || []).forEach((row) => {
-    if (!dailyTotals.hasOwnProperty(row.report_date)) {
+  /* =====================================================
+     جلب البيانات من Supabase
+
+     بما أن:
+     production_date = report_date - 1
+
+     فإن:
+     إنتاج 01/10 ← تقرير 02/10
+     إنتاج 05/10 ← تقرير 06/10
+
+     لذلك نحتاج تقارير:
+     02/10 → 06/10
+  ====================================================== */
+
+  if (dates.length > 0) {
+    const reportStartObject = new Date(monthStart + "T00:00:00");
+
+    reportStartObject.setDate(reportStartObject.getDate() + 1);
+
+    const reportStartDate =
+      reportStartObject.getFullYear() +
+      "-" +
+      String(reportStartObject.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(reportStartObject.getDate()).padStart(2, "0");
+
+    const reportEndObject = new Date(productionEndDate + "T00:00:00");
+
+    reportEndObject.setDate(reportEndObject.getDate() + 1);
+
+    const reportEndDate =
+      reportEndObject.getFullYear() +
+      "-" +
+      String(reportEndObject.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(reportEndObject.getDate()).padStart(2, "0");
+
+    const { data, error } = await supabaseClient
+      .from("daily_reports")
+      .select("report_date,field_name,field_value")
+      .eq("factory", factory)
+      .gte("report_date", reportStartDate)
+      .lte("report_date", reportEndDate)
+      .in("field_name", productionFields);
+
+    if (error) {
+      console.error("REFINERY CUMULATIVE ERROR:", error);
+
       return;
     }
 
-    const value = parseFloat(row.field_value) || 0;
+    /* =================================================
+       تحويل report_date إلى production_date
 
-    dailyTotals[row.report_date] += value;
-  });
+       مثال:
+       report_date 06/10
+       ↓
+       production_date 05/10
+    ================================================= */
 
-  /* =====================================
-     بيانات اليوم
-  ===================================== */
+    (data || []).forEach((row) => {
+      if (!row.report_date) return;
 
-  const todayTotal = dailyTotals[currentDate] || 0;
+      const productionDateObject = new Date(row.report_date + "T00:00:00");
 
-  /* =====================================
-     الأيام الثلاثة السابقة
-  ===================================== */
+      productionDateObject.setDate(productionDateObject.getDate() - 1);
 
-  const previousDates = dates.filter((date) => date !== currentDate);
+      const productionDate =
+        productionDateObject.getFullYear() +
+        "-" +
+        String(productionDateObject.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(productionDateObject.getDate()).padStart(2, "0");
 
-  const previousValues = previousDates.map((date) => dailyTotals[date] || 0);
+      /* ===============================================
+         تجاهل أي يوم خارج الفترة المطلوبة
+      =============================================== */
 
-  const average = previousValues.length
-    ? previousValues.reduce((sum, value) => sum + value, 0) /
-      previousValues.length
-    : 0;
+      if (!dailyByField[productionDate]) {
+        return;
+      }
 
-  /* =====================================
-     نسبة الفرق
-  ===================================== */
+      if (
+        !Object.prototype.hasOwnProperty.call(
+          dailyByField[productionDate],
+          row.field_name,
+        )
+      ) {
+        return;
+      }
 
-  let differencePercent = 0;
-
-  if (average > 0) {
-    differencePercent = ((todayTotal - average) / average) * 100;
+      dailyByField[productionDate][row.field_name] =
+        parseFloat(row.field_value) || 0;
+    });
   }
 
-  /* =====================================
-     تحديث الملخص
-  ===================================== */
+  /* =====================================================
+     حفظ الحالة العامة
+  ====================================================== */
 
-  const todayElement = document.getElementById("refineryComparisonToday");
+  window.refineryCumulativeState = {
+    currentDate: currentReportDate,
 
-  const averageElement = document.getElementById("refineryComparisonAverage");
+    dates,
 
-  if (todayElement) {
-    todayElement.textContent = todayTotal.toFixed(2);
+    dailyByField,
+
+    chart: window.refineryCumulativeState?.chart || null,
+  };
+
+  /* =====================================================
+     تحديث الفترة الظاهرة للمستخدم
+  ====================================================== */
+
+  const periodElement = document.getElementById("refineryCumulativePeriod");
+
+  if (periodElement) {
+    const currentDateObject = new Date(currentReportDate + "T00:00:00");
+
+    const month = String(currentDateObject.getMonth() + 1).padStart(2, "0");
+
+    const year = currentDateObject.getFullYear();
+
+    if (dates.length > 0) {
+      const firstDate = dates[0];
+      const lastDate = dates[dates.length - 1];
+
+      const firstObject = new Date(firstDate + "T00:00:00");
+
+      const lastObject = new Date(lastDate + "T00:00:00");
+
+      const firstDay = String(firstObject.getDate()).padStart(2, "0");
+
+      const firstMonth = String(firstObject.getMonth() + 1).padStart(2, "0");
+
+      const lastDay = String(lastObject.getDate()).padStart(2, "0");
+
+      const lastMonth = String(lastObject.getMonth() + 1).padStart(2, "0");
+
+      periodElement.textContent = `من ${firstDay}/${firstMonth}/${year} إلى ${lastDay}/${lastMonth}/${year}`;
+    } else {
+      periodElement.textContent = `لا يوجد إنتاج مكتمل في شهر ${month}/${year} حتى الآن`;
+    }
+  }
+
+  /* =====================================================
+     إعادة رسم التراكمي
+  ====================================================== */
+
+  renderRefineryCumulativeChart();
+}
+
+/* =========================================================
+   فلترة المنتج
+========================================================= */
+
+function updateRefineryCumulativeFilter(productKey) {
+  if (!REFINERY_CUMULATIVE_PRODUCTS[productKey]) {
+    productKey = "all";
+  }
+
+  const state = window.refineryCumulativeState;
+
+  const product = REFINERY_CUMULATIVE_PRODUCTS[productKey];
+
+  /* =====================================================
+     حساب الإنتاج اليومي للمنتج المختار
+  ====================================================== */
+
+  const dailyValues = {};
+
+  state.dates.forEach((date) => {
+    let total = 0;
+
+    product.fields.forEach((field) => {
+      total += state.dailyByField[date]?.[field] || 0;
+    });
+
+    dailyValues[date] = total;
+  });
+
+  /* =====================================================
+     حساب التراكمي
+  ====================================================== */
+
+  let cumulative = 0;
+
+  const cumulativeValues = state.dates.map((date) => {
+    cumulative += dailyValues[date] || 0;
+
+    return Number(cumulative.toFixed(2));
+  });
+
+  /* =====================================================
+     الإجمالي
+  ====================================================== */
+
+  const total = cumulativeValues.length
+    ? cumulativeValues[cumulativeValues.length - 1]
+    : 0;
+
+  /* =====================================================
+     متوسط الإنتاج اليومي
+  ====================================================== */
+
+  const daysCount = state.dates.length || 1;
+
+  const average = total / daysCount;
+
+  /* =====================================================
+     إجمالي كل المنتجات
+  ====================================================== */
+
+  let allProductsTotal = 0;
+
+  const allProduct = REFINERY_CUMULATIVE_PRODUCTS.all;
+
+  state.dates.forEach((date) => {
+    allProduct.fields.forEach((field) => {
+      allProductsTotal += state.dailyByField[date]?.[field] || 0;
+    });
+  });
+
+  /* =====================================================
+     نسبة مساهمة المنتج
+  ====================================================== */
+
+  let contribution = 100;
+
+  if (productKey !== "all" && allProductsTotal > 0) {
+    contribution = (total / allProductsTotal) * 100;
+  }
+
+  /* =====================================================
+     تحديث KPI
+  ====================================================== */
+
+  const totalElement = document.getElementById("refineryCumulativeTotal");
+
+  const averageElement = document.getElementById("refineryCumulativeAverage");
+
+  const productNameElement = document.getElementById(
+    "refineryCumulativeProductName",
+  );
+
+  const contributionElement = document.getElementById(
+    "refineryCumulativeContribution",
+  );
+
+  if (totalElement) {
+    totalElement.textContent = total.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   }
 
   if (averageElement) {
-    averageElement.textContent = average.toFixed(2);
+    averageElement.textContent = average.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   }
 
-  /* =====================================
-     مؤشر المقارنة
-  ===================================== */
+  if (productNameElement) {
+    productNameElement.textContent = product.label;
+  }
 
-  const indicator = document.getElementById("refineryComparisonIndicator");
-
-  const arrow = document.getElementById("refineryComparisonArrow");
-
-  const percent = document.getElementById("refineryComparisonPercent");
-
-  const text = document.getElementById("refineryComparisonText");
-
-  if (indicator) {
-    indicator.classList.remove("positive", "negative", "neutral");
-
-    if (average <= 0) {
-      indicator.classList.add("neutral");
-
-      if (arrow) arrow.textContent = "●";
-
-      if (percent) percent.textContent = "—";
-
-      if (text) {
-        text.textContent = "لا توجد بيانات كافية";
-      }
-    } else if (todayTotal > average) {
-      indicator.classList.add("positive");
-
-      if (arrow) arrow.textContent = "↑";
-
-      if (percent) {
-        percent.textContent = "+" + differencePercent.toFixed(1) + "%";
-      }
-
-      if (text) {
-        text.textContent = "أعلى من متوسط آخر 3 أيام";
-      }
-    } else if (todayTotal < average) {
-      indicator.classList.add("negative");
-
-      if (arrow) arrow.textContent = "↓";
-
-      if (percent) {
-        percent.textContent = differencePercent.toFixed(1) + "%";
-      }
-
-      if (text) {
-        text.textContent = "أقل من متوسط آخر 3 أيام";
-      }
+  if (contributionElement) {
+    if (productKey === "all") {
+      contributionElement.textContent = "100% من إجمالي التكرير";
     } else {
-      indicator.classList.add("neutral");
-
-      if (arrow) arrow.textContent = "→";
-
-      if (percent) percent.textContent = "0%";
-
-      if (text) {
-        text.textContent = "مطابق لمتوسط آخر 3 أيام";
-      }
+      contributionElement.textContent = `${contribution.toFixed(1)}% من إجمالي التكرير`;
     }
   }
 
-  /* =====================================
-     رسم الأعمدة
-  ===================================== */
+  /* =====================================================
+     آخر يوم
+  ====================================================== */
 
-  renderRefineryComparisonChart(dates, dailyTotals, currentDate);
+  const lastDayElement = document.getElementById("refineryCumulativeLastDay");
+
+  if (lastDayElement) {
+    const lastDate = state.currentDate.split("-");
+
+    lastDayElement.textContent = `حتى ${lastDate[2]}/${lastDate[1]}/${lastDate[0]}`;
+  }
+
+  /* =====================================================
+     تحديث الرسم
+  ====================================================== */
+
+  const canvas = document.getElementById("refineryCumulativeChart");
+
+  if (!canvas || typeof Chart === "undefined") {
+    return;
+  }
+
+  const labels = state.dates.map((date) => {
+    const parts = date.split("-");
+
+    return `${parts[2]}/${parts[1]}`;
+  });
+
+  /* =====================================================
+     حذف الرسم السابق
+  ====================================================== */
+
+  if (state.chart) {
+    state.chart.destroy();
+
+    state.chart = null;
+  }
+
+  /* =====================================================
+     إنشاء الرسم
+  ====================================================== */
+
+  const ctx = canvas.getContext("2d");
+
+  state.chart = new Chart(ctx, {
+    type: "line",
+
+    data: {
+      labels,
+
+      datasets: [
+        {
+          label: `الإنتاج التراكمي — ${product.label}`,
+
+          data: cumulativeValues,
+
+          borderColor: "#f5c542",
+
+          backgroundColor: "rgba(245, 197, 66, 0.12)",
+
+          borderWidth: 3,
+
+          fill: true,
+
+          tension: 0.35,
+
+          pointRadius: 3,
+
+          pointHoverRadius: 6,
+
+          pointBackgroundColor: "#f5c542",
+
+          pointBorderColor: "#ffffff",
+
+          pointBorderWidth: 2,
+        },
+      ],
+    },
+
+    options: {
+      responsive: true,
+
+      maintainAspectRatio: false,
+
+      interaction: {
+        mode: "index",
+
+        intersect: false,
+      },
+
+      plugins: {
+        legend: {
+          display: false,
+        },
+
+        tooltip: {
+          rtl: true,
+
+          textDirection: "rtl",
+
+          displayColors: false,
+
+          callbacks: {
+            label: function (context) {
+              return (
+                "التراكمي: " +
+                context.parsed.y.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }) +
+                " طن"
+              );
+            },
+          },
+        },
+      },
+
+      scales: {
+        x: {
+          grid: {
+            color: "rgba(255,255,255,0.05)",
+          },
+
+          ticks: {
+            color: "rgba(255,255,255,0.45)",
+
+            font: {
+              size: 10,
+            },
+          },
+        },
+
+        y: {
+          beginAtZero: true,
+
+          grid: {
+            color: "rgba(255,255,255,0.06)",
+          },
+
+          ticks: {
+            color: "rgba(255,255,255,0.45)",
+
+            font: {
+              size: 10,
+            },
+
+            callback: function (value) {
+              return Number(value).toLocaleString("en-US");
+            },
+          },
+        },
+      },
+    },
+  });
 }
 
-function renderRefineryComparisonChart(dates, dailyTotals, currentDate) {
-  const container = document.getElementById("refineryComparisonBars");
+/* =========================================================
+   الرسم عند التحميل
+========================================================= */
 
-  if (!container) return;
+function renderRefineryCumulativeChart() {
+  const select = document.getElementById("refineryCumulativeProduct");
 
-  container.innerHTML = "";
+  const selectedProduct = select?.value || "all";
 
-  /* =====================================
-     أعلى قيمة للمخطط
-  ===================================== */
-
-  const values = dates.map((date) => dailyTotals[date] || 0);
-
-  const maxValue = Math.max(1500, ...values);
-
-  const maxLabel = document.getElementById("chartMaxLabel");
-
-  if (maxLabel) {
-    maxLabel.textContent = Math.ceil(maxValue / 500) * 500;
-  }
-
-  const chartMax = Math.max(1500, Math.ceil(maxValue / 500) * 500);
-
-  /* =====================================
-     إنشاء الأعمدة
-  ===================================== */
-
-  dates.forEach((date) => {
-    const value = dailyTotals[date] || 0;
-
-    const column = document.createElement("div");
-
-    column.className = "comparison-bar-column";
-
-    if (date === currentDate) {
-      column.classList.add("today");
-    }
-
-    const valueLabel = document.createElement("div");
-
-    valueLabel.className = "comparison-bar-value";
-
-    valueLabel.textContent = value.toFixed(0);
-
-    const bar = document.createElement("div");
-
-    bar.className = "comparison-bar";
-
-    if (date === currentDate) {
-      bar.classList.add("today");
-    }
-
-    const height = value > 0 ? Math.max((value / chartMax) * 100, 2) : 2;
-
-    bar.style.height = height + "%";
-
-    const dateLabel = document.createElement("div");
-
-    dateLabel.className = "comparison-bar-date";
-
-    const d = new Date(date + "T00:00:00");
-
-    if (date === currentDate) {
-      dateLabel.textContent = "اليوم";
-    } else {
-      dateLabel.textContent =
-        String(d.getDate()).padStart(2, "0") +
-        "/" +
-        String(d.getMonth() + 1).padStart(2, "0");
-    }
-
-    column.appendChild(valueLabel);
-
-    column.appendChild(bar);
-
-    column.appendChild(dateLabel);
-
-    container.appendChild(column);
-  });
+  updateRefineryCumulativeFilter(selectedProduct);
 }
 
 function updateRefinery2Visual(value) {
@@ -5314,15 +5669,15 @@ function setPlasticProductionDetailsByRole(role) {
 ========================================================= */
 
 const packingTargets = {
-  krones1: 40000,
+  krones1: 18000,
 
-  krones2: 40000,
+  krones2: 18000,
 
-  krones3: 40000,
+  krones3: 18000,
 
-  gea: 20000,
+  gea: 19200,
 
-  runo: 30000,
+  runo: 6480,
 };
 
 /* =========================================================
@@ -5330,7 +5685,23 @@ const packingTargets = {
 ========================================================= */
 
 function packingNumber(id) {
-  return parseFloat(document.getElementById(id)?.value) || 0;
+  const element = document.getElementById(id);
+
+  if (!element) {
+    return 0;
+  }
+
+  const rawValue = String(element.value ?? "")
+    .replace(/,/g, "")
+    .trim();
+
+  if (rawValue === "") {
+    return 0;
+  }
+
+  const value = Number(rawValue);
+
+  return Number.isFinite(value) ? value : 0;
 }
 
 /* =========================================================
@@ -5519,18 +5890,59 @@ function updatePackingDashboard() {
    تحديث الهدف
 ========================================================= */
 
+/* =========================================================
+   تحديث هدف خط التعبئة
+   تحويل الهدف والإنتاج إلى أرقام آمنة
+========================================================= */
+
 function updatePackingTarget(line, value) {
-  const target = packingTargets[line] || 0;
+  /* =======================================================
+     تحويل الإنتاج والهدف إلى أرقام مؤكدة
+  ======================================================= */
 
-  if (!target) return;
+  const rawTarget = packingTargets[line];
 
-  const percent = (value / target) * 100;
+  const target = Number(
+    String(rawTarget ?? "")
+      .replace(/,/g, "")
+      .trim(),
+  );
 
-  const displayPercent = Math.min(percent, 100);
+  const production = Number(
+    String(value ?? "")
+      .replace(/,/g, "")
+      .trim(),
+  );
 
-  setPackingText(line + "TargetPercent", percent.toFixed(1) + "%");
+  const safeTarget = Number.isFinite(target) && target > 0 ? target : 0;
 
-  setPackingText(line + "TargetValue", formatPackingNumber(target));
+  const safeProduction = Number.isFinite(production) ? production : 0;
+
+  /* =======================================================
+     حساب النسبة
+  ======================================================= */
+
+  const percent = safeTarget > 0 ? (safeProduction / safeTarget) * 100 : 0;
+
+  const safePercent = Number.isFinite(percent) ? percent : 0;
+
+  const displayPercent = Math.max(0, Math.min(safePercent, 100));
+
+  /* =======================================================
+     عرض النسبة
+  ======================================================= */
+
+  setPackingText(line + "TargetPercent", safePercent.toFixed(1) + "%");
+
+  /* =======================================================
+     عرض الهدف
+  ======================================================= */
+
+  setPackingText(line + "TargetValue", safeTarget);
+
+  /* =======================================================
+     شريط التقدم
+  ======================================================= */
 
   const bar = document.getElementById(line + "Progress");
 
@@ -5550,13 +5962,15 @@ function updatePackingTarget(line, value) {
         : line + "Status",
   );
 
-  if (!status) return;
+  if (!status) {
+    return;
+  }
 
-  if (value <= 0) {
+  if (safeProduction <= 0) {
     status.style.background = "#666";
 
     status.style.boxShadow = "0 0 0 4px rgba(255,255,255,.025)";
-  } else if (percent < 70) {
+  } else if (safePercent < 70) {
     status.style.background = "#e5a93d";
 
     status.style.boxShadow = "0 0 0 4px rgba(229,169,61,.10)";
@@ -5576,11 +5990,54 @@ function setPackingText(id, value) {
 
   if (!element) return;
 
-  element.textContent = formatPackingNumber(value);
+  /* =========================================
+     إذا كانت القيمة رقمًا حقيقيًا
+     يتم تنسيقها كرقم
+  ========================================= */
+
+  if (typeof value === "number") {
+    if (Number.isFinite(value)) {
+      element.textContent = value.toLocaleString("en-US", {
+        maximumFractionDigits: 2,
+      });
+    } else {
+      element.textContent = "0";
+    }
+
+    return;
+  }
+
+  /* =========================================
+     إذا كانت القيمة نصًا
+     نعرضها كما هي
+     
+     مهم جدًا للنسب:
+     31.5%
+     
+     والأسماء:
+     كرونس 1
+  ========================================= */
+
+  if (value === null || value === undefined) {
+    element.textContent = "0";
+    return;
+  }
+
+  element.textContent = String(value);
 }
 
+/* =========================================================
+   تنسيق الأرقام فقط
+========================================================= */
+
 function formatPackingNumber(value) {
-  return Number(value || 0).toLocaleString("en-US", {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return "0";
+  }
+
+  return number.toLocaleString("en-US", {
     maximumFractionDigits: 2,
   });
 }

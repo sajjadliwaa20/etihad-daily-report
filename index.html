@@ -477,16 +477,6 @@
         <div class="main-command-actions">
 
             <button
-                id="darkModeBtn"
-                class="main-command-action"
-                onclick="toggleDarkMode()"
-            >
-                🌙
-                <span>الوضع الليلي</span>
-            </button>
-
-
-            <button
                 class="main-command-action"
                 onclick="window.print()"
             >
@@ -676,7 +666,7 @@
 
                 <input
                     id="updateVersion"
-                    placeholder="مثال: 6.3.0"
+                    placeholder=" "
                 />
 
 
@@ -2916,7 +2906,7 @@
           id="power_station_notes"
           class="notes"
           data-save
-          placeholder="اكتب ملاحظات محطة الطاقة، الحالة التشغيلية، الأعطال أو الإجراءات المتخذة..."
+          placeholder="اكتب ملاحظات محطة الطاقة..."
         ></textarea>
 
 
@@ -6951,99 +6941,169 @@ PKF
 <!-- =========================
      مقارنة الإنتاج
 ========================== -->
+<!-- =========================================================
+     الإنتاج التراكمي الشهري للتكرير
+========================================================= -->
 
-<div class="refinery-comparison-card">
+<div class="refinery-cumulative-card">
 
-  <div class="comparison-header">
+  <!-- الرأس -->
 
-    <div class="comparison-title">
+  <div class="refinery-cumulative-header">
 
-      <div class="comparison-icon">
+    <div class="refinery-cumulative-title">
+
+      <div class="refinery-cumulative-icon">
         ↗
       </div>
 
       <div>
-        <strong>مقارنة إنتاج التكرير</strong>
-        <small>اليوم مقارنة بآخر 3 أيام</small>
+        <strong>الإنتاج التراكمي الشهري</strong>
+
+        <small id="refineryCumulativePeriod">
+  من بداية شهر الإنتاج حتى آخر يوم مكتمل
+</small>
       </div>
 
     </div>
+
+
+    <!-- فلترة المنتجات -->
 
     <div
-      id="refineryComparisonIndicator"
-      class="comparison-indicator neutral"
-    >
+  class="refinery-cumulative-filter"
+  id="refineryCumulativeFilterArea"
+>
 
-      <span id="refineryComparisonArrow">●</span>
+      <span>عرض:</span>
+
+      <select
+        id="refineryCumulativeProduct"
+        onchange="updateRefineryCumulativeFilter(this.value)"
+      >
+
+        <option value="all">
+          كل المنتجات
+        </option>
+
+        <option value="sunflower">
+          زيت عباد الشمس
+        </option>
+
+        <option value="olein">
+          زيت الأولين
+        </option>
+
+        <option value="ghee">
+          السمنة
+        </option>
+
+        <option value="stearin">
+          زيت الستيارين
+        </option>
+
+        <option value="shortening">
+          الشورتنينغ
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       بطاقات الملخص
+  ====================================================== -->
+
+  <div class="refinery-cumulative-summary">
+
+    <!-- الإجمالي -->
+
+    <div class="refinery-cumulative-kpi main">
+
+      <span>الإجمالي التراكمي</span>
 
       <div>
-        <strong id="refineryComparisonPercent">0%</strong>
-        <small id="refineryComparisonText">
-          لا توجد مقارنة
-        </small>
+
+        <strong id="refineryCumulativeTotal">
+          0.00
+        </strong>
+
+        <small>طن</small>
+
       </div>
 
     </div>
 
+
+    <!-- المتوسط -->
+
+    <div class="refinery-cumulative-kpi">
+
+      <span>متوسط الإنتاج اليومي</span>
+
+      <div>
+
+        <strong id="refineryCumulativeAverage">
+          0.00
+        </strong>
+
+        <small>طن / يوم</small>
+
+      </div>
+
+    </div>
+
+
+    <!-- المنتج -->
+
+    <div class="refinery-cumulative-kpi">
+
+      <span>المنتج المعروض</span>
+
+      <strong
+        id="refineryCumulativeProductName"
+        class="refinery-cumulative-product-name"
+      >
+        كل المنتجات
+      </strong>
+
+      <small id="refineryCumulativeContribution">
+        100% من إجمالي التكرير
+      </small>
+
+    </div>
+
   </div>
 
 
-  <!-- ملخص اليوم -->
-  <div class="comparison-summary">
+  <!-- =====================================================
+       الرسم التراكمي
+  ====================================================== -->
 
-    <div class="comparison-today">
+  <div class="refinery-cumulative-chart">
 
-      <span>إنتاج اليوم</span>
-
-      <strong id="refineryComparisonToday">
-        0.00
-      </strong>
-
-      <small>طن</small>
-
-    </div>
-
-
-    <div class="comparison-average">
-
-      <span>متوسط آخر 3 أيام</span>
-
-      <strong id="refineryComparisonAverage">
-        0.00
-      </strong>
-
-      <small>طن</small>
-
-    </div>
+    <canvas id="refineryCumulativeChart"></canvas>
 
   </div>
 
 
-  <!-- المخطط -->
-  <div class="refinery-chart">
+  <!--=====================================================
+       معلومات أسفل الرسم
+  ======================================================-->
 
-    <div class="chart-y-axis">
+  <div class="refinery-cumulative-footer">
 
-      <span id="chartMaxLabel">1500</span>
-      <span>1000</span>
-      <span>500</span>
-      <span>0</span>
+    <span>
+      <i></i>
+      الإنتاج التراكمي
+    </span>
 
-    </div>
-
-    <div class="chart-area">
-
-      <div class="chart-grid-line"></div>
-      <div class="chart-grid-line"></div>
-      <div class="chart-grid-line"></div>
-      <div class="chart-grid-line"></div>
-
-      <div
-        id="refineryComparisonBars"
-        class="comparison-bars"
-      ></div>
-
-    </div>
+    <span id="refineryCumulativeLastDay">
+      آخر تحديث: —
+    </span>
 
   </div>
 
@@ -7179,26 +7239,9 @@ PKF
                 </div>
               </div>
 
-              <!-- حالة تشغيل المحطة -->
-
-              <div class="separation-kpi-card station-mode-card">
-                <div class="separation-kpi-top">
-                  <span class="separation-kpi-icon"> 🔄 </span>
-
-                  <span class="separation-kpi-label"> وضع المحطة </span>
-                </div>
-
-                <div class="station-mode-display" id="stationModeDisplay">
-                  غير محدد
-                </div>
-
-                <div class="separation-kpi-footer">
-                  الحالة التشغيلية الحالية
-                </div>
-              </div>
             </div>
 
-            <!-- =========================
+       <!-- =========================
              ملاحظات المحطة
         ========================== -->
 
@@ -7275,8 +7318,31 @@ PKF
     <!-- =================================================
          إجمالي شفتات كرونس فقط
     ================================================= -->
+    <!-- الإجمالي اليومي -->
+
+  <div class="krones-total-day">
+
+    <div>
+
+      <span class="krones-total-icon">🏭</span>
+
+      <div>
+        <span>إجمالي إنتاج كرونس االامس</span>
+      </div>
+
+    </div>
+
+    <strong id="kronesDailyTotal">0</strong>
+
+    <span>كارتون</span>
+
+  </div>
+  
+  <BR />
 
     <div class="packing-shifts-card">
+
+   
 
       <div class="packing-shifts-header">
 
@@ -8001,27 +8067,6 @@ PKF
       </div>
 
     </div>
-
-  <!-- الإجمالي اليومي -->
-
-  <div class="krones-total-day">
-
-    <div>
-
-      <span class="krones-total-icon">🏭</span>
-
-      <div>
-        <span>إجمالي إنتاج كرونس اليوم</span>
-        <small>كرونس 1 + كرونس 2 + كرونس 3</small>
-      </div>
-
-    </div>
-
-    <strong id="kronesDailyTotal">0</strong>
-
-    <span>كارتون</span>
-
-  </div>
 
 <br />
 
@@ -16355,9 +16400,21 @@ function recalculateAll() {
             ) {
               el.readOnly = true;
             }
-          } else {
-            el.disabled = true;
-          }
+         } else {
+  /*
+   * فلاتر العرض والتحليل تبقى قابلة للاستخدام
+   * حتى في وضع القراءة فقط
+   */
+
+  if (
+    el.id === "refineryCumulativeProduct"
+  ) {
+    el.disabled = false;
+    return;
+  }
+
+  el.disabled = true;
+}
         });
 
         // إخفاء أزرار الحفظ والاعتماد فقط
@@ -16476,6 +16533,14 @@ function recalculateAll() {
           editBtn.style.background = "#d97706";
         }
         applySugarDashboardPermissions("executive");
+
+        const refineryProductFilter = document.getElementById(
+  "refineryCumulativeProduct"
+);
+
+if (refineryProductFilter) {
+  refineryProductFilter.disabled = false;
+}
       }
 
       async function approveSection(
@@ -18237,7 +18302,7 @@ if (factory === "oil") {
 
   updatePalmSalesTotal();
   updatePalmStockTotal();
-  updateKronesProductionSummary();
+  updatePackingDashboard();
 
   /* =====================================
      تحديث واجهة التكرير
@@ -19004,7 +19069,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (userInfo?.role === "admin") {
           loadApprovalsDashboard();
 
-          loadLateFieldsDashboard();
+          if (typeof loadLateFieldsDashboard === "function") {
+  loadLateFieldsDashboard();
+}
 
           loadReminders();
 
@@ -19183,13 +19250,8 @@ updatePalmStockTotal();
             localStorage.removeItem("pendingUpdate");
           }
 
-          // تطبيق الوضع الليلي افتراضياً
-          const savedTheme = localStorage.getItem("darkMode");
-          const useDark = savedTheme === null || savedTheme === "true";
-
-          if (useDark) {
-            document.body.classList.add("dark-mode");
-          }
+          // الوضع الليلي ثابت في المشروع
+document.body.classList.add("dark-mode");
 
           await applyPermissions();
 
@@ -19203,12 +19265,6 @@ updatePalmStockTotal();
 
           if (hasUpdate) {
             showUpdateDialog();
-          }
-
-          const btn = document.getElementById("darkModeBtn");
-
-          if (btn) {
-            btn.innerHTML = useDark ? "☀️ الوضع النهاري" : "🌙 الوضع الليلي";
           }
 
           /* أخفِ شاشة التحميل مباشرة */
@@ -19531,34 +19587,6 @@ installPowerNegativeButtons();
 
         showNotification(" تم رفع الملفات بنجاح", "success");
       }
-
-      function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
-
-        const isDark = document.body.classList.contains("dark-mode");
-
-        localStorage.setItem("darkMode", isDark);
-
-        const btn = document.getElementById("darkModeBtn");
-
-        if (btn) {
-          btn.innerHTML = isDark ? "☀️ الوضع النهاري" : "🌙 الوضع الليلي";
-        }
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const savedDarkMode = localStorage.getItem("darkMode");
-
-        const isDark = savedDarkMode === null ? true : savedDarkMode === "true";
-
-        document.body.classList.toggle("dark-mode", isDark);
-
-        const btn = document.getElementById("darkModeBtn");
-
-        if (btn) {
-          btn.innerHTML = isDark ? "☀️ الوضع النهاري" : "🌙 الوضع الليلي";
-        }
-      });
 
       function toggleAdminEditMode() {
         adminEditMode = !adminEditMode;
@@ -23915,518 +23943,6 @@ function showNotification(message, type = "success") {
 </style>
 
 <script>
-/* =========================================================
-   OIL PACKING PRODUCTION PROGRESS
-   الأهداف اليومية لخطوط التعبئة
-   ========================================================= */
-
-(function () {
-
-    /* =====================================================
-       الأهداف اليومية
-       ===================================================== */
-
-    const PACKING_TARGETS = {
-
-        /* Krones */
-        krones1: 54000,
-        krones2: 54000,
-        krones3: 54000,
-
-        /* Plastic */
-        bottle1: 1000000,
-        bottle2: 1000000,
-        spout1: 900000,
-        spout2: 900000,
-        cap: 1800000
-    };
-
-
-    /* =====================================================
-       أدوات مساعدة
-       ===================================================== */
-
-    function getNumber(id) {
-
-        const el = document.getElementById(id);
-
-        if (!el) {
-            return 0;
-        }
-
-        const value = Number(
-            String(el.value ?? "").replace(/,/g, "")
-        );
-
-        return Number.isFinite(value) ? value : 0;
-    }
-
-
-    function setProgress(barId, percent) {
-
-        const bar = document.getElementById(barId);
-
-        if (!bar) {
-            return;
-        }
-
-        const safePercent = Math.max(
-            0,
-            Math.min(percent, 100)
-        );
-
-        bar.style.width = safePercent + "%";
-    }
-
-
-    function setText(id, value) {
-
-        const el = document.getElementById(id);
-
-        if (!el) {
-            return;
-        }
-
-        el.textContent = value;
-    }
-
-
-    /* =====================================================
-       تحديث خط كرونس
-       ===================================================== */
-
-    function updateKronesLine(line) {
-
-        const morning = getNumber("krones" + line + "a");
-        const evening = getNumber("krones" + line + "b");
-        const night = getNumber("krones" + line + "c");
-
-        const total =
-            morning +
-            evening +
-            night;
-
-        const target =
-            PACKING_TARGETS["krones" + line];
-
-        const percent =
-            target > 0
-                ? (total / target) * 100
-                : 0;
-
-
-        /* إجمالي الخط */
-
-        setText(
-            "krones" + line + "Total",
-            total.toLocaleString("en-US", {
-                maximumFractionDigits: 0
-            })
-        );
-
-
-        /* النسبة */
-
-        setText(
-            "krones" + line + "TargetPercent",
-            percent.toFixed(1) + "%"
-        );
-
-
-        /* الشريط */
-
-        setProgress(
-            "krones" + line + "Progress",
-            percent
-        );
-    }
-
-
-    /* =====================================================
-       تحديث خطوط كرونس الثلاثة
-       ===================================================== */
-
-    function updateKronesProgress() {
-
-        updateKronesLine(1);
-        updateKronesLine(2);
-        updateKronesLine(3);
-
-    }
-
-
-    /* =====================================================
-       تحديث خط بلاستيك واحد
-       ===================================================== */
-
-    function updatePlasticLine(config) {
-
-        const quantity =
-            getNumber(config.input);
-
-        const target =
-            config.target;
-
-        const percent =
-            target > 0
-                ? (quantity / target) * 100
-                : 0;
-
-        const safePercent =
-            Math.max(
-                0,
-                Math.min(percent, 100)
-            );
-
-
-        /* ==============================================
-           رقم الإنتاج في البطاقة
-           ============================================== */
-
-        setText(
-            config.cardQty,
-            quantity.toLocaleString("en-US", {
-                maximumFractionDigits: 0
-            })
-        );
-
-
-        /* ==============================================
-           شريط الإنتاج
-           ============================================== */
-
-        setProgress(
-            config.bar,
-            percent
-        );
-
-
-        /* ==============================================
-           الحلقة الدائرية
-           ============================================== */
-
-        const ring =
-            document.getElementById(config.ring);
-
-        if (ring) {
-
-            ring.style.setProperty(
-                "--progress",
-                safePercent + "%"
-            );
-
-            ring.style.setProperty(
-                "--percentage",
-                safePercent + "%"
-            );
-        }
-
-
-        setText(
-            config.ringValue,
-            percent.toFixed(1) + "%"
-        );
-
-
-        /* ==============================================
-           التوقف والنقص
-           ============================================== */
-
-        if (config.stopCard) {
-
-            setText(
-                config.stopCard,
-                getNumber(config.stopInput)
-                    .toLocaleString("en-US", {
-                        maximumFractionDigits: 0
-                    })
-            );
-        }
-
-
-        if (config.missingCard) {
-
-            setText(
-                config.missingCard,
-                getNumber(config.missingInput)
-                    .toLocaleString("en-US", {
-                        maximumFractionDigits: 0
-                    })
-            );
-        }
-
-    }
-
-
-    /* =====================================================
-       تحديث جميع خطوط البلاستيك
-       ===================================================== */
-
-    function updatePlasticPackingProgress() {
-
-        updatePlasticLine({
-
-            input: "plastic_bottle1_qty",
-
-            target: 1000000,
-
-            cardQty: "plasticBottle1CardQty",
-
-            bar: "plasticBottle1Bar",
-
-            ring: "plasticBottle1Ring",
-
-            ringValue: "plasticBottle1RingValue",
-
-            stopInput: "plastic_bottle1_stop",
-
-            stopCard: "plasticBottle1StopCard",
-
-            missingInput: "plastic_bottle1_missing",
-
-            missingCard: "plasticBottle1MissingCard"
-        });
-
-
-        updatePlasticLine({
-
-            input: "plastic_bottle2_qty",
-
-            target: 1000000,
-
-            cardQty: "plasticBottle2CardQty",
-
-            bar: "plasticBottle2Bar",
-
-            ring: "plasticBottle2Ring",
-
-            ringValue: "plasticBottle2RingValue",
-
-            stopInput: "plastic_bottle2_stop",
-
-            stopCard: "plasticBottle2StopCard",
-
-            missingInput: "plastic_bottle2_missing",
-
-            missingCard: "plasticBottle2MissingCard"
-        });
-
-
-        updatePlasticLine({
-
-            input: "plastic_spout1_qty",
-
-            target: 900000,
-
-            cardQty: "plasticSpout1CardQty",
-
-            bar: "plasticSpout1Bar",
-
-            ring: "plasticSpout1Ring",
-
-            ringValue: "plasticSpout1RingValue",
-
-            stopInput: "plastic_spout1_stop",
-
-            stopCard: "plasticSpout1StopCard",
-
-            missingInput: "plastic_spout1_missing",
-
-            missingCard: "plasticSpout1MissingCard"
-        });
-
-
-        updatePlasticLine({
-
-            input: "plastic_spout2_qty",
-
-            target: 900000,
-
-            cardQty: "plasticSpout2CardQty",
-
-            bar: "plasticSpout2Bar",
-
-            ring: "plasticSpout2Ring",
-
-            ringValue: "plasticSpout2RingValue",
-
-            stopInput: "plastic_spout2_stop",
-
-            stopCard: "plasticSpout2StopCard",
-
-            missingInput: "plastic_spout2_missing",
-
-            missingCard: "plasticSpout2MissingCard"
-        });
-
-
-        updatePlasticLine({
-
-            input: "plastic_cap_qty",
-
-            target: 1800000,
-
-            cardQty: "plasticCapCardQty",
-
-            bar: "plasticCapBar",
-
-            ring: "plasticCapRing",
-
-            ringValue: "plasticCapRingValue",
-
-            stopInput: "plastic_cap_stop",
-
-            stopCard: "plasticCapStopCard",
-
-            missingInput: "plastic_cap_missing",
-
-            missingCard: "plasticCapMissingCard"
-        });
-
-    }
-
-
-    /* =====================================================
-       تحديث شامل
-       ===================================================== */
-
-    function refreshOilPackingProgress() {
-
-        updateKronesProgress();
-
-        updatePlasticPackingProgress();
-
-    }
-
-
-    /* =====================================================
-       نراقب إدخال بيانات كرونس
-       ===================================================== */
-
-    const kronesInputs = [
-
-        "krones1a",
-        "krones1b",
-        "krones1c",
-
-        "krones2a",
-        "krones2b",
-        "krones2c",
-
-        "krones3a",
-        "krones3b",
-        "krones3c"
-    ];
-
-
-    kronesInputs.forEach(function (id) {
-
-        const el =
-            document.getElementById(id);
-
-        if (!el) {
-            return;
-        }
-
-        el.addEventListener(
-            "input",
-            refreshOilPackingProgress
-        );
-
-        el.addEventListener(
-            "change",
-            refreshOilPackingProgress
-        );
-    });
-
-
-    /* =====================================================
-       نراقب خطوط البلاستيك
-       ===================================================== */
-
-    const plasticInputs = [
-
-        "plastic_bottle1_qty",
-        "plastic_bottle1_eff",
-        "plastic_bottle1_missing",
-        "plastic_bottle1_stop",
-
-        "plastic_bottle2_qty",
-        "plastic_bottle2_eff",
-        "plastic_bottle2_missing",
-        "plastic_bottle2_stop",
-
-        "plastic_spout1_qty",
-        "plastic_spout1_eff",
-        "plastic_spout1_missing",
-        "plastic_spout1_stop",
-
-        "plastic_spout2_qty",
-        "plastic_spout2_eff",
-        "plastic_spout2_missing",
-        "plastic_spout2_stop",
-
-        "plastic_cap_qty",
-        "plastic_cap_eff",
-        "plastic_cap_missing",
-        "plastic_cap_stop"
-    ];
-
-
-    plasticInputs.forEach(function (id) {
-
-        const el =
-            document.getElementById(id);
-
-        if (!el) {
-            return;
-        }
-
-        el.addEventListener(
-            "input",
-            refreshOilPackingProgress
-        );
-
-        el.addEventListener(
-            "change",
-            refreshOilPackingProgress
-        );
-    });
-
-
-    /* =====================================================
-       تشغيل أولي
-       ===================================================== */
-
-    function initializeOilPackingProgress() {
-
-        refreshOilPackingProgress();
-
-    }
-
-
-    if (document.readyState === "loading") {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initializeOilPackingProgress
-        );
-
-    } else {
-
-        initializeOilPackingProgress();
-
-    }
-
-
-    /* =====================================================
-       إتاحة التحديث للدوال الأخرى
-       ===================================================== */
-
-    window.refreshOilPackingProgress =
-        refreshOilPackingProgress;
-
-})();
 
 </script>
 
