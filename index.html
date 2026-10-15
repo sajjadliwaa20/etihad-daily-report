@@ -1340,7 +1340,7 @@
 
             <div>
               <strong>مبيعات وأرصدة الزيوت</strong>
-              <span>العباد والأولين والنخيل والشورتنينغ</span>
+             <span>عباد الشمس والسمنة والأولين</span>
             </div>
 
           </div>
@@ -1355,54 +1355,156 @@
         <div class="sales-product-body oil-sales-body">
 
 
-          <!-- الشورتنينغ -->
 
-          <div class="oil-sub-card">
+<!-- مبيعات السمن -->
+<div class="oil-sub-card wide-oil-card">
 
-            <div class="oil-sub-header">
-              <span>🥫</span>
+  <div class="oil-sub-header">
+    <span>🧈</span>
+    <div>
+      <strong>مبيعات السمنة</strong>
+      <small>حسب حجم العبوة</small>
+    </div>
+  </div>
 
-              <div>
-                <strong>مبيعات الشورتنينغ</strong>
-                <small>بالطن</small>
-              </div>
-            </div>
+  <div class="sales-table-container">
+    <table class="sales-modern-table">
+      <thead>
+        <tr>
+          <th>الفئة</th>
+          <th>المبيعات<br>(طن)</th>
+          <th>الرصيد<br>(طن)</th>
+        </tr>
+      </thead>
 
-<div class="sales-table-container">
-            <table class="sales-modern-table compact-table">
+      <tbody>
+        <tr>
+          <td>5 لتر</td>
+          <td>
+            
+<input id="ghee_sales_5l" data-save step="any"
+  oninput="updateGheeSalesTotal(); saveSalesField('ghee_sales_5l', 'oil');" />
+</td>
+<td>
+  
+<input id="ghee_5l_stock" data-save step="any"
+  oninput="updateGheeStockTotal(); saveSalesField('ghee_5l_stock', 'oil');" />
 
-              <thead>
-                <tr>
-                  <th>الفئة</th>
-                  <th>المبيعات (طن)</th>
-                </tr>
-              </thead>
+</td>
+</tr>
 
-              <tbody>
 
-                <tr>
-                  <td>20 كغم</td>
+        <tr>
+          <td>6 لتر</td>
+          <td>
+            <input id="ghee_sales_6l" data-save step="any"
+  oninput="updateGheeSalesTotal(); saveSalesField('ghee_sales_6l', 'oil');" />
+</td>
+<td>
+  <input id="ghee_6l_stock" data-save step="any"
+    oninput="updateGheeStockTotal(); saveSalesField('ghee_6l_stock', 'oil');" />
+</td>
+</tr>
 
-                  <td>
-                    <input
-                      id="shortening_sales_20kg"
-                      data-save
-                      step="any"
-                      oninput="
-                        updateShorteningSalesTotal();
-                        saveSalesField('shortening_sales_20kg', 'oil');
-                      "
-                    />
-                  </td>
-                </tr>
+        <tr>
+          <td>10 لتر</td>
+          <td>
+           
+<input id="ghee_sales_10l" data-save step="any"
+  oninput="updateGheeSalesTotal(); saveSalesField('ghee_sales_10l', 'oil');" />
+</td>
+<td>
+  <input id="ghee_10l_stock" data-save step="any"
+    oninput="updateGheeStockTotal(); saveSalesField('ghee_10l_stock', 'oil');" />
+</td>
+</tr>
 
-              </tbody>
 
-            </table>
+        <tr>
+          <td>12 لتر</td>
+          <td>
+           
+<input id="ghee_sales_12l" data-save step="any"
+  oninput="updateGheeSalesTotal(); saveSalesField('ghee_sales_12l', 'oil');" />
+</td>
+<td>
+  <input id="ghee_12l_stock" data-save step="any"
+    oninput="updateGheeStockTotal(); saveSalesField('ghee_12l_stock', 'oil');" />
+</td>
+</tr>
+
+
+        <tr>
+          <td>14 لتر</td>
+          <td>
+            
+<input id="ghee_sales_14l" data-save step="any"
+  oninput="updateGheeSalesTotal(); saveSalesField('ghee_sales_14l', 'oil');" />
+</td>
+<td>
+  <input id="ghee_14l_stock" data-save step="any"
+    oninput="updateGheeStockTotal(); saveSalesField('ghee_14l_stock', 'oil');" />
+</td>
+</tr>
+
+
+        <tr>
+          <td>18 لتر</td>
+          <td>
+            
+<input id="ghee_sales_18l" data-save step="any"
+  oninput="updateGheeSalesTotal(); saveSalesField('ghee_sales_18l', 'oil');" />
+</td>
+<td>
+  <input id="ghee_18l_stock" data-save step="any"
+    oninput="updateGheeStockTotal(); saveSalesField('ghee_18l_stock', 'oil');" />
+</td>
+</tr>
+
+  <td>20 كغم شورتنينغ</td>
+  <td>
+   
+<input id="shortening_sales_20kg" data-save step="any"
+  oninput="updateShorteningSalesTotal(); saveSalesField('shortening_sales_20kg', 'oil');" />
+</td>
+<td>
+  <input id="shortening_20kg_stock" data-save step="any"
+    oninput="updateGheeStockTotal(); saveSalesField('shortening_20kg_stock', 'oil');" />
+</td>
+</tr>
+
+<tr>
+  <td>20 كغم مارغرين</td>
+  <td>
+   
+<input id="margarine_sales_20kg" data-save step="any"
+  oninput="updateGheeSalesTotal(); saveSalesField('margarine_sales_20kg', 'oil');" />
+</td>
+<td>
+  <input id="margarine_20kg_stock" data-save step="any"
+    oninput="updateGheeStockTotal(); saveSalesField('margarine_20kg_stock', 'oil');" />
+</td>
+</tr>
+
+
+      </tbody>
+
+     
+<tfoot>
+  <tr>
+    <td><strong>الإجمالي</strong></td>
+    <td>
+      <input id="ghee_sales_total" readonly />
+    </td>
+    <td>
+      <input id="ghee_stock_total" readonly />
+    </td>
+  </tr>
+</tfoot>
+
+    </table>
+  </div>
 </div>
-          </div>
-
-
 
           <!-- زيت العباد -->
 
@@ -1429,7 +1531,6 @@
               </thead>
 
               <tbody>
-
                 <tr>
                   <td>750 مل</td>
 
@@ -1454,8 +1555,6 @@
 />
                   </td>
                 </tr>
-
-
                 <tr>
                   <td>900 مل</td>
 
@@ -1470,17 +1569,13 @@
                       "
                     />
                   </td>
-
                   <td>
-                    <input
-                      id="sun_900_stock"
-                      data-save
-                      step="any"
-                    />
+                   
+<input id="sun_900_stock" data-save step="any"
+  oninput="updateSunStockTotal(); saveSalesField('sun_900_stock', 'oil');" />
+
                   </td>
                 </tr>
-
-
                 <tr>
                   <td>1 لتر</td>
 
@@ -1501,10 +1596,9 @@
                       id="sun_1l_stock"
                       data-save
                       step="any"
-                    />
+                      oninput="updateSunStockTotal(); saveSalesField('sun_1l_stock', 'oil');" />
                   </td>
                 </tr>
-
 
                 <tr>
                   <td>1 لتر وزارة</td>
@@ -1526,7 +1620,7 @@
                       id="sun_1_1lirq_stock"
                       data-save
                       step="any"
-                    />
+                      oninput="updateSunStockTotal(); saveSalesField('sun_1_1lirq_stock', 'oil');" />
                   </td>
                 </tr>
 
@@ -1551,9 +1645,35 @@
                       id="sun_1_1l15_stock"
                       data-save
                       step="any"
-                    />
+                      oninput="updateSunStockTotal(); saveSalesField('sun_1_1l15_stock', 'oil');" />
                   </td>
                 </tr>
+
+<tr>
+  <td>زيت عباد الشمس المكرر</td>
+  <td>
+    <input id="sun_sales_refined" data-save step="any"
+      oninput="updateSunSalesTotal(); saveSalesField('sun_sales_refined', 'oil');" 
+/>
+  </td>
+  <td>
+    <input id="sun_refined_stock" data-save step="any"
+      oninput="updateSunStockTotal(); saveSalesField('sun_refined_stock', 'oil');" 
+/>
+  </td>
+</tr>
+
+<tr>
+  <td>زيت عباد الشمس الخام</td>
+  <td>
+    <input id="sun_sales_raw" data-save step="any"
+      oninput="updateSunSalesTotal(); saveSalesField('sun_sales_raw', 'oil');" />
+  </td>
+  <td>
+    <input id="sun_raw_stock" data-save step="any"
+      oninput="updateSunStockTotal(); saveSalesField('sun_raw_stock', 'oil');" />
+  </td>
+</tr>
 
               </tbody>
 
@@ -1584,354 +1704,85 @@
 </div>
           </div>
 
+<!-- جدول الأولين المستقل -->
+<div class="oil-sub-card wide-oil-card">
 
+  <div class="oil-sub-header">
+    <span>🫒</span>
+    <div>
+      <strong>مبيعات وأرصدة الأولين</strong>
+      <small>حسب الفئة</small>
+    </div>
+  </div>
 
-          <!-- الأولين والنخيل -->
+  <div class="sales-table-container">
+    <table class="sales-modern-table">
+      <thead>
+        <tr>
+          <th>الفئة</th>
+          <th>المبيعات (طن)</th>
+          <th>الرصيد (طن)</th>
+        </tr>
+      </thead>
 
-          <div class="oil-sub-card wide-oil-card">
+      <tbody>
+        <tr>
+          <td>18 لتر</td>
+          <td>
+            <input id="olein_sales_18l_big" data-save step="any"
+              oninput="updateOleinSalesTotal(); saveSalesField('olein_sales_18l_big', 'oil');" />
+          </td>
+          <td>
+            <input id="olein_18l_stock" data-save step="any"
+              oninput="updateOleinStockTotal(); saveSalesField('olein_18l_stock', 'oil');" />
+          </td>
+        </tr>
 
-            <div class="oil-sub-header">
+        <tr>
+          <td>20 كغم</td>
+          <td>
+            <input id="olein_sales_20kg" data-save step="any"
+              oninput="updateOleinSalesTotal(); saveSalesField('olein_sales_20kg', 'oil');" />
+          </td>
+          <td>
+            <input id="olein_20kg_stock" data-save step="any"
+              oninput="updateOleinStockTotal(); saveSalesField('olein_20kg_stock', 'oil');" />
+          </td>
+        </tr>
 
-              <span>🌴</span>
+        <tr>
+          <td>الأولين الخام</td>
+          <td>
+            <input id="olein_sales_raw" data-save step="any"
+              oninput="updateOleinSalesTotal(); saveSalesField('olein_sales_raw', 'oil');" />
+          </td>
+          <td>—</td>
+        </tr>
 
-              <div>
-                <strong>مبيعات وأرصدة الأولين والنخيل</strong>
-                <small>حسب الحجم</small>
-              </div>
+        <tr>
+          <td>الأولين المكرر</td>
+          <td>
+            <input id="olein_sales_refined" data-save step="any"
+              oninput="updateOleinSalesTotal(); saveSalesField('olein_sales_refined', 'oil');" />
+          </td>
+          <td>—</td>
+        </tr>
+      </tbody>
 
-            </div>
-
-
-            <div class="sales-table-container">
-
-              <table class="sales-modern-table">
-
-                <thead>
-                  <tr>
-                    <th>الحجم</th>
-                    <th>مبيعات الأولين<br>(طن)</th>
-                    <th>رصيد الأولين<br>(طن)</th>
-                    <th>مبيعات النخيل<br>(طن)</th>
-                    <th>رصيد النخيل<br>(طن)</th>
-                  </tr>
-                </thead>
-
-
-                <tbody>
-
-                  <tr>
-                    <td>5 لتر</td>
-
-                    <td>
-                      <input
-                        id="olein_sales_5l"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateOleinSalesTotal();
-                          saveSalesField('olein_sales_5l', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="olein_5l_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateOleinStockTotal();
-                          saveSalesField('olein_5l_stock', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="palm_sales_5l"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmSalesTotal();
-                          saveSalesField('palm_sales_5l', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="palm_5l_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmStockTotal();
-                          saveSalesField('palm_5l_stock', 'oil');
-                        "
-                      />
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td>6 لتر</td>
-
-                    <td>—</td>
-                    <td>—</td>
-
-                    <td>
-                      <input
-                        id="palm_sales_6l"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmSalesTotal();
-                          saveSalesField('palm_sales_6l', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="palm_6l_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmStockTotal();
-                          saveSalesField('palm_6l_stock', 'oil');
-                        "
-                      />
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td>10 لتر</td>
-
-                    <td>
-                      <input
-                        id="olein_sales_10l"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateOleinSalesTotal();
-                          saveSalesField('olein_sales_10l', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="olein_10l_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateOleinStockTotal();
-                          saveSalesField('olein_10l_stock', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="palm_sales_10l"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmSalesTotal();
-                          saveSalesField('palm_sales_10l', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="palm_10l_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmStockTotal();
-                          saveSalesField('palm_10l_stock', 'oil');
-                        "
-                      />
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td>12 لتر</td>
-
-                    <td>—</td>
-                    <td>—</td>
-
-                    <td>
-                      <input
-                        id="palm_sales_12l"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmSalesTotal();
-                          saveSalesField('palm_sales_12l', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="palm_12l_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmStockTotal();
-                          saveSalesField('palm_12l_stock', 'oil');
-                        "
-                      />
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td>14 لتر</td>
-
-                    <td>—</td>
-                    <td>—</td>
-
-                    <td>
-                      <input
-                        id="palm_sales_14l"
-                        data-save
-                        step="any"
-                        oninput="
-                          updatePalmSalesTotal();
-                          saveSalesField('palm_sales_14l', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                   <input
-  id="palm_14l_stock"
-  data-save
-  step="any"
-  oninput="
-    updatePalmStockTotal();
-    saveSalesField('palm_14l_stock', 'oil');
-  "
-/>
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td>18 لتر</td>
-
-                    <td>
-                      <input
-                        id="olein_sales_18l_big"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateOleinSalesTotal();
-                          saveSalesField('olein_sales_18l_big', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="olein_18l_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateOleinStockTotal();
-                          saveSalesField('olein_18l_stock', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>—</td>
-                    <td>—</td>
-                  </tr>
-
-
-                  <tr>
-                    <td>20 كغم</td>
-
-                    <td>
-                      <input
-                        id="olein_sales_20kg"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateOleinSalesTotal();
-                          saveSalesField('olein_sales_20kg', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="olein_20kg_stock"
-                        data-save
-                        step="any"
-                        oninput="
-                          updateOleinStockTotal();
-                          saveSalesField('olein_20kg_stock', 'oil');
-                        "
-                      />
-                    </td>
-
-                    <td>—</td>
-                    <td>—</td>
-                  </tr>
-
-                </tbody>
-
-
-                <tfoot>
-
-                  <tr>
-
-                    <td>
-                      <strong>الإجمالي</strong>
-                    </td>
-
-                    <td>
-                      <input
-                        id="olein_sales_total"
-                        readonly
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="olein_stock_total"
-                        readonly
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="palm_sales_total"
-                        readonly
-                      />
-                    </td>
-
-                    <td>
-                      <input
-                        id="palm_stock_total"
-                        readonly
-                      />
-                    </td>
-
-                  </tr>
-
-                </tfoot>
-
-              </table>
-
-            </div>
-
-          </div>
+      <tfoot>
+        <tr>
+          <td><strong>الإجمالي</strong></td>
+          <td>
+            <input id="olein_sales_total" readonly />
+          </td>
+          <td>
+            <input id="olein_stock_total" readonly />
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
 
         </div>
 
@@ -9513,7 +9364,7 @@ PKF
         <div>
 
             <strong>
-                اعتماد تقرير مبيعات الزيت
+                اعتماد تقرير تعبئة الزيت
             </strong>
 
             <small>
@@ -9532,7 +9383,7 @@ PKF
         data-subsection-approval="oil_sales"
         onclick="approveOilSalesSubsection()"
     >
-        ✓ اعتماد مبيعات الزيت
+        ✓ اعتماد تعبئة الزيت
     </button>
 
 </div>
@@ -15995,6 +15846,9 @@ function recalculateAll() {
     updateSugarSalesTotal();
     updateShorteningSalesTotal();
     updateGEASalesTotal();
+    updateGheeSalesTotal();
+    updateGheeStockTotal();
+    updateSunStockTotal();
 
     updateSugarStockTotal();
 
@@ -16004,7 +15858,6 @@ function recalculateAll() {
     updateFeedSalesTotal();
 
     updateFlourStockTotal();
-    updateSunStockTotal();
     updateOleinStockTotal();
     updatePalmStockTotal();
 
@@ -16070,78 +15923,92 @@ function recalculateAll() {
     updatePremixRate();
 }
 
-      function updateSunSalesTotal() {
-        let total = 0;
+ 
 
-        total +=
-          parseFloat(document.getElementById("sun_sales_750")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_900")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_1l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_18l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_5l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_6l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_10l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_12l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_14l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_18l_big")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_20l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("sun_sales_20kg")?.value) || 0;
 
-        document.getElementById("sun_sales_total").value = total.toFixed(2);
+function updateSunSalesTotal() {
+  const fields = [
+    "sun_sales_750",
+    "sun_sales_900",
+    "sun_sales_1l",
+    "sun_sales_1_1lirq",
+    "sun_sales_1_1l15",
+    "sun_sales_refined",
+    "sun_sales_raw"
+  ];
 
-        saveSalesField("sun_sales_total", "oil");
-      }
+  let total = 0;
 
-      function updateOleinSalesTotal() {
-        let total = 0;
+  fields.forEach((id) => {
+    const field = document.getElementById(id);
+    total += parseFloat(field?.value) || 0;
+  });
 
-        total +=
-          parseFloat(document.getElementById("olein_sales_750")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_900")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_1l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_18l")?.value) || 0;
+  const totalField = document.getElementById("sun_sales_total");
 
-        total +=
-          parseFloat(document.getElementById("olein_sales_5l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_6l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_10l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_12l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_14l")?.value) || 0;
+  if (totalField) {
+    totalField.value = total.toFixed(2);
+    saveSalesField("sun_sales_total", "oil");
+  }
+}
 
-        total +=
-          parseFloat(document.getElementById("olein_sales_18l_big")?.value) ||
-          0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_20l")?.value) || 0;
-        total +=
-          parseFloat(document.getElementById("olein_sales_20kg")?.value) || 0;
 
-        const totalEl = document.getElementById("olein_sales_total");
+function updateSunStockTotal() {
+  const stockIds = [
+    "sun_750_stock",
+    "sun_900_stock",
+    "sun_1l_stock",
+    "sun_1_1lirq_stock",
+    "sun_1_1l15_stock",
+    "sun_refined_stock",
+    "sun_raw_stock"
+  ];
 
-        if (totalEl) {
-          totalEl.value = total.toFixed(2);
-        }
+  let total = 0;
 
-        saveSalesField("olein_sales_total", "oil");
-      }
+  stockIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const value = parseFloat(el.value);
+    total += Number.isFinite(value) ? value : 0;
+  });
+
+  const totalEl = document.getElementById("sun_stock_total");
+
+  if (totalEl) {
+    totalEl.value = total.toFixed(2);
+  }
+}
+
+
+
+  
+
+function updateOleinSalesTotal() {
+  const fields = [
+    "olein_sales_18l_big",
+    "olein_sales_20kg",
+    "olein_sales_raw",
+    "olein_sales_refined"
+  ];
+
+  let total = 0;
+
+  fields.forEach((id) => {
+    const field = document.getElementById(id);
+    total += parseFloat(field?.value) || 0;
+  });
+
+  const totalEl = document.getElementById("olein_sales_total");
+
+  if (totalEl) {
+    totalEl.value = total.toFixed(2);
+    saveSalesField("olein_sales_total", "oil");
+  }
+}
+
+
 
       function updatePalmSalesTotal() {
         let total = 0;
@@ -16194,7 +16061,15 @@ function recalculateAll() {
         saveSalesField("olein_stock_total", "oil");
       }
 
-      function updateShorteningSalesTotal() {}
+      
+function updateShorteningSalesTotal() {
+  const field = document.getElementById("shortening_sales_20kg");
+
+  if (field) {
+    saveSalesField("shortening_sales_20kg", "oil");
+  }
+}
+
      
  function calcMillTotals() {
 
@@ -16352,6 +16227,61 @@ function recalculateAll() {
 
         saveSalesField("GEA_sales_total", "oil");
       }
+
+      
+
+function updateGheeSalesTotal() {
+  const ids = [
+    'ghee_sales_5l',
+    'ghee_sales_6l',
+    'ghee_sales_10l',
+    'ghee_sales_12l',
+    'ghee_sales_14l',
+    'ghee_sales_18l',
+    'shortening_sales_20kg',
+    'margarine_sales_20kg'
+  ];
+
+  const total = ids.reduce((sum, id) => {
+    const el = document.getElementById(id);
+    const value = el ? parseFloat(el.value) : 0;
+    return sum + (Number.isFinite(value) ? value : 0);
+  }, 0);
+
+  const totalField = document.getElementById('ghee_sales_total');
+  if (totalField) {
+    totalField.value = total.toFixed(2);
+    saveSalesField('ghee_sales_total', 'oil');
+  }
+}
+
+
+
+function updateGheeStockTotal() {
+  const ids = [
+    'ghee_5l_stock',
+    'ghee_6l_stock',
+    'ghee_10l_stock',
+    'ghee_12l_stock',
+    'ghee_14l_stock',
+    'ghee_18l_stock',
+    'shortening_20kg_stock',
+    'margarine_20kg_stock'
+  ];
+
+  const total = ids.reduce((sum, id) => {
+    const el = document.getElementById(id);
+    const value = el ? parseFloat(el.value) : 0;
+    return sum + (Number.isFinite(value) ? value : 0);
+  }, 0);
+
+  const totalField = document.getElementById('ghee_stock_total');
+  if (totalField) {
+    totalField.value = total.toFixed(2);
+  }
+}
+
+
 
       function updateGEAStockTotal() {
         const stockIds = [
@@ -18034,12 +17964,16 @@ const salesFieldIds =
         "shortening_sales_20kg",
 
         "sun_sales_750",
+        "sun_sales_refined",
+        "sun_sales_raw",
         "sun_sales_900",
         "sun_sales_1l",
         "sun_sales_1_1lirq",
         "sun_sales_1_1l15",
 
         "olein_sales_5l",
+        "olein_sales_raw",
+        "olein_sales_refined",
         "olein_sales_10l",
         "olein_sales_18l_big",
         "olein_sales_20kg",
@@ -18048,6 +17982,13 @@ const salesFieldIds =
         "palm_sales_6l",
         "palm_sales_10l",
         "palm_sales_12l",
+        "ghee_sales_5l",
+        "ghee_sales_6l",
+        "ghee_sales_10l",
+        "ghee_sales_12l",
+        "ghee_sales_14l",
+        "ghee_sales_18l",
+        "margarine_sales_20kg",
         "palm_sales_14l"
       ]
     : [];
@@ -18746,23 +18687,38 @@ if (userInfo.role === "feed" ||
         sugar_sales_50kg: "مبيعات السكر 50 كغم",
         sugar_sales_1ton: "مبيعات السكر 1 طن",
 
-        shortening_sales_20kg: "مبيعات الشورتنينغ 20 كغم",
+        
+shortening_sales_20kg: "مبيعات الشورتنينغ 20 كغم",
 
-        GEA_sales_5l: "مبيعات السمنة 5 لتر",
-        GEA_sales_6l: "مبيعات السمنة 6 لتر",
-        GEA_sales_10l: "مبيعات السمنة 10 لتر",
-        GEA_sales_12l: "مبيعات السمنة 12 لتر",
-        GEA_sales_14l: "مبيعات السمنة 14 لتر",
+// السمنة
+GEA_sales_5l: "مبيعات السمنة 5 لتر",
+GEA_sales_6l: "مبيعات السمنة 6 لتر",
+GEA_sales_10l: "مبيعات السمنة 10 لتر",
+GEA_sales_12l: "مبيعات السمنة 12 لتر",
+GEA_sales_14l: "مبيعات السمنة 14 لتر",
 
-        sun_sales_750: "مبيعات زيت العباد 750 مل",
-        sun_sales_900: "مبيعات زيت العباد 900 مل",
-        sun_sales_1l: "مبيعات زيت العباد 1 لتر",
+ghee_sales_5l: "مبيعات السمنة 5 لتر",
+ghee_sales_6l: "مبيعات السمنة 6 لتر",
+ghee_sales_10l: "مبيعات السمنة 10 لتر",
+ghee_sales_12l: "مبيعات السمنة 12 لتر",
+ghee_sales_14l: "مبيعات السمنة 14 لتر",
+ghee_sales_18l: "مبيعات السمنة 18 لتر",
+margarine_sales_20kg: "مبيعات المارغرين 20 كغم",
 
-        olein_sales_5l: "مبيعات زيت الأولين 5 لتر",
-        olein_sales_6l: "مبيعات زيت الأولين 6 لتر",
-        olein_sales_10l: "مبيعات زيت الأولين 10 لتر",
-        olein_sales_18l_big: "مبيعات زيت الأولين 18 لتر",
-        olein_sales_20kg: "مبيعات زيت الأولين 20 كغم",
+// زيت دوار الشمس
+sun_sales_750: "مبيعات زيت دوار الشمس 750 مل",
+sun_sales_900: "مبيعات زيت دوار الشمس 900 مل",
+sun_sales_1l: "مبيعات زيت دوار الشمس 1 لتر - الوكلاء",
+sun_sales_1_1lirq: "مبيعات زيت دوار الشمس 1 لتر - التموينية",
+sun_sales_1_1l15: "مبيعات زيت دوار الشمس 1.5 لتر",
+sun_sales_refined: "مبيعات زيت دوار الشمس المكرر",
+sun_sales_raw: "مبيعات زيت دوار الشمس الخام",
+
+// زيت الأولين
+olein_sales_18l_big: "مبيعات زيت الأولين 18 لتر",
+olein_sales_20kg: "مبيعات زيت الأولين 20 كغم",
+olein_sales_raw: "مبيعات زيت الأولين الخام",
+olein_sales_refined: "مبيعات زيت الأولين المكرر",
 
         flour_sales_f1: "مبيعات طحين F1",
         flour_sales_f3: "مبيعات طحين F3",
@@ -20000,6 +19956,7 @@ if (typeof applyApprovalPermissions === "function") {
     </div>
 
     <script>
+
       async function saveSalesField(fieldId, factory) {
             /* أثناء تعديل تقرير سابق:
        لا تحفظ المبيعات مباشرة.
@@ -20974,51 +20931,55 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
 
-    oil: {
-      label: "الزيت",
-      icon: "🫒",
+    
+oil: {
+  label: "الزيت",
+  icon: "🫒",
 
-      /* الحقول الأصلية فقط */
-      salesFields: [
-        "shortening_sales_20kg",
 
-        "sun_sales_750",
-        "sun_sales_900",
-        "sun_sales_1l",
-        "sun_sales_1_1lirq",
-        "sun_sales_1_1l15",
+salesFields: [
+  // زيت عباد الشمس
+  "sun_sales_750",
+  "sun_sales_900",
+  "sun_sales_1l",
+  "sun_sales_1_1lirq",
+  "sun_sales_1_1l15",
+  "sun_sales_refined",
+  "sun_sales_raw",
 
-        "olein_sales_5l",
-        "olein_sales_10l",
-        "olein_sales_18l_big",
-        "olein_sales_20kg",
+  // السمن
+  "ghee_sales_5l",
+  "ghee_sales_6l",
+  "ghee_sales_10l",
+  "ghee_sales_12l",
+  "ghee_sales_14l",
+  "ghee_sales_18l",
 
-        "palm_sales_5l",
-        "palm_sales_6l",
-        "palm_sales_10l",
-        "palm_sales_12l",
-        "palm_sales_14l"
-      ],
+  // الشحوم
+  "shortening_sales_20kg",
+  "margarine_sales_20kg",
 
-      stockIds: [
-        "sun_750_stock",
-        "sun_900_stock",
-        "sun_1l_stock",
-        "sun_1_1lirq_stock",
-        "sun_1_1l15_stock",
+  // الأولين
+  "olein_sales_18l_big",
+  "olein_sales_20kg",
+  "olein_sales_raw",
+  "olein_sales_refined"
+],
 
-        "olein_5l_stock",
-        "olein_10l_stock",
-        "olein_18l_stock",
-        "olein_20kg_stock",
 
-        "palm_5l_stock",
-        "palm_6l_stock",
-        "palm_10l_stock",
-        "palm_12l_stock",
-        "palm_14l_stock"
-      ]
-    },
+  stockIds: [
+  "sun_750_stock",
+  "sun_900_stock",
+  "sun_1l_stock",
+  "sun_1_1lirq_stock",
+  "sun_1_1l15_stock",
+  "sun_refined_stock",
+  "sun_raw_stock",
+  "olein_18l_stock",
+  "olein_20kg_stock"
+]
+},
+
 
 
     flour: {
@@ -21206,12 +21167,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const oil =
+    
       sumSalesFieldsFromDOM(
         SALES_DASHBOARD_CONFIG
           .oil
           .salesFields
       );
-
+console.log("DEBUG - Oil dashboard total:", oil);
 
     const flour =
       sumSalesFieldsFromDOM(
@@ -23940,6 +23902,9 @@ function showNotification(message, type = "success") {
         justify-content: center;
     }
 }
+
+
+
 </style>
 
 <script>
