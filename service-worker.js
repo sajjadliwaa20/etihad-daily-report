@@ -1,4 +1,4 @@
-const CACHE_NAME = "etihad-daily-v9.7.1";
+const CACHE_NAME = "etihad-daily-v9.7.2";
 
 const FILES_TO_CACHE = [
   "index.html",
@@ -65,6 +65,60 @@ self.addEventListener("fetch", (event) => {
 
       .then((response) => {
         return response || fetch(event.request);
+      }),
+  );
+});
+
+self.addEventListener("push", (event) => {
+  let data = {};
+
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch (error) {
+    data = {
+      title: "التقرير اليومي للمصانع",
+      body: event.data ? event.data.text() : "يوجد تحديث جديد",
+    };
+  }
+
+  const title = data.title || "التقرير اليومي للمصانع";
+
+  const options = {
+    body: data.body || "تمت الموافقة على أحد الأقسام أو الحسابات الفرعية.",
+    icon: "/etihad-daily-report/icons/icon-192.png",
+    badge: "/etihad-daily-report/icons/icon-192.png",
+    data: {
+      url: data.url || "/etihad-daily-report/",
+    },
+    tag: data.tag || "factory-approval",
+    renotify: true,
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  const targetUrl = new URL(
+    event.notification.data?.url || "/etihad-daily-report/",
+    self.location.origin,
+  ).href;
+
+  event.waitUntil(
+    clients
+      .matchAll({
+        type: "window",
+        includeUncontrolled: true,
+      })
+      .then((clientList) => {
+        for (const client of clientList) {
+          if (client.url.startsWith(self.location.origin)) {
+            return client.navigate(targetUrl).then(() => client.focus());
+          }
+        }
+
+        return clients.openWindow(targetUrl);
       }),
   );
 });
