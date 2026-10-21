@@ -91,8 +91,7 @@ async function initializeAdminPushNotifications() {
 
         if (
           !PUSH_VAPID_PUBLIC_KEY ||
-          PUSH_VAPID_PUBLIC_KEY ===
-            "BC-2ETblhz2vxfphfsiTf85pt3ILcb7tJ6hbicKDjVKVMzjgqPVWALhYJlkONBqN_sPPAJ41dxlO7voecBymqTM"
+          PUSH_VAPID_PUBLIC_KEY === "ضع_المفتاح_العام_الجديد_هنا"
         ) {
           throw new Error("أضف المفتاح العام VAPID أولًا.");
         }
