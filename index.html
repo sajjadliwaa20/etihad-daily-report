@@ -16127,6 +16127,14 @@ function updateShorteningSalesTotal() {
         }
 
 
+        const cardTotalElement =
+    document.getElementById(`millCardTotal${i}`);
+
+if (cardTotalElement) {
+    cardTotalElement.textContent = lineTotal.toFixed(2);
+}
+
+
         /* المجاميع */
 
         totalF1 += f1;
@@ -23921,6 +23929,9 @@ function showNotification(message, type = "success") {
 <script>
 
 </script>
+
+
+
 
   </body>
 </html>

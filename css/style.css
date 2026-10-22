@@ -32850,3 +32850,38 @@ body:not(.dark-mode) .power-negative-btn {
   padding: 5px 2px;
   font-size: 12px;
 }
+
+/* تحسين حقول المبيعات على الهاتف فقط */
+@media (max-width: 700px) {
+  .sales-modern-table input {
+    width: 76px !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 4px 5px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .sales-modern-table td,
+  .sales-modern-table th {
+    padding: 5px 6px !important;
+    font-size: 11px !important;
+  }
+
+  .sales-modern-table td {
+    height: 46px !important;
+  }
+
+  .sales-product-body {
+    padding: 10px !important;
+  }
+
+  .sales-table-container {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}

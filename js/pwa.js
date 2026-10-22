@@ -40,7 +40,7 @@ laterBtn.onclick = () => {
 
 // ضع المفتاح العام الجديد بين علامتي الاقتباس أدناه
 const PUSH_VAPID_PUBLIC_KEY =
-  "BC-2ETblhz2vxfphfsiTf85pt3ILcb7tJ6hbicKDjVKVMzjgqPVWALhYJlkONBqN_sPPAJ41dxlO7voecBymqTM";
+  "BHC4foMUZzODOq236RnfxpnJETo2mJhkfRq-QTRxuXKDbjFrfhBGexHoo80Ii44tl7ZhO8pwKUPgJMnn4MChHxQ";
 
 function pushBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -140,6 +140,42 @@ async function initializeAdminPushNotifications() {
   } catch (error) {
     console.error("Admin push initialization failed:", error);
   }
+}
+async function controlAdminNotificationButton() {
+  const button = document.getElementById("pushNotificationBtn");
+
+  if (!button) return;
+
+  // إخفاء الزر افتراضياً عن الجميع
+  button.style.display = "none";
+
+  try {
+    const {
+      data: { user },
+      error: authError,
+    } = await supabaseClient.auth.getUser();
+
+    if (authError || !user) return;
+
+    const { data: userInfo, error } = await supabaseClient
+      .from("users")
+      .select("role")
+      .eq("email", user.email)
+      .maybeSingle();
+
+    if (!error && userInfo?.role === "admin") {
+      button.style.display = "inline-flex";
+    }
+  } catch (error) {
+    button.style.display = "none";
+    console.error("Notification button:", error);
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", controlAdminNotificationButton);
+} else {
+  controlAdminNotificationButton();
 }
 
 initializeAdminPushNotifications();

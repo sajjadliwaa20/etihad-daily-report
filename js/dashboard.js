@@ -1416,6 +1416,13 @@ async function applyPermissions() {
   }
 
   const role = data.role;
+
+  const pushNotificationBtn = document.getElementById("pushNotificationBtn");
+
+  if (pushNotificationBtn) {
+    pushNotificationBtn.style.setProperty("display", "none", "important");
+  }
+
   const subsection = data.subsection || null;
 
   window.currentUserRole = role;
@@ -1483,6 +1490,16 @@ async function applyPermissions() {
   const buttons = document.querySelectorAll("button");
 
   buttons.forEach((btn) => {
+    // إشعارات المدير: تظهر لحساب admin فقط
+    if (btn.id === "pushNotificationBtn") {
+      btn.style.setProperty(
+        "display",
+        role === "admin" ? "inline-flex" : "none",
+        "important",
+      );
+      return;
+    }
+
     if (
       btn.id === "approvewaterBtn" ||
       btn.id === "approvePowerBtn" ||
@@ -1844,6 +1861,17 @@ async function applyPermissions() {
     showAllMenus();
 
     showAdminTools();
+
+    const pushNotificationBtn = document.getElementById("pushNotificationBtn");
+
+    if (pushNotificationBtn) {
+      pushNotificationBtn.style.setProperty(
+        "display",
+        "inline-flex",
+        "important",
+      );
+    }
+
     document.getElementById("adminTools").style.display = "block";
 
     document.getElementById("editModeBtn").style.display = "inline-block";
