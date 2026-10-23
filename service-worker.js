@@ -1,4 +1,4 @@
-const CACHE_NAME = "etihad-daily-v9.7.2";
+const CACHE_NAME = "etihad-daily-v9.7.3";
 
 const FILES_TO_CACHE = [
   "index.html",
@@ -100,25 +100,32 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
-  const targetUrl = new URL(
-    event.notification.data?.url || "/etihad-daily-report/",
-    self.location.origin,
-  ).href;
+  const appUrl = new URL("/etihad-daily-report/", self.location.origin).href;
+
+  const targetUrl = new URL(event.notification.data?.url || appUrl, appUrl)
+    .href;
 
   event.waitUntil(
-    clients
-      .matchAll({
+    (async () => {
+      const clientList = await clients.matchAll({
         type: "window",
         includeUncontrolled: true,
-      })
-      .then((clientList) => {
-        for (const client of clientList) {
-          if (client.url.startsWith(self.location.origin)) {
-            return client.navigate(targetUrl).then(() => client.focus());
+      });
+
+      // البحث عن نافذة تطبيق التقرير نفسه
+      for (const client of clientList) {
+        if (client.url.startsWith(appUrl) && "focus" in client) {
+          const navigatedClient = await client.navigate(targetUrl);
+
+          if (navigatedClient) {
+            await navigatedClient.focus();
+            return;
           }
         }
+      }
 
-        return clients.openWindow(targetUrl);
-      }),
+      // إذا لم تكن نافذة التطبيق مفتوحة، افتحها
+      await clients.openWindow(targetUrl);
+    })(),
   );
 });
