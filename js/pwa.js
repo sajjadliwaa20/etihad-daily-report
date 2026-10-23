@@ -116,13 +116,38 @@ async function initializeAdminPushNotifications() {
           });
         }
 
+        const {
+          data: { user: currentUser },
+          error: authError,
+        } = await supabaseClient.auth.getUser();
+
+        if (authError || !currentUser?.email) {
+          throw new Error("تعذر التحقق من المستخدم المسجل دخوله.");
+        }
+
+        const { data: isAdmin, error: adminError } =
+          await supabaseClient.rpc("is_admin");
+
+        if (adminError || isAdmin !== true) {
+          throw new Error("تعذر تأكيد صلاحيات المدير لهذا الجهاز.");
+        }
+
+        console.log("Push registration check:", {
+          email: currentUser.email,
+          isAdmin,
+        });
+
         const { error: saveError } = await supabaseClient
           .from("push_subscriptions")
           .insert({
-            user_email: user.email,
+            user_email: currentUser.email,
             endpoint: subscription.endpoint,
             subscription: subscription.toJSON(),
           });
+
+        if (saveError && saveError.code !== "23505") {
+          throw saveError;
+        }
 
         if (saveError && saveError.code !== "23505") {
           throw saveError;
