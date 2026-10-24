@@ -116,13 +116,12 @@ async function initializeAdminPushNotifications() {
           });
         }
 
-        const {
-          data: { user: currentUser },
-          error: authError,
-        } = await supabaseClient.auth.getUser();
+        const { data: sessionData } = await supabaseClient.auth.getSession();
 
-        if (authError || !currentUser?.email) {
-          throw new Error("تعذر التحقق من المستخدم المسجل دخوله.");
+        const currentUser = sessionData.session?.user || user;
+
+        if (!currentUser?.email) {
+          throw new Error("انتهت جلسة الدخول. سجّل الدخول مجددًا ثم حاول.");
         }
 
         const { data: isAdmin, error: adminError } =

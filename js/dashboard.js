@@ -6222,9 +6222,11 @@ function updateElectricalLoadVisual() {
 
 function refreshPowerDashboardVisuals() {
   try {
-    updateBlackOilTotalVisual();
+    if (typeof updateBlackOilStockTotals === "function") {
+      updateBlackOilStockTotals();
+    }
   } catch (e) {
-    console.warn("Black oil visual update failed:", e);
+    console.warn("Black oil stock total update failed:", e);
   }
 
   try {
