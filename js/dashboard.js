@@ -8086,6 +8086,555 @@ function updateFlourExtractionEfficiency() {
     detailRing.style.strokeDashoffset = offset;
   }
 }
+async function exportFlourReportPDF() {
+  if (typeof html2pdf === "undefined") {
+    alert("مكتبة PDF غير محمّلة. تحقق من اتصال الإنترنت.");
+    return;
+  }
+
+  const reportDate =
+    document.getElementById("reportDateKey")?.value ||
+    new Date().toLocaleDateString("en-CA");
+
+  const getValue = (id) => {
+    const el = document.getElementById(id);
+    return Number(el?.value ?? el?.textContent) || 0;
+  };
+
+  const getText = (id) =>
+    document.getElementById(id)?.value?.trim() ||
+    document.getElementById(id)?.textContent?.trim() ||
+    "";
+
+  const fmt = (v) =>
+    Number(v).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+  const esc = (value) =>
+    String(value ?? "").replace(
+      /[&<>"']/g,
+      (ch) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[ch],
+    );
+
+  const totalWheat =
+    getValue("aus_wheat_use") +
+    getValue("iraq_wheat_use") +
+    getValue("rus_wheat_use");
+
+  const production = getValue("flour_grand_total");
+  const efficiency = getValue("extraction_eff");
+  const flourPacked = getValue("flour_packaging_stock");
+  const branPacked = getValue("bran_packaging_stock");
+
+  const lineRows = [];
+  for (let i = 1; i <= 6; i++) {
+    const f1 = getValue(`line${i}_f1`);
+    const f3 = getValue(`line${i}_f3`);
+    const bran = getValue(`line${i}_bran`);
+
+    lineRows.push(`
+      <tr>
+        <td>${String.fromCharCode(64 + i)}</td>
+        <td>${fmt(f1)}</td>
+        <td>${fmt(f3)}</td>
+        <td>${fmt(bran)}</td>
+        <td>${fmt(f1 + f3 + bran)}</td>
+      </tr>
+    `);
+  }
+
+  const stopData = [
+    ["A", "astoptime", "astopcause"],
+    ["B", "bstoptime", "bstopcause"],
+    ["C", "cstoptime", "cstopcause"],
+    ["D", "dstoptime", "dstopcause"],
+    ["E", "estoptime", "estopcause"],
+    ["F", "fstoptime", "fstopcause"],
+  ];
+
+  const stopRows = stopData
+    .map(([line, timeId, causeId]) => {
+      const time = getValue(timeId);
+      const cause = getText(causeId);
+      if (time <= 0 && !cause) return "";
+
+      return `
+      <tr>
+        <td>${line}</td>
+        <td>${fmt(time)}</td>
+        <td class="cause">${esc(cause || "—")}</td>
+      </tr>
+    `;
+    })
+    .join("");
+
+  const notesData = [
+    ["الجودة", "flour_quality_notes"],
+    ["السلامة", "flour_safety_notes"],
+    ["ملاحظات عامة", "flour_notes"],
+  ];
+
+  const notesHtml = notesData
+    .map(([label, id]) => {
+      const value = getText(id);
+      if (!value) return "";
+      return `
+      <div class="note">
+        <strong>${label}</strong>
+        <div>${esc(value).replace(/\n/g, "<br>")}</div>
+      </div>
+    `;
+    })
+    .join("");
+
+  const report = document.createElement("div");
+  report.className = "flour-pdf-report";
+  report.dir = "rtl";
+
+  report.innerHTML = `
+  <header class="report-header">
+    <div class="report-brand">
+      <img class="company-logo" src="${new URL("assets/logo.png", window.location.href).href}" alt="شعار الشركة">
+      <div>
+        <div class="company">شركة الاتحاد للصناعات الغذائية</div>
+        <div class="report-title">التقرير اليومي — مصنع المطحنة</div>
+        <div class="report-date">تاريخ التقرير: ${esc(reportDate)}</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>المؤشرات التشغيلية الرئيسية</h2>
+    <table>
+      <thead>
+        <tr><th>المؤشر</th><th>القيمة</th><th>الوحدة</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>استهلاك  الحنطة</td><td>${fmt(totalWheat)}</td><td>طن</td></tr>
+        <tr><td>الإنتاج  الكلي</td><td>${fmt(production)}</td><td>طن</td></tr>
+        <tr><td>كفاءة   الاستخراج</td><td>${fmt(efficiency)}</td><td>%</td></tr>
+        <tr><td>الطحين  المعبأ</td><td>${fmt(flourPacked)}</td><td>طن</td></tr>
+        <tr><td>النخالة  المعبأة</td><td>${fmt(branPacked)}</td><td>طن</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>جدول الإنتاج التفصيلي حسب خطوط المطحنة</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>الخط</th><th>F1 (طن)</th><th>F3 (طن)</th>
+          <th>النخالة (طن)</th><th>الإجمالي (طن)</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${lineRows.join("")}
+        <tr class="total-row">
+          <th>الإجمالي</th>
+          <th>${fmt(getValue("flour_total_f1"))}</th>
+          <th>${fmt(getValue("flour_total_f3"))}</th>
+          <th>${fmt(getValue("flour_total_wbran"))}</th>
+          <th>${fmt(production)}</th>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>جدول استهلاك الحنطة وأرصدة المواد الخام</h2>
+    <table>
+      <thead>
+        <tr><th>نوع الحنطة</th><th>الاستهلاك (طن)</th><th>الرصيد (طن)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>الأسترالية</td><td>${fmt(getValue("aus_wheat_use"))}</td><td>${fmt(getValue("auseti"))}</td></tr>
+        <tr><td>العراقية</td><td>${fmt(getValue("iraq_wheat_use"))}</td><td>${fmt(getValue("iraqeti"))}</td></tr>
+        <tr><td>الروسية</td><td>${fmt(getValue("rus_wheat_use"))}</td><td>${fmt(getValue("ruseti"))}</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  ${
+    stopRows
+      ? `
+    <section>
+      <h2>جدول توقفات خطوط الإنتاج وأسبابها</h2>
+      <table class="stop-table">
+        <thead><tr><th>الخط</th><th>المدة (دقيقة)</th><th>سبب التوقف</th></tr></thead>
+        <tbody>${stopRows}</tbody>
+      </table>
+    </section>
+  `
+      : ""
+  }
+
+  ${
+    notesHtml
+      ? `
+    <section>
+      <h2>الملاحظات التشغيلية والجودة والسلامة</h2>
+      ${notesHtml}
+    </section>
+  `
+      : ""
+  }
+
+  <footer>التقرير اليومي للمصانع | مصنع المطحنة</footer>
+`;
+
+  const style = document.createElement("style");
+  style.textContent = `
+    
+.flour-pdf-report {
+  box-sizing: border-box;
+  width: 186mm;
+  margin: 0 auto;
+  padding: 0;
+  background: #ffffff !important;
+  color: #243447 !important;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 12pt;
+  line-height: 1.5;
+  direction: rtl;
+  text-align: right;
+  color-scheme: light;
+}
+
+.flour-pdf-report,
+.flour-pdf-report * {
+  box-sizing: border-box;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.flour-pdf-report * {
+  color: #243447;
+}
+
+.flour-pdf-report .report-header {
+  padding: 3mm 0 4mm;
+  margin-bottom: 5mm;
+  border-bottom: 2px solid #176b52;
+  background: #ffffff !important;
+}
+
+.flour-pdf-report .report-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5mm;
+  text-align: center;
+}
+
+.flour-pdf-report .company-logo {
+  width: 24mm;
+  height: 24mm;
+  object-fit: contain;
+}
+
+.flour-pdf-report .company {
+  font-size: 16pt;
+  font-weight: 700;
+  color: #176b52 !important;
+}
+
+.flour-pdf-report .report-title {
+  font-size: 12pt;
+  font-weight: 700;
+  margin: 2mm 0;
+  color: #243447 !important;
+}
+
+.flour-pdf-report .report-date {
+  font-size: 9pt;
+  color: #526477 !important;
+}
+
+.flour-pdf-report section {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto 5mm !important;
+  float: none !important;
+  background: #ffffff !important;
+}
+
+.flour-pdf-report h2 {
+  display: block;
+  width: 100% !important;
+  font-size: 11pt;
+  margin: 0 0 2mm;
+  padding: 2.5mm 3mm;
+  background: #e8f3ee !important;
+  color: #176b52 !important;
+  border-right: 3px solid #176b52;
+  text-align: right;
+  break-after: avoid;
+}
+
+
+
+.flour-pdf-report table {
+  display: table !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto 4mm !important;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 9pt;
+  background: #ffffff !important;
+  direction: rtl;
+  float: none !important;
+  position: static !important;
+  inset-inline: auto !important;
+  transform: none !important;
+  clear: both !important;
+}
+
+
+
+/* تنسيق جدول التوقفات فقط */
+.flour-pdf-report table.stop-table {
+  width: 100% !important;
+  table-layout: fixed !important; 
+}
+
+.flour-pdf-report table.stop-table th:nth-child(1),
+.flour-pdf-report table.stop-table td:nth-child(1) {
+  width: 7% !important;
+}
+
+.flour-pdf-report table.stop-table th:nth-child(2),
+.flour-pdf-report table.stop-table td:nth-child(2) {
+  width: 15% !important;
+}
+
+.flour-pdf-report table.stop-table th:nth-child(3),
+.flour-pdf-report table.stop-table td:nth-child(3) {
+  width: 78% !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  text-align: right;
+}
+
+
+
+.flour-pdf-report thead {
+  display: table-header-group;
+}
+
+.flour-pdf-report tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.flour-pdf-report th,
+.flour-pdf-report td {
+  border: 1px solid #b9c9c2 !important;
+  padding: 2mm 1.5mm;
+  text-align: center;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+  background: #ffffff !important;
+  color: #243447 !important;
+  font-weight: 400;
+}
+
+.flour-pdf-report thead th {
+  background: #176b52 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.flour-pdf-report .total-row th,
+.flour-pdf-report .total-row td {
+  background: #e8f3ee !important;
+  color: #176b52 !important;
+  font-weight: 700;
+}
+
+.flour-pdf-report .cause {
+  text-align: right;
+}
+
+.flour-pdf-report .note {
+  display: block;
+  border: 1px solid #d4dce3;
+  padding: 2mm 3mm;
+  margin-bottom: 2mm;
+  background: #ffffff !important;
+  color: #243447 !important;
+  break-inside: avoid;
+}
+
+.flour-pdf-report .note strong {
+  color: #176b52 !important;
+  display: block;
+  margin-bottom: 1mm;
+}
+
+.flour-pdf-report footer {
+  display: block;
+  text-align: center;
+  border-top: 1px solid #d4dce3;
+  padding-top: 2mm;
+  margin-top: 4mm;
+  font-size: 8pt;
+  color: #526477 !important;
+  background: #ffffff !important;
+}
+
+  `;
+
+  document.head.appendChild(style);
+
+  report.style.position = "absolute";
+  report.style.left = "0";
+  report.style.top = "0";
+  report.style.zIndex = "99999";
+  report.style.width = "186mm";
+  report.style.background = "#ffffff";
+  report.style.transform = "none";
+
+  document.body.appendChild(report);
+
+  report.style.display = "block";
+  report.style.visibility = "visible";
+  report.style.opacity = "1";
+  report.style.height = "auto";
+  report.style.minHeight = "100px";
+  report.style.maxHeight = "none";
+  report.style.overflow = "visible";
+  report.style.contain = "none";
+  report.style.transform = "none";
+  report.style.position = "relative";
+  report.style.marginLeft = "auto";
+  report.style.marginRight = "auto";
+  report.style.width = "186mm";
+  report.style.zIndex = "auto";
+
+  report.querySelectorAll("section, table, header, footer").forEach((el) => {
+    el.style.display = "block";
+    el.style.visibility = "visible";
+    el.style.height = "auto";
+    el.style.overflow = "visible";
+  });
+
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  console.log("FLOUR PDF DIAGNOSTIC", {
+    reportExists: document.body.contains(report),
+    textLength: report.innerText.length,
+    width: report.getBoundingClientRect().width,
+    height: report.getBoundingClientRect().height,
+    html2pdfLoaded: typeof html2pdf !== "undefined",
+    logoLoaded: report.querySelector(".company-logo")?.naturalWidth,
+  });
+
+  console.log(
+    "FLOUR PDF LAYOUT:",
+    [...report.querySelectorAll("section, h2, table")].map((el) => ({
+      tag: el.tagName,
+      text: el.innerText.slice(0, 35),
+      width: Math.round(el.getBoundingClientRect().width),
+      left: Math.round(el.getBoundingClientRect().left),
+      right: Math.round(el.getBoundingClientRect().right),
+      parentWidth: Math.round(el.parentElement.getBoundingClientRect().width),
+    })),
+  );
+
+  console.table(
+    [...report.querySelectorAll("section, h2, table")].map((el, i) => {
+      const r = el.getBoundingClientRect();
+      const p = el.parentElement.getBoundingClientRect();
+
+      return {
+        index: i,
+        element: el.tagName,
+        text: el.innerText.slice(0, 25),
+        width: Math.round(r.width),
+        left: Math.round(r.left),
+        right: Math.round(r.right),
+        parentWidth: Math.round(p.width),
+      };
+    }),
+  );
+
+  try {
+    const pdfOptions = {
+      margin: [7, 7, 7, 7],
+      filename: `تقرير-المطحنة-${reportDate}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: true,
+        scrollX: 0,
+        scrollY: 0,
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait",
+      },
+      pagebreak: {
+        mode: ["css", "legacy"],
+        avoid: ["section", "tr", ".kpi", ".note"],
+      },
+    };
+
+    const worker = html2pdf().set(pdfOptions).from(report).toCanvas();
+
+    const canvas = await worker.get("canvas");
+
+    console.log("FLOUR PDF CANVAS:", {
+      width: canvas.width,
+      height: canvas.height,
+      hasPixels: canvas.width > 0 && canvas.height > 0,
+    });
+
+    if (!canvas.width || !canvas.height) {
+      throw new Error("PDF canvas is empty");
+    }
+    const ctx = canvas.getContext("2d");
+    const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    let visiblePixels = 0;
+
+    for (let i = 3; i < pixels.length; i += 4) {
+      if (pixels[i] > 0) visiblePixels++;
+    }
+
+    console.log("FLOUR PDF PIXEL CHECK:", {
+      width: canvas.width,
+      height: canvas.height,
+      visiblePixels,
+      totalPixels: canvas.width * canvas.height,
+    });
+    await worker.toPdf().save();
+  } catch (error) {
+    console.error("PDF EXPORT ERROR:", error);
+    console.error("PDF EXPORT STACK:", error?.stack);
+    alert("فشل تصدير PDF. افتح Console وانسخ الخطأ الأحمر.");
+  } finally {
+    report.remove();
+    style.remove();
+  }
+}
 
 /* يبدأ فحص الحقول كل دقيقة */
 setInterval(refreshAllFieldStaleStyles, 60 * 1000);

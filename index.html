@@ -9400,11 +9400,15 @@ PKF
 </div>
 
              </section>
+
+
 <!-- ===================================== -->
 <!-- مصنع الطحين -->
 <!-- ===================================== -->
-      <section id="flour" class="section">
-       <!-- =========================
+
+<section id="flour" class="section">
+
+<!-- =========================
      Flour Command Center
 ========================= -->
 
@@ -9432,7 +9436,16 @@ PKF
     <span>لوحة التشغيل</span>
     <span id="flourDashboardChevron">▼</span>
   </button>
+
 </div>
+
+<button
+  type="button"
+  class="flour-command-toggle"
+  onclick="exportFlourReportPDF()"
+>
+  <span>📄 تصدير تقرير PDF</span>
+</button>
 
 <div id="flourDashboardContent" class="flour-dashboard-content">
 
@@ -18540,39 +18553,22 @@ if (factory === "feed") {
 
     switch (userInfo.role) {
 
-        case "admin":
+        
+case "admin":
+case "executive":
 
-        case "executive":
+    await Promise.all([
+        loadFactorySection("powerstation"),
+        loadFactorySection("blackoil"),
+        loadFactorySection("sugar"),
+        loadFactorySection("oil"),
+        loadFactorySection("flour"),
+        loadFactorySection("feed"),
+        loadFactorySection("waterfiltration")
+    ]);
 
-            await loadFactorySection(
-                "powerstation"
-            );
+    break;
 
-            await loadFactorySection(
-                "blackoil"
-            );
-
-            await loadFactorySection(
-                "sugar"
-            );
-
-            await loadFactorySection(
-                "oil"
-            );
-
-            await loadFactorySection(
-                "flour"
-            );
-
-            await loadFactorySection(
-                "feed"
-            );
-
-            await loadFactorySection(
-                "waterfiltration"
-            );
-
-            break;
 
 
         case "power":
@@ -20051,8 +20047,10 @@ if (typeof applyApprovalPermissions === "function") {
     <script src="js/jsinit.js"></script>
     <script src="js/jsupdate.js"></script>
     <script src="js/dashboard.js"></script>
-    <script src="js/archive.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/archive.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.3/dist/html2pdf.bundle.min.js"></script>
+
 
     <script>
       bootApplication();
