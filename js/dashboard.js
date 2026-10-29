@@ -2788,37 +2788,42 @@ function showAllSections() {
   });
 }
 
+let remindersLoading = false;
+
 async function loadReminders() {
-  // إخفاء الحاويات أولاً لمنع بقاء بيانات قديمة
-  const factoryRoles = [
-    "sugar",
-    "oil",
-    "flour",
-    "feed",
-    "waterfiltration",
-    "power",
-  ];
-
-  const containers = {};
-
-  factoryRoles.forEach((role) => {
-    const container = document.getElementById(`reminders-${role}`);
-
-    if (container) {
-      containers[role] = container;
-    }
-  });
-
-  // إذا كانت التذكيرات معروضة بالفعل، لا تعِد إنشاءها
-  if (
-    Object.values(containers).some((container) =>
-      container.querySelector("button"),
-    )
-  ) {
-    return;
-  }
+  if (remindersLoading) return;
+  remindersLoading = true;
 
   try {
+    // إخفاء الحاويات أولاً لمنع بقاء بيانات قديمة
+    const factoryRoles = [
+      "sugar",
+      "oil",
+      "flour",
+      "feed",
+      "waterfiltration",
+      "power",
+    ];
+
+    const containers = {};
+
+    factoryRoles.forEach((role) => {
+      const container = document.getElementById(`reminders-${role}`);
+
+      if (container) {
+        containers[role] = container;
+      }
+    });
+
+    // إذا كانت التذكيرات معروضة بالفعل، لا تعِد إنشاءها
+    if (
+      Object.values(containers).some((container) =>
+        container.querySelector("button"),
+      )
+    ) {
+      return;
+    }
+
     // التحقق من المستخدم الحالي
     const {
       data: { user },
@@ -2942,6 +2947,8 @@ async function loadReminders() {
     });
   } catch (error) {
     console.error("LOAD REMINDERS ERROR:", error);
+  } finally {
+    remindersLoading = false;
   }
 }
 
@@ -5754,6 +5761,285 @@ function packingNumber(id) {
   const value = Number(rawValue);
 
   return Number.isFinite(value) ? value : 0;
+}
+
+/* =========================================================
+   PREMIX — MONTHLY CUMULATIVE PRODUCTION
+   report_date = production_date + 1 day
+========================================================= */
+
+window.premixCumulativeState = {
+  currentDate: null,
+  dates: [],
+  dailyProduction: {},
+  chart: null,
+};
+
+async function loadPremixCumulativeChart() {
+  const dateElement = document.getElementById("reportDateKey");
+
+  if (!dateElement?.value) return;
+
+  const currentReportDate = dateElement.value;
+
+  // آخر يوم إنتاج مكتمل = تاريخ التقرير ناقص يوم
+  const productionEndObject = new Date(currentReportDate + "T00:00:00");
+
+  productionEndObject.setDate(productionEndObject.getDate() - 1);
+
+  const formatDate = (date) =>
+    [
+      date.getFullYear(),
+      String(date.getMonth() + 1).padStart(2, "0"),
+      String(date.getDate()).padStart(2, "0"),
+    ].join("-");
+
+  const productionEndDate = formatDate(productionEndObject);
+
+  // بداية شهر الإنتاج حسب تاريخ آخر يوم مكتمل
+  const monthStart = currentReportDate.slice(0, 8) + "01";
+
+  const dates = [];
+
+  const start = new Date(monthStart + "T00:00:00");
+  const end = new Date(productionEndDate + "T00:00:00");
+
+  if (end >= start) {
+    for (
+      let date = new Date(start);
+      date <= end;
+      date.setDate(date.getDate() + 1)
+    ) {
+      dates.push(formatDate(date));
+    }
+  }
+
+  // تهيئة إنتاج كل يوم بصفر، بما فيها الأيام التي لا إنتاج فيها
+  const dailyProduction = {};
+
+  dates.forEach((date) => {
+    dailyProduction[date] = 0;
+  });
+
+  if (dates.length > 0) {
+    // تقارير اليوم التالي تحتوي على إنتاج اليوم السابق
+    const reportStartObject = new Date(monthStart + "T00:00:00");
+
+    reportStartObject.setDate(reportStartObject.getDate() + 1);
+
+    const reportStartDate = formatDate(reportStartObject);
+
+    const reportEndObject = new Date(productionEndDate + "T00:00:00");
+
+    reportEndObject.setDate(reportEndObject.getDate() + 1);
+
+    const reportEndDate = formatDate(reportEndObject);
+
+    const { data, error } = await supabaseClient
+      .from("daily_reports")
+      .select("report_date, field_name, field_value")
+      .eq("factory", "feed")
+      .eq("field_name", "premix1_prod")
+      .gte("report_date", reportStartDate)
+      .lte("report_date", reportEndDate);
+
+    if (error) {
+      console.error("PREMIX CUMULATIVE ERROR:", error);
+      return;
+    }
+
+    // ربط كل تقرير بتاريخ الإنتاج السابق
+    (data || []).forEach((row) => {
+      if (!row.report_date) return;
+
+      const reportDateObject = new Date(row.report_date + "T00:00:00");
+
+      reportDateObject.setDate(reportDateObject.getDate() - 1);
+
+      const productionDate = formatDate(reportDateObject);
+
+      if (
+        !Object.prototype.hasOwnProperty.call(dailyProduction, productionDate)
+      ) {
+        return;
+      }
+
+      // استخدام آخر قيمة للسجل إذا تكرر نفس الحقل والتاريخ
+      dailyProduction[productionDate] = Number.parseFloat(row.field_value) || 0;
+    });
+  }
+
+  window.premixCumulativeState = {
+    currentDate: currentReportDate,
+    productionEndDate,
+    dates,
+    dailyProduction,
+    chart: window.premixCumulativeState?.chart || null,
+  };
+
+  renderPremixCumulativeChart();
+}
+
+function renderPremixCumulativeChart() {
+  const state = window.premixCumulativeState;
+
+  if (!state) return;
+
+  // حساب الإنتاج التراكمي لكل يوم
+  let cumulative = 0;
+
+  const cumulativeValues = state.dates.map((date) => {
+    cumulative += state.dailyProduction[date] || 0;
+    return Number(cumulative.toFixed(2));
+  });
+
+  const total = cumulativeValues.length
+    ? cumulativeValues[cumulativeValues.length - 1]
+    : 0;
+
+  // المتوسط يشمل جميع الأيام المعروضة، بما فيها أيام الصفر
+  const average = state.dates.length ? total / state.dates.length : 0;
+
+  const formatNumber = (value) =>
+    value.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+  const totalElement = document.getElementById("premixCumulativeTotal");
+
+  const averageElement = document.getElementById("premixCumulativeAverage");
+
+  const periodElement = document.getElementById("premixCumulativePeriod");
+
+  const lastDayElement = document.getElementById("premixCumulativeLastDay");
+
+  if (totalElement) {
+    totalElement.textContent = formatNumber(total);
+  }
+
+  if (averageElement) {
+    averageElement.textContent = formatNumber(average);
+  }
+
+  if (periodElement) {
+    if (state.dates.length > 0) {
+      const firstDate = state.dates[0];
+      const lastDate = state.dates[state.dates.length - 1];
+
+      periodElement.textContent =
+        `من ${firstDate.slice(8, 10)}/${firstDate.slice(5, 7)}` +
+        ` إلى ${lastDate.slice(8, 10)}/${lastDate.slice(5, 7)}`;
+    } else {
+      periodElement.textContent = "لا يوجد إنتاج مكتمل في هذا الشهر حتى الآن";
+    }
+  }
+
+  if (lastDayElement) {
+    lastDayElement.textContent = state.productionEndDate
+      ? `حتى ${state.productionEndDate.slice(8, 10)}/${state.productionEndDate.slice(5, 7)}/${state.productionEndDate.slice(0, 4)}`
+      : "لا يوجد يوم إنتاج مكتمل";
+  }
+
+  const canvas = document.getElementById("premixCumulativeChart");
+
+  if (!canvas || typeof Chart === "undefined") return;
+
+  if (state.chart) {
+    state.chart.destroy();
+    state.chart = null;
+  }
+
+  const labels = state.dates.map(
+    (date) => `${date.slice(8, 10)}/${date.slice(5, 7)}`,
+  );
+
+  state.chart = new Chart(canvas.getContext("2d"), {
+    type: "line",
+
+    data: {
+      labels,
+
+      datasets: [
+        {
+          label: "الإنتاج التراكمي للبريمكس",
+          data: cumulativeValues,
+          borderColor: "#f5c542",
+          backgroundColor: "rgba(245, 197, 66, 0.12)",
+          borderWidth: 3,
+          fill: true,
+          tension: 0.35,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: "#f5c542",
+          pointBorderColor: "#ffffff",
+          pointBorderWidth: 2,
+        },
+      ],
+    },
+
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+
+      interaction: {
+        mode: "index",
+        intersect: false,
+      },
+
+      plugins: {
+        legend: {
+          display: false,
+        },
+
+        tooltip: {
+          rtl: true,
+          textDirection: "rtl",
+          displayColors: false,
+
+          callbacks: {
+            label(context) {
+              return "التراكمي: " + formatNumber(context.parsed.y) + " طن";
+            },
+          },
+        },
+      },
+
+      scales: {
+        x: {
+          grid: {
+            color: "rgba(255,255,255,0.05)",
+          },
+
+          ticks: {
+            color: "rgba(255,255,255,0.45)",
+            font: {
+              size: 10,
+            },
+          },
+        },
+
+        y: {
+          beginAtZero: true,
+
+          grid: {
+            color: "rgba(255,255,255,0.06)",
+          },
+
+          ticks: {
+            color: "rgba(255,255,255,0.45)",
+            font: {
+              size: 10,
+            },
+
+            callback(value) {
+              return Number(value).toLocaleString("en-US");
+            },
+          },
+        },
+      },
+    },
+  });
 }
 
 /* =========================================================

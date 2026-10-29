@@ -13116,6 +13116,69 @@ PKF
 
       </div>
 
+      
+<!-- =====================================================
+     PREMIX — MONTHLY CUMULATIVE PRODUCTION
+====================================================== -->
+<div class="premix-cumulative-card">
+
+  <div class="premix-cumulative-header">
+    <div class="premix-cumulative-title">
+      <div class="premix-cumulative-icon">↗</div>
+      <div>
+        <strong>الإنتاج التراكمي الشهري</strong>
+        <small id="premixCumulativePeriod">
+          من بداية شهر الإنتاج حتى آخر يوم مكتمل
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <div class="premix-cumulative-summary">
+
+    <div class="premix-cumulative-kpi main">
+      <span>الإجمالي التراكمي</span>
+      <div>
+        <strong id="premixCumulativeTotal">0.00</strong>
+        <small>طن</small>
+      </div>
+    </div>
+
+    <div class="premix-cumulative-kpi">
+      <span>متوسط الإنتاج اليومي</span>
+      <div>
+        <strong id="premixCumulativeAverage">0.00</strong>
+        <small>طن / يوم</small>
+      </div>
+    </div>
+
+    <div class="premix-cumulative-kpi">
+      <span>المنتج المعروض</span>
+      <strong class="premix-cumulative-product-name">
+        إنتاج البريمكس
+      </strong>
+      <small>إجمالي إنتاج الشهر</small>
+    </div>
+
+  </div>
+
+  <div class="premix-cumulative-chart">
+    <canvas id="premixCumulativeChart"></canvas>
+  </div>
+
+  <div class="premix-cumulative-footer">
+    <span>
+      <i></i>
+      الإنتاج التراكمي
+    </span>
+    <span id="premixCumulativeLastDay">
+      آخر تحديث: —
+    </span>
+  </div>
+
+</div>
+
+
     </div>
 
   </details>
@@ -18300,6 +18363,7 @@ if (factory === "oil") {
   ===================================== */
 
   await loadRefineryProductionComparison();
+  loadPremixCumulativeChart();
 }
         
 if (factory === "flour") {
