@@ -2789,60 +2789,89 @@ function showAllSections() {
 }
 
 async function loadReminders() {
-  const {
-    data: { user },
-  } = await supabaseClient.auth.getUser();
+  // إخفاء الحاويات أولاً لمنع بقاء بيانات قديمة
+  const factoryRoles = [
+    "sugar",
+    "oil",
+    "flour",
+    "feed",
+    "waterfiltration",
+    "power",
+  ];
 
-  if (!user) return;
+  const containers = {};
 
-  // التأكد أن المستخدم Admin
-  const { data: userInfo } = await supabaseClient
-    .from("users")
-    .select("role")
-    .eq("email", user.email)
-    .single();
+  factoryRoles.forEach((role) => {
+    const container = document.getElementById(`reminders-${role}`);
 
-  if (!userInfo || userInfo.role !== "admin") return;
+    if (container) {
+      containers[role] = container;
+    }
+  });
 
-  const container = document.getElementById("remindersContent");
-
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  // جلب جميع الحسابات التي لديها رقم هاتف
-  const { data: users, error } = await supabaseClient
-    .from("users")
-    .select("email, name, role, subsection, phone")
-    .not("phone", "is", null)
-    .neq("role", "admin")
-    .order("name", { ascending: true });
-
-  if (error) {
-    console.error("LOAD WHATSAPP USERS ERROR:", error);
+  // إذا كانت التذكيرات معروضة بالفعل، لا تعِد إنشاءها
+  if (
+    Object.values(containers).some((container) =>
+      container.querySelector("button"),
+    )
+  ) {
     return;
   }
 
-  if (!users || users.length === 0) {
-    container.innerHTML = `
-      <div style="padding:10px;font-weight:bold;">
-        لا توجد حسابات تحتوي على أرقام هاتف
-      </div>
-    `;
-    return;
-  }
+  try {
+    // التحقق من المستخدم الحالي
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
 
-  users.forEach((userData) => {
-    const phone = String(userData.phone).replace(/\D/g, "");
+    if (!user) return;
 
-    if (!phone) return;
+    // السماح للأدمن فقط
+    const { data: userInfo, error: userError } = await supabaseClient
+      .from("users")
+      .select("role")
+      .eq("email", user.email)
+      .single();
 
-    const displayName = userData.name || userData.email || "مستخدم";
+    if (userError || userInfo?.role !== "admin") return;
 
-    const subsection = userData.subsection ? ` — ${userData.subsection}` : "";
+    // جلب الحسابات التي لديها أرقام هاتف
+    const { data: users, error } = await supabaseClient
+      .from("users")
+      .select("email, name, role, subsection, phone")
+      .not("phone", "is", null)
+      .neq("role", "admin")
+      .order("name", { ascending: true });
 
-    container.innerHTML += `
-      <div style="
+    if (error) {
+      console.error("LOAD WHATSAPP USERS ERROR:", error);
+      return;
+    }
+
+    if (!users || users.length === 0) {
+      Object.values(containers).forEach((container) => {
+        container.hidden = false;
+        container.textContent = "لا توجد حسابات تحتوي على أرقام هاتف";
+      });
+      return;
+    }
+
+    // توزيع كل حساب حسب role الخاص بمصنعه
+    users.forEach((userData) => {
+      const role = userData.role;
+      const container = containers[role];
+
+      // تجاهل الحسابات التي لا تقابل حاوية مصنع
+      if (!container) return;
+
+      const phone = String(userData.phone || "").replace(/\D/g, "");
+
+      if (!phone) return;
+
+      container.hidden = false;
+
+      const card = document.createElement("div");
+      card.style.cssText = `
         display:flex;
         justify-content:space-between;
         align-items:center;
@@ -2852,56 +2881,70 @@ async function loadReminders() {
         border-radius:8px;
         background:#2b313a;
         border:1px solid #454d58;
-      ">
+      `;
 
-        <div style="display:flex;flex-direction:column;gap:3px;">
+      const details = document.createElement("div");
+      details.style.cssText =
+        "display:flex;flex-direction:column;gap:3px;min-width:0;";
 
-          <span style="
-            font-weight:bold;
-            font-size:14px;
-          ">
-            ${displayName}
-          </span>
+      const name = document.createElement("span");
+      name.textContent = userData.name || userData.email || "مستخدم";
+      name.style.cssText = "font-weight:bold;font-size:14px;";
 
-          <span style="
-            font-size:11px;
-            opacity:.75;
-            direction:ltr;
-            text-align:right;
-          ">
-            ${userData.email}${subsection}
-          </span>
+      const info = document.createElement("span");
+      info.textContent = [userData.email, userData.subsection]
+        .filter(Boolean)
+        .join(" — ");
 
-        </div>
+      info.style.cssText = `
+        font-size:11px;
+        opacity:.75;
+        overflow-wrap:anywhere;
+      `;
 
-        <button
-          style="
-            padding:7px 13px;
-            font-size:13px;
-            border:none;
-            border-radius:7px;
-            background:#25D366;
-            color:white;
-            cursor:pointer;
-            white-space:nowrap;
-          "
-          onclick="
-            window.open(
-              'https://wa.me/${phone}?text=' +
-              encodeURIComponent(
-                'تذكير بتحديث التقرير اليومي'
-              ),
-              '_blank'
-            )
-          "
-        >
-          💬 واتساب
-        </button>
+      details.append(name, info);
 
-      </div>
-    `;
-  });
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = "💬 واتساب";
+      button.style.cssText = `
+        padding:7px 13px;
+        font-size:13px;
+        border:none;
+        border-radius:7px;
+        background:#25D366;
+        color:white;
+        cursor:pointer;
+        white-space:nowrap;
+      `;
+
+      button.addEventListener("click", () => {
+        const message = encodeURIComponent("تذكير بتحديث التقرير اليومي");
+
+        window.open(
+          `https://wa.me/${phone}?text=${message}`,
+          "_blank",
+          "noopener,noreferrer",
+        );
+      });
+
+      card.append(details, button);
+      container.appendChild(card);
+    });
+
+    // إظهار رسالة داخل الحاويات التي لم تحصل على حسابات
+    Object.values(containers).forEach((container) => {
+      if (container.hidden) return;
+
+      if (!container.hasChildNodes()) {
+        container.textContent = "لا توجد حسابات تحتوي على أرقام هاتف";
+      }
+    });
+  } catch (error) {
+    console.error("LOAD REMINDERS ERROR:", error);
+  }
 }
+
 async function loadApprovalsDashboard() {
   const reportDate = document.getElementById("reportDateKey")?.value;
 
@@ -2911,27 +2954,8 @@ async function loadApprovalsDashboard() {
 
   if (!box) return;
 
-  box.innerHTML = `
-<details open>
+  box.innerHTML = "";
 
-<summary style="
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-">
-
-📱 تذكيرات الواتساب
-
-</summary>
-
-<div
-id="remindersContent"
-style="margin-top:15px;">
-
-</div>
-
-</details>
-`;
   const factories = [
     {
       role: "sugar",
