@@ -2792,37 +2792,35 @@ let remindersLoading = false;
 
 async function loadReminders() {
   if (remindersLoading) return;
+
   remindersLoading = true;
 
   try {
-    // إخفاء الحاويات أولاً لمنع بقاء بيانات قديمة
-    const factoryRoles = [
+    // جميع حاويات التذكيرات
+    const reminderTargets = [
       "sugar",
       "oil",
       "flour",
       "feed",
       "waterfiltration",
       "power",
+      "sales-oil",
+      "sales-feed",
+      "sales-sugar",
+      "sales-flour",
     ];
 
     const containers = {};
+    const groups = {};
 
-    factoryRoles.forEach((role) => {
-      const container = document.getElementById(`reminders-${role}`);
+    // العثور على الحاويات الموجودة في الصفحة
+    reminderTargets.forEach((target) => {
+      const container = document.getElementById(`reminders-${target}`);
 
       if (container) {
-        containers[role] = container;
+        containers[target] = container;
       }
     });
-
-    // إذا كانت التذكيرات معروضة بالفعل، لا تعِد إنشاءها
-    if (
-      Object.values(containers).some((container) =>
-        container.querySelector("button"),
-      )
-    ) {
-      return;
-    }
 
     // التحقق من المستخدم الحالي
     const {
@@ -2853,77 +2851,90 @@ async function loadReminders() {
       return;
     }
 
-    if (!users || users.length === 0) {
-      Object.values(containers).forEach((container) => {
-        container.hidden = false;
-        container.textContent = "لا توجد حسابات تحتوي على أرقام هاتف";
-      });
-      return;
-    }
+    // تجهيز مجموعات التذكيرات
+    reminderTargets.forEach((target) => {
+      const container = containers[target];
 
-    // توزيع كل حساب حسب role الخاص بمصنعه
-    users.forEach((userData) => {
-      const role = userData.role;
-      const container = containers[role];
-
-      // تجاهل الحسابات التي لا تقابل حاوية مصنع
       if (!container) return;
+
+      container.innerHTML = "";
+      container.hidden = false;
+
+      const group = document.createElement("div");
+      group.className = "reminders-group";
+
+      container.appendChild(group);
+
+      groups[target] = group;
+    });
+
+    // توزيع الحسابات على المصانع وأقسام المبيعات
+    (users || []).forEach((userData) => {
+      const role = String(userData.role || "")
+        .trim()
+        .toLowerCase();
+
+      const subsection = String(userData.subsection || "")
+        .trim()
+        .toLowerCase();
+      let target = role;
+
+      // حسابات مبيعات الزيت
+      if (
+        role === "oil" &&
+        ["sales", "oil_sales", "sales/oil_sales"].includes(subsection)
+      ) {
+        target = "sales-oil";
+      }
+
+      // حسابات مبيعات الأعلاف
+      else if (
+        role === "feed" &&
+        ["sales", "feed_sales", "sales/feed_sales"].includes(subsection)
+      ) {
+        target = "sales-feed";
+      }
+
+      // حسابات مبيعات السكر
+      else if (
+        role === "sugar" &&
+        ["sales", "sugar_sales", "sales/sugar_sales"].includes(subsection)
+      ) {
+        target = "sales-sugar";
+      }
+
+      // حسابات مبيعات الطحين
+      else if (
+        role === "flour" &&
+        ["sales", "flour_sales", "sales/flour_sales"].includes(subsection)
+      ) {
+        target = "sales-flour";
+      }
+      const group = groups[target];
+
+      if (!group) return;
 
       const phone = String(userData.phone || "").replace(/\D/g, "");
 
       if (!phone) return;
 
-      container.hidden = false;
+      const button = document.createElement("button");
 
-      const card = document.createElement("div");
-      card.style.cssText = `
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:10px;
-        padding:10px 12px;
-        margin:6px 0;
-        border-radius:8px;
-        background:#2b313a;
-        border:1px solid #454d58;
-      `;
+      button.type = "button";
+      button.className = "reminders-whatsapp-btn";
 
-      const details = document.createElement("div");
-      details.style.cssText =
-        "display:flex;flex-direction:column;gap:3px;min-width:0;";
+      const icon = document.createElement("span");
+      icon.className = "wa-icon";
+      icon.textContent = "💬";
 
       const name = document.createElement("span");
       name.textContent = userData.name || userData.email || "مستخدم";
-      name.style.cssText = "font-weight:bold;font-size:14px;";
 
-      const info = document.createElement("span");
-      info.textContent = [userData.email, userData.subsection]
-        .filter(Boolean)
-        .join(" — ");
+      button.append(icon, name);
 
-      info.style.cssText = `
-        font-size:11px;
-        opacity:.75;
-        overflow-wrap:anywhere;
-      `;
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
 
-      details.append(name, info);
-
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = "💬 واتساب";
-      button.style.cssText = `
-        padding:7px 13px;
-        font-size:13px;
-        border:none;
-        border-radius:7px;
-        background:#25D366;
-        color:white;
-        cursor:pointer;
-        white-space:nowrap;
-      `;
-
-      button.addEventListener("click", () => {
         const message = encodeURIComponent("تذكير بتحديث التقرير اليومي");
 
         window.open(
@@ -2933,16 +2944,19 @@ async function loadReminders() {
         );
       });
 
-      card.append(details, button);
-      container.appendChild(card);
+      group.appendChild(button);
     });
 
-    // إظهار رسالة داخل الحاويات التي لم تحصل على حسابات
-    Object.values(containers).forEach((container) => {
-      if (container.hidden) return;
+    // إظهار رسالة عند عدم وجود حسابات في القسم
+    reminderTargets.forEach((target) => {
+      const container = containers[target];
+      const group = groups[target];
 
-      if (!container.hasChildNodes()) {
-        container.textContent = "لا توجد حسابات تحتوي على أرقام هاتف";
+      if (!container) return;
+
+      if (!group || !group.hasChildNodes()) {
+        container.innerHTML =
+          '<div class="reminders-empty">لا توجد حسابات تحتوي على أرقام هاتف</div>';
       }
     });
   } catch (error) {
@@ -7981,11 +7995,13 @@ async function loadFeedProductionHistory() {
 
   const selectedDate = dateEl.value;
 
-  const dates = [
-    getFeedPreviousDate(selectedDate, 2),
-    getFeedPreviousDate(selectedDate, 1),
-    selectedDate,
-  ];
+  const dates = [];
+
+  for (let i = 6; i >= 1; i--) {
+    dates.push(getFeedPreviousDate(selectedDate, i));
+  }
+
+  dates.push(selectedDate);
 
   /* =====================================================
      الحقول الفعلية لإنتاج الأعلاف
@@ -8026,11 +8042,11 @@ async function loadFeedProductionHistory() {
      تجميع إنتاج كل يوم
      ===================================================== */
 
-  const values = {
-    [dates[0]]: 0,
-    [dates[1]]: 0,
-    [selectedDate]: 0,
-  };
+  const values = {};
+
+  dates.forEach((date) => {
+    values[date] = 0;
+  });
 
   previousData.forEach((row) => {
     if (!values.hasOwnProperty(row.report_date)) {
@@ -8112,25 +8128,37 @@ function renderFeedProductionHistory(dates, values, selectedDate) {
       type: "bar",
 
       data: {
-        labels: ["قبل أمس", "أمس", "اليوم"],
+        labels: dates.map((date, index) => {
+          if (date === selectedDate) return "اليوم";
+
+          const dayDifference = dates.length - 1 - index;
+
+          if (dayDifference === 1) return "أمس";
+          if (dayDifference === 2) return "قبل أمس";
+
+          const parts = date.split("-");
+          return `${parts[2]}/${parts[1]}`;
+        }),
 
         datasets: [
           {
             label: "الإنتاج طن",
 
-            data: [beforeYesterday, yesterday, today],
+            data: dates.map((date) => Number(values[date]) || 0),
 
             borderRadius: 9,
 
             borderSkipped: false,
 
-            backgroundColor: [
-              "rgba(75,155,131,.45)",
-              "rgba(55,184,120,.55)",
-              "rgba(55,184,120,.90)",
-            ],
+            backgroundColor: dates.map((date) =>
+              date === selectedDate
+                ? "rgba(55,184,120,.90)"
+                : "rgba(75,155,131,.55)",
+            ),
 
-            borderColor: ["#4b9b83", "#37b878", "#75d47b"],
+            borderColor: dates.map((date) =>
+              date === selectedDate ? "#75d47b" : "#4b9b83",
+            ),
 
             borderWidth: 1,
           },
@@ -8446,20 +8474,25 @@ async function exportFlourReportPDF() {
   const branPacked = getValue("bran_packaging_stock");
 
   const lineRows = [];
+
   for (let i = 1; i <= 6; i++) {
     const f1 = getValue(`line${i}_f1`);
     const f3 = getValue(`line${i}_f3`);
     const bran = getValue(`line${i}_bran`);
 
+    // نسبة الاستخراج الخاصة بكل خط
+    const extraction = getValue(`line${i}_extraction`);
+
     lineRows.push(`
-      <tr>
-        <td>${String.fromCharCode(64 + i)}</td>
-        <td>${fmt(f1)}</td>
-        <td>${fmt(f3)}</td>
-        <td>${fmt(bran)}</td>
-        <td>${fmt(f1 + f3 + bran)}</td>
-      </tr>
-    `);
+    <tr>
+      <td>${String.fromCharCode(64 + i)}</td>
+      <td>${fmt(extraction)}%</td>
+      <td>${fmt(f1)}</td>
+      <td>${fmt(f3)}</td>
+      <td>${fmt(bran)}</td>
+      <td>${fmt(f1 + f3 + bran)}</td>
+    </tr>
+  `);
   }
 
   const stopData = [
@@ -8481,7 +8514,11 @@ async function exportFlourReportPDF() {
       <tr>
         <td>${line}</td>
         <td>${fmt(time)}</td>
-        <td class="cause">${esc(cause || "—")}</td>
+        <td class="cause">
+  <div class="cause-text" dir="auto">
+    ${esc(cause || "—").replace(/\n/g, "<br>")}
+  </div>
+</td>
       </tr>
     `;
     })
@@ -8542,20 +8579,25 @@ async function exportFlourReportPDF() {
     <h2>جدول الإنتاج التفصيلي حسب خطوط المطحنة</h2>
     <table>
       <thead>
-        <tr>
-          <th>الخط</th><th>F1 (طن)</th><th>F3 (طن)</th>
-          <th>النخالة (طن)</th><th>الإجمالي (طن)</th>
-        </tr>
-      </thead>
+  <tr>
+    <th>الخط</th>
+    <th>نسبة الاستخراج (%)</th>
+    <th>F1 (طن)</th>
+    <th>F3 (طن)</th>
+    <th>النخالة (طن)</th>
+    <th>الإجمالي (طن)</th>
+  </tr>
+</thead>
       <tbody>
         ${lineRows.join("")}
         <tr class="total-row">
-          <th>الإجمالي</th>
-          <th>${fmt(getValue("flour_total_f1"))}</th>
-          <th>${fmt(getValue("flour_total_f3"))}</th>
-          <th>${fmt(getValue("flour_total_wbran"))}</th>
-          <th>${fmt(production)}</th>
-        </tr>
+  <th>الإجمالي</th>
+  <th>—</th>
+  <th>${fmt(getValue("flour_total_f1"))}</th>
+  <th>${fmt(getValue("flour_total_f3"))}</th>
+  <th>${fmt(getValue("flour_total_wbran"))}</th>
+  <th>${fmt(production)}</th>
+</tr>
       </tbody>
     </table>
   </section>
@@ -8777,7 +8819,26 @@ async function exportFlourReportPDF() {
 }
 
 .flour-pdf-report .cause {
-  text-align: right;
+  text-align: right !important;
+  direction: rtl;
+  white-space: normal !important;
+  vertical-align: middle;
+  padding: 3mm 2.5mm !important;
+}
+
+.flour-pdf-report .cause-text {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  direction: auto;
+  unicode-bidi: plaintext;
+  text-align: start;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+  line-height: 1.8;
+  font-size: 9pt;
+  box-sizing: border-box;
 }
 
 .flour-pdf-report .note {
@@ -8943,6 +9004,32 @@ async function exportFlourReportPDF() {
   } finally {
     report.remove();
     style.remove();
+  }
+}
+
+function updateLineExtractionRing(line, value) {
+  const ring = document.getElementById(`lineExtractionRing${line}`);
+
+  if (!ring) return;
+
+  const number = Number(value);
+
+  const percent = Number.isFinite(number)
+    ? Math.max(0, Math.min(number, 100))
+    : 0;
+
+  const circumference = 2 * Math.PI * 42;
+
+  ring.style.strokeDasharray = circumference;
+
+  ring.style.strokeDashoffset = circumference * (1 - percent / 100);
+}
+
+for (let line = 1; line <= 6; line++) {
+  const input = document.getElementById(`line${line}_extraction`);
+
+  if (input) {
+    updateLineExtractionRing(line, input.value);
   }
 }
 
