@@ -3398,82 +3398,36 @@ function scheduleFieldHistoryUpdate(fieldId, factory, value, email) {
 
   window.autoSaveTimers = window.autoSaveTimers || new Map();
 
-  function scheduleDailyReportAutoSave(fieldId) {
-    const field = document.getElementById(fieldId);
+  /* =========================================
+   حفظ سجل التغييرات
+========================================= */
 
-    if (!field) return;
-
-    /* لا نحفظ أثناء تعديل تقرير سابق */
-    if (window.isHistoricalEditMode) return;
-
-    /* لا نحفظ الحقول غير القابلة للتحرير */
-    if (field.readOnly || field.disabled) return;
-
-    const reportDateElement = document.getElementById("reportDateKey");
-    if (!reportDateElement?.value) return;
-
-    const factory =
-      window.fieldFactoryById instanceof Map
-        ? window.fieldFactoryById.get(fieldId)
-        : null;
-
-    if (!factory) {
-      console.warn("AUTO SAVE: factory not found for", fieldId);
-      return;
-    }
-
+  function scheduleFieldHistoryUpdate(fieldId, factory, value, email) {
     const key = fieldStateKey(factory, fieldId);
 
-    /* إلغاء المؤقت السابق لنفس الحقل */
-    if (window.autoSaveTimers.has(key)) {
-      clearTimeout(window.autoSaveTimers.get(key));
+    if (window.fieldHistoryTimers.has(key)) {
+      clearTimeout(window.fieldHistoryTimers.get(key));
     }
 
     const timer = setTimeout(async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabaseClient.auth.getUser();
+      await saveFieldHistoryIfChanged(fieldId, factory, value, email);
 
-        if (!user) return;
-
-        const reportDate = reportDateElement.value;
-        const value = field.value ?? "";
-
-        const { error } = await supabaseClient.from("daily_reports").upsert(
-          {
-            report_date: reportDate,
-            factory: factory,
-            field_name: fieldId,
-            field_value: value,
-            updated_by: user.email,
-            updated_at: new Date().toISOString(),
-          },
-          {
-            onConflict: "report_date,factory,field_name",
-          },
-        );
-
-        if (error) {
-          console.error("AUTO SAVE ERROR:", error);
-          return;
-        }
-
-        console.log("AUTO SAVED:", factory, fieldId, value);
-
-        /* تحديث سجل التغيير */
-        scheduleFieldHistoryUpdate(fieldId, factory, value, user.email);
-      } catch (error) {
-        console.error("AUTO SAVE FAILED:", error);
-      } finally {
-        window.autoSaveTimers.delete(key);
-      }
+      window.fieldHistoryTimers.delete(key);
     }, 800);
 
-    window.autoSaveTimers.set(key, timer);
+    window.fieldHistoryTimers.set(key, timer);
   }
 
-  /* تشغيل AutoSave لجميع الحقول القابلة للحفظ */
+  /* =========================================
+   AUTO SAVE - حفظ التقرير اليومي
+========================================= */
+
+  window.autoSaveTimers = window.autoSaveTimers || new Map();
+
+  /* =========================================
+   تسجيل مستمع الحفظ مرة واحدة عند تحميل الملف
+========================================= */
+
   document.addEventListener("input", (event) => {
     const field = event.target;
 
@@ -3481,6 +3435,80 @@ function scheduleFieldHistoryUpdate(fieldId, factory, value, email) {
 
     scheduleDailyReportAutoSave(field.id);
   });
+}
+window.autoSaveTimers =
+  window.autoSaveTimers instanceof Map ? window.autoSaveTimers : new Map();
+
+function scheduleDailyReportAutoSave(fieldId) {
+  const field = document.getElementById(fieldId);
+
+  if (!field) return;
+
+  if (window.isHistoricalEditMode) return;
+
+  if (field.readOnly || field.disabled) return;
+
+  const reportDateElement = document.getElementById("reportDateKey");
+
+  if (!reportDateElement?.value) return;
+
+  const factory =
+    window.fieldFactoryById instanceof Map
+      ? window.fieldFactoryById.get(fieldId)
+      : null;
+
+  if (!factory) {
+    console.warn("AUTO SAVE: factory not found for", fieldId);
+    return;
+  }
+
+  const key = fieldStateKey(factory, fieldId);
+
+  if (window.autoSaveTimers.has(key)) {
+    clearTimeout(window.autoSaveTimers.get(key));
+  }
+
+  const timer = setTimeout(async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabaseClient.auth.getUser();
+
+      if (!user) return;
+
+      const reportDate = reportDateElement.value;
+      const value = field.value ?? "";
+
+      const { error } = await supabaseClient.from("daily_reports").upsert(
+        {
+          report_date: reportDate,
+          factory: factory,
+          field_name: fieldId,
+          field_value: value,
+          updated_by: user.email,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          onConflict: "report_date,factory,field_name",
+        },
+      );
+
+      if (error) {
+        console.error("AUTO SAVE ERROR:", error);
+        return;
+      }
+
+      console.log("AUTO SAVED:", factory, fieldId, value);
+
+      scheduleFieldHistoryUpdate(fieldId, factory, value, user.email);
+    } catch (error) {
+      console.error("AUTO SAVE FAILED:", error);
+    } finally {
+      window.autoSaveTimers.delete(key);
+    }
+  }, 800);
+
+  window.autoSaveTimers.set(key, timer);
 }
 
 function updateRefineryTotals() {
@@ -8424,6 +8452,7 @@ function updateFlourExtractionEfficiency() {
     detailRing.style.strokeDashoffset = offset;
   }
 }
+
 async function exportFlourReportPDF() {
   if (typeof html2pdf === "undefined") {
     alert("مكتبة PDF غير محمّلة. تحقق من اتصال الإنترنت.");
@@ -8475,24 +8504,32 @@ async function exportFlourReportPDF() {
 
   const lineRows = [];
 
+  let totalLineWheatInput = 0;
+
   for (let i = 1; i <= 6; i++) {
     const f1 = getValue(`line${i}_f1`);
     const f3 = getValue(`line${i}_f3`);
     const bran = getValue(`line${i}_bran`);
 
-    // نسبة الاستخراج الخاصة بكل خط
-    const extraction = getValue(`line${i}_extraction`);
+    const wheatInput = getValue(`line${i}_wheat_input`);
+
+    const extractionField = document.getElementById(`line${i}_extraction`);
+
+    const extraction = extractionField?.value || "—";
+
+    totalLineWheatInput += wheatInput;
 
     lineRows.push(`
     <tr>
       <td>${String.fromCharCode(64 + i)}</td>
-      <td>${fmt(extraction)}%</td>
+      <td>${fmt(wheatInput)}</td>
+      <td>${esc(extraction === "—" ? "—" : extraction + "%")}</td>
       <td>${fmt(f1)}</td>
       <td>${fmt(f3)}</td>
       <td>${fmt(bran)}</td>
       <td>${fmt(f1 + f3 + bran)}</td>
     </tr>
-  `);
+    `);
   }
 
   const stopData = [
@@ -8581,22 +8618,24 @@ async function exportFlourReportPDF() {
       <thead>
   <tr>
     <th>الخط</th>
+    <th>الحنطة الداخلة (طن)</th>
     <th>نسبة الاستخراج (%)</th>
     <th>F1 (طن)</th>
     <th>F3 (طن)</th>
     <th>النخالة (طن)</th>
     <th>الإجمالي (طن)</th>
-  </tr>
+</tr>
 </thead>
       <tbody>
         ${lineRows.join("")}
-        <tr class="total-row">
-  <th>الإجمالي</th>
-  <th>—</th>
-  <th>${fmt(getValue("flour_total_f1"))}</th>
-  <th>${fmt(getValue("flour_total_f3"))}</th>
-  <th>${fmt(getValue("flour_total_wbran"))}</th>
-  <th>${fmt(production)}</th>
+  <tr class="total-row">
+    <th>الإجمالي</th>
+    <th>${fmt(totalLineWheatInput)}</th>
+    <th>—</th>
+    <th>${fmt(getValue("flour_total_f1"))}</th>
+    <th>${fmt(getValue("flour_total_f3"))}</th>
+    <th>${fmt(getValue("flour_total_wbran"))}</th>
+    <th>${fmt(production)}</th>
 </tr>
       </tbody>
     </table>
@@ -9007,6 +9046,50 @@ async function exportFlourReportPDF() {
   }
 }
 
+/* =========================================================
+   MILL — AUTOMATIC LINE EXTRACTION
+   Extraction = F1 / Wheat Input × 100
+========================================================= */
+
+function updateLineExtractionForLine(line) {
+  const f1Field = document.getElementById(`line${line}_f1`);
+  const wheatField = document.getElementById(`line${line}_wheat_input`);
+  const extractionField = document.getElementById(`line${line}_extraction`);
+
+  if (!f1Field || !wheatField || !extractionField) return;
+
+  const f1 = Number(f1Field.value);
+  const wheat = Number(wheatField.value);
+
+  let extraction = null;
+
+  if (
+    wheatField.value.trim() !== "" &&
+    Number.isFinite(wheat) &&
+    wheat > 0 &&
+    Number.isFinite(f1) &&
+    f1 >= 0
+  ) {
+    extraction = (f1 / wheat) * 100;
+  }
+
+  if (extraction === null) {
+    extractionField.value = "—";
+
+    updateLineExtractionRing(line, 0);
+
+    return;
+  }
+
+  extractionField.value = extraction.toFixed(2);
+
+  updateLineExtractionRing(line, extraction);
+}
+
+/* =========================================================
+   تحديث الدونات
+========================================================= */
+
 function updateLineExtractionRing(line, value) {
   const ring = document.getElementById(`lineExtractionRing${line}`);
 
@@ -9023,6 +9106,14 @@ function updateLineExtractionRing(line, value) {
   ring.style.strokeDasharray = circumference;
 
   ring.style.strokeDashoffset = circumference * (1 - percent / 100);
+}
+
+/* =========================================================
+   تهيئة نسب الاستخراج عند تحميل الصفحة
+========================================================= */
+
+for (let line = 1; line <= 6; line++) {
+  updateLineExtractionForLine(line);
 }
 
 for (let line = 1; line <= 6; line++) {

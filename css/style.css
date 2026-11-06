@@ -33296,3 +33296,80 @@ body:not(.dark-mode) .power-negative-btn {
     height: 72px;
   }
 }
+
+/* =========================================================
+   MILL — FIVE OUTPUT CARDS
+   F1 + F3 + Bran + Wheat Input + Extraction
+========================================================= */
+
+.mill-output-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+
+/* حقل الحنطة الداخلة */
+.mill-output-grid .flour-wheat-input {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* حقل النسبة المحسوبة */
+.line-extraction-value input[readonly] {
+  cursor: default;
+  user-select: none;
+}
+
+/* الهاتف */
+@media (max-width: 700px) {
+  .mill-output-grid {
+    grid-template-columns: repeat(5, minmax(125px, 1fr)) !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .mill-output-grid > .mill-output {
+    min-width: 125px !important;
+  }
+}
+/* Fix: prevent mill output cards from overlapping */
+.mill-output-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+
+.mill-output-grid > .mill-output {
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.mill-output-grid .mill-output input {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.mill-output-grid .mill-output label {
+  overflow-wrap: anywhere;
+}
+/* Extraction value - transparent text only */
+.mill-extraction-output .line-extraction-ring .line-extraction-value input {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 42px !important;
+  min-width: 42px !important;
+  max-width: 42px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  text-align: center !important;
+}
