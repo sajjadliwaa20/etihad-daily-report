@@ -8463,6 +8463,8 @@ async function exportFlourReportPDF() {
     document.getElementById("reportDateKey")?.value ||
     new Date().toLocaleDateString("en-CA");
 
+  const isMobileExport = window.matchMedia("(max-width: 700px)").matches;
+
   const getValue = (id) => {
     const el = document.getElementById(id);
     return Number(el?.value ?? el?.textContent) || 0;
@@ -8688,7 +8690,7 @@ async function exportFlourReportPDF() {
     
 .flour-pdf-report {
   box-sizing: border-box;
-  width: 186mm;
+  width: ${isMobileExport ? "273mm" : "186mm"};
   margin: 0 auto;
   padding: 0;
   background: #ffffff !important;
@@ -8999,7 +9001,7 @@ async function exportFlourReportPDF() {
       jsPDF: {
         unit: "mm",
         format: "a4",
-        orientation: "portrait",
+        orientation: isMobileExport ? "landscape" : "portrait",
       },
       pagebreak: {
         mode: ["css", "legacy"],

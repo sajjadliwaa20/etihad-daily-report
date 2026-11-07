@@ -33373,3 +33373,79 @@ body:not(.dark-mode) .power-negative-btn {
   color: #fff !important;
   text-align: center !important;
 }
+/* =========================================
+   MOBILE ONLY — FLOUR MILL RESPONSIVE CARDS
+========================================= */
+
+@media screen and (max-width: 700px) {
+  .mill-dashboard {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .mill-line-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .mill-output-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .mill-output-grid > .mill-output {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    padding: 10px 6px !important;
+  }
+
+  /* الحقول */
+  .mill-output-grid > .mill-output input {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    font-size: 14px !important;
+    padding: 9px 3px !important;
+  }
+
+  /* أسماء الحقول */
+  .mill-output-grid > .mill-output label {
+    font-size: 13px !important;
+    white-space: normal !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    text-align: center !important;
+  }
+
+  /* بطاقة نسبة الاستخراج بعرض كامل */
+  .mill-output-grid > .mill-output:nth-child(5) {
+    grid-column: 1 / -1 !important;
+    min-height: 115px !important;
+  }
+
+  .mill-extraction-output {
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 15px !important;
+  }
+
+  .line-extraction-ring {
+    width: 75px !important;
+    height: 75px !important;
+  }
+
+  .mill-output-grid > .mill-output > span {
+    font-size: 11px !important;
+  }
+}
