@@ -3529,7 +3529,7 @@
 
                         <div>
                             <strong>ICUMSA</strong>
-                            <small>PRODUCT COLOR</small>
+                            <small>Raw Material Color </small>
                         </div>
 
                     </div>
@@ -14676,7 +14676,17 @@ PKF
 
       const SUPABASE_KEY = "sb_publishable_q0VgF-S8RkmWdRUvA9pQMQ_nDrLa28F";
 
-      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+     const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  }
+);
 
  /* =========================================================
    FIELD STATE MEMORY

@@ -1451,7 +1451,13 @@
 
       const supabaseKey = "sb_publishable_q0VgF-S8RkmWdRUvA9pQMQ_nDrLa28F";
 
-      const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+      const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+        },
+      });
 
       /* =========================================================
        NOTIFICATION

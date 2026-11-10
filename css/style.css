@@ -23414,11 +23414,16 @@ body.sidebar-open #sidebarOverlay {
     padding-top: 5px;
   }
 
-  .blackoil-total-number input {
-    width: 160px;
+ .blackoil-total-number input {
+    width: 190px !important;
+    min-width: 0 !important;
+    max-width: 190px !important;
+    box-sizing: border-box !important;
 
-    font-size: 30px !important;
-  }
+    font-size: 24px !important;
+    white-space: nowrap !important;
+    flex: 0 1 190px !important;
+}
 }
 
 /* =========================================================
