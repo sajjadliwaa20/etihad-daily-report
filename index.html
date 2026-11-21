@@ -6785,9 +6785,6 @@ PKF
 
 </div>
 
-<!-- =========================
-     مقارنة الإنتاج
-========================== -->
 <!-- =========================================================
      الإنتاج التراكمي الشهري للتكرير
 ========================================================= -->
@@ -10852,91 +10849,86 @@ PKF
             </div>
           </div>
 
-<!-- =====================================================
-     FLOUR — PRODUCTION HISTORY
-====================================================== -->
 
-<div class="flour-production-history">
+<!-- الإنتاج التراكمي الشهري للمطاحن -->
+<div class="refinery-cumulative-card flour-cumulative-card">
 
-  <div class="flour-history-header">
+  <div class="refinery-cumulative-header">
 
-    <div class="flour-history-title">
-      <span class="flour-history-icon">📊</span>
+    <div class="refinery-cumulative-title">
+      <div class="refinery-cumulative-icon">↗</div>
 
       <div>
-        <strong>تطور الإنتاج</strong>
-        <small>PRODUCTION TREND</small>
+        <strong>الإنتاج التراكمي الشهري</strong>
+        <small id="flourCumulativePeriod">
+          جارٍ تحميل فترة الإنتاج...
+        </small>
       </div>
     </div>
 
-    <div class="flour-history-period">
-      اليوم + آخر 3 أيام
+    <div class="refinery-cumulative-filter">
+      <span>عرض:</span>
+
+      <select id="flourCumulativeProduct"
+        onchange="updateFlourCumulativeFilter(this.value)">
+
+        <option value="all">كل المنتجات</option>
+        <option value="f1">F1</option>
+        <option value="f3">F3</option>
+        <option value="bran">W.Bran</option>
+
+      </select>
     </div>
 
   </div>
 
+  <div class="refinery-cumulative-summary">
 
-  <div class="flour-history-body">
-
-    <!-- الرسم -->
-    <div class="flour-history-chart-wrap">
-
-      <canvas id="flourProductionHistoryChart"></canvas>
-
+    <div class="refinery-cumulative-kpi main">
+      <span>الإجمالي التراكمي</span>
+      <div>
+        <strong id="flourCumulativeTotal">0.00</strong>
+        <small>طن</small>
+      </div>
     </div>
 
-
-    <!-- ملخص المقارنة -->
-    <div class="flour-history-summary">
-
-      <div class="flour-history-summary-card current">
-
-        <span>إنتاج اليوم</span>
-
-        <strong id="flourHistoryCurrentValue">
-          0
-        </strong>
-
-        <small>طن</small>
-
+    <div class="refinery-cumulative-kpi">
+      <span>متوسط الإنتاج اليومي</span>
+      <div>
+        <strong id="flourCumulativeAverage">0.00</strong>
+        <small>طن / يوم</small>
       </div>
-
-
-      <div class="flour-history-summary-card">
-
-        <span>متوسط آخر 3 أيام</span>
-
-        <strong id="flourHistoryAverage">
-          0
-        </strong>
-
-        <small>طن</small>
-
-      </div>
-
-
-      <div
-        class="flour-history-summary-card"
-        id="flourHistoryChangeCard"
-      >
-
-        <span>الفرق عن أمس</span>
-
-        <strong id="flourHistoryChange">
-          —
-        </strong>
-
-        <small id="flourHistoryChangePercent">
-          —
-        </small>
-
-      </div>
-
     </div>
 
+    <div class="refinery-cumulative-kpi">
+      <span>المنتج المعروض</span>
+
+      <strong id="flourCumulativeProductName"
+        class="refinery-cumulative-product-name">
+        كل المنتجات
+      </strong>
+
+      <small id="flourCumulativeContribution">
+        100% من إجمالي إنتاج المطحنة
+      </small>
+    </div>
+
+  </div>
+
+  <div class="refinery-cumulative-chart">
+    <canvas id="flourCumulativeChart"></canvas>
+  </div>
+
+  <div class="refinery-cumulative-footer">
+    <span><i></i> الإنتاج التراكمي</span>
+
+    <span id="flourCumulativeLastDay">
+      آخر تحديث: —
+    </span>
   </div>
 
 </div>
+
 
 
         </details>
@@ -13043,59 +13035,86 @@ PKF
       </div>
 
 
-      <!-- ===================================================
-           PRODUCTION HISTORY
-           =================================================== -->
+      
+<!-- الإنتاج التراكمي الشهري للأعلاف -->
+<div class="refinery-cumulative-card feed-cumulative-card">
 
-      <div class="feed-production-history-card">
+  <div class="refinery-cumulative-header">
 
-        <div class="feed-chart-header">
+    <div class="refinery-cumulative-title">
+      <div class="refinery-cumulative-icon">↗</div>
 
-          <div>
-            <strong>📊 تطور الإنتاج</strong>
-            <span>PRODUCTION TREND • TODAY & PREVIOUS DAYS</span>
-          </div>
-
-          <div class="feed-chart-badge">
-            آخر 3 أيام
-          </div>
-
-        </div>
-
-
-        <div class="feed-chart-summary">
-
-          <div class="feed-summary-item today">
-            <span>إنتاج اليوم</span>
-            <strong id="feedChartToday">—</strong>
-            <small>طن</small>
-          </div>
-
-          <div class="feed-summary-item">
-            <span>أمس</span>
-            <strong id="feedChartYesterday">—</strong>
-            <small>طن</small>
-          </div>
-
-          <div class="feed-summary-item">
-            <span>قبل أمس</span>
-            <strong id="feedChartBeforeYesterday">—</strong>
-            <small>طن</small>
-          </div>
-
-          <div class="feed-summary-item change">
-            <span>التغير عن أمس</span>
-            <strong id="feedChartChange">—</strong>
-          </div>
-
-        </div>
-
-
-        <div class="feed-chart-container">
-          <canvas id="feedProductionComparisonChart"></canvas>
-        </div>
-
+      <div>
+        <strong>الإنتاج التراكمي الشهري</strong>
+        <small id="feedCumulativePeriod">
+          جارٍ تحميل فترة الإنتاج...
+        </small>
       </div>
+    </div>
+
+    <div class="refinery-cumulative-filter">
+      <span>عرض:</span>
+
+      <select id="feedCumulativeLine"
+        onchange="updateFeedCumulativeFilter(this.value)">
+        <option value="all">كل الخطوط</option>
+        <option value="line1">الخط 1</option>
+        <option value="line2">الخط 2</option>
+        <option value="line3">الخط 3</option>
+        <option value="line4">الخط 4</option>
+        <option value="line5">الخط 5</option>
+        <option value="line6">الخط 6</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="refinery-cumulative-summary">
+
+    <div class="refinery-cumulative-kpi main">
+      <span>الإجمالي التراكمي</span>
+      <div>
+        <strong id="feedCumulativeTotal">0.00</strong>
+        <small>طن</small>
+      </div>
+    </div>
+
+    <div class="refinery-cumulative-kpi">
+      <span>متوسط الإنتاج اليومي</span>
+      <div>
+        <strong id="feedCumulativeAverage">0.00</strong>
+        <small>طن / يوم</small>
+      </div>
+    </div>
+
+    <div class="refinery-cumulative-kpi">
+      <span>الخط المعروض</span>
+
+      <strong id="feedCumulativeLineName"
+        class="refinery-cumulative-product-name">
+        كل الخطوط
+      </strong>
+
+      <small id="feedCumulativeContribution">
+        100% من إجمالي إنتاج الأعلاف
+      </small>
+    </div>
+
+  </div>
+
+  <div class="refinery-cumulative-chart">
+    <canvas id="feedCumulativeChart"></canvas>
+  </div>
+
+  <div class="refinery-cumulative-footer">
+    <span><i></i> الإنتاج التراكمي</span>
+    <span id="feedCumulativeLastDay">
+      آخر تحديث: —
+    </span>
+  </div>
+
+</div>
+
 
 
       <!-- أسباب الانخفاض -->
@@ -16731,17 +16750,14 @@ function updateGheeStockTotal() {
               el.readOnly = true;
             }
          } else {
-  /*
-   * فلاتر العرض والتحليل تبقى قابلة للاستخدام
-   * حتى في وضع القراءة فقط
-   */
-
-  if (
-    el.id === "refineryCumulativeProduct"
-  ) {
-    el.disabled = false;
-    return;
-  }
+if (
+  el.id === "refineryCumulativeProduct" ||
+  el.id === "feedCumulativeLine" ||
+  el.id === "flourCumulativeProduct"
+) {
+  el.disabled = false;
+  return;
+}
 
   el.disabled = true;
 }

@@ -33548,3 +33548,22 @@ body:not(.dark-mode) .power-negative-btn {
   opacity: 0.7;
   cursor: wait;
 }
+/* التراكمي الشهري للأعلاف */
+#feedCumulativeChart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#feedCumulativeContribution {
+  color: #7c8791;
+}
+
+/* التراكمي الشهري للمطاحن */
+#flourCumulativeChart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#flourCumulativeContribution {
+  color: #7c8791;
+}

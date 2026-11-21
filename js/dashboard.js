@@ -7966,302 +7966,285 @@ async function getFlourRowsForDate(date) {
 
   return data || [];
 }
-
-/* ---------------------------------------------------------
-   تحميل مقارنة إنتاج الطحين
---------------------------------------------------------- */
+/* ==============================================
+   FLOUR — MONTHLY CUMULATIVE PRODUCTION
+   F1 + F3 + W.Bran
+============================================== */
 
 async function loadFlourProductionHistory() {
-  const dateElement = document.getElementById("reportDateKey");
+  const dateInput = document.getElementById("reportDateKey");
+  const canvas = document.getElementById("flourCumulativeChart");
 
-  if (!dateElement || !dateElement.value) {
-    return;
+  if (!dateInput?.value || !canvas) return;
+
+  const selectedDate = dateInput.value;
+  const firstDate = selectedDate.slice(0, 7) + "-01";
+  const lastDate = getFlourPreviousDate(selectedDate, 1);
+
+  const requestId = (window.flourCumulativeRequestId || 0) + 1;
+  window.flourCumulativeRequestId = requestId;
+
+  // تكوين تواريخ الأيام المكتملة
+  const dates = [];
+
+  if (lastDate >= firstDate) {
+    const cursor = new Date(firstDate + "T12:00:00");
+    const end = new Date(lastDate + "T12:00:00");
+
+    while (cursor <= end) {
+      dates.push(
+        cursor.getFullYear() +
+          "-" +
+          String(cursor.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(cursor.getDate()).padStart(2, "0"),
+      );
+
+      cursor.setDate(cursor.getDate() + 1);
+    }
   }
 
-  const selectedDate = dateElement.value;
+  // الحقول الأصلية لجميع الخطوط الستة
+  const productionFields = [];
 
-  const yesterday = getFlourPreviousDate(selectedDate, 1);
-
-  const beforeYesterday = getFlourPreviousDate(selectedDate, 2);
-
-  const threeDaysAgo = getFlourPreviousDate(selectedDate, 3);
-
-  /*
-   * ==========================================
-   * إنتاج اليوم
-   * المصدر الحقيقي = الحقل الأصلي في الشاشة
-   * ==========================================
-   */
-
-  let todayProduction = getFlourProductionFromScreen();
-
-  /*
-   * إذا كنا نستعرض تاريخًا قديمًا،
-   * نحتاج قيمة ذلك التاريخ من قاعدة البيانات.
-   */
-
-  const isToday = selectedDate === getTodayLocalDate();
-
-  /*
-   * ==========================================
-   * نعرض إنتاج اليوم مباشرة
-   * حتى لا ننتظر Supabase
-   * ==========================================
-   */
-
-  if (isToday) {
-    renderFlourProductionHistory(todayProduction, 0, 0, 0);
+  for (let i = 1; i <= 6; i++) {
+    productionFields.push(`line${i}_f1`, `line${i}_f3`, `line${i}_bran`);
   }
 
-  /*
-   * ==========================================
-   * تحميل الأيام الثلاثة السابقة فقط
-   * ==========================================
-   */
+  // دعم التقارير القديمة
+  productionFields.push(
+    "flour_total_f1",
+    "flour_total_f3",
+    "flour_total_wbran",
+    "flour_grand_total",
+  );
 
-  const previousDates = [yesterday, beforeYesterday, threeDaysAgo];
+  const dailyData = {};
 
-  const { data, error } = await supabaseClient
-    .from("daily_reports")
-    .select("report_date,field_name,field_value")
-    .eq("factory", "flour")
-    .in("report_date", previousDates)
-    .in("field_name", [
-      "line1_f1",
-      "line1_f3",
-      "line1_bran",
+  dates.forEach((date) => {
+    dailyData[date] = {
+      f1: 0,
+      f3: 0,
+      bran: 0,
+      seen: {
+        f1: false,
+        f3: false,
+        bran: false,
+      },
+      legacy: {},
+      grand: null,
+      unallocated: 0,
+    };
+  });
 
-      "line2_f1",
-      "line2_f3",
-      "line2_bran",
+  if (dates.length) {
+    const { data, error } = await supabaseClient
+      .from("daily_reports")
+      .select("report_date,field_name,field_value")
+      .eq("factory", "flour")
+      .gte("report_date", firstDate)
+      .lte("report_date", lastDate)
+      .in("field_name", productionFields)
+      .limit(1000);
 
-      "line3_f1",
-      "line3_f3",
-      "line3_bran",
-
-      "line4_f1",
-      "line4_f3",
-      "line4_bran",
-
-      "line5_f1",
-      "line5_f3",
-      "line5_bran",
-
-      "line6_f1",
-      "line6_f3",
-      "line6_bran",
-
-      /* دعم البيانات القديمة */
-      "flour_grand_total",
-      "flour_total_f1",
-      "flour_total_f3",
-      "flour_total_wbran",
-    ]);
-
-  if (error) {
-    console.error("FLOUR PRODUCTION HISTORY ERROR:", error);
-
-    /*
-     * إنتاج اليوم يبقى ظاهرًا
-     * حتى لو فشل تحميل التاريخ
-     */
-
-    if (isToday) {
-      renderFlourProductionHistory(todayProduction, 0, 0, 0);
+    if (error) {
+      console.error("FLOUR CUMULATIVE ERROR:", error);
+      return;
     }
 
-    return;
-  }
+    if (
+      requestId !== window.flourCumulativeRequestId ||
+      dateInput.value !== selectedDate
+    )
+      return;
 
-  const rows = data || [];
+    (data || []).forEach((row) => {
+      const day = dailyData[row.report_date];
 
-  /*
-   * ==========================================
-   * فصل الأيام
-   * ==========================================
-   */
+      if (!day) return;
 
-  const yesterdayRows = rows.filter((row) => row.report_date === yesterday);
+      const value = Number(row.field_value);
 
-  const beforeYesterdayRows = rows.filter(
-    (row) => row.report_date === beforeYesterday,
-  );
+      if (
+        !Number.isFinite(value) ||
+        String(row.field_value ?? "").trim() === ""
+      )
+        return;
 
-  const threeDaysAgoRows = rows.filter(
-    (row) => row.report_date === threeDaysAgo,
-  );
+      // البيانات الأصلية للخطوط الستة
+      const match = /^line[1-6]_(f1|f3|bran)$/.exec(row.field_name);
 
-  /*
-   * ==========================================
-   * حساب الإنتاج التاريخي
-   * ==========================================
-   */
+      if (match) {
+        const product = match[1];
 
-  const yesterdayProduction = calculateFlourProductionFromRows(yesterdayRows);
+        day[product] += value;
+        day.seen[product] = true;
 
-  const beforeYesterdayProduction =
-    calculateFlourProductionFromRows(beforeYesterdayRows);
+        return;
+      }
 
-  const threeDaysAgoProduction =
-    calculateFlourProductionFromRows(threeDaysAgoRows);
+      // الإجماليات التاريخية البديلة
+      const legacyMap = {
+        flour_total_f1: "f1",
+        flour_total_f3: "f3",
+        flour_total_wbran: "bran",
+      };
 
-  /*
-   * ==========================================
-   * إذا كان التقرير الحالي هو اليوم
-   * نستخدم قيمة الشاشة لليوم.
-   * ==========================================
-   */
+      const product = legacyMap[row.field_name];
 
-  if (isToday) {
-    renderFlourProductionHistory(
-      todayProduction,
-      yesterdayProduction,
-      beforeYesterdayProduction,
-      threeDaysAgoProduction,
-    );
+      if (product) {
+        day.legacy[product] = value;
+      }
 
-    return;
-  }
-
-  /*
-   * ==========================================
-   * إذا كان التاريخ المختار قديمًا
-   * نقرأ إنتاج ذلك التاريخ من قاعدة البيانات.
-   * ==========================================
-   */
-
-  const todayRows = await getFlourRowsForDate(selectedDate);
-
-  const historicalTodayProduction = calculateFlourProductionFromRows(todayRows);
-
-  renderFlourProductionHistory(
-    historicalTodayProduction,
-    yesterdayProduction,
-    beforeYesterdayProduction,
-    threeDaysAgoProduction,
-  );
-}
-
-function renderFlourProductionHistory(
-  today,
-  yesterday,
-  beforeYesterday,
-  threeDaysAgo,
-) {
-  const canvas = document.getElementById("flourProductionHistoryChart");
-
-  if (!canvas) {
-    console.warn("flourProductionHistoryChart not found");
-    return;
-  }
-
-  /*
-       حماية من القيم غير الرقمية
-    */
-
-  today = Number.isFinite(Number(today)) ? Number(today) : 0;
-
-  yesterday = Number.isFinite(Number(yesterday)) ? Number(yesterday) : 0;
-
-  beforeYesterday = Number.isFinite(Number(beforeYesterday))
-    ? Number(beforeYesterday)
-    : 0;
-
-  threeDaysAgo = Number.isFinite(Number(threeDaysAgo))
-    ? Number(threeDaysAgo)
-    : 0;
-
-  /* =====================================================
-       تحديث بطاقات الملخص
-    ===================================================== */
-
-  const currentEl = document.getElementById("flourHistoryCurrentValue");
-
-  const averageEl = document.getElementById("flourHistoryAverage");
-
-  const changeEl = document.getElementById("flourHistoryChange");
-
-  const changePercentEl = document.getElementById("flourHistoryChangePercent");
-
-  if (currentEl) {
-    currentEl.textContent = today.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+      if (row.field_name === "flour_grand_total") {
+        day.grand = value;
+      }
     });
   }
 
-  /*
-       المتوسط = الأيام الثلاثة السابقة
-    */
+  // استخدام الإجماليات القديمة فقط إذا لم تتوفر
+  // بيانات المصدر الأصلي لنفس المنتج
+  dates.forEach((date) => {
+    const day = dailyData[date];
 
-  const previousDays = [threeDaysAgo, beforeYesterday, yesterday].filter(
-    (value) => Number.isFinite(value) && value > 0,
+    let hasBreakdown = false;
+
+    ["f1", "f3", "bran"].forEach((product) => {
+      if (day.seen[product]) {
+        hasBreakdown = true;
+      } else if (Number.isFinite(day.legacy[product])) {
+        day[product] = day.legacy[product];
+        hasBreakdown = true;
+      }
+    });
+
+    // دعم الأيام القديمة التي تحتوي فقط على إجمالي عام
+    if (!hasBreakdown && Number.isFinite(day.grand)) {
+      day.unallocated = day.grand;
+    }
+  });
+
+  if (
+    requestId !== window.flourCumulativeRequestId ||
+    dateInput.value !== selectedDate
+  )
+    return;
+
+  window.flourCumulativeState = {
+    dates,
+    dailyData,
+    selectedDate,
+  };
+
+  const formatDate = (date) => date.split("-").reverse().join("/");
+
+  const period = document.getElementById("flourCumulativePeriod");
+
+  if (period) {
+    period.textContent = dates.length
+      ? `من ${formatDate(dates[0])} إلى ${formatDate(dates[dates.length - 1])}`
+      : "لا توجد أيام مكتملة لهذا الشهر بعد";
+  }
+
+  updateFlourCumulativeFilter(
+    document.getElementById("flourCumulativeProduct")?.value || "all",
+  );
+}
+
+/* ==============================================
+   FILTER + KPI + MONTHLY CHART
+============================================== */
+
+function updateFlourCumulativeFilter(productKey) {
+  const state = window.flourCumulativeState;
+
+  if (!state?.dates || !state.dailyData) return;
+
+  const labels = {
+    all: "كل المنتجات",
+    f1: "F1",
+    f3: "F3",
+    bran: "W.Bran",
+  };
+
+  if (!Object.prototype.hasOwnProperty.call(labels, productKey)) {
+    productKey = "all";
+  }
+
+  const format = (number) =>
+    Number(number).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+  const getDailyValue = (date, key) => {
+    const day = state.dailyData[date];
+
+    if (!day) return 0;
+
+    if (key === "all") {
+      return day.f1 + day.f3 + day.bran + day.unallocated;
+    }
+
+    return day[key] || 0;
+  };
+
+  let cumulative = 0;
+
+  const points = state.dates.map((date) => {
+    cumulative += getDailyValue(date, productKey);
+    return Number(cumulative.toFixed(2));
+  });
+
+  const total = points.length ? points[points.length - 1] : 0;
+
+  const average = state.dates.length ? total / state.dates.length : 0;
+
+  const allTotal = state.dates.reduce(
+    (sum, date) => sum + getDailyValue(date, "all"),
+    0,
   );
 
-  const average = previousDays.length
-    ? previousDays.reduce((sum, value) => sum + value, 0) / previousDays.length
-    : 0;
+  const contribution =
+    productKey === "all" ? 100 : allTotal > 0 ? (total / allTotal) * 100 : 0;
 
-  if (averageEl) {
-    averageEl.textContent = average
-      ? average.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })
-      : "—";
-  }
+  const hasUnknownBreakdown = state.dates.some(
+    (date) => state.dailyData[date]?.unallocated !== 0,
+  );
 
-  /*
-       الفرق عن أمس
-    */
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  };
 
-  /* =====================================================
-   الفرق عن آخر يوم سابق فيه إنتاج فعلي
-===================================================== */
+  setText("flourCumulativeTotal", format(total));
 
-  /* =====================================================
-   الفرق الحقيقي عن أمس
-===================================================== */
+  setText("flourCumulativeAverage", format(average));
 
-  const comparisonProduction = yesterday;
+  setText("flourCumulativeProductName", labels[productKey]);
 
-  const difference = today - yesterday;
+  const contributionText =
+    productKey === "all"
+      ? "100% من إجمالي إنتاج المطحنة"
+      : hasUnknownBreakdown
+        ? `${contribution.toFixed(1)}% من الإجمالي المسجل (توجد أيام قديمة دون تفصيل)`
+        : `${contribution.toFixed(1)}% من إجمالي إنتاج المطحنة`;
 
-  const percentage = yesterday > 0 ? (difference / yesterday) * 100 : null;
+  setText("flourCumulativeContribution", contributionText);
 
-  if (changeEl) {
-    if (comparisonProduction > 0) {
-      changeEl.textContent =
-        (difference >= 0 ? "▲ " : "▼ ") +
-        Math.abs(difference).toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
-    } else {
-      changeEl.textContent = "—";
-    }
-  }
+  const lastDate = state.dates[state.dates.length - 1];
 
-  if (changePercentEl) {
-    if (percentage !== null) {
-      changePercentEl.textContent =
-        (percentage >= 0 ? "▲ " : "▼ ") +
-        Math.abs(percentage).toFixed(1) +
-        "% عن أمس";
-    } else {
-      changePercentEl.textContent = "لا توجد مقارنة";
-    }
-  }
+  setText(
+    "flourCumulativeLastDay",
+    lastDate
+      ? `حتى ${lastDate.split("-").reverse().join("/")}`
+      : "لا توجد أيام مكتملة",
+  );
 
-  /* =====================================================
-       الرسم
-    ===================================================== */
+  // الرسم التراكمي
+  const canvas = document.getElementById("flourCumulativeChart");
 
-  if (typeof Chart === "undefined") {
-    console.error("Chart.js غير محمل");
-
-    return;
-  }
+  if (!canvas || typeof Chart === "undefined") return;
 
   if (
     window.flourProductionHistoryChartInstance &&
@@ -8270,130 +8253,98 @@ function renderFlourProductionHistory(
     window.flourProductionHistoryChartInstance.destroy();
   }
 
-  window.flourProductionHistoryChartInstance = null;
+  window.flourProductionHistoryChartInstance = new Chart(
+    canvas.getContext("2d"),
+    {
+      type: "line",
 
-  const ctx = canvas.getContext("2d");
+      data: {
+        labels: state.dates.map(
+          (date) => date.slice(8, 10) + "/" + date.slice(5, 7),
+        ),
 
-  window.flourProductionHistoryChartInstance = new Chart(ctx, {
-    type: "bar",
+        datasets: [
+          {
+            label: `الإنتاج التراكمي — ${labels[productKey]}`,
+            data: points,
 
-    data: {
-      labels: ["قبل 3 أيام", "قبل أمس", "أمس", "اليوم"],
+            borderColor: "#f5c542",
+            backgroundColor: "rgba(245,197,66,0.12)",
 
-      datasets: [
-        {
-          label: "الإنتاج الكلي",
+            borderWidth: 3,
+            fill: true,
+            tension: 0.35,
 
-          data: [threeDaysAgo, beforeYesterday, yesterday, today],
-
-          backgroundColor: [
-            "rgba(160,170,178,.30)",
-            "rgba(160,170,178,.40)",
-            "rgba(160,170,178,.52)",
-            "rgba(55,184,120,.88)",
-          ],
-
-          borderColor: [
-            "rgba(160,170,178,.50)",
-            "rgba(160,170,178,.60)",
-            "rgba(160,170,178,.75)",
-            "rgba(55,184,120,1)",
-          ],
-
-          borderWidth: 1,
-
-          borderRadius: 10,
-
-          borderSkipped: false,
-
-          maxBarThickness: 75,
-        },
-      ],
-    },
-
-    options: {
-      responsive: true,
-
-      maintainAspectRatio: false,
-
-      animation: {
-        duration: 500,
-      },
-
-      plugins: {
-        legend: {
-          display: false,
-        },
-
-        tooltip: {
-          rtl: true,
-
-          textDirection: "rtl",
-
-          displayColors: false,
-
-          callbacks: {
-            label: function (context) {
-              return (
-                "الإنتاج: " +
-                Number(context.raw).toLocaleString("en-US", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }) +
-                " طن"
-              );
-            },
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            pointBackgroundColor: "#f5c542",
+            pointBorderColor: "#ffffff",
+            pointBorderWidth: 2,
           },
-        },
+        ],
       },
 
-      scales: {
-        x: {
-          grid: {
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        interaction: {
+          mode: "index",
+          intersect: false,
+        },
+
+        plugins: {
+          legend: {
             display: false,
           },
 
-          ticks: {
-            color: "rgba(255,255,255,.65)",
+          tooltip: {
+            rtl: true,
+            textDirection: "rtl",
+            displayColors: false,
 
-            font: {
-              size: 11,
-              weight: "600",
+            callbacks: {
+              label: (context) => `التراكمي: ${format(context.parsed.y)} طن`,
             },
           },
         },
 
-        y: {
-          beginAtZero: true,
+        scales: {
+          x: {
+            grid: {
+              color: "rgba(255,255,255,0.05)",
+            },
 
-          grid: {
-            color: "rgba(255,255,255,.07)",
+            ticks: {
+              color: "rgba(255,255,255,0.45)",
+              font: { size: 10 },
+            },
           },
 
-          ticks: {
-            color: "rgba(255,255,255,.45)",
+          y: {
+            beginAtZero: true,
 
-            callback: function (value) {
-              return Number(value).toLocaleString("en-US") + " طن";
+            grid: {
+              color: "rgba(255,255,255,0.06)",
+            },
+
+            ticks: {
+              color: "rgba(255,255,255,0.45)",
+              callback: (value) => Number(value).toLocaleString("en-US"),
             },
           },
         },
       },
     },
-  });
+  );
 
-  /*
-       إجبار Chart.js على إعادة الحساب
-       بعد ظهور القسم.
-    */
-
+  // ضبط الرسم إذا كان القسم قد ظهر للتو
   setTimeout(() => {
-    if (
-      window.flourProductionHistoryChartInstance &&
-      typeof window.flourProductionHistoryChartInstance.resize === "function"
-    ) {
-      window.flourProductionHistoryChartInstance.resize();
-      window.flourProductionHistoryChartInstance.update();
+    const chart = window.flourProductionHistoryChartInstance;
+
+    if (chart?.canvas === canvas && canvas.isConnected) {
+      chart.resize();
+      chart.update();
     }
   }, 100);
 }
@@ -8450,220 +8401,288 @@ function getFeedCurrentGrossProduction() {
 
 window.feedProductionComparisonChartInstance = null;
 
+/* ============================================
+   FEED — MONTHLY CUMULATIVE PRODUCTION
+============================================ */
+
+window.feedCumulativeState = window.feedCumulativeState || { chart: null };
+
 async function loadFeedProductionHistory() {
-  const dateEl = document.getElementById("reportDateKey");
+  const dateInput = document.getElementById("reportDateKey");
+  const canvas = document.getElementById("feedCumulativeChart");
 
-  if (!dateEl?.value) return;
+  if (!dateInput?.value || !canvas) return;
 
-  const selectedDate = dateEl.value;
+  const reportDate = dateInput.value;
+  const firstDay = reportDate.slice(0, 7) + "-01";
+  const lastDay = getFeedPreviousDate(reportDate, 1);
 
   const dates = [];
 
-  for (let i = 6; i >= 1; i--) {
-    dates.push(getFeedPreviousDate(selectedDate, i));
+  // تحديد أيام الشهر المكتملة فقط
+  if (lastDay >= firstDay) {
+    const cursor = new Date(firstDay + "T12:00:00");
+    const end = new Date(lastDay + "T12:00:00");
+
+    while (cursor <= end) {
+      dates.push(
+        cursor.getFullYear() +
+          "-" +
+          String(cursor.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(cursor.getDate()).padStart(2, "0"),
+      );
+
+      cursor.setDate(cursor.getDate() + 1);
+    }
   }
 
-  dates.push(selectedDate);
+  // مصفوفة إنتاج الخطوط الستة لكل يوم
+  const dailyByLine = {};
 
-  /* =====================================================
-     الحقول الفعلية لإنتاج الأعلاف
-     ===================================================== */
+  dates.forEach((date) => {
+    dailyByLine[date] = [0, 0, 0, 0, 0, 0];
+  });
 
-  const productionFields = [];
+  // منع نتائج طلب قديم من الكتابة فوق تاريخ أحدث
+  const requestId = (window.feedCumulativeRequestId || 0) + 1;
+  window.feedCumulativeRequestId = requestId;
 
-  for (let i = 1; i <= 6; i++) {
-    productionFields.push(`feed_l${i}_m`);
-    productionFields.push(`feed_l${i}_e`);
-    productionFields.push(`feed_l${i}_n`);
-  }
+  if (dates.length) {
+    const productionFields = [];
 
-  /* =====================================================
-     جلب بيانات الأيام السابقة من Supabase
-     ===================================================== */
+    for (let i = 1; i <= 6; i++) {
+      productionFields.push(`feed_l${i}_m`, `feed_l${i}_e`, `feed_l${i}_n`);
+    }
 
-  let previousData = [];
-
-  if (typeof supabaseClient !== "undefined") {
-    const result = await supabaseClient
+    const { data, error } = await supabaseClient
       .from("daily_reports")
       .select("report_date,field_name,field_value")
       .eq("factory", "feed")
-      .in("report_date", dates)
+      .gte("report_date", firstDay)
+      .lte("report_date", lastDay)
       .in("field_name", productionFields);
 
-    if (result.error) {
-      console.error("FEED PRODUCTION HISTORY ERROR:", result.error);
-
+    if (error) {
+      console.error("FEED CUMULATIVE ERROR:", error);
       return;
     }
 
-    previousData = result.data || [];
-  }
-
-  /* =====================================================
-     تجميع إنتاج كل يوم
-     ===================================================== */
-
-  const values = {};
-
-  dates.forEach((date) => {
-    values[date] = 0;
-  });
-
-  previousData.forEach((row) => {
-    if (!values.hasOwnProperty(row.report_date)) {
+    if (
+      requestId !== window.feedCumulativeRequestId ||
+      document.getElementById("reportDateKey")?.value !== reportDate
+    )
       return;
-    }
 
-    if (!productionFields.includes(row.field_name)) {
-      return;
-    }
+    (data || []).forEach((row) => {
+      const match = /^feed_l([1-6])_[men]$/.exec(row.field_name || "");
 
-    values[row.report_date] += Number(row.field_value) || 0;
-  });
+      if (
+        !match ||
+        !Object.prototype.hasOwnProperty.call(dailyByLine, row.report_date)
+      )
+        return;
 
-  /* =====================================================
-     اليوم الحالي يأخذ البيانات الموجودة على الشاشة
-     ===================================================== */
+      const lineIndex = Number(match[1]) - 1;
 
-  if (selectedDate === getTodayLocalDate()) {
-    values[selectedDate] = getFeedCurrentGrossProduction();
+      dailyByLine[row.report_date][lineIndex] += Number(row.field_value) || 0;
+    });
   }
-
-  renderFeedProductionHistory(dates, values, selectedDate);
-}
-
-function renderFeedProductionHistory(dates, values, selectedDate) {
-  const today = Number(values[selectedDate]) || 0;
-
-  const yesterday = Number(values[dates[1]]) || 0;
-
-  const beforeYesterday = Number(values[dates[0]]) || 0;
-
-  const todayEl = document.getElementById("feedChartToday");
-
-  const yesterdayEl = document.getElementById("feedChartYesterday");
-
-  const beforeEl = document.getElementById("feedChartBeforeYesterday");
-
-  const changeEl = document.getElementById("feedChartChange");
-
-  if (todayEl) {
-    todayEl.textContent = today.toFixed(2);
-  }
-
-  if (yesterdayEl) {
-    yesterdayEl.textContent = yesterday.toFixed(2);
-  }
-
-  if (beforeEl) {
-    beforeEl.textContent = beforeYesterday.toFixed(2);
-  }
-
-  const change = today - yesterday;
-
-  if (changeEl) {
-    changeEl.textContent = `${change >= 0 ? "+" : ""}${change.toFixed(2)} طن`;
-  }
-
-  const canvas = document.getElementById("feedProductionComparisonChart");
-
-  if (!canvas || typeof Chart === "undefined") {
-    return;
-  }
-
-  /*
-   * لا نستخدم let/const عام حتى لا يحدث
-   * already been declared عند إعادة تحميل dashboard
-   */
 
   if (
-    window.feedProductionComparisonChartInstance &&
-    typeof window.feedProductionComparisonChartInstance.destroy === "function"
-  ) {
-    window.feedProductionComparisonChartInstance.destroy();
+    requestId !== window.feedCumulativeRequestId ||
+    document.getElementById("reportDateKey")?.value !== reportDate
+  )
+    return;
+
+  window.feedCumulativeState = {
+    ...window.feedCumulativeState,
+    reportDate,
+    dates,
+    dailyByLine,
+  };
+
+  // تحديث فترة التقرير
+  const period = document.getElementById("feedCumulativePeriod");
+
+  if (period) {
+    const display = (date) => date.split("-").reverse().join("/");
+
+    period.textContent = dates.length
+      ? `من ${display(dates[0])} إلى ${display(dates[dates.length - 1])}`
+      : "لا توجد أيام مكتملة لهذا الشهر بعد";
   }
 
-  window.feedProductionComparisonChartInstance = new Chart(
-    canvas.getContext("2d"),
-    {
-      type: "bar",
+  updateFeedCumulativeFilter(
+    document.getElementById("feedCumulativeLine")?.value || "all",
+  );
+}
 
-      data: {
-        labels: dates.map((date, index) => {
-          if (date === selectedDate) return "اليوم";
+/* ============================================
+   FILTER + KPIs + CUMULATIVE CHART
+============================================ */
 
-          const dayDifference = dates.length - 1 - index;
+function updateFeedCumulativeFilter(lineKey) {
+  const state = window.feedCumulativeState;
 
-          if (dayDifference === 1) return "أمس";
-          if (dayDifference === 2) return "قبل أمس";
+  if (!state?.dates || !state.dailyByLine) return;
 
-          const parts = date.split("-");
-          return `${parts[2]}/${parts[1]}`;
-        }),
+  const groups = {
+    all: [1, 2, 3, 4, 5, 6],
+    line1: [1],
+    line2: [2],
+    line3: [3],
+    line4: [4],
+    line5: [5],
+    line6: [6],
+  };
 
-        datasets: [
-          {
-            label: "الإنتاج طن",
+  if (!groups[lineKey]) lineKey = "all";
 
-            data: dates.map((date) => Number(values[date]) || 0),
+  let running = 0;
 
-            borderRadius: 9,
+  const points = state.dates.map((date) => {
+    const lineValues = state.dailyByLine[date] || [];
 
-            borderSkipped: false,
+    const dailyTotal = groups[lineKey].reduce(
+      (sum, line) => sum + (lineValues[line - 1] || 0),
+      0,
+    );
 
-            backgroundColor: dates.map((date) =>
-              date === selectedDate
-                ? "rgba(55,184,120,.90)"
-                : "rgba(75,155,131,.55)",
-            ),
+    running += dailyTotal;
 
-            borderColor: dates.map((date) =>
-              date === selectedDate ? "#75d47b" : "#4b9b83",
-            ),
+    return Number(running.toFixed(2));
+  });
 
-            borderWidth: 1,
-          },
-        ],
+  const total = points.length ? points[points.length - 1] : 0;
+
+  const average = state.dates.length ? total / state.dates.length : 0;
+
+  const allTotal = state.dates.reduce(
+    (sum, date) =>
+      sum + (state.dailyByLine[date] || []).reduce((a, b) => a + b, 0),
+    0,
+  );
+
+  const percentage =
+    lineKey === "all" ? 100 : allTotal ? (total / allTotal) * 100 : 0;
+
+  const label = lineKey === "all" ? "كل الخطوط" : `الخط ${groups[lineKey][0]}`;
+
+  const format = (value) =>
+    Number(value).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  };
+
+  setText("feedCumulativeTotal", format(total));
+  setText("feedCumulativeAverage", format(average));
+  setText("feedCumulativeLineName", label);
+
+  setText(
+    "feedCumulativeContribution",
+    `${percentage.toFixed(1)}% من إجمالي إنتاج الأعلاف`,
+  );
+
+  const last = state.dates[state.dates.length - 1];
+
+  setText(
+    "feedCumulativeLastDay",
+    last ? `حتى ${last.split("-").reverse().join("/")}` : "لا توجد أيام مكتملة",
+  );
+
+  // رسم الخط التراكمي
+  const canvas = document.getElementById("feedCumulativeChart");
+
+  if (!canvas || typeof Chart === "undefined") return;
+
+  if (state.chart) {
+    state.chart.destroy();
+    state.chart = null;
+  }
+
+  state.chart = new Chart(canvas.getContext("2d"), {
+    type: "line",
+
+    data: {
+      labels: state.dates.map(
+        (date) => date.slice(8, 10) + "/" + date.slice(5, 7),
+      ),
+
+      datasets: [
+        {
+          label: `الإنتاج التراكمي — ${label}`,
+          data: points,
+
+          borderColor: "#f5c542",
+          backgroundColor: "rgba(245, 197, 66, 0.12)",
+
+          borderWidth: 3,
+          fill: true,
+          tension: 0.35,
+
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: "#f5c542",
+          pointBorderColor: "#ffffff",
+          pointBorderWidth: 2,
+        },
+      ],
+    },
+
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+
+      interaction: {
+        mode: "index",
+        intersect: false,
       },
 
-      options: {
-        responsive: true,
+      plugins: {
+        legend: { display: false },
 
-        maintainAspectRatio: false,
+        tooltip: {
+          rtl: true,
+          textDirection: "rtl",
+          displayColors: false,
 
-        plugins: {
-          legend: {
-            display: false,
+          callbacks: {
+            label: (ctx) => `التراكمي: ${format(ctx.parsed.y)} طن`,
+          },
+        },
+      },
+
+      scales: {
+        x: {
+          grid: {
+            color: "rgba(255,255,255,0.05)",
+          },
+          ticks: {
+            color: "rgba(255,255,255,0.45)",
+            font: { size: 10 },
           },
         },
 
-        scales: {
-          x: {
-            ticks: {
-              color: "rgba(255,255,255,.55)",
-            },
-
-            grid: {
-              display: false,
-            },
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(255,255,255,0.06)",
           },
-
-          y: {
-            beginAtZero: true,
-
-            ticks: {
-              color: "rgba(255,255,255,.45)",
-            },
-
-            grid: {
-              color: "rgba(255,255,255,.06)",
-            },
+          ticks: {
+            color: "rgba(255,255,255,0.45)",
+            font: { size: 10 },
+            callback: (value) => Number(value).toLocaleString("en-US"),
           },
         },
       },
     },
-  );
+  });
 }
 
 function refreshFeedProductionHistory() {
