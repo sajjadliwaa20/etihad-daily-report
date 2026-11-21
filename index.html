@@ -1661,11 +1661,7 @@
       oninput="updateSunSalesTotal(); saveSalesField('sun_sales_refined', 'oil');" 
 />
   </td>
-  <td>
-    <input id="sun_refined_stock" data-save step="any"
-      oninput="updateSunStockTotal(); saveSalesField('sun_refined_stock', 'oil');" 
-/>
-  </td>
+  <td>-</td>
 </tr>
 
 <tr>
@@ -1674,10 +1670,7 @@
     <input id="sun_sales_raw" data-save step="any"
       oninput="updateSunSalesTotal(); saveSalesField('sun_sales_raw', 'oil');" />
   </td>
-  <td>
-    <input id="sun_raw_stock" data-save step="any"
-      oninput="updateSunStockTotal(); saveSalesField('sun_raw_stock', 'oil');" />
-  </td>
+  <td>-</td>
 </tr>
 
               </tbody>
@@ -1818,6 +1811,9 @@
           </div>
 
         </summary>
+        
+        <br>
+
 <div id="reminders-sales-flour"
      class="section-reminders section-reminders-header"
      hidden>
@@ -4952,7 +4948,14 @@ PKF
                         👁 عرض الملف
 
                     </a>
-
+                    <div class="quality-approval-only" id="qualityApproval_sugar" hidden>
+  <button type="button"
+          class="quality-approve-btn"
+          id="approve_sugar_quality"
+          onclick="approveQualitySubsection('sugar')">
+    ✓ اعتماد تقرير الجودة
+  </button>
+</div>
                 </div>
 
 
@@ -8950,10 +8953,20 @@ PKF
         </div>
       </div>
 
-      <div class="oil-machine-metric unavailable">
-        <span>نسبة التلف</span>
-        <strong>—</strong>
-      </div>
+    <div class="oil-machine-metric scrap">
+  <span>نسبة التلف</span>
+
+  <div>
+    <input
+      id="plastic_metalcap_scrap"
+      data-save
+      type="number"
+      step="any"
+      placeholder="0"
+    />
+    <small>%</small>
+  </div>
+</div>
 
     </div>
 
@@ -9188,6 +9201,14 @@ PKF
                 >
                   👁 عرض الملف
                 </a>
+                <div class="quality-approval-only" id="qualityApproval_oil" hidden>
+  <button type="button"
+          class="quality-approve-btn"
+          id="approve_oil_quality"
+          onclick="approveQualitySubsection('oil')">
+    ✓ اعتماد تقرير الجودة
+  </button>
+</div>
               </div>
             </div>
 
@@ -9356,13 +9377,13 @@ PKF
 
         <div>
 
-            <strong>
-                اعتماد تقرير تعبئة الزيت
-            </strong>
+          <strong>
+    اعتماد تقرير مبيعات وأرصدة الزيت
+</strong>
 
             <small>
-                تأكد من مراجعة بيانات التعبئة واللدائن
-                وملحقاتها قبل الاعتماد
+         تأكد من مراجعة مبيعات وأرصدة السمنة
+وعباد الشمس والأولين قبل الاعتماد
             </small>
 
         </div>
@@ -9376,7 +9397,7 @@ PKF
         data-subsection-approval="oil_sales"
         onclick="approveOilSalesSubsection()"
     >
-        ✓ اعتماد تعبئة الزيت
+      ✓ اعتماد مبيعات الزيت
     </button>
 
 </div>
@@ -12153,6 +12174,14 @@ PKF
                   >
                     👁 عرض الملف
                   </a>
+                  <div class="quality-approval-only" id="qualityApproval_flour" hidden>
+  <button type="button"
+          class="quality-approve-btn"
+          id="approve_flour_quality"
+          onclick="approveQualitySubsection('flour')">
+    ✓ اعتماد تقرير الجودة
+  </button>
+</div>
                 </div>
               </div>
 
@@ -13435,7 +13464,7 @@ PKF
     open
     class="feed-section-card"
 >
-
+<BR>
     <summary class="feed-section-card-header">
 
       <div class="feed-section-card-title">
@@ -14128,7 +14157,14 @@ PKF
             >
               👁 عرض الملف
             </a>
-
+            <div class="quality-approval-only" id="qualityApproval_feed" hidden>
+  <button type="button"
+          class="quality-approve-btn"
+          id="approve_feed_quality"
+          onclick="approveQualitySubsection('feed')">
+    ✓ اعتماد تقرير الجودة
+  </button>
+</div>
           </div>
 
         </div>
@@ -16878,6 +16914,10 @@ if (refineryProductFilter) {
 ========================= */
 
         sectionElement.querySelectorAll("[data-save]").forEach((el) => {
+  // استثناء ملاحظات الجودة من اعتماد المصنع الرئيسي
+if (/^(sugar|oil|flour|feed)_quality_notes$/.test(el.id)) {
+    return;
+}
           const key = fieldStateKey(section, el.id);
 
           const currentValue = normalizeFieldValue(el);
@@ -16945,6 +16985,13 @@ if (refineryProductFilter) {
         console.log("REPORT ROWS:", reportRows.length);
 
         console.log("UNIQUE ROWS:", uniqueRows.length);
+
+        console.log(
+    "QUALITY FIELDS SENT:",
+    uniqueRows.filter(row =>
+        /^(sugar|oil|flour|feed)_quality_notes$/.test(row.field_name)
+    )
+);
 
         /* =========================
    حفظ البيانات
@@ -17166,6 +17213,10 @@ if (showMessage) {
         const parentFactory = subsectionFactoryMap[subsection] || subsection;
 
         fields.forEach((fieldId) => {
+          // استثناء ملاحظات الجودة من اعتماد الأقسام الفرعية
+if (/^(sugar|oil|flour|feed)_quality_notes$/.test(fieldId)) {
+  return;
+}
           const el = document.getElementById(fieldId);
 
           const key = fieldStateKey(parentFactory, fieldId);
@@ -17700,12 +17751,10 @@ async function approveOilSalesSubsection() {
         "🟢 OIL SALES APPROVAL STARTED"
     );
 
-    const fields =
-        getSubsectionSaveFields([
-            "oilPackingDetails",
-            "oilPlasticDetails",
-            "oilAssemblyDetails"
-        ]);
+   const fields =
+    getSubsectionSaveFields([
+        "sales_oil"
+    ]);
 
     console.log(
         "OIL SALES APPROVAL FIELDS:",
@@ -18247,11 +18296,24 @@ async function clearInheritedFieldForToday(
         console.log("DEVICE:", navigator.userAgent);
         console.log("DATE ELEMENT:", dateElement);
         console.log("📅 Report Date:", reportDate);
-        const { data, error } = await supabaseClient
-          .from("daily_reports")
-          .select("*")
-          .eq("report_date", reportDate)
-          .eq("factory", factory);
+        let qualityDailyRequest = supabaseClient
+  .from("daily_reports")
+  .select("*")
+  .eq("report_date", reportDate)
+  .eq("factory", factory);
+
+if (isQualitySubaccount(factory)) {
+  qualityDailyRequest = qualityDailyRequest.eq(
+    "field_name",
+    factory + "_quality_notes"
+  );
+
+  const notes = document.getElementById(factory + "_quality_notes");
+
+  if (notes) notes.value = "";
+}
+
+const { data, error } = await qualityDailyRequest;
 
         if (error) {
           console.log(error);
@@ -18272,6 +18334,13 @@ async function clearInheritedFieldForToday(
               .map((el) => el.id)
               .filter(Boolean)
           : [];
+          if (isQualitySubaccount(factory)) {
+  fieldIds.splice(
+    0,
+    fieldIds.length,
+    factory + "_quality_notes"
+  );
+}
 
         /* تسجيل علاقة الحقل بالمصنع */
         fieldIds.forEach((fieldId) => {
@@ -18356,6 +18425,10 @@ const salesFieldIds =
         "palm_sales_14l"
       ]
     : [];
+    // ملاحظات الجودة تخص تاريخ التقرير فقط ولا تورث
+if (QUALITY_FACTORIES.includes(factory)) {
+  salesFieldIds.push(factory + "_quality_notes");
+}
 
 /*
    فقط الحقول الموجودة فعليًا في daily_reports لليوم
@@ -18694,11 +18767,20 @@ if (factory === "feed") {
 
         // تحميل روابط الصور الخاصة بالملاحظات
 
-        const { data: imageRows } = await supabaseClient
-          .from("note_images")
-          .select("*")
-          .eq("report_date", reportDate)
-          .eq("factory", factory);
+        let qualityImageRequest = supabaseClient
+  .from("note_images")
+  .select("*")
+  .eq("report_date", reportDate)
+  .eq("factory", factory);
+
+if (isQualitySubaccount(factory)) {
+  qualityImageRequest = qualityImageRequest.eq(
+    "field_name",
+    factory + "_quality_notes"
+  );
+}
+
+const { data: imageRows } = await qualityImageRequest;
         console.log("Archive Date:", reportDate);
         console.log("Factory:", factory);
         console.log("Images:", imageRows);
@@ -18795,7 +18877,17 @@ if (factory === "feed") {
                     showNotification("فشل حذف الملف", "error");
                   }
                 };
-                wrapper.appendChild(deleteBtn);
+                
+if (
+  !isQualitySubaccount(factory) &&
+  (
+    !/^(sugar|oil|flour|feed)_quality_notes$/.test(file.field_name) ||
+    window.currentUserRole === "admin"
+  )
+) {
+  wrapper.appendChild(deleteBtn);
+}
+
 
                 grid.appendChild(wrapper);
               } else {
@@ -18847,7 +18939,17 @@ if (factory === "feed") {
                   }
                 };
 
-                wrapper.appendChild(deleteBtn);
+                
+if (
+  !isQualitySubaccount(factory) &&
+  (
+    !/^(sugar|oil|flour|feed)_quality_notes$/.test(file.field_name) ||
+    window.currentUserRole === "admin"
+  )
+) {
+  wrapper.appendChild(deleteBtn);
+}
+
 
                 grid.appendChild(wrapper);
               }
@@ -19020,7 +19122,12 @@ if (userInfo.role === "feed" ||
 
     }
 
-    
+    if (isQualitySubaccount()) {
+  await refreshQualityApprovalStatus(
+    window.currentUserRole,
+    document.getElementById("reportDateKey")?.value
+  );
+}
 
 }
 
@@ -19557,9 +19664,10 @@ updatePalmStockTotal();
           // الوضع الليلي ثابت في المشروع
 document.body.classList.add("dark-mode");
 
-          await applyPermissions();
+// تطبيق صلاحيات المستخدم قبل إظهار أي محتوى
+await applyPermissions();
 
-          await showCurrentUser();
+await showCurrentUser();
 
           await loadSystemVersion();
 
@@ -19824,6 +19932,33 @@ async function installPowerNegativeButtons() {
 installPowerNegativeButtons();
 
       async function uploadNoteImage(input) {
+        const isQualityField =
+  /^(sugar|oil|flour|feed)_quality_notes$/.test(
+    input.dataset.field || ""
+  );
+
+if (isQualityField) {
+  if (isQualitySubaccount()) {
+    queueQualityFiles(input);
+  } else {
+    showNotification(
+      "إرفاق ملفات الجودة متاح لحساب الجودة فقط",
+      "error"
+    );
+    input.value = "";
+  }
+
+  return;
+}
+
+if (isQualitySubaccount()) {
+  showNotification(
+    "لا تملك صلاحية إرفاق ملفات في هذا القسم",
+    "error"
+  );
+  input.value = "";
+  return;
+}
         const files = [...input.files];
 
         if (files.length === 0) return;
@@ -20322,12 +20457,16 @@ if (typeof applyApprovalPermissions === "function") {
 
         if (!reportDate) return;
 
-        const field = document.getElementById(fieldId);
+   const field = document.getElementById(fieldId);
 
-        if (!field) return;
+if (!field) return;
 
-        const value = field.value;
+// مبيعات الزيت لا تُحفظ فورياً، بل عند الاعتماد فقط
+if (field.closest("#sales_oil")) {
+    return;
+}
 
+const value = field.value;
         const {
           data: { user },
         } = await supabaseClient.auth.getUser();
@@ -20383,7 +20522,6 @@ if (typeof applyApprovalPermissions === "function") {
     <script src="js/archive.js"></script>  
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.3/dist/html2pdf.bundle.min.js"></script>
-
 
     <script>
       bootApplication();
@@ -24252,17 +24390,8 @@ function showNotification(message, type = "success") {
         justify-content: center;
     }
 }
-
-
-
 </style>
-
 <script>
-
 </script>
-
-
-
-
-  </body>
+</body>
 </html>

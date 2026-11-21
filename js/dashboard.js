@@ -19,8 +19,355 @@ async function showCurrentUser() {
     "👤 " + data.name + " | " + data.role;
 }
 
+/* ========== QUALITY SUBACCOUNTS ========== */
+
+const QUALITY_FACTORIES = ["sugar", "oil", "flour", "feed"];
+
+function isQualitySubaccount(
+  role = window.currentUserRole,
+  subsection = window.currentUserSubsection,
+) {
+  return (
+    QUALITY_FACTORIES.includes(role) &&
+    String(subsection || "")
+      .trim()
+      .toLowerCase() === "quality"
+  );
+}
+
+function applyQualityAccountView(factory) {
+  if (!isQualitySubaccount(factory)) return;
+
+  const section = document.getElementById(factory);
+  const field = document.getElementById(factory + "_quality_notes");
+
+  if (!section || !field) {
+    console.error("QUALITY SECTION NOT FOUND:", factory);
+    return;
+  }
+
+  const selectors = {
+    sugar: ".sugar-qc-card.quality",
+    oil: ".plastic-quality-card",
+    flour: ".quality-safety-card.quality-card",
+    feed: ".feed-qc-card:not(.safety)",
+  };
+
+  const card = field.closest(selectors[factory]);
+
+  if (!card || !section.contains(card)) {
+    console.error("QUALITY CARD NOT FOUND:", factory);
+    return;
+  }
+
+  // إخفاء جميع الأقسام أولاً
+  document.querySelectorAll(".section").forEach((section) => {
+    section.style.setProperty("display", "none", "important");
+  });
+
+  // إظهار البطاقة العلوية المشتركة لجميع المستخدمين
+  const home = document.getElementById("home");
+
+  if (home) {
+    home.style.setProperty("display", "block", "important");
+  }
+
+  // منع ظهور أدوات الإدارة لحساب الجودة
+  const adminTools = document.getElementById("adminTools");
+
+  if (adminTools) {
+    adminTools.style.setProperty("display", "none", "important");
+  }
+
+  // منع ظهور إشعارات المدير
+  const pushNotificationBtn = document.getElementById("pushNotificationBtn");
+
+  if (pushNotificationBtn) {
+    pushNotificationBtn.style.setProperty("display", "none", "important");
+  }
+
+  // إظهار قسم المصنع المرتبط بحساب الجودة
+  section.style.setProperty("display", "block", "important");
+
+  // إبقاء بطاقة الجودة ومسارها داخل المصنع فقط
+  let node = card;
+
+  while (node && node !== section) {
+    const parent = node.parentElement;
+    if (!parent) break;
+
+    Array.from(parent.children).forEach((sibling) => {
+      if (sibling === node || sibling.tagName === "SUMMARY") return;
+      sibling.style.setProperty("display", "none", "important");
+    });
+
+    if (parent.tagName === "DETAILS") parent.open = true;
+    if (parent.classList?.contains("collapsed")) {
+      parent.classList.remove("collapsed");
+    }
+
+    node = parent;
+  }
+
+  // إخفاء اعتمادات الأقسام الأخرى
+  section
+    .querySelectorAll(
+      ".sugar-approval-area, .oil-approval-area, " +
+        ".feed-approval-area, .flour-approval-area, " +
+        "[data-subsection-approval]",
+    )
+    .forEach((el) => {
+      el.style.setProperty("display", "none", "important");
+    });
+
+  const area = document.getElementById("qualityApproval_" + factory);
+  const button = document.getElementById("approve_" + factory + "_quality");
+
+  if (area) {
+    area.hidden = false;
+    area.style.setProperty("display", "flex", "important");
+  }
+
+  if (button) {
+    button.hidden = false;
+    button.disabled = false;
+  }
+
+  // قائمة المصنع المسموح فقط
+  document.querySelectorAll('[id^="menu_"]').forEach((menu) => {
+    menu.style.setProperty("display", "none", "important");
+  });
+
+  const factoryMenu = document.getElementById("menu_" + factory);
+
+  if (factoryMenu) {
+    factoryMenu.style.setProperty("display", "block", "important");
+  }
+
+  // إبقاء عرض الصفحة من الأعلى
+  window.history.replaceState(
+    null,
+    "",
+    window.location.pathname + window.location.search + "#home",
+  );
+
+  window.scrollTo({
+    top: 0,
+    behavior: "auto",
+  });
+}
+
+/* الملفات المختارة لا ترفع قبل الاعتماد */
+window.qualityPendingFiles = window.qualityPendingFiles || new Map();
+
+function queueQualityFiles(input) {
+  const factory = window.currentUserRole;
+  const reportDate = document.getElementById("reportDateKey")?.value;
+
+  if (
+    !isQualitySubaccount() ||
+    input.dataset.factory !== factory ||
+    input.dataset.field !== factory + "_quality_notes" ||
+    !reportDate
+  ) {
+    showNotification("لا تملك صلاحية إرفاق هذا الملف", "error");
+    input.value = "";
+    return;
+  }
+
+  const files = [...input.files];
+  if (!files.length) return;
+
+  const key = reportDate + "|" + factory;
+  const previous = window.qualityPendingFiles.get(key) || [];
+
+  window.qualityPendingFiles.set(key, previous.concat(files));
+
+  input.value = "";
+
+  showNotification("تم تجهيز الملفات. ستُرفع عند اعتماد الجودة", "success");
+}
+
+async function uploadQueuedQualityFiles(factory, reportDate, email) {
+  const key = reportDate + "|" + factory;
+  const files = window.qualityPendingFiles.get(key) || [];
+
+  if (!files.length) return true;
+
+  const fieldName = factory + "_quality_notes";
+
+  while (files.length) {
+    const file = files[0];
+
+    if (!file.type.startsWith("image/") && file.type !== "application/pdf") {
+      showNotification("يُسمح بالصور وملفات PDF فقط", "error");
+      return false;
+    }
+
+    const extension = (file.name.split(".").pop() || "bin")
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .toLowerCase();
+
+    const path =
+      `${reportDate}/${factory}/${fieldName}/` +
+      `${Date.now()}_${Math.random().toString(36).slice(2)}.${extension}`;
+
+    const { error: uploadError } = await supabaseClient.storage
+      .from("daily-report-images")
+      .upload(path, file, { upsert: false });
+
+    if (uploadError) {
+      console.error("QUALITY UPLOAD ERROR:", uploadError);
+      showNotification("فشل رفع أحد ملفات الجودة", "error");
+      return false;
+    }
+
+    const { data: urlData } = supabaseClient.storage
+      .from("daily-report-images")
+      .getPublicUrl(path);
+
+    const { error: insertError } = await supabaseClient
+      .from("note_images")
+      .insert({
+        report_date: reportDate,
+        factory,
+        field_name: fieldName,
+        image_url: urlData.publicUrl,
+        storage_path: path,
+        uploaded_by: email,
+      });
+
+    if (insertError) {
+      console.error("QUALITY IMAGE RECORD ERROR:", insertError);
+
+      await supabaseClient.storage.from("daily-report-images").remove([path]);
+
+      showNotification("فشل تسجيل أحد المرفقات", "error");
+      return false;
+    }
+
+    files.shift();
+  }
+
+  window.qualityPendingFiles.delete(key);
+  return true;
+}
+
+/* حالة الاعتماد */
+async function refreshQualityApprovalStatus(factory, reportDate) {
+  if (!isQualitySubaccount(factory)) return;
+
+  const button = document.getElementById("approve_" + factory + "_quality");
+
+  if (!button || !reportDate) return;
+
+  button.textContent = "✓ اعتماد تقرير الجودة";
+
+  const { data, error } = await supabaseClient
+    .from("section_approvals")
+    .select("approved_at")
+    .eq("report_date", reportDate)
+    .eq("section_name", factory + "_quality")
+    .order("approved_at", { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.error("QUALITY APPROVAL STATUS:", error);
+    return;
+  }
+
+  if (data?.length) {
+    button.textContent = "✓ تم الاعتماد — يمكن إعادة الاعتماد";
+  }
+}
+
+/* إظهار حالة وجود تعديلات جديدة */
+document.addEventListener("input", (event) => {
+  const factory = window.currentUserRole;
+
+  if (!isQualitySubaccount() || event.target?.id !== factory + "_quality_notes")
+    return;
+
+  const button = document.getElementById("approve_" + factory + "_quality");
+
+  if (button && !button.disabled) {
+    button.textContent = "✓ اعتماد التعديلات";
+  }
+});
+
+/* الاعتماد الفعلي */
+async function approveQualitySubsection(factory) {
+  if (!isQualitySubaccount(factory)) {
+    showNotification("الاعتماد مخصص لمسؤول الجودة", "error");
+    return;
+  }
+
+  const reportDate = document.getElementById("reportDateKey")?.value;
+  const notes = document.getElementById(factory + "_quality_notes");
+  const button = document.getElementById("approve_" + factory + "_quality");
+
+  if (!reportDate || !notes || !button || button.disabled) return;
+
+  const pending =
+    window.qualityPendingFiles.get(reportDate + "|" + factory) || [];
+
+  if (!notes.value.trim() && !pending.length) {
+    showNotification("اكتب ملاحظة أو اختر ملفاً قبل الاعتماد", "error");
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "جارٍ اعتماد الجودة...";
+
+  try {
+    const {
+      data: { user },
+      error: authError,
+    } = await supabaseClient.auth.getUser();
+
+    if (authError || !user) {
+      throw new Error("يجب تسجيل الدخول مجدداً");
+    }
+
+    const uploaded = await uploadQueuedQualityFiles(
+      factory,
+      reportDate,
+      user.email,
+    );
+
+    if (!uploaded) return;
+
+    const { error } = await supabaseClient.rpc("approve_quality_report", {
+      p_report_date: reportDate,
+      p_notes: notes.value,
+    });
+
+    if (error) throw error;
+
+    const key = fieldStateKey(factory, notes.id);
+
+    if (window.fieldLastSavedValues instanceof Map) {
+      window.fieldLastSavedValues.set(key, normalizeFieldValue(notes));
+    }
+
+    button.textContent = "✓ تم الاعتماد — يمكن إعادة الاعتماد";
+
+    showNotification("تم اعتماد تقرير الجودة بنجاح", "success");
+  } catch (error) {
+    console.error("QUALITY APPROVAL FAILED:", error);
+
+    showNotification(error.message || "فشل اعتماد تقرير الجودة", "error");
+  } finally {
+    button.disabled = false;
+  }
+}
+
 function applySubsectionPermissions(role, subsection) {
   console.log("SUBSECTION PERMISSIONS:", role, subsection);
+  if (isQualitySubaccount(role, subsection)) {
+    applyQualityAccountView(role);
+    return;
+  }
 
   const normalizedSubsection = String(subsection || "")
     .trim()
@@ -1389,6 +1736,34 @@ function applyApprovalPermissions(role) {
 async function applyPermissions() {
   console.log("applyPermissions started");
 
+  // إخفاء الأقسام الحساسة فوراً وقبل الاتصال بـ Supabase
+  document.querySelectorAll(".section").forEach((section) => {
+    section.style.display = "none";
+  });
+
+  // إخفاء قوائم المصانع وأدوات الإدارة مؤقتاً
+  const protectedElements = [
+    "adminTools",
+    "editModeBtn",
+    "approvalsDashboard",
+    "lateFieldsDashboard",
+    "remindersBox",
+    "menu_power",
+    "menu_sugar",
+    "menu_oil",
+    "menu_flour",
+    "menu_feed",
+    "menu_waterfiltration",
+    "menu_sales_marketing",
+  ];
+
+  protectedElements.forEach((id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.style.display = "none";
+    }
+  });
+
   const {
     data: { user },
   } = await supabaseClient.auth.getUser();
@@ -1427,6 +1802,22 @@ async function applyPermissions() {
 
   window.currentUserRole = role;
   window.currentUserSubsection = subsection;
+  // صلاحيات تحرير ملاحظات الجودة
+  QUALITY_FACTORIES.forEach((factory) => {
+    const notes = document.getElementById(factory + "_quality_notes");
+
+    const permitted = isQualitySubaccount(role, subsection) && role === factory;
+
+    if (notes) notes.readOnly = !permitted;
+
+    const uploadLabel = document.querySelector(
+      'label[for="' + factory + '_quality_notes_image"]',
+    );
+
+    if (uploadLabel) {
+      uploadLabel.style.display = permitted ? "" : "none";
+    }
+  });
 
   applySalesDashboardPermissions(role, subsection);
 
@@ -1444,9 +1835,13 @@ async function applyPermissions() {
 
   const editBtn = document.getElementById("editModeBtn");
 
-  adminTools.style.display = "none";
-  editBtn.style.display = "none";
-  document.getElementById("editModeBtn").style.display = "none";
+  if (adminTools) {
+    adminTools.style.display = "none";
+  }
+
+  if (editBtn) {
+    editBtn.style.display = "none";
+  }
   console.log("EMAIL =", userEmail);
   console.log("ROLE =", role);
   console.log(data);
@@ -1530,6 +1925,10 @@ async function applyPermissions() {
   applyOilSubsectionApprovalPermissions(role, subsection);
 
   applySugarFlourSubsectionApprovalPermissions(role, subsection);
+  if (isQualitySubaccount(role, subsection)) {
+    applyQualityAccountView(role);
+    return;
+  }
 
   /* =========================================================
    الحسابات الفرعية للسكر والطحين
@@ -2576,6 +2975,10 @@ function showOnlySection(sectionId) {
   const subsection = String(window.currentUserSubsection || "")
     .trim()
     .toLowerCase();
+  if (isQualitySubaccount(role, subsection)) {
+    applyQualityAccountView(role);
+    return false;
+  }
 
   console.log("SIDEBAR NAVIGATION:", {
     role,
@@ -2729,6 +3132,10 @@ function showOnlySection(sectionId) {
 ========================================================= */
 
 function allowSectionNavigation(sectionId) {
+  if (isQualitySubaccount()) {
+    applyQualityAccountView(window.currentUserRole);
+    return;
+  }
   /* إخفاء جميع الأقسام */
   document.querySelectorAll(".section").forEach((section) => {
     section.style.display = "none";
@@ -3443,6 +3850,16 @@ function scheduleDailyReportAutoSave(fieldId) {
   const field = document.getElementById(fieldId);
 
   if (!field) return;
+
+  // ملاحظات الجودة تحفظ بالاعتماد فقط
+  if (/^(sugar|oil|flour|feed)_quality_notes$/.test(fieldId)) {
+    return;
+  }
+
+  // حساب الجودة لا يحفظ حقولاً أخرى
+  if (isQualitySubaccount()) {
+    return;
+  }
 
   if (window.isHistoricalEditMode) return;
 
@@ -6143,11 +6560,28 @@ function updatePackingDashboard() {
      الأهداف
   ======================================================= */
 
-  updatePackingTarget("krones1", krones1);
+  // تحديد عدد الورديات المدخلة لكل خط
+  const krones1Shifts = ["krones1a", "krones1b", "krones1c"];
 
-  updatePackingTarget("krones2", krones2);
+  const krones2Shifts = ["krones2a", "krones2b", "krones2c"];
 
-  updatePackingTarget("krones3", krones3);
+  const krones3Shifts = ["krones3a", "krones3b", "krones3c"];
+
+  // حساب الهدف حسب عدد الورديات المدخلة
+  function getKronesDailyTarget(shiftIds) {
+    const activeShifts = shiftIds.filter((id) => {
+      const input = document.getElementById(id);
+      return input && input.value.trim() !== "";
+    }).length;
+
+    return activeShifts * 18000;
+  }
+
+  updatePackingTarget("krones1", krones1, getKronesDailyTarget(krones1Shifts));
+
+  updatePackingTarget("krones2", krones2, getKronesDailyTarget(krones2Shifts));
+
+  updatePackingTarget("krones3", krones3, getKronesDailyTarget(krones3Shifts));
 
   updatePackingTarget("gea", gea);
 
@@ -6275,12 +6709,12 @@ function updatePackingDashboard() {
    تحويل الهدف والإنتاج إلى أرقام آمنة
 ========================================================= */
 
-function updatePackingTarget(line, value) {
+function updatePackingTarget(line, value, targetOverride = null) {
   /* =======================================================
      تحويل الإنتاج والهدف إلى أرقام مؤكدة
   ======================================================= */
 
-  const rawTarget = packingTargets[line];
+  const rawTarget = targetOverride ?? packingTargets[line];
 
   const target = Number(
     String(rawTarget ?? "")

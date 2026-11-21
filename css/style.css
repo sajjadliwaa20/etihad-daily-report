@@ -23414,7 +23414,7 @@ body.sidebar-open #sidebarOverlay {
     padding-top: 5px;
   }
 
- .blackoil-total-number input {
+  .blackoil-total-number input {
     width: 190px !important;
     min-width: 0 !important;
     max-width: 190px !important;
@@ -23423,7 +23423,7 @@ body.sidebar-open #sidebarOverlay {
     font-size: 24px !important;
     white-space: nowrap !important;
     flex: 0 1 190px !important;
-}
+  }
 }
 
 /* =========================================================
@@ -33453,4 +33453,98 @@ body:not(.dark-mode) .power-negative-btn {
   .mill-output-grid > .mill-output > span {
     font-size: 11px !important;
   }
+}
+
+/* إصلاح بطاقة إجمالي إنتاج خطوط التكرير على الهاتف */
+@media screen and (max-width: 600px) {
+  .refinery-grand-total-new {
+    display: grid !important;
+    grid-template-columns: 42px minmax(0, 1fr) !important;
+    grid-template-areas:
+      "icon info"
+      "badge badge" !important;
+
+    align-items: center;
+    gap: 12px !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    padding: 16px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    box-sizing: border-box !important;
+    overflow: hidden;
+  }
+
+  .refinery-grand-total-new .grand-total-icon {
+    grid-area: icon;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 0 !important;
+    font-size: 22px !important;
+  }
+
+  .refinery-grand-total-new .grand-total-info {
+    grid-area: info;
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .refinery-grand-total-new .grand-total-label {
+    font-size: 13px !important;
+    white-space: normal !important;
+  }
+
+  .refinery-grand-total-new .grand-total-number {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .refinery-grand-total-new .grand-total-number strong {
+    font-size: clamp(25px, 7vw, 34px) !important;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    overflow-wrap: anywhere;
+  }
+
+  .refinery-grand-total-new .grand-total-badge {
+    grid-area: badge;
+    justify-self: start;
+    position: static !important;
+    margin: 0 !important;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* اعتماد تقارير الجودة */
+.quality-approval-only[hidden] {
+  display: none !important;
+}
+
+.quality-approval-only {
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.quality-approve-btn {
+  background: #087f62;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 22px;
+  font-weight: 700;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.quality-approve-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
 }
