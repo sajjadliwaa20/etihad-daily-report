@@ -1456,6 +1456,11 @@
           persistSession: true,
           autoRefreshToken: true,
           detectSessionInUrl: true,
+
+          // تفعيل تسجيل الدخول بالبصمة وFace ID
+          experimental: {
+            passkey: true,
+          },
         },
       });
 

@@ -33567,3 +33567,18 @@ body:not(.dark-mode) .power-negative-btn {
 #flourCumulativeContribution {
   color: #7c8791;
 }
+
+/* توسيع حقول ورديات خطوط كرونس فقط */
+#oil .packing-shift-inputs .packing-input-group input {
+  width: 130px !important;
+  max-width: 100% !important;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-inline: auto;
+  display: block;
+
+  padding: 9px 5px !important;
+  font-size: 17px !important;
+  text-align: center !important;
+  direction: ltr;
+}
