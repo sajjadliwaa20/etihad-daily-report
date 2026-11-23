@@ -3,9 +3,9 @@
   "short_name": "Factory ERP",
   "description": "Factory Daily Reporting System",
 
-  "id": "/etihad-daily-report/",
-  "start_url": "/etihad-daily-report/",
-  "scope": "/etihad-daily-report/",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
 
   "background_color": "#F5F7FA",

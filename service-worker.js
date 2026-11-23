@@ -1,65 +1,38 @@
-const CACHE_NAME = "etihad-daily-v9.8.0";
+/* ==========================================
+   ETIHAD — SERVICE WORKER
+   Cloudflare Access Compatible
+========================================== */
 
-const FILES_TO_CACHE = [
-  "index.html",
-  "login.html",
-  "css/style.css",
-  "js/dashboard.js",
-  "js/jsinit.js",
-  "js/jssplash.js",
-  "js/jsupdate.js",
-  "js/pwa.js",
-  "manifest.json",
-  "favicon.png",
-  "icons/icon-192.png",
-  "icons/icon-512.png",
-];
-
+// تثبيت التحديث الجديد مباشرة
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-
-      .then((cache) => cache.addAll(FILES_TO_CACHE)),
-  );
-  self.skipWaiting();
+  event.waitUntil(self.skipWaiting());
 });
 
+// حذف النسخ القديمة المخزنة من المشروع
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys
+    (async () => {
+      const cacheNames = await caches.keys();
 
-          .filter((key) => key !== CACHE_NAME)
+      await Promise.all(
+        cacheNames
+          .filter((name) => name.startsWith("etihad-daily-"))
+          .map((name) => caches.delete(name)),
+      );
 
-          .map((key) => caches.delete(key)),
-      ),
-    ),
-  );
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", (event) => {
-  // لا نخزن version.json حتى يقرأ أحدث إصدار دائماً
-  if (event.request.url.includes("version.json")) {
-    event.respondWith(
-      fetch(event.request, {
-        cache: "no-store",
-      }),
-    );
-    return;
-  }
-
-  event.respondWith(
-    caches
-      .match(event.request)
-
-      .then((response) => {
-        return response || fetch(event.request);
-      }),
+      await self.clients.claim();
+    })(),
   );
 });
+
+/*
+  لا نستخدم fetch handler هنا.
+
+  جميع الصفحات والملفات تمر عبر الشبكة
+  وCloudflare Access بصورة طبيعية.
+
+  تبقى إشعارات Push تعمل في الأسفل.
+*/
 
 self.addEventListener("push", (event) => {
   let data = {};
@@ -77,10 +50,10 @@ self.addEventListener("push", (event) => {
 
   const options = {
     body: data.body || "تمت الموافقة على أحد الأقسام أو الحسابات الفرعية.",
-    icon: "/etihad-daily-report/icons/icon-192.png",
-    badge: "/etihad-daily-report/icons/icon-192.png",
+    icon: new URL("icons/icon-192.png", self.registration.scope).href,
+    badge: new URL("icons/icon-192.png", self.registration.scope).href,
     data: {
-      url: data.url || "/etihad-daily-report/",
+      url: data.url || self.registration.scope,
     },
     tag: data.tag || "factory-approval",
     renotify: true,
@@ -92,7 +65,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
-  const appUrl = new URL("/etihad-daily-report/", self.location.origin).href;
+  const appUrl = self.registration.scope;
 
   const targetUrl = new URL(event.notification.data?.url || appUrl, appUrl)
     .href;
