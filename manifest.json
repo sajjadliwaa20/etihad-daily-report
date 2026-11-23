@@ -12,8 +12,6 @@
 
   "theme_color": "#145A46",
 
-  "orientation": "portrait",
-
   "icons": [
     {
       "src": "icons/icon-192.png",
