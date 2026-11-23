@@ -484,6 +484,16 @@
                 <span>طباعة PDF</span>
             </button>
 
+<button
+  type="button"
+  id="activateBiometricBtn"
+  class="main-command-action"
+  onclick="activateBiometricLogin()"
+>
+  👆
+  <span>تفعيل الدخول بالبصمة أو الوجه</span>
+</button>
+
 
             <button
                 id="loginBtn"
@@ -14731,17 +14741,56 @@ PKF
 
       const SUPABASE_KEY = "sb_publishable_q0VgF-S8RkmWdRUvA9pQMQ_nDrLa28F";
 
-     const supabaseClient = supabase.createClient(
+   
+const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY,
   {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
-      detectSessionInUrl: true
+      detectSessionInUrl: true,
+      experimental: {
+        passkey: true
+      }
     }
   }
 );
+
+
+window.activateBiometricLogin = async function () {
+  const button = document.getElementById("activateBiometricBtn");
+
+  if (window.location.origin !== "https://report.etihad-operations.com") {
+    alert("يرجى استخدام النطاق الرسمي لتفعيل البصمة.");
+    return;
+  }
+
+  try {
+    if (button) button.disabled = true;
+
+    const { data: { user }, error: userError } =
+      await supabaseClient.auth.getUser();
+
+    if (userError || !user) {
+      alert("يجب تسجيل الدخول إلى حسابك أولاً.");
+      return;
+    }
+
+    const { error } =
+      await supabaseClient.auth.registerPasskey();
+
+    if (error) throw error;
+
+    alert("تم تفعيل الدخول بالبصمة أو الوجه بنجاح.");
+  } catch (error) {
+    console.error("Biometric registration:", error);
+    alert("تعذر تفعيل البصمة: " + (error.message || "خطأ غير معروف"));
+  } finally {
+    if (button) button.disabled = false;
+  }
+};
+
 
  /* =========================================================
    FIELD STATE MEMORY
