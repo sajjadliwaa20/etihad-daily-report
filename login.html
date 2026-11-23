@@ -1238,6 +1238,21 @@
           font-size: 16px;
         }
       }
+      /* زر الدخول بواسطة Passkey */
+      .passkey-login-button {
+        margin-top: 12px;
+        background: linear-gradient(135deg, #245a62, #163f49);
+        box-shadow: 0 10px 24px rgba(20, 70, 75, 0.18);
+      }
+
+      .passkey-login-button[hidden] {
+        display: none !important;
+      }
+
+      .passkey-login-button:disabled {
+        opacity: 0.65;
+        cursor: wait;
+      }
     </style>
   </head>
 
@@ -1407,6 +1422,20 @@
             </span>
           </button>
 
+          <!-- تسجيل الدخول بالبصمة أو Face ID -->
+          <button
+            type="button"
+            id="passkeyLoginButton"
+            class="login-button passkey-login-button"
+            onclick="loginWithPasskey()"
+            hidden
+          >
+            <span class="login-button-content">
+              <span>🔐</span>
+              <span>الدخول بالبصمة أو Face ID</span>
+            </span>
+          </button>
+
           <!-- Divider -->
 
           <div class="login-divider">نظام آمن لمتابعة العمليات اليومية</div>
@@ -1440,7 +1469,7 @@
        SUPABASE
   ======================================================== -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0"></script>
 
     <script>
       /* =========================================================
@@ -1583,6 +1612,76 @@
 
           if (buttonText) {
             buttonText.textContent = "تسجيل الدخول";
+          }
+        }
+      }
+
+      /* =========================================================
+   PASSKEY LOGIN — FINGERPRINT / FACE ID
+========================================================= */
+
+      const PASSKEY_ORIGIN = "https://report.etihad-operations.com";
+
+      // عرض زر البصمة على النطاق الرسمي فقط
+      if (window.location.origin === PASSKEY_ORIGIN) {
+        const passkeyButton = document.getElementById("passkeyLoginButton");
+
+        if (passkeyButton) {
+          passkeyButton.hidden = false;
+        }
+      }
+
+      async function loginWithPasskey() {
+        const button = document.getElementById("passkeyLoginButton");
+
+        if (window.location.origin !== PASSKEY_ORIGIN) {
+          showNotification("الدخول بالبصمة متاح من النطاق الرسمي فقط", "error");
+          return;
+        }
+
+        if (typeof supabaseClient.auth.signInWithPasskey !== "function") {
+          showNotification("مكتبة تسجيل الدخول بالبصمة غير متاحة", "error");
+          return;
+        }
+
+        if (button?.disabled) return;
+
+        const originalContent = button?.innerHTML;
+
+        if (button) {
+          button.disabled = true;
+          button.textContent = "جارٍ التحقق من البصمة...";
+        }
+
+        try {
+          const { data, error } = await supabaseClient.auth.signInWithPasskey();
+
+          if (error) throw error;
+
+          if (!data?.session) {
+            throw new Error("لم يتم إنشاء جلسة تسجيل الدخول");
+          }
+
+          if (data.user?.email) {
+            localStorage.setItem("lastEmail", data.user.email);
+          }
+
+          showNotification("تم تسجيل الدخول بالبصمة بنجاح", "success");
+
+          window.location.replace("index.html");
+        } catch (error) {
+          console.error("PASSKEY LOGIN ERROR:", error);
+
+          const message =
+            error?.name === "NotAllowedError"
+              ? "تم إلغاء التحقق أو لم يكتمل"
+              : error?.message || "تعذر تسجيل الدخول";
+
+          showNotification(message, "error");
+        } finally {
+          if (button) {
+            button.disabled = false;
+            button.innerHTML = originalContent;
           }
         }
       }
